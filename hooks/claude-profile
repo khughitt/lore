@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""SessionStart: add the checkout profile layer to Claude's context."""
+"""SessionStart: add the checkout profile layer to the agent's context. Claude and
+Codex both run it and send the same payload shape; its transcript_path is what names
+the harness home (see ops-profile home_of)."""
 import importlib.machinery
 import importlib.util
 import json
@@ -21,12 +23,14 @@ def _load(path):
 def main(text, env, fallback_cwd):
     try:
         payload = json.loads(text or "null")
-        cwd = payload.get("cwd") if isinstance(payload, dict) else None
     except json.JSONDecodeError:
-        cwd = None
+        payload = None
+    if not isinstance(payload, dict):
+        payload = None
+    cwd = payload.get("cwd") if payload else None
     profiles = _load(HERE.parent / "bin" / "ops-profile")
     try:
-        res = profiles.resolve(cwd or fallback_cwd, env)
+        res = profiles.resolve(cwd or fallback_cwd, env, payload)
     except (profiles.ProfileError, ValueError) as error:
         sys.stdout.write(f"profile: unresolved — {error}; run ops-profile session after fixing it\n")
         return 0

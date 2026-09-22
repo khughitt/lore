@@ -21,7 +21,7 @@ class ProfileHookTests(ProfileSandbox):
     def test_the_line_and_fragments_reach_stdout(self):
         result, exports = self.run_hook(self.ns)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertTrue(result.stdout.startswith("profile: personal, science (identity.toml [ns].profiles); "))
+        self.assertTrue(result.stdout.startswith("profile: personal, science (identity-mirror.toml [ns].profiles); "))
         self.assertIn("# Profile: science", result.stdout)
         self.assertEqual(exports, "export AGENT_PROFILE=personal,science\n")
 
@@ -38,7 +38,7 @@ class ProfileHookTests(ProfileSandbox):
         self.identity("")
         result, exports = self.run_hook(self.ai)
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, "profile: unresolved — ai is registered but identity.toml [ai] declares no profiles; "
+        self.assertEqual(result.stdout, "profile: unresolved — ai is registered but identity-mirror.toml [ai] declares no profiles; "
                                         "run ops-profile session after fixing it\n")
         self.assertEqual(exports, "")
 
@@ -46,4 +46,4 @@ class ProfileHookTests(ProfileSandbox):
         result = subprocess.run([sys.executable, str(HOOK)], input="not json", env=self.env(CLAUDECODE="1"),
                                 cwd=self.wrk4, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertTrue(result.stdout.startswith("profile: work (identity.toml [wrk4].profiles); "))
+        self.assertTrue(result.stdout.startswith("profile: work (identity-mirror.toml [wrk4].profiles); "))

@@ -36,9 +36,9 @@ class ProfileHookTests(ProfileSandbox):
 
     def test_a_failure_is_one_line_and_exit_zero(self):
         self.identity("")
-        result, exports = self.run_hook(self.ai)
+        result, exports = self.run_hook(self.tack)
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, "profile: unresolved — ai is registered but identity-mirror.toml [ai] declares no profiles; "
+        self.assertEqual(result.stdout, "profile: unresolved — tack is registered but identity-mirror.toml [tack] declares no profiles; "
                                         "run ops-profile session after fixing it\n")
         self.assertEqual(exports, "")
 

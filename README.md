@@ -4,25 +4,41 @@
 What a session is told: the global instructions and profile fragments, the skills with
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest. Extracted from tack; design in ops docs/specs/2026-10-03-agent-layer-split-design.md.
+
+Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`
 <!-- ops:identity end -->
 
-Created by the agent layer split (ops docs/specs/2026-10-03-agent-layer-split-design.md,
-goal ops-cb9749; written without backticks because that spec is on an ops branch until
-the bootstrap merges). The extraction that fills this repository is its first goal; until
-it lands there is nothing to install.
+The instruction corpus is extracted from tack with its history. Extraction, instruction
+assembly and the later profile-hook move are tracked by lore-443368 under the agent
+layer split (ops docs/specs/2026-10-03-agent-layer-split-design.md, goal ops-cb9749).
 
 ## Setup
 
-`just setup` after a clone. There is no dependency yet.
+Run `just setup` after a clone to prepare worktree storage and initialize the pinned
+superpowers submodule. Checks use Python 3.11+, pytest, Git and just. Run `just check`
+and `just test-fast` to verify the corpus and its generated-block checker.
 
 ## Usage
 
-Nothing yet: the extraction brings the commands and documents them here.
+This repository is read, not run: its outputs are the files the home links serve.
+`instructions/AGENTS.md` supplies global instructions, `profiles/` supplies profile
+fragments, and `skills/` and `vendor/superpowers/skills/` supply skills. Tack declares
+the home links; ops resolves profiles and renders the generated Projects block.
+
+Run `python3 tools/check-projects-block` from the repository root to validate the
+generated block. It checks staged instructions when present, otherwise the working
+copy, and never writes the file. Run just projects in ops to regenerate the block.
 
 ## Layout
 
-- `tasks/`: the task records. `tools/`: the vendored ops tooling (`tt`, `ops-check`, `ops-docs`).
+- `instructions/AGENTS.md`: global instructions; root `AGENTS.md`: the project guide.
+- `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
+- `bin/skill-sizes.py`: the skill inventory utility.
+- `docs/notes/`, `docs/archive/`, `docs/specs/`, `docs/plans/`: briefs, archives and designs.
+- `tasks/`: task records. `tools/`: the generated-block checker, its tests and vendored ops tooling.
 
 ## Consumers
 
-None yet. After the extraction: every harness home, through the links tack declares.
+Every harness home through tack's declared links; ops-profile reads profile fragments,
+and ops-projects renders the generated Projects block. The extraction plan coordinates
+their activation on both hosts before tack's old copies are removed.

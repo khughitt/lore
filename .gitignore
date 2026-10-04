@@ -1,0 +1,5 @@
+# Fallback test-timing log, written by tools/tt when the shared log is unwritable and
+# emptied by ops `tt-report`; never committed.
+.tt/
+# Host storage link made by work-link; the second host makes its own.
+.worktrees

@@ -25,19 +25,17 @@ tt := "python3 tools/tt"
 # never drift from the gate it is supposed to be. Avoid single quotes inside them.
 # With no affected-only mechanism, set fast_cmd to the same command as test_cmd and say
 # so here; the target must always exist and the report shows the gap as equal durations.
-# Until the extraction lands a suite, the tests are the checks; the extraction replaces
-# fast_cmd and test_cmd and deletes this comment (spec §7.2: nothing may look installable
-# before it is).
-fast_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check"
-test_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check"
-check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check"
+# Fast and full run the same tools directory; there is no affected-only selection.
+fast_cmd := "python3 -m pytest tools -q"
+test_cmd := "python3 -m pytest tools -q"
+check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 tools/check-projects-block && python3 -m py_compile bin/skill-sizes.py tools/check-projects-block"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
 # when docs/ holds executable examples, fixtures, or anything a test reads; set it to
 # "" to always run the full check.
-docs_paths := "*.md docs/* tasks/*"
-docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check"
+docs_paths := "*.md docs/* tasks/* instructions/* profiles/* skills/*"
+docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 tools/check-projects-block"
 
 # Remote refs whose push makes CI run the full suite (test_cmd or its equivalent), as
 # space-separated fnmatch globs: "refs/heads/main", or "refs/heads/*" when CI runs it on
@@ -57,15 +55,14 @@ ci_remote := "origin"
 # crates changed since <base> and their reverse dependencies), falling back explicitly
 # to the fast set when the base cannot be resolved; testmon's own selection (fast_cmd
 # may serve); or the project's fixed fast set. Say which here.
-# The push gate's fast loop is the same until there is a suite to select from.
-push_fast_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check"
+# The push gate runs the same complete tools directory as the fast loop.
+push_fast_cmd := "python3 -m pytest tools -q"
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which
 # forms work is the runner's business (pytest: a path, path::name, -k expr; vitest: a
 # filename filter, -t "<name>"); name them in AGENTS.md under Gates.
-# No runner yet: test-one fails, saying so, until the extraction brings one.
-one_cmd := "sh -c \"echo no suite yet: the extraction brings the runner >&2; exit 1\""
+one_cmd := "python3 -m pytest"
 
 # What a fresh checkout or worktree needs before the suite can run: dependency installs
 # (npm ci, uv sync) and any gitignored inputs the tests read, hydrated from the main
@@ -84,8 +81,8 @@ one_cmd := "sh -c \"echo no suite yet: the extraction brings the runner >&2; exi
 # catches both kinds only every two hours. Use explicit, audited paths; never
 # ignore source parents. Linux needs attr installed. Attribute failures must
 # fail setup, not be swallowed.
-# Nothing to install yet; the worktree storage link is all a fresh checkout needs.
-setup_cmd := "just work-link .worktrees"
+# Initialize the pinned skill submodule after preparing host-local worktree storage.
+setup_cmd := "just work-link .worktrees && git submodule update --init"
 
 # Affected-only: the inner loop.
 test-fast:

@@ -8,9 +8,11 @@ provenance manifest. Extracted from tack; design in ops docs/specs/2026-10-03-ag
 Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`, `docs/specs/2026-10-05-instruction-assembly-design.md`
 <!-- ops:identity end -->
 
-The instruction corpus is extracted from tack with its history. Extraction, instruction
-assembly and the later profile-hook move are tracked by lore-443368 under the agent
-layer split (ops docs/specs/2026-10-03-agent-layer-split-design.md, goal ops-cb9749).
+The instruction corpus is extracted from tack with its history. Extraction and
+instruction assembly are complete on both hosts; the separate profile-hook move
+remains open under lore-443368 and the agent layer split (ops
+docs/specs/2026-10-03-agent-layer-split-design.md, goal ops-cb9749).
+Assembly evidence is in docs/notes/2026-10-05-instruction-assembly-acceptance.md.
 
 ## Setup
 

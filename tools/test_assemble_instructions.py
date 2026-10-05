@@ -415,6 +415,8 @@ def test_projects_input_structure_and_renderer_failures_are_guarded(world, chang
 def test_deployed_recipes_ignore_stale_preparation_environment(world):
     shutil.copy(ROOT / 'justfile', world.root / 'justfile')
     shutil.copy(ROOT / 'bin/skill-sizes.py', world.root / 'bin/skill-sizes.py')
+    (world.root / 'hooks').mkdir(exist_ok=True)
+    shutil.copy(ROOT / 'hooks/claude-profile', world.root / 'hooks/claude-profile')  # check_cmd compiles it
     for name in ('ops-check', 'ops-docs'):
         (world.root / 'tools' / name).write_text('import sys\n')
     (world.root / 'tools/tt').write_text('import subprocess, sys\nsys.exit(subprocess.run(sys.argv[sys.argv.index("--") + 1:]).returncode)\n')

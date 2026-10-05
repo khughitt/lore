@@ -170,7 +170,15 @@ class ProfileHookTests(ProfileSandbox):
         self.assertEqual(result.returncode, 0)
         first = result.stdout.splitlines()[0] if result.stdout else ""
         self.assertTrue(first.startswith("profile: unresolved — "), result.stdout)
-        self.assertNotEqual(first, "profile: unresolved — ")
+        self.assertIn("is not valid TOML", first)
+
+    def test_a_non_string_ops_entry_is_one_line_naming_the_registry(self):
+        (self.config / "projects.toml").write_text("[projects.ops]\npath = 1\n")
+        result, _ = self.run_hook(self.ns)
+        self.assertEqual(result.returncode, 0)
+        first = result.stdout.splitlines()[0] if result.stdout else ""
+        self.assertTrue(first.startswith("profile: unresolved — "), result.stdout)
+        self.assertIn(str(self.config / "projects.toml"), first)
 
     def test_a_registered_ops_without_the_resolver_is_one_line(self):
         (self.ops / "bin" / "ops-profile").unlink()

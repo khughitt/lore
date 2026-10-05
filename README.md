@@ -5,7 +5,7 @@ What a session is told: the global instructions and profile fragments, the skill
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest. Extracted from tack; design in ops docs/specs/2026-10-03-agent-layer-split-design.md.
 
-Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`, `docs/specs/2026-10-05-instruction-assembly-design.md`
+Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`, `docs/specs/2026-10-05-instruction-assembly-design.md`, `docs/specs/2026-10-05-profile-hook-move-design.md`
 <!-- ops:identity end -->
 
 The instruction corpus is extracted from tack with its history. Extraction and
@@ -52,3 +52,7 @@ they run during acceptance and audits, outside the normal checks.
 Every harness home through tack's declared links; ops-profile reads profile fragments,
 and ops-projects supplies its owned Projects fragment. The assembly plan coordinates
 the single-writer activation and proof verification on both hosts.
+
+`hooks/claude-profile` is the SessionStart hook that puts a checkout's profile text in front
+of every Claude Code and Codex session; tack's hook files name it, and it resolves profiles
+through ops.

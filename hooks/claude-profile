@@ -12,8 +12,6 @@ import pathlib
 import sys
 import tomllib
 
-HERE = pathlib.Path(__file__).resolve().parent
-
 
 def _load(path):
     loader = importlib.machinery.SourceFileLoader(path.name.replace("-", "_"), str(path))
@@ -25,7 +23,7 @@ def _load(path):
 
 def ops_root(env):
     """The registered ops checkout, from the tasks registry; LookupError names the registry
-    path and the reason (missing file, no [projects] table, no ops entry, or a parse error)."""
+    path and the reason (missing file, no [projects] table, no string ops entry, or a parse error)."""
     config = pathlib.Path(env.get("XDG_CONFIG_HOME") or pathlib.Path.home() / ".config")
     registry = config / "tasks" / "projects.toml"
     if not registry.is_file():
@@ -34,9 +32,10 @@ def ops_root(env):
         roots = tomllib.loads(registry.read_text()).get("projects")
     except tomllib.TOMLDecodeError as error:
         raise LookupError(f"{registry} is not valid TOML: {error}") from None
-    if not isinstance(roots, dict) or "ops" not in roots:
-        raise LookupError(f"{registry} has no [projects] ops entry; run tasks init in the ops checkout")
-    return pathlib.Path(os.path.expanduser(roots["ops"]))
+    root = roots.get("ops") if isinstance(roots, dict) else None
+    if not isinstance(root, str):
+        raise LookupError(f"{registry} has no [projects] ops = \"<path>\" entry; run tasks init in the ops checkout")
+    return pathlib.Path(os.path.expanduser(root))
 
 
 def main(text, env, fallback_cwd):
@@ -49,7 +48,7 @@ def main(text, env, fallback_cwd):
     cwd = payload.get("cwd") if payload else None
     try:
         profiles = _load(ops_root(env) / "bin" / "ops-profile")
-    except (LookupError, OSError, SyntaxError) as error:
+    except Exception as error:  # every failure before the resolver loads is one visible line
         sys.stdout.write(f"profile: unresolved — {error}; register or repair the ops checkout, then run ops-profile session\n")
         return 0
     try:

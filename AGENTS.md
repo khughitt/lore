@@ -34,7 +34,8 @@ Historical proof commands are acceptance checks outside the recurring gates.
   `docs/archive/`: the former Codex instructions. `docs/specs/` and `docs/plans/`:
   the profiles documents and this extraction's design and plan.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
-  wired from tack's hook files; it reaches ops's resolver through the tasks registry.
+  which tack's hook files name once the hook move activates; it reaches ops's resolver
+  through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.
   `tools/`: assembly tests, pinned proof driver and vendored tooling;
   `tasks/`: task records.

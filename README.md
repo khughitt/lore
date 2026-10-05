@@ -5,7 +5,7 @@ What a session is told: the global instructions and profile fragments, the skill
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest. Extracted from tack; design in ops docs/specs/2026-10-03-agent-layer-split-design.md.
 
-Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`
+Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`, `docs/specs/2026-10-05-instruction-assembly-design.md`
 <!-- ops:identity end -->
 
 The instruction corpus is extracted from tack with its history. Extraction, instruction
@@ -16,29 +16,37 @@ layer split (ops docs/specs/2026-10-03-agent-layer-split-design.md, goal ops-cb9
 
 Run `just setup` after a clone to prepare worktree storage and initialize the pinned
 superpowers submodule. Checks use Python 3.11+, pytest, Git and just. Run `just check`
-and `just test-fast` to verify the corpus and its generated-block checker.
+and `just test-fast` to verify the corpus and its assembly outputs.
 
 ## Usage
 
-This repository is read, not run: its outputs are the files the home links serve.
-`instructions/AGENTS.md` supplies global instructions, `profiles/` supplies profile
-fragments, and `skills/` and `vendor/superpowers/skills/` supply skills. Tack declares
-the home links; ops resolves profiles and renders the generated Projects block.
+The delivered outputs are the files tack's home links serve. Edit policy in
+`instructions/fragments/` and ordering/provenance in `instructions/assembly.toml`.
+Run `just assemble` to generate `instructions/AGENTS.md` and
+`instructions/AGENTS.manifest.json`. Do not hand-edit either output. Provenance
+stays out of the delivered text.
 
-Run `python3 tools/check-projects-block` from the repository root to validate the
-generated block. It checks staged instructions when present, otherwise the working
-copy, and never writes the file. Run just projects in ops to regenerate the block.
+Ops owns instructions/fragments/projects.md in its checkout. Refresh that source
+with just projects in ops, then assemble here. The assembler's read-only check
+validates the catalog, sources, manifest, artifact and live Projects renderer;
+relevant staged files select the whole prospective index. The session-start notice
+still detects a forgotten assembly step after an ops refresh.
+
+`profiles/` and `skills/` remain separately delivered sources. Historical
+`verify-baseline` and `verify-initial` commands read recorded lore/ops revisions;
+they run during acceptance and audits, outside the normal checks.
 
 ## Layout
 
-- `instructions/AGENTS.md`: global instructions; root `AGENTS.md`: the project guide.
+- `instructions/`: policy fragments, ordered catalog, generated global artifact and manifest.
+- Root `AGENTS.md`: the project guide; `bin/assemble-instructions`: assembler and guard.
 - `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
 - `docs/notes/`, `docs/archive/`, `docs/specs/`, `docs/plans/`: briefs, archives and designs.
-- `tasks/`: task records. `tools/`: the generated-block checker, its tests and vendored ops tooling.
+- `tasks/`: task records. `tools/`: assembly tests/fixtures, pinned proof driver and vendored tooling.
 
 ## Consumers
 
 Every harness home through tack's declared links; ops-profile reads profile fragments,
-and ops-projects renders the generated Projects block. The extraction plan coordinates
-their activation on both hosts before tack's old copies are removed.
+and ops-projects supplies its owned Projects fragment. The assembly plan coordinates
+the single-writer activation and proof verification on both hosts.

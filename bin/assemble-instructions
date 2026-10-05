@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build global instructions and source provenance from an explicit catalog."""
 import argparse
+import base64
 import datetime
 import hashlib
 import json
@@ -159,6 +160,9 @@ def registry():
     data = tomllib.loads((config / 'tasks/projects.toml').read_text())
     if not isinstance(data.get('projects'), dict):
         raise ValueError('tasks registry requires project roots')
+    for name, path in data['projects'].items():
+        if not isinstance(path, str) or not path.strip():
+            raise ValueError(f'tasks registry root for {name} must be a nonempty path')
     return {name: Path(path).expanduser() for name, path in data['projects'].items()}
 
 
@@ -215,26 +219,105 @@ def write_pair(root, artifact, manifest):
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    for name in ('render', 'write', 'check'):
+    for name in ('render', 'write', 'check', 'verify-baseline', 'verify-initial'):
         command = sub.add_parser(name)
         command.add_argument('--owner-root', action='append', default=[])
+        if name.startswith('verify-'):
+            command.add_argument('--revision', required=True)
+            if name == 'verify-initial': command.add_argument('--projects-revision', required=True)
         if name == 'check':
             command.add_argument('--working-tree', action='store_true')
             command.add_argument('--skip-projects-render', action='store_true')
     return parser
 
 
+def resolve_commit(root, ref):
+    return git_bytes(root, 'rev-parse', '--verify', '--end-of-options', f'{ref}^{{commit}}').decode().strip()
+
+
+def verify_proof(root, args):
+    revision = resolve_commit(root, args.revision)
+    catalog_bytes = read_local(root, CATALOG, revision=revision)
+    catalog = catalog_from(catalog_bytes)
+    owners = owner_roots(catalog, args.owner_root, root)
+    mode = 'baseline' if args.command == 'verify-baseline' else 'initial'
+    sources = {}
+    reference = {'mode': mode, 'lore_revision': revision}
+    if mode == 'initial':
+        ops_revision = resolve_commit(owners['ops'], args.projects_revision)
+        reference['ops_revision'] = ops_revision
+    else:
+        reference['extraction_commit'] = '4e5aa132f452a0a8c6170261d6a3e7f1592a6d67'
+        reference['global_blob'] = '5297be329c58bc758b20c48a504a87887be5470a'
+        reference['projects_snapshot'] = {'owner': 'lore', 'path': 'tools/fixtures/instruction-assembly/baseline-projects.md', 'revision': revision}
+    for f in catalog['fragments']:
+        if f['owner'] == 'lore':
+            data = read_local(root, f['source'], revision=revision)
+        elif f['id'] == 'projects' and f['owner'] == 'ops':
+            data = read_local(root, 'tools/fixtures/instruction-assembly/baseline-projects.md', revision=revision) if mode == 'baseline' else read_local(owners['ops'], f['source'], revision=ops_revision)
+        else:
+            raise ValueError('historical proof requires the recorded lore/ops inventory')
+        sources[f['id']] = base64.b64encode(data).decode()
+    blob_id, expected_hash, fixture = (
+        ('5297be329c58bc758b20c48a504a87887be5470a', '66f5ae3d32e218ac3688969171179501ecdcc253e4d9a01f48c05ddb04350642', 'baseline.md')
+        if mode == 'baseline' else
+        ('08bd5862dcd0fa47000dac7f13e8617875f99586', '2729ca9ae116c50501a65764af73b4729498df283407f8b6a5a5e98e15cc2760', 'initial.md'))
+    expected = git_bytes(root, 'cat-file', 'blob', blob_id)
+    if digest(expected) != expected_hash or read_local(root, 'tools/fixtures/instruction-assembly/' + fixture, revision=revision) != expected:
+        raise ValueError(f'{mode} reference fixture differs from the independent pinned Git blob')
+    payload = {'catalog': base64.b64encode(catalog_bytes).decode(), 'sources': sources,
+               'required_ids': sorted(committed_minimum(root, revision)), 'mode': mode, 'reference': reference}
+    with tempfile.TemporaryDirectory(prefix='instruction-proof-') as temporary:
+        directory = Path(temporary)
+        pinned = directory / 'assemble-instructions'
+        driver = directory / 'driver.py'
+        pinned.write_bytes(read_local(root, ASSEMBLER, revision=revision))
+        driver.write_bytes(read_local(root, 'tools/instruction-assembly-proof-driver.py', revision=revision))
+        result = subprocess.run([sys.executable, str(driver), str(pinned)], cwd=root,
+                                input=json.dumps(payload).encode(), capture_output=True)
+        if result.returncode:
+            raise ValueError(f'{mode} pinned assembler failed: ' + result.stderr.decode(errors='replace').strip())
+        if result.stdout != expected:
+            raise ValueError(f'{mode} proof differs from the pinned reference bytes')
+        if mode == 'initial' and read_local(root, ARTIFACT, revision=revision) != expected:
+            raise ValueError('initial committed artifact differs from the pinned reference')
+        proof_manifest = json.loads((directory / 'proof-manifest.json').read_bytes())
+        if proof_manifest['artifact']['sha256'] != expected_hash or proof_manifest['reference'] != reference:
+            raise ValueError('proof manifest does not identify its reference inputs')
+    print(f'{mode} proof passed: lore {revision}' + (f' ops {ops_revision}' if mode == 'initial' else '') + f' sha256 {expected_hash}')
+
+
+def index_selected(root, working_tree):
+    if working_tree:
+        return False
+    changed = {p.decode() for p in git_bytes(root, 'diff', '--cached', '--name-only', '--no-renames', '-z').split(b'\0') if p}
+    fixed = {CATALOG, ARTIFACT, MANIFEST, ASSEMBLER}
+    if changed & fixed or any(p.startswith('instructions/fragments/') for p in changed):
+        return True
+    if changed:
+        catalog = catalog_from(read_local(root, CATALOG, index=True))
+        fixed |= {f['source'] for f in catalog['fragments'] if f['owner'] == 'lore'}
+    return bool(changed & fixed)
+
+
 def main(argv=None):
     args = build_parser().parse_args(argv)
     root = Path(__file__).resolve().parents[1]
     try:
-        catalog_bytes = read_local(root, CATALOG)
+        if args.command.startswith('verify-'):
+            verify_proof(root, args)
+            return 0
+        index = args.command == 'check' and index_selected(root, args.working_tree)
+        assembler_bytes = read_local(root, ASSEMBLER, index=index)
+        if index and assembler_bytes != Path(__file__).read_bytes():
+            raise ValueError('executing assembler differs from index; stage intended assembler or restore index version')
+        catalog_bytes = read_local(root, CATALOG, index=index)
         catalog = catalog_from(catalog_bytes)
         owners = owner_roots(catalog, args.owner_root, root, validate=args.command in ('write', 'check'))
         if args.command == 'check' and args.owner_root:
             for option in args.owner_root: sys.stderr.write(f'assemble-instructions: owner-root override {option}\n')
-        sources = {f['id']: read_local(owners[f['owner']], f['source']) for f in catalog['fragments']}
-        artifact, manifest = assemble(catalog_bytes, sources, read_local(root, ASSEMBLER), committed_minimum(root))
+        sources = {f['id']: read_local(owners[f['owner']], f['source'], index=index and f['owner'] == 'lore') for f in catalog['fragments']}
+        artifact, manifest = assemble(catalog_bytes, sources, assembler_bytes, committed_minimum(root))
         if args.command == 'render': sys.stdout.buffer.write(artifact)
         elif args.command == 'write': write_pair(root, artifact, manifest)
         else:
@@ -243,9 +326,9 @@ def main(argv=None):
                 if rendered.returncode: raise ValueError('ops-projects render failed: ' + rendered.stderr.decode(errors='replace').strip())
                 if rendered.stdout != sources['projects']: raise ValueError('Projects input stale; run just projects in ops, then just assemble in lore')
             expected = (json.dumps(manifest, sort_keys=True, indent=2) + '\n').encode()
-            if read_local(root, ARTIFACT) != artifact:
+            if read_local(root, ARTIFACT, index=index) != artifact:
                 raise ValueError('artifact stale; edit instructions/fragments/… then run just assemble in lore')
-            if read_local(root, MANIFEST) != expected:
+            if read_local(root, MANIFEST, index=index) != expected:
                 raise ValueError('manifest stale; run just assemble in lore')
         return 0
     except (ValueError, OSError, UnicodeError) as error:

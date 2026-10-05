@@ -254,3 +254,168 @@ def test_interrupted_pair_is_detected_and_repaired(world, monkeypatch):
     assert not list((world.root / 'instructions').glob('.AGENTS*'))
     assert build(world).returncode == 0
     assert build(world, 'check').returncode == 0
+
+
+def commit_pair(world):
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    git(world.root, 'commit', '-q', '-m', 'test: commit assembled pair')
+
+
+@pytest.mark.parametrize('path', ['instructions/assembly.toml', 'instructions/fragments/core.md',
+                                  'instructions/AGENTS.md', 'instructions/AGENTS.manifest.json'])
+def test_invalid_staged_input_cannot_be_hidden_by_restoring_disk(world, path):
+    commit_pair(world)
+    file = world.root / path
+    before = file.read_bytes()
+    file.write_bytes(b'invalid staged bytes\n')
+    git(world.root, 'add', path)
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_bytes(before)
+    assert build(world, 'check').returncode == 1
+
+
+def test_consistent_index_ignores_unstaged_policy_but_working_tree_check_rejects_it(world):
+    commit_pair(world)
+    source = world.root / 'instructions/fragments/core.md'
+    source.write_bytes(source.read_bytes() + b'- Approved policy update.\n')
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    source.write_bytes(source.read_bytes() + b'- Unstaged policy.\n')
+    assert build(world, 'check').returncode == 0
+    assert build(world, 'check', '--working-tree').returncode == 1
+
+
+REQUIRED_PATHS = ['instructions/assembly.toml', 'instructions/AGENTS.md',
+                  'instructions/AGENTS.manifest.json', 'bin/assemble-instructions'] + [
+                      f'instructions/fragments/{name}.md' for name in IDS[:-1]]
+
+@pytest.mark.parametrize('action', ['delete', 'rename'])
+@pytest.mark.parametrize('path', REQUIRED_PATHS)
+def test_required_staged_delete_or_rename_never_falls_back_to_disk(world, action, path):
+    commit_pair(world)
+    file = world.root / path
+    before = file.read_bytes()
+    if action == 'delete': git(world.root, 'rm', '-q', path)
+    else: git(world.root, 'mv', path, path + '.moved')
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_bytes(before)
+    assert build(world, 'check').returncode == 1
+
+
+def test_staged_assembler_must_equal_executing_code(world):
+    commit_pair(world)
+    script = world.root / 'bin/assemble-instructions'
+    script.write_bytes(script.read_bytes() + b'\n# stage intended code\n')
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    script.write_bytes(script.read_bytes() + b'\n# different executing code\n')
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert b'assembler' in result.stderr and b'index' in result.stderr
+
+
+def test_unrelated_staging_keeps_working_tree_check(world):
+    commit_pair(world)
+    (world.root / 'other.md').write_text('unrelated\n')
+    git(world.root, 'add', 'other.md')
+    (world.root / 'instructions/AGENTS.md').write_text('unstaged drift\n')
+    assert build(world, 'check').returncode == 1
+
+
+def test_renderer_drift_and_failure_are_reported_and_skip_is_narrow(world):
+    commit_pair(world)
+    renderer = world.ops / 'bin/ops-projects'
+    renderer.write_text('import sys\nsys.stdout.write("drift\\n")\n')
+    assert build(world, 'check').returncode == 1
+    assert build(world, 'check', '--skip-projects-render').returncode == 0
+    (world.root / 'instructions/AGENTS.md').write_text('stale artifact\n')
+    assert build(world, 'check', '--skip-projects-render').returncode == 1
+    renderer.write_text('import sys\nsys.stderr.write("bad renderer\\n")\nsys.exit(1)\n')
+    result = build(world, 'check')
+    assert result.returncode == 1 and b'render failed' in result.stderr and b'bad renderer' in result.stderr
+
+
+def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(world):
+    commit_pair(world)
+    lore_rev = git(world.root, 'rev-parse', 'HEAD').decode().strip()
+    ops_rev = git(world.ops, 'rev-parse', 'HEAD').decode().strip()
+    args = ('--revision', lore_rev, '--owner-root', f'ops={world.ops}')
+    baseline = invoke(world, 'verify-baseline', *args)
+    assert baseline.returncode == 0, baseline.stderr
+    initial = invoke(world, 'verify-initial', *args, '--projects-revision', ops_rev)
+    assert initial.returncode == 0, initial.stderr
+    core = world.root / 'instructions/fragments/core.md'
+    core.write_bytes(core.read_bytes() + b'- Later approved policy.\n')
+    assert build(world).returncode == 0
+    assert build(world, 'check').returncode == 0
+    script = world.root / 'bin/assemble-instructions'
+    changed = script.read_text().replace('def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode=',
+                                         'def renamed_current_assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode=')
+    script.write_text(changed)
+    (world.root / 'tools/instruction-assembly-proof-driver.py').write_text('raise RuntimeError("current driver must not run")\n')
+    (world.ops / 'bin/ops-projects').write_text('raise RuntimeError("live renderer must not run")\n')
+    assert invoke(world, 'verify-baseline', *args).returncode == 0
+    assert invoke(world, 'verify-initial', *args, '--projects-revision', ops_rev).returncode == 0
+
+
+def test_pinned_proof_rejects_changed_snapshot_and_missing_revision(world):
+    commit_pair(world)
+    core = world.root / 'instructions/fragments/core.md'
+    core.write_bytes(core.read_bytes() + b'- Incorrect initial snapshot.\n')
+    git(world.root, 'add', '.')
+    git(world.root, 'commit', '-q', '-m', 'test: changed snapshot')
+    changed = git(world.root, 'rev-parse', 'HEAD').decode().strip()
+    result = invoke(world, 'verify-baseline', '--revision', changed, '--owner-root', f'ops={world.ops}')
+    assert result.returncode == 1 and b'baseline' in result.stderr
+    result = invoke(world, 'verify-baseline', '--revision', 'missing-revision', '--owner-root', f'ops={world.ops}')
+    assert result.returncode == 1 and b'git' in result.stderr.lower()
+
+
+@pytest.mark.parametrize('change', ['missing', 'unregistered', 'bad-path'])
+def test_registry_errors_are_clear_validation_failures(world, change):
+    registry = world.config / 'projects.toml'
+    if change == 'missing': registry.unlink()
+    elif change == 'unregistered': registry.write_text('[projects]\n')
+    else: registry.write_text('[projects]\nops = 123\n')
+    result = build(world)
+    assert result.returncode == 1
+    assert b'Traceback' not in result.stderr
+    assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
+
+
+@pytest.mark.parametrize('change', ['missing', 'old-marker', 'duplicate-marker'])
+def test_projects_input_structure_and_renderer_failures_are_guarded(world, change):
+    commit_pair(world)
+    projects = world.ops / 'instructions/fragments/projects.md'
+    if change == 'missing': (world.ops / 'bin/ops-projects').unlink()
+    elif change == 'old-marker': projects.write_bytes(projects.read_bytes().replace(b'edit identity.toml in the project, or identity-mirror.toml in ops', b'edit identity-mirror.toml in ops'))
+    else: projects.write_bytes(projects.read_bytes() + b'<!-- ops:projects end -->\n')
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert b'Projects' in result.stderr or b'render failed' in result.stderr
+
+
+def test_preparation_recipe_override_is_explicit_and_rejects_unsafe_values(world):
+    shutil.copy(ROOT / 'justfile', world.root / 'justfile')
+    shutil.copy(ROOT / 'bin/skill-sizes.py', world.root / 'bin/skill-sizes.py')
+    for name in ('ops-check', 'ops-docs'):
+        (world.root / 'tools' / name).write_text('import sys\n')
+    (world.root / 'tools/tt').write_text('import subprocess, sys\nsys.exit(subprocess.run(sys.argv[sys.argv.index("--") + 1:]).returncode)\n')
+    task_stub = world.root / 'bin/tasks'
+    task_stub.write_text('#!/bin/sh\nexit 0\n')
+    task_stub.chmod(0o755)
+    commit_pair(world)
+    env = {**world.env, 'PATH': str(world.root / 'bin') + os.pathsep + os.environ['PATH']}
+    env.pop('LORE_ASSEMBLY_OPS_ROOT', None)
+    default = subprocess.run(['just', 'check'], cwd=world.root, env=env, capture_output=True)
+    assert default.returncode == 0, default.stderr
+    assert b'owner-root override' not in default.stderr
+    selected = subprocess.run(['just', 'check'], cwd=world.root,
+                              env={**env, 'LORE_ASSEMBLY_OPS_ROOT': str(world.ops)}, capture_output=True)
+    assert selected.returncode == 0, selected.stderr
+    assert selected.stderr.count(b'owner-root override') == 1
+    for value in ('has space', "has'quote", 'has;command', '$(command)'):
+        rejected = subprocess.run(['just', 'check'], cwd=world.root,
+                                  env={**env, 'LORE_ASSEMBLY_OPS_ROOT': value}, capture_output=True)
+        assert rejected.returncode != 0 and b'LORE_ASSEMBLY_OPS_ROOT' in rejected.stderr

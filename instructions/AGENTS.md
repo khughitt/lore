@@ -229,7 +229,7 @@ to read one of them from anywhere.
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
 - `relay` — relay — Harness adapters, hook dispatch, and a host-local live-agent registry
 - `sci` — science — The daily surface of Science: the layer people and agents use
-- `tack` — tack — Agent harness configuration: global instructions, skills, rules
+- `tack` — tack — Harness homes, declared links, settings, and session-state hygiene
 - `tasks` — tasks — The file-based task tracker every project here uses
 - `tui` — tasks-tui — A keyboard-driven terminal front end for the tasks tracker
 - `vdocs` — docs (verifiably-docs) — The verifiably ecosystem's front door: its goal, overview, and repository map

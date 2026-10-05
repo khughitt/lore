@@ -6,5 +6,5 @@ What a session is told: the global instructions and profile fragments, the skill
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest. Extracted from tack; design in ops docs/specs/2026-10-03-agent-layer-split-design.md.
 """
-authority = ["docs/specs/2026-09-19-project-profiles-design.md", "docs/specs/2026-10-04-extract-from-tack-design.md", "docs/specs/2026-10-05-instruction-assembly-design.md"]
+authority = ["docs/specs/2026-09-19-project-profiles-design.md", "docs/specs/2026-10-04-extract-from-tack-design.md", "docs/specs/2026-10-05-instruction-assembly-design.md", "docs/specs/2026-10-05-profile-hook-move-design.md"]
 subsystems = []

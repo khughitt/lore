@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """SessionStart: add the checkout profile layer to the agent's context. Claude and
 Codex both run it and send the same payload shape; its transcript_path is what names
-the harness home (see ops-profile home_of)."""
+the harness home (see ops-profile home_of). The hook lives in lore and reaches ops's
+resolver through the tasks registry; every failure is one `profile: unresolved` line
+and exit 0, never silence, so the session starts and says what is wrong."""
 import importlib.machinery
 import importlib.util
 import json
 import os
 import pathlib
 import sys
+import tomllib
 
 HERE = pathlib.Path(__file__).resolve().parent
 
@@ -20,6 +23,22 @@ def _load(path):
     return module
 
 
+def ops_root(env):
+    """The registered ops checkout, from the tasks registry; LookupError names the registry
+    path and the reason (missing file, no [projects] table, no ops entry, or a parse error)."""
+    config = pathlib.Path(env.get("XDG_CONFIG_HOME") or pathlib.Path.home() / ".config")
+    registry = config / "tasks" / "projects.toml"
+    if not registry.is_file():
+        raise LookupError(f"{registry} is missing; the tasks registry locates the ops checkout")
+    try:
+        roots = tomllib.loads(registry.read_text()).get("projects")
+    except tomllib.TOMLDecodeError as error:
+        raise LookupError(f"{registry} is not valid TOML: {error}") from None
+    if not isinstance(roots, dict) or "ops" not in roots:
+        raise LookupError(f"{registry} has no [projects] ops entry; run tasks init in the ops checkout")
+    return pathlib.Path(os.path.expanduser(roots["ops"]))
+
+
 def main(text, env, fallback_cwd):
     try:
         payload = json.loads(text or "null")
@@ -28,7 +47,11 @@ def main(text, env, fallback_cwd):
     if not isinstance(payload, dict):
         payload = None
     cwd = payload.get("cwd") if payload else None
-    profiles = _load(HERE.parent / "bin" / "ops-profile")
+    try:
+        profiles = _load(ops_root(env) / "bin" / "ops-profile")
+    except (LookupError, OSError, SyntaxError) as error:
+        sys.stdout.write(f"profile: unresolved — {error}; register or repair the ops checkout, then run ops-profile session\n")
+        return 0
     try:
         res = profiles.resolve(cwd or fallback_cwd, env, payload)
     except (profiles.ProfileError, ValueError) as error:

@@ -28,14 +28,17 @@ tt := "python3 tools/tt"
 # Fast and full run the same tools directory; there is no affected-only selection.
 fast_cmd := "python3 -m pytest tools -q"
 test_cmd := "python3 -m pytest tools -q"
-check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 tools/check-projects-block && python3 -m py_compile bin/skill-sizes.py tools/check-projects-block"
+# Preparation-only bridge, removed after the separately approved activation.
+assembly_ops_root := env_var_or_default("LORE_ASSEMBLY_OPS_ROOT", "")
+assembly_check_cmd := "python3 bin/assemble-instructions check" + if assembly_ops_root == "" { "" } else { if assembly_ops_root =~ "^[A-Za-z0-9_./-]+$" { " --owner-root ops=" + assembly_ops_root } else { error("LORE_ASSEMBLY_OPS_ROOT requires a path containing only letters, digits, underscore, dot, slash or hyphen") } }
+check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && " + assembly_check_cmd + " && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
 # when docs/ holds executable examples, fixtures, or anything a test reads; set it to
 # "" to always run the full check.
 docs_paths := "*.md docs/* tasks/* instructions/* profiles/* skills/*"
-docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 tools/check-projects-block"
+docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && " + assembly_check_cmd
 
 # Remote refs whose push makes CI run the full suite (test_cmd or its equivalent), as
 # space-separated fnmatch globs: "refs/heads/main", or "refs/heads/*" when CI runs it on
@@ -139,3 +142,7 @@ hook-pre-push:
 # What the pre-push hook runs when CI runs the full suite for every pushed ref.
 hook-pre-push-fast:
     {{tt}} hook-pre-push-fast -- sh -c '{{check_cmd}} && {{push_fast_cmd}}'
+
+# Build delivered instructions and their provenance; pass explicit owner roots in preparation.
+assemble *args:
+    {{tt}} assemble -- python3 bin/assemble-instructions write "$@"

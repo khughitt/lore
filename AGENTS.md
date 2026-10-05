@@ -44,10 +44,9 @@ Historical proof commands are acceptance checks outside the recurring gates.
 - Ops owns the Projects/Feedback-owners source. Edit identity declarations there,
   run just projects in ops, then `just assemble` here. Assembly is the only writer
   of delivered instructions and provenance; both checks must pass.
-- During preparation only, a command-local `LORE_ASSEMBLY_OPS_ROOT` supplies an
-  explicit CLI override to the gate. It announces its path and must share the
-  registered ops repository's Git common directory. The bridge is removed at
-  activation; never keep it as a shell export or repoint host launchers.
+- Deployed gates always use registered owner roots. Preparation environment
+  values cannot redirect them; explicit CLI source overrides announce their
+  input and require the registered repository identity.
 - Keep `vendor/superpowers` at the release Claude Code's installed plugin runs
   (`~/.claude/plugins/installed_plugins.json`). A bump that adds or removes a skill
   needs a commit here and a declaration in tack `./links.toml`, or harnesses run

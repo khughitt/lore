@@ -1,0 +1,356 @@
+{
+  "artifact": {
+    "path": "instructions/AGENTS.md",
+    "sha256": "2729ca9ae116c50501a65764af73b4729498df283407f8b6a5a5e98e15cc2760"
+  },
+  "assembler": {
+    "path": "bin/assemble-instructions",
+    "revision": "96aef01250dbb929dc145ae78e3135e267bdf1d0",
+    "sha256": "6ce95b17901e38300b3eb62ee9d5fea8fd23f92d056169c2dd6daa4229e7981b"
+  },
+  "catalog": {
+    "path": "instructions/assembly.toml",
+    "sha256": "d457c0b2be9b102fc5571a3340cafed46ece95962574bc97a15bcec191fae61c"
+  },
+  "fragments": [
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A1\u2013A3",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "none recorded"
+        }
+      ],
+      "id": "core",
+      "length": 116,
+      "offset": 0,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Keep explicit development preferences.",
+      "revision": "cf56d62fc5b24064eadbc4b7e4cc5d463b294e0a",
+      "sha256": "c639112982cfc288ebdda988f41c1739fc2dff215d1f09fbe23cc60ece63d410",
+      "source": "instructions/fragments/core.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A4\u2013A5",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "recorded"
+        }
+      ],
+      "id": "refactoring",
+      "length": 143,
+      "offset": 117,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve compatibility and naming constraints.",
+      "revision": "2d76e2e70b659c8649959a86f0c5ac9923fac0b4",
+      "sha256": "2d40c17612a2896328efab148e00ebf2ecaa1f2d4fca0098c52b64cd9139f6c6",
+      "source": "instructions/fragments/refactoring.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A6\u2013A12",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "git",
+      "length": 3407,
+      "offset": 261,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Protect repository and host-state operations.",
+      "revision": "cea0244f8d7c49a5aa68c9170d7e3bb4dc949bbb",
+      "sha256": "93e88d06eab95e6e035891b3ffb3323d0efe7a80e0194cc0a8adae3b4a3e26db",
+      "source": "instructions/fragments/git.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "project-profiles spec",
+          "owner": "lore",
+          "path": "docs/specs/2026-09-19-project-profiles-design.md",
+          "revision": "44a0fc88383f096feeeb1346991059351e050cbf",
+          "status": "recorded"
+        }
+      ],
+      "id": "profiles",
+      "length": 537,
+      "offset": 3669,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve profile and layer precedence.",
+      "revision": "aabffadbc014e1879eb3bd6dd83347e3ec15b723",
+      "sha256": "68d93b1a394889415ce2219c6a90394360ed3a3b03d64f948922f2170cfaa499",
+      "source": "instructions/fragments/profiles.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A13\u2013A16",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "design-docs",
+      "length": 293,
+      "offset": 4207,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Keep document authority and review conventions.",
+      "revision": "5e68d764967ccb45c2699c2c8c247ee18de83966",
+      "sha256": "5fbee1a653de3d6d088ec9a5f99904eb27b1d2eb4e75bf18fd024d42b22abb74",
+      "source": "instructions/fragments/design-docs.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A11 and A21",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "recorded"
+        }
+      ],
+      "id": "communication",
+      "length": 516,
+      "offset": 4501,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Keep paths and routing intelligible to the user.",
+      "revision": "dc9f0361c11422acdccf94da3664c115583025f6",
+      "sha256": "7c40017777e0c602e061f4fef4e849f0868f29c020ce10884d113c343f148857",
+      "source": "instructions/fragments/communication.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "A17\u2013A20",
+          "owner": "lore",
+          "path": "docs/notes/2026-10-02-skill-stop-points-brief.md",
+          "revision": "8bba32405c6829151080980223d81f43fc46f83c",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "decisions",
+      "length": 2801,
+      "offset": 5018,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve approval and handoff limits.",
+      "revision": "ec2955ef793e431ff7554c64ab74104b02d858a4",
+      "sha256": "99ef0010b21022863e62d205e189e1009e22e45a2de6df80f92bdb311809284e",
+      "source": "instructions/fragments/decisions.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "waiting-loops brief",
+          "owner": "lore",
+          "path": "docs/notes/2026-09-27-waiting-loops-brief.md",
+          "revision": "1d23722f4fbcab652b78a2bb3dc879d0ea42bb7c",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "processes",
+      "length": 3351,
+      "offset": 7820,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Keep cleanup, tracked waiting and host-use policy.",
+      "revision": "8068ec0aa3430c952cc0b7783c944ef1964b2261",
+      "sha256": "ae18587085dae671fe2f8286a7cc4e95712bb8d5c8a446e662a521930af5196f",
+      "source": "instructions/fragments/processes.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "none recorded",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "none recorded"
+        }
+      ],
+      "id": "tests",
+      "length": 1230,
+      "offset": 11172,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve project test entry points and incident closeout.",
+      "revision": "d9047df28327c59f94198f124f2c07b43749e9ed",
+      "sha256": "0435b08b97bb988bbb141cdcf466aa2b69f1913ab77e4f981b609a5cb0ebf4ba",
+      "source": "instructions/fragments/tests.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "n/a",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "n/a"
+        }
+      ],
+      "id": "shell",
+      "length": 494,
+      "offset": 12403,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve shell and platform conventions.",
+      "revision": "631cf286b5862beef80624d24014d8a23bc29895",
+      "sha256": "50d520b938fb2c0634550ab8e7ef8195cc9be0660335cf5c8a917d7dccd80239",
+      "source": "instructions/fragments/shell.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "none recorded",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "none recorded"
+        }
+      ],
+      "id": "outcome-notes",
+      "length": 1138,
+      "offset": 12898,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Keep the note formats consumed by outcome measures.",
+      "revision": "f2a387027ee214d33f6afa33707d6ea6db385591",
+      "sha256": "fa9825afeef8f9958e1328d5378b6d2669ff08de3ed3886b46cbf38ed550c50a",
+      "source": "instructions/fragments/outcome-notes.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "flow-gates brief",
+          "owner": "lore",
+          "path": "docs/notes/2026-09-21-flow-gates-brief.md",
+          "revision": "26bd02eb9695bcf59b2fb1211c643f66b4dfe356",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "trials",
+      "length": 528,
+      "offset": 14037,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve explicit trial assignment and override rules.",
+      "revision": "0d63ddd5e35fcb2795b3d8f431d18ee9169cfb95",
+      "sha256": "a2e6f43a4e07ce8f68aea0c651b0a895a3291bf32202aa51bbc2d345c004911c",
+      "source": "instructions/fragments/trials.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "Feedback rows T30/Q16",
+          "owner": "lore",
+          "path": "docs/instruction-provenance.md",
+          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "status": "recorded"
+        },
+        {
+          "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
+          "owner": "lore",
+          "path": "none recorded",
+          "revision": "none recorded",
+          "status": "none recorded"
+        }
+      ],
+      "id": "feedback",
+      "length": 1421,
+      "offset": 14566,
+      "owner": "lore",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve immediate redacted feedback routing.",
+      "revision": "859eef9ed447194c6d87d2b24be2c226ed5aa8e7",
+      "sha256": "40bc9c2202489f5d8c52b114b148dd9b086c968cb2b393edba5725d578ccf0fe",
+      "source": "instructions/fragments/feedback.md"
+    },
+    {
+      "classification": "mandatory",
+      "evidence": [
+        {
+          "location": "Assembly amendment and original identity contract.",
+          "owner": "ops",
+          "path": "docs/specs/2026-09-07-project-identity-design.md",
+          "revision": "8dfdefe62c07480a5939021c90176a25e89e5e86",
+          "status": "n/a"
+        }
+      ],
+      "id": "projects",
+      "length": 3811,
+      "offset": 15988,
+      "owner": "ops",
+      "provenance_date": "2026-10-05",
+      "rationale": "Preserve ops-owned project identity and feedback vocabulary.",
+      "revision": "2206ba15038c94bdc1512721ba5e9b06ced35362",
+      "sha256": "d5d8b20f6a9840b3c41e60b7d0d4b07dc68aff35ee6802a3a70033184350f503",
+      "source": "instructions/fragments/projects.md"
+    }
+  ],
+  "mode": "production",
+  "separator": "\n",
+  "version": 1
+}

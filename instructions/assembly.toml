@@ -1,0 +1,234 @@
+version = 1
+separator = "\n"
+
+[[fragments]]
+id = "core"
+owner = "lore"
+source = "instructions/fragments/core.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Keep explicit development preferences."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "A1–A3"
+status = "none recorded"
+
+[[fragments]]
+id = "refactoring"
+owner = "lore"
+source = "instructions/fragments/refactoring.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve compatibility and naming constraints."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "A4–A5"
+status = "recorded"
+
+[[fragments]]
+id = "git"
+owner = "lore"
+source = "instructions/fragments/git.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Protect repository and host-state operations."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "A6–A12"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "profiles"
+owner = "lore"
+source = "instructions/fragments/profiles.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve profile and layer precedence."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/specs/2026-09-19-project-profiles-design.md"
+revision = "44a0fc88383f096feeeb1346991059351e050cbf"
+location = "project-profiles spec"
+status = "recorded"
+
+[[fragments]]
+id = "design-docs"
+owner = "lore"
+source = "instructions/fragments/design-docs.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Keep document authority and review conventions."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "A13–A16"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "communication"
+owner = "lore"
+source = "instructions/fragments/communication.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Keep paths and routing intelligible to the user."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "A11 and A21"
+status = "recorded"
+
+[[fragments]]
+id = "decisions"
+owner = "lore"
+source = "instructions/fragments/decisions.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve approval and handoff limits."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/notes/2026-10-02-skill-stop-points-brief.md"
+revision = "8bba32405c6829151080980223d81f43fc46f83c"
+location = "A17–A20"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "processes"
+owner = "lore"
+source = "instructions/fragments/processes.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Keep cleanup, tracked waiting and host-use policy."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/notes/2026-09-27-waiting-loops-brief.md"
+revision = "1d23722f4fbcab652b78a2bb3dc879d0ea42bb7c"
+location = "waiting-loops brief"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "tests"
+owner = "lore"
+source = "instructions/fragments/tests.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve project test entry points and incident closeout."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "none recorded"
+status = "none recorded"
+
+[[fragments]]
+id = "shell"
+owner = "lore"
+source = "instructions/fragments/shell.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve shell and platform conventions."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "n/a"
+status = "n/a"
+
+[[fragments]]
+id = "outcome-notes"
+owner = "lore"
+source = "instructions/fragments/outcome-notes.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Keep the note formats consumed by outcome measures."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "none recorded"
+status = "none recorded"
+
+[[fragments]]
+id = "trials"
+owner = "lore"
+source = "instructions/fragments/trials.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve explicit trial assignment and override rules."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/notes/2026-09-21-flow-gates-brief.md"
+revision = "26bd02eb9695bcf59b2fb1211c643f66b4dfe356"
+location = "flow-gates brief"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "feedback"
+owner = "lore"
+source = "instructions/fragments/feedback.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve immediate redacted feedback routing."
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/instruction-provenance.md"
+revision = "9c3831982468ed35a157a86d216363ba3438096d"
+location = "Feedback rows T30/Q16"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "none recorded"
+revision = "none recorded"
+location = "Later or unmapped clauses: no incident evidence established by the dated source."
+status = "none recorded"
+
+[[fragments]]
+id = "projects"
+owner = "ops"
+source = "instructions/fragments/projects.md"
+classification = "mandatory"
+provenance_date = "2026-10-05"
+rationale = "Preserve ops-owned project identity and feedback vocabulary."
+[[fragments.evidence]]
+owner = "ops"
+path = "docs/specs/2026-09-07-project-identity-design.md"
+revision = "8dfdefe62c07480a5939021c90176a25e89e5e86"
+location = "Assembly amendment and original identity contract."
+status = "n/a"

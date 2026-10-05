@@ -2,6 +2,8 @@
 import importlib.machinery
 import importlib.util
 import json
+import hashlib
+import re
 import os
 from pathlib import Path
 import shutil
@@ -35,6 +37,15 @@ def world(tmp_path):
     root, ops = tmp_path / 'lore', tmp_path / 'ops'
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
+    # Reference worlds use immutable initial policy, not today's editable prose.
+    baseline = (ROOT / 'tools/fixtures/instruction-assembly/baseline.md').read_bytes()
+    boundary = baseline.index(b'<!-- ops:projects start')
+    cuts = [m.start() for m in re.finditer(rb'^## ', baseline[:boundary], re.M)] + [boundary]
+    historical = {name: baseline[a:b][:-1] for name, a, b in zip(IDS[:-1], cuts, cuts[1:])}
+    catalog = tomllib.loads((root / 'instructions/assembly.toml').read_text())
+    for fragment in catalog['fragments']:
+        if fragment['owner'] == 'lore':
+            (root / fragment['source']).write_bytes(historical[fragment['id']])
     shutil.copytree(ROOT / 'tools/fixtures/instruction-assembly', root / 'tools/fixtures/instruction-assembly')
     (root / 'bin').mkdir()
     if (ROOT / 'bin/assemble-instructions').exists():
@@ -70,14 +81,19 @@ def outputs(world):
                  ('instructions/AGENTS.md', 'instructions/AGENTS.manifest.json'))
 
 
-def test_catalog_inventory_covers_every_baseline_section():
+def test_catalog_inventory_preserves_v1_mandatory_ids():
     catalog = tomllib.loads((ROOT / 'instructions/assembly.toml').read_text())
     assert [f['id'] for f in catalog['fragments']] == IDS
     assert {f['classification'] for f in catalog['fragments']} == {'mandatory'}
-    baseline = (ROOT / 'tools/fixtures/instruction-assembly/baseline.md').read_bytes()
-    pieces = [(ROOT / f['source']).read_bytes() for f in catalog['fragments'][:-1]]
-    pieces.append((ROOT / 'tools/fixtures/instruction-assembly/baseline-projects.md').read_bytes())
-    assert b'\n'.join(pieces) == baseline
+
+
+def test_historical_reference_fixtures_match_independent_git_blobs():
+    for name, object_id, expected in [
+        ('baseline.md', '5297be329c58bc758b20c48a504a87887be5470a', '66f5ae3d32e218ac3688969171179501ecdcc253e4d9a01f48c05ddb04350642'),
+        ('initial.md', '08bd5862dcd0fa47000dac7f13e8617875f99586', '2729ca9ae116c50501a65764af73b4729498df283407f8b6a5a5e98e15cc2760')]:
+        fixture = (ROOT / 'tools/fixtures/instruction-assembly' / name).read_bytes()
+        assert fixture == git(ROOT, 'cat-file', 'blob', object_id)
+        assert hashlib.sha256(fixture).hexdigest() == expected
 
 
 def test_render_reproduces_initial_bytes_without_writing(world):
@@ -419,3 +435,24 @@ def test_preparation_recipe_override_is_explicit_and_rejects_unsafe_values(world
         rejected = subprocess.run(['just', 'check'], cwd=world.root,
                                   env={**env, 'LORE_ASSEMBLY_OPS_ROOT': value}, capture_output=True)
         assert rejected.returncode != 0 and b'LORE_ASSEMBLY_OPS_ROOT' in rejected.stderr
+
+
+def test_version_one_inventory_does_not_freeze_current_policy_text(world, monkeypatch):
+    checkout = world.root
+    source = checkout / 'instructions/fragments/core.md'
+    source.write_bytes(source.read_bytes() + b'- Later reviewed policy.\n')
+    monkeypatch.setattr(sys.modules[__name__], 'ROOT', checkout)
+    test_catalog_inventory_preserves_v1_mandatory_ids()
+
+
+def test_later_policy_bytes_are_rendered_without_changing_historical_fixtures(world):
+    source = world.root / 'instructions/fragments/core.md'
+    original = source.read_bytes()
+    updated = original + b'- Later reviewed policy.\n'
+    source.write_bytes(updated)
+    expected = world.initial.replace(original + b'\n', updated + b'\n', 1)
+    result = build(world, 'render')
+    assert result.returncode == 0 and result.stdout == expected
+    assert build(world).returncode == 0
+    assert outputs(world)[0] == expected
+    assert (world.root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes() == world.initial

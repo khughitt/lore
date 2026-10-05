@@ -412,7 +412,7 @@ def test_projects_input_structure_and_renderer_failures_are_guarded(world, chang
     assert b'Projects' in result.stderr or b'render failed' in result.stderr
 
 
-def test_preparation_recipe_override_is_explicit_and_rejects_unsafe_values(world):
+def test_deployed_recipes_ignore_stale_preparation_environment(world):
     shutil.copy(ROOT / 'justfile', world.root / 'justfile')
     shutil.copy(ROOT / 'bin/skill-sizes.py', world.root / 'bin/skill-sizes.py')
     for name in ('ops-check', 'ops-docs'):
@@ -422,19 +422,17 @@ def test_preparation_recipe_override_is_explicit_and_rejects_unsafe_values(world
     task_stub.write_text('#!/bin/sh\nexit 0\n')
     task_stub.chmod(0o755)
     commit_pair(world)
+    stale = world.root.parent / 'old-ops-worktree'
+    git(world.ops, 'worktree', 'add', '-q', '--detach', str(stale), 'HEAD')
+    (stale / 'instructions/fragments/projects.md').write_text('stale source\n')
     env = {**world.env, 'PATH': str(world.root / 'bin') + os.pathsep + os.environ['PATH']}
     env.pop('LORE_ASSEMBLY_OPS_ROOT', None)
-    default = subprocess.run(['just', 'check'], cwd=world.root, env=env, capture_output=True)
-    assert default.returncode == 0, default.stderr
-    assert b'owner-root override' not in default.stderr
-    selected = subprocess.run(['just', 'check'], cwd=world.root,
-                              env={**env, 'LORE_ASSEMBLY_OPS_ROOT': str(world.ops)}, capture_output=True)
-    assert selected.returncode == 0, selected.stderr
-    assert selected.stderr.count(b'owner-root override') == 1
-    for value in ('has space', "has'quote", 'has;command', '$(command)'):
-        rejected = subprocess.run(['just', 'check'], cwd=world.root,
-                                  env={**env, 'LORE_ASSEMBLY_OPS_ROOT': value}, capture_output=True)
-        assert rejected.returncode != 0 and b'LORE_ASSEMBLY_OPS_ROOT' in rejected.stderr
+    for value in (None, str(stale), 'stale path with spaces'):
+        selected = dict(env)
+        if value is not None: selected['LORE_ASSEMBLY_OPS_ROOT'] = value
+        result = subprocess.run(['just', 'check'], cwd=world.root, env=selected, capture_output=True)
+        assert result.returncode == 0, result.stderr
+        assert b'owner-root override' not in result.stderr
 
 
 def test_version_one_inventory_does_not_freeze_current_policy_text(world, monkeypatch):

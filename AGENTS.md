@@ -31,8 +31,9 @@ Historical proof commands are acceptance checks outside the recurring gates.
 - `vendor/superpowers`: the pinned submodule; `just setup` initializes it.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
 - `docs/notes/`: eight dated briefs. `docs/`: coding advice and the provenance audit.
-  `docs/archive/`: the former Codex instructions. `docs/specs/` and `docs/plans/`:
-  the profiles documents and this extraction's design and plan.
+  `docs/archive/`: old instruction text awaiting review; its README lists it.
+  `docs/specs/` and `docs/plans/`: the profiles documents and this extraction's design
+  and plan.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from tack's hook files; it reaches ops's resolver through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.

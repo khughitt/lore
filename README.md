@@ -54,5 +54,5 @@ and ops-projects supplies its owned Projects fragment. The assembly plan coordin
 the single-writer activation and proof verification on both hosts.
 
 `hooks/claude-profile` is the SessionStart hook that puts a checkout's profile text in front
-of every Claude Code and Codex session; tack's hook files name it once the hook move
-activates, and it resolves profiles through ops.
+of every Claude Code and Codex session; tack's hook files name it, and it resolves profiles
+through ops.

@@ -248,6 +248,6 @@ the Feedback section above says when.
 - `obs` — Execution evidence: session and task indexing, joins, baselines, and their reports.
 - `ops` — Shared tooling in bin/ (including the vendored tt, ops-check, ops-docs), the Claude Code hooks (pretooluse, claim-guard, relay-guard, provenance), profiles, gates, and the quick-add skill.
 - `relay` — Harness adapters, hook dispatch to non-Claude harnesses, the live-agent registry, and relay identity.
-- `tack` — Global agent instruction delivery, harness settings, state hygiene, the session archive, and the session-logs skill with its tools.
+- `tack` — Harness homes and the declared links that install the agent surface, harness settings and hook wiring, capability facts, state hygiene, the session archive, and the session-logs skill with its tools.
 - `tasks` — The tasks CLI and its tasks, curate, and scope skills.
 <!-- ops:projects end -->

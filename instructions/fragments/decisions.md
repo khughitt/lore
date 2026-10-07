@@ -32,6 +32,17 @@
   checkout, never merge on your own: present the integration choice. A push, a PR, or
   a merge that changes a live global surface (these global instructions, hooks,
   services) stays an action outside the repository.
-- After a final whole-branch review, keep running corrective rounds (one fix dispatch
-  plus one scoped re-review each) while the re-review reproduces Critical or Important
-  findings, up to five rounds; then surface what remains. External actions stay gated.
+- After a final whole-branch review, in subagent-driven and inline (executing-plans)
+  execution alike, fix (or rule on, as the skills allow) its Critical and Important
+  findings in corrective rounds, up to five; then surface what remains. A round is one
+  fix pass plus one scoped re-review of it, and another follows while that re-review
+  reports any Critical or Important finding, persisting or introduced by the fix. Minor
+  findings never enter a round; they go to the ledger as `minor (deferred)`, as both
+  skills say. A fix subagent makes the fixes under subagent-driven execution; inline,
+  you make them yourself, each still proven RED→GREEN with a green suite. A fresh
+  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks
+  executing-plans' "do not dispatch a re-review" and "no second fix pass" and
+  subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".
+  Without a subagent tool, the re-review is a self-review, recorded as such in the
+  ledger and the final message, as executing-plans' final-review fallback does. External
+  actions stay gated.

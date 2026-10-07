@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "a85442b0581cc7cd8d39498fd8f3e44258deb9109ac3a97488cdc1212e4a8f36"
+    "sha256": "cdea5278491eb3c885907eabc7e5dcfacc54ac85e89cd073ea773538db48f2b0"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -172,13 +172,13 @@
         }
       ],
       "id": "decisions",
-      "length": 2801,
+      "length": 3675,
       "offset": 5690,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
-      "revision": "ec2955ef793e431ff7554c64ab74104b02d858a4",
-      "sha256": "99ef0010b21022863e62d205e189e1009e22e45a2de6df80f92bdb311809284e",
+      "revision": "1332d6d08fe1bf75f2ae97776148424a28fdba73",
+      "sha256": "6def1d8cfc0bf830fb9cd8b9c46787d0963d76c4ad928d9f48310a22778e0856",
       "source": "instructions/fragments/decisions.md"
     },
     {
@@ -201,7 +201,7 @@
       ],
       "id": "processes",
       "length": 3351,
-      "offset": 8492,
+      "offset": 9366,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -222,7 +222,7 @@
       ],
       "id": "tests",
       "length": 1230,
-      "offset": 11844,
+      "offset": 12718,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -243,7 +243,7 @@
       ],
       "id": "shell",
       "length": 1176,
-      "offset": 13075,
+      "offset": 13949,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -264,7 +264,7 @@
       ],
       "id": "outcome-notes",
       "length": 1138,
-      "offset": 14252,
+      "offset": 15126,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -292,7 +292,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 15391,
+      "offset": 16265,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -320,7 +320,7 @@
       ],
       "id": "feedback",
       "length": 1421,
-      "offset": 15920,
+      "offset": 16794,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -341,7 +341,7 @@
       ],
       "id": "projects",
       "length": 3888,
-      "offset": 17342,
+      "offset": 18216,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

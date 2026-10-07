@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "941ae15a8fba4f7dfbf733476ec7cef166f0b46729f88fa93199479ba3ca7c6c"
+    "sha256": "933ba86f36a8c7c6b83ae6b8104ab8afc6ca8e051cacbe9be5a00ae1fdf7e2d7"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "d457c0b2be9b102fc5571a3340cafed46ece95962574bc97a15bcec191fae61c"
+    "sha256": "6604005b19409c2ef5607f4d97a65465b53512775e028e566148516fdd7bf1b6"
   },
   "fragments": [
     {
@@ -311,6 +311,13 @@
           "status": "recorded"
         },
         {
+          "location": "upstream note: an upstream defect reproduced and patched before an upstream search found the fix (upstream-defect clauses)",
+          "owner": "lore",
+          "path": "tasks/lore-9d1471.md",
+          "revision": "30ceb0aa1344e55a99164c0ce6890861dd9d6590",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -319,13 +326,13 @@
         }
       ],
       "id": "feedback",
-      "length": 1421,
+      "length": 2486,
       "offset": 17424,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
-      "revision": "859eef9ed447194c6d87d2b24be2c226ed5aa8e7",
-      "sha256": "40bc9c2202489f5d8c52b114b148dd9b086c968cb2b393edba5725d578ccf0fe",
+      "revision": "64aaace56b5093f1b0aa6895aad6f27bc3ddbc98",
+      "sha256": "111455565567584f63b590064304a52d050e171d3971ae555cc3f8890e0886a7",
       "source": "instructions/fragments/feedback.md"
     },
     {
@@ -341,7 +348,7 @@
       ],
       "id": "projects",
       "length": 3888,
-      "offset": 18846,
+      "offset": 19911,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

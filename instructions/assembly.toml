@@ -89,12 +89,18 @@ owner = "lore"
 source = "instructions/fragments/communication.md"
 classification = "mandatory"
 provenance_date = "2026-10-05"
-rationale = "Keep paths and routing intelligible to the user."
+rationale = "Keep paths, routing and review sheets intelligible to the user."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
 revision = "9c3831982468ed35a157a86d216363ba3438096d"
 location = "A11 and A21"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "tasks/lore-9cd3e5.md"
+revision = "298bd8f1c997529efab848be211ebb995407b0b7"
+location = "original report: a review grid labelled only by parameter codes, with no title, axis headers or legend (review-sheet clause)"
 status = "recorded"
 
 [[fragments]]

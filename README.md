@@ -22,7 +22,7 @@ and `just test-fast` to verify the corpus and its assembly outputs.
 
 ## Usage
 
-The delivered outputs are the files tack's home links serve. Edit policy in
+The delivered outputs are the files hq's home links serve. Edit policy in
 `instructions/fragments/` and ordering/provenance in `instructions/assembly.toml`.
 Run `just assemble` to generate `instructions/AGENTS.md` and
 `instructions/AGENTS.manifest.json`. Do not hand-edit either output. Provenance
@@ -49,10 +49,10 @@ they run during acceptance and audits, outside the normal checks.
 
 ## Consumers
 
-Every harness home through tack's declared links; ops-profile reads profile fragments,
+Every harness home through hq's declared links; ops-profile reads profile fragments,
 and ops-projects supplies its owned Projects fragment. The assembly plan coordinates
 the single-writer activation and proof verification on both hosts.
 
 `hooks/claude-profile` is the SessionStart hook that puts a checkout's profile text in front
-of every Claude Code and Codex session; tack's hook files name it, and it resolves profiles
+of every Claude Code and Codex session; hq's hook files name it, and it resolves profiles
 through ops.

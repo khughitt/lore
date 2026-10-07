@@ -1,6 +1,6 @@
 # skills
 
-tack's `links.toml` declares `~/.agents/skills` as a real directory of individual links
+hq's `links.toml` declares `~/.agents/skills` as a real directory of individual links
 into this repository, into tasks and ops, and into the superpowers submodule here;
 it is the skill directory for every harness other
 than Claude Code, which reads skills from `~/.claude/skills` and plugins from its own
@@ -14,10 +14,10 @@ is the one an agent guesses; nested skill directories were read back with a leve
 dropped or added. Keep new skills at this depth.
 
 - `tasks`, `curate`, `scope`, `quick-add` — served from the tasks and ops checkouts by
-  declarations in tack's `links.toml`, so the skills those repositories ship are always
+  declarations in hq's `links.toml`, so the skills those repositories ship are always
   the checked-out version. A new skill is a declaration there for each home surface;
   `just link --apply` creates the links.
-- `flow` and `session-logs` — served from the flows and tack checkouts, declared the same way.
+- `flow` and `session-logs` — served from the flows and hq checkouts, declared the same way.
 - `api-and-interface-design/`, `code-simplification/`, `context-engineering/`,
   `documentation-and-adrs/`, `observability-and-instrumentation/`,
   `performance-optimization/`, `security-and-hardening/` — vendored copies from
@@ -33,7 +33,7 @@ dropped or added. Keep new skills at this depth.
   keep the submodule on the same version as the installed plugin (`~/.claude/plugins/installed_plugins.json`)
   or the two harnesses run different skills. Bump with
   `git -C vendor/superpowers checkout <tag>` and commit the pointer; when the
-  release adds or removes a skill, add or remove its declaration in tack's `links.toml`
+  release adds or removes a skill, add or remove its declaration in hq's `links.toml`
   (`lore:vendor/superpowers/skills/<name>`), in the commit after the bump here.
   Move a removed home link's declaration to `[retired]`, keeping its
   former target so `just link --apply` can safely remove it. On a fresh clone,

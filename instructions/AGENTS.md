@@ -242,10 +242,9 @@ If it exits non-zero, show the user its error and do not choose flow on or off u
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.
-- Filing needs a tracked checkout (one with `tasks/.config.toml`) to stand in. Elsewhere,
-  do not file and do not borrow another checkout with `-C`, which would misstate the
-  source: name the tool, its owner, and what went wrong in your end-of-turn report, and
-  the user decides.
+- File from where you stand. A tracked or linked checkout reports under its project's
+  prefix; anywhere else the report is tagged `from:unregistered`. Never borrow another
+  checkout with `-C`, which would misstate the source.
 - A defect in code the user does not maintain (a vendored submodule, an installed tool, a
   library) is checked upstream before anything else, scoping included: search the
   project's open and closed issues and PRs, its default and development branches, and

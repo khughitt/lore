@@ -226,6 +226,12 @@ location = "upstream note: an upstream defect reproduced and patched before an u
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-c58645.md"
+revision = "4bcc37027f23b32135e346d68acf52a7a8e111e1"
+location = "original report: owner feedback on an artifact saved only as a local memory, filed after a follow-up question (owner-feedback clause)"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

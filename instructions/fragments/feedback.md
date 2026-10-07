@@ -20,9 +20,11 @@
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.
-- File from where you stand. A tracked or linked checkout reports under its project's
-  prefix; anywhere else the report is tagged `from:unregistered`. Never borrow another
-  checkout with `-C`, which would misstate the source.
+- File from where you stand. A project checkout (one with `tasks/.config.toml`) or a
+  linked checkout reports under its project's prefix; outside every project the report
+  is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would
+  misstate the source. If filing fails (a broken config, `tasks` missing), name the
+  tool, its owner, and the error in your end-of-turn report, and the user decides.
 - A defect in code the user does not maintain (a vendored submodule, an installed tool, a
   library) is checked upstream before anything else, scoping included: search the
   project's open and closed issues and PRs, its default and development branches, and

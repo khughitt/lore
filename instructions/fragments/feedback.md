@@ -12,6 +12,11 @@
   around it (`gap`); when something saved you real work (`positive`); and when a flow
   retro's lesson is about the tooling rather than the task (file it too, and put the
   returned id in the retro).
+- The user's feedback on how agents behave or what they produce, and any request to
+  make a lesson a pattern, is filed the same way, to the project that owns the guidance
+  or tool it would change (`lore` for the global instructions and skills). A memory may
+  keep a local copy; it never replaces the report. A request about the current task
+  alone (fix this file, relabel this sheet) is ordinary work, not a new rule.
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.

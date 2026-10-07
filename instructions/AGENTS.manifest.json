@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "cd04904f943223c249e47e96d77ebd8b84d30ea2e2b5fd03edcdd7416dcd63de"
+    "sha256": "6e1f2bae1334a00242c457c2b4903bd64c8f1cd2581e51f1f3144d343484702e"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "65742f2b7562ea9f24dd1ad673738eb1a5576308e72555e83dfca190fe304e25"
+    "sha256": "42018da3b9d2d3bef75dce854a4820e61fef460b9dc6ac67ebb18b3cb355961a"
   },
   "fragments": [
     {
@@ -325,6 +325,13 @@
           "status": "recorded"
         },
         {
+          "location": "original report: owner feedback on an artifact saved only as a local memory, filed after a follow-up question (owner-feedback clause)",
+          "owner": "lore",
+          "path": "tasks/lore-c58645.md",
+          "revision": "4bcc37027f23b32135e346d68acf52a7a8e111e1",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -333,13 +340,13 @@
         }
       ],
       "id": "feedback",
-      "length": 2486,
+      "length": 2908,
       "offset": 18090,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
-      "revision": "64aaace56b5093f1b0aa6895aad6f27bc3ddbc98",
-      "sha256": "111455565567584f63b590064304a52d050e171d3971ae555cc3f8890e0886a7",
+      "revision": "79fe16fd7229e88c8cea486ee9e0c1aeaa3ca49c",
+      "sha256": "eea0a3da5eefcf39da2d76dcb5905e0068cdb375edafe769c97243812542474b",
       "source": "instructions/fragments/feedback.md"
     },
     {
@@ -355,7 +362,7 @@
       ],
       "id": "projects",
       "length": 3888,
-      "offset": 20577,
+      "offset": 20999,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

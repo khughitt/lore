@@ -277,6 +277,7 @@ to read one of them from anywhere.
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them
 - `forge` — familiar-forge — Generative art CAS behind familiar's pet themes
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
+- `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene
 - `lit` — lit — Science literature as a world model, a personal corpus, and a walk over both
 - `lore` — lore — Agent context: the instruction corpus, profiles, skills, and traceable assembly
 - `material` — niri-material (niri) — One glass material across niri, terminals, editor, and shell
@@ -288,7 +289,6 @@ to read one of them from anywhere.
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
 - `relay` — relay — Harness adapters, hook dispatch, and a host-local live-agent registry
 - `sci` — science — The daily surface of Science: the layer people and agents use
-- `tack` — tack — Harness homes, declared links, settings, and session-state hygiene
 - `tasks` — tasks — The file-based task tracker every project here uses
 - `tui` — tasks-tui — A keyboard-driven terminal front end for the tasks tracker
 - `vdocs` — docs (verifiably-docs) — The verifiably ecosystem's front door: its goal, overview, and repository map
@@ -298,15 +298,15 @@ Retired: `mind3` (mindful v3, 2026-10-04) → `mind6`.
 
 ### Feedback owners
 
-The projects that accept feedback, and what each owns. File from a tracked checkout with
+The projects that accept feedback, and what each owns. File with
 `tasks feedback --project <prefix> "<one line>" --category <friction|gap|idea|positive>`;
 the Feedback section above says when.
 
 - `flows` — The flow skill and state machine, its gate tools, evals and trials.
+- `hq` — Harness homes and the declared links that install the agent surface, harness settings and hook wiring, capability facts, state hygiene, the session archive, and the session-logs skill with its tools.
 - `lore` — The global instructions and profile fragments, the skill corpus, instruction assembly, and the profile hook.
 - `obs` — Execution evidence: session and task indexing, joins, baselines, and their reports.
 - `ops` — Shared tooling in bin/ (including the vendored tt, ops-check, ops-docs), the Claude Code hooks (pretooluse, claim-guard, relay-guard, provenance), profiles, gates, and the quick-add skill.
 - `relay` — Harness adapters, hook dispatch to non-Claude harnesses, the live-agent registry, and relay identity.
-- `tack` — Harness homes and the declared links that install the agent surface, harness settings and hook wiring, capability facts, state hygiene, the session archive, and the session-logs skill with its tools.
 - `tasks` — The tasks CLI and its tasks, curate, and scope skills.
 <!-- ops:projects end -->

@@ -21,7 +21,7 @@ Historical proof commands are acceptance checks outside the recurring gates.
 
 ## Layout
 
-- `instructions/AGENTS.md`: generated global instructions served through tack
+- `instructions/AGENTS.md`: generated global instructions served through hq
   `./links.toml`; `instructions/AGENTS.manifest.json`: generated provenance.
   Root `AGENTS.md` is this repository's guide.
 - `instructions/assembly.toml` and `instructions/fragments/`: editable catalog and
@@ -35,7 +35,7 @@ Historical proof commands are acceptance checks outside the recurring gates.
   `docs/specs/` and `docs/plans/`: the profiles documents and this extraction's design
   and plan.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
-  wired from tack's hook files; it reaches ops's resolver through the tasks registry.
+  wired from hq's hook files; it reaches ops's resolver through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.
   `tools/`: assembly tests, pinned proof driver and vendored tooling;
   `tasks/`: task records.
@@ -56,5 +56,5 @@ Historical proof commands are acceptance checks outside the recurring gates.
   input and require the registered repository identity.
 - Keep `vendor/superpowers` at the release Claude Code's installed plugin runs
   (`~/.claude/plugins/installed_plugins.json`). A bump that adds or removes a skill
-  needs a commit here and a declaration in tack `./links.toml`, or harnesses run
+  needs a commit here and a declaration in hq `./links.toml`, or harnesses run
   different skills.

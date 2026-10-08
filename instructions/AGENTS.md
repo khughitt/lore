@@ -127,22 +127,25 @@ this repository's own instructions, then the user in the session.
 - Never end a turn waiting on work the harness does not track. Run a long check in the
   foreground with a timeout that covers it, or through the harness's own background
   mechanism; a job detached with `&` or `nohup` never wakes you, so no turn ends waiting
-  on a monitor of one. Claude Code's background Bash (`run_in_background`) is stopped
-  at its `timeout`, 30 min when unset and at most 2 h: set it to cover the run. A run
+  on a monitor of one. Claude Code's background Bash (`run_in_background`) is stopped at
+  its `timeout`, 30 min when unset and at most 2 h: set it to cover the run. A run
   longer than 2 h is split into resumable slices (an incremental job run in bounded
-  passes, each under the limit, e.g. with `timeout --signal=INT`) or handed to a
-  tracked process the user agrees to. A controller with a running child ends its turn only where the
-  harness is known to start its next turn when the child finishes (Claude Code: yes;
+  passes, each under the limit, e.g. with `timeout --signal=INT`) or handed to a tracked
+  process the user agrees to. A controller with a running child ends its turn only where
+  the harness is known to start its next turn when the child finishes (Claude Code: yes;
   Codex: no — probed 2026-09-24 and recorded in ops `hooks/claim-guard`'s
   `CHILD_WAKES`), and otherwise waits with the harness's bounded wait, at its longest
   (Codex: `wait_agent` with `timeout_ms: 3600000`, an empty `write_stdin` with
   `yield_time_ms: 300000`; both return as soon as the child or command finishes), never
-  a loop of shorter waits. A worker's turn
-  end is its final report: it reports and stops only when its assignment is complete or
-  blocked on its controller or a person, never with its own check still running. A
-  child's "waiting on background work" is unverified until you check that the process or
-  its output exists; after a wake-up, report what you observed, never a notification
-  that did not arrive.
+  a loop of shorter waits. Before each such wait, post one line naming what you await,
+  how long it should take and the wait's limit; when it returns, post one status line.
+  This outranks a harness's own shorter guidance: Codex's base instructions' 60-second
+  cap on blocking waits and on gaps between updates, and the vendored superpowers
+  `codex-tools` reference's 5–10 minute stretches. A worker's turn end is its final
+  report: it reports and stops only when its assignment is complete or blocked on its
+  controller or a person, never with its own check still running. A child's "waiting on
+  background work" is unverified until you check that the process or its output exists;
+  after a wake-up, report what you observed, never a notification that did not arrive.
 - Before committing to an extended run (a benchmark, capture, experiment, or sweep that
   takes more than a few minutes, and above all one that needs the user off the machine),
   first run the smallest version that exercises every gate end to end through its

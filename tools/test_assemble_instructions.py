@@ -64,6 +64,13 @@ def world(tmp_path):
     config.mkdir(parents=True)
     (config / 'projects.toml').write_text('[projects]\nops = ' + json.dumps(str(ops)) +
                                           '\nlore = ' + json.dumps(str(tmp_path / 'wrong-lore')) + '\n')
+    for fragment in catalog['fragments']:
+        for evidence in fragment['evidence']:
+            if evidence['path'] in ('none recorded', 'n/a'): continue
+            repo = root if evidence['owner'] == 'lore' else ops
+            file = repo / evidence['path']
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_text('Disposable historical evidence.\n')
     for repo in (root, ops):
         git(repo, 'init', '-q', '-b', 'main')
         git(repo, 'config', 'user.name', 'Assembly fixture')
@@ -72,6 +79,16 @@ def world(tmp_path):
         git(repo, 'config', 'commit.gpgsign', 'false')
         git(repo, 'add', '.')
         git(repo, 'commit', '-q', '-m', 'test: bootstrap sources without manifest')
+    path = root / 'instructions/assembly.toml'
+    text = path.read_text()
+    for fragment in catalog['fragments']:
+        for evidence in fragment['evidence']:
+            if evidence['path'] in ('none recorded', 'n/a'): continue
+            repo = root if evidence['owner'] == 'lore' else ops
+            revision = git(repo, 'rev-parse', 'HEAD').decode().strip()
+            text = text.replace('revision = ' + json.dumps(evidence['revision']),
+                                'revision = ' + json.dumps(revision))
+    path.write_text(text)
     return SimpleNamespace(root=root, ops=ops, config=config,
                            env={**os.environ, 'XDG_CONFIG_HOME': str(config.parent)}, initial=initial)
 
@@ -79,6 +96,98 @@ def world(tmp_path):
 def outputs(world):
     return tuple((world.root / path).read_bytes() for path in
                  ('instructions/AGENTS.md', 'instructions/AGENTS.manifest.json'))
+
+
+def change_evidence(world, **changes):
+    path = world.root / 'instructions/assembly.toml'
+    text = path.read_text()
+    prefix, marker, remainder = text.partition('[[fragments.evidence]]\n')
+    body, next_marker, suffix = remainder.partition('[[fragments]]')
+    for key, value in changes.items():
+        body = re.sub(r'^' + key + r' = .*$', lambda _: key + ' = ' + json.dumps(value), body, flags=re.M)
+    path.write_text(prefix + marker + body + next_marker + suffix)
+    return tomllib.loads(body)
+
+
+@pytest.mark.parametrize('command', ['render', 'write', 'check'])
+@pytest.mark.parametrize('status', ['recorded', 'none recorded', 'n/a'])
+@pytest.mark.parametrize('bad', ['missing-commit', 'blob', 'mutable', 'abbreviated', 'missing-path', 'tree'])
+def test_invalid_concrete_evidence_is_rejected_before_output(world, command, status, bad):
+    assert build(world).returncode == 0
+    before = outputs(world)
+    evidence = change_evidence(world, status=status)
+    if bad == 'missing-commit': evidence['revision'] = '0' * 40
+    elif bad == 'blob':
+        evidence['revision'] = git(world.root, 'rev-parse', 'HEAD:' + evidence['path']).decode().strip()
+    elif bad == 'mutable': evidence['revision'] = 'HEAD'
+    elif bad == 'abbreviated': evidence['revision'] = evidence['revision'][:12]
+    elif bad == 'tree': evidence['path'] = 'docs'
+    else:
+        evidence['path'] = 'disk-only.md'
+        (world.root / evidence['path']).write_text('Not in the historical commit.\n')
+    change_evidence(world, **evidence)
+    result = build(world, command)
+    assert result.returncode == 1, result.stdout
+    assert b'evidence' in result.stderr
+    for key in ('owner', 'revision', 'path'):
+        assert evidence[key].encode() in result.stderr
+    assert not result.stdout
+    assert outputs(world) == before
+
+
+@pytest.mark.parametrize('path,revision', [
+    ('none recorded', 'HEAD'), ('n/a', 'HEAD'),
+    ('docs/instruction-provenance.md', 'none recorded'),
+    ('docs/instruction-provenance.md', 'n/a'), ('none recorded', 'n/a')])
+def test_malformed_evidence_sentinel_pairs_are_rejected(world, path, revision):
+    change_evidence(world, path=path, revision=revision)
+    result = build(world)
+    assert result.returncode == 1
+    assert b'evidence' in result.stderr and b'sentinel' in result.stderr
+    assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
+
+
+@pytest.mark.parametrize('sentinel', ['none recorded', 'n/a'])
+@pytest.mark.parametrize('status', ['recorded', 'none recorded', 'n/a'])
+def test_paired_evidence_sentinels_preserve_metadata_without_owner_lookup(world, sentinel, status):
+    expected = change_evidence(world, owner='notes', path=sentinel, revision=sentinel, status=status)
+    result = build(world)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(outputs(world)[1])['fragments'][0]['evidence'][0] == expected
+
+
+@pytest.mark.parametrize('owner', ['Bad', 'bad/name'])
+def test_evidence_owner_requires_a_project_prefix(world, owner):
+    change_evidence(world, owner=owner)
+    result = build(world)
+    assert result.returncode == 1
+    assert b'evidence owner' in result.stderr
+    assert b'Traceback' not in result.stderr
+
+
+@pytest.mark.parametrize('case', ['registered', 'unregistered', 'worktree', 'alien'])
+def test_evidence_only_external_owner_uses_registry_and_override_identity(world, case):
+    external = world.root.parent / 'notes'
+    git(world.root.parent, 'clone', '-q', str(world.root), str(external))
+    expected = change_evidence(world, owner='notes')
+    if case != 'unregistered':
+        registry = world.config / 'projects.toml'
+        registry.write_text(registry.read_text() + 'notes = ' + json.dumps(str(external)) + '\n')
+    args = ()
+    if case in ('worktree', 'alien'):
+        selected = world.root.parent / 'notes-override'
+        if case == 'worktree': git(external, 'worktree', 'add', '-q', '--detach', str(selected), 'HEAD')
+        else: git(world.root.parent, 'clone', '-q', str(external), str(selected))
+        args = ('--owner-root', f'notes={selected}')
+    result = build(world, 'write', *args)
+    if case in ('unregistered', 'alien'):
+        assert result.returncode == 1
+        assert b'registered' in result.stderr and b'notes' in result.stderr
+        assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
+    else:
+        assert result.returncode == 0, result.stderr
+        assert json.loads(outputs(world)[1])['fragments'][0]['evidence'][0] == expected
+        assert build(world, 'check', *args).returncode == 0
 
 
 def test_catalog_inventory_preserves_v1_mandatory_ids():
@@ -302,6 +411,62 @@ def test_consistent_index_ignores_unstaged_policy_but_working_tree_check_rejects
     assert build(world, 'check', '--working-tree').returncode == 1
 
 
+def test_staged_invalid_evidence_cannot_be_hidden_by_a_valid_disk_catalog(world):
+    commit_pair(world)
+    catalog = world.root / 'instructions/assembly.toml'
+    valid = catalog.read_bytes()
+    change_evidence(world, revision='0' * 40)
+    git(world.root, 'add', 'instructions/assembly.toml')
+    catalog.write_bytes(valid)
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert b'evidence' in result.stderr and b'0' * 40 in result.stderr
+    assert build(world, 'check', '--working-tree').returncode == 0
+
+
+def test_staged_valid_evidence_ignores_an_invalid_disk_catalog(world):
+    commit_pair(world)
+    change_evidence(world, location='Another inspected section')
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    change_evidence(world, revision='0' * 40)
+    assert build(world, 'check').returncode == 0
+    result = build(world, 'check', '--working-tree')
+    assert result.returncode == 1 and b'evidence' in result.stderr
+
+
+def test_worktree_commit_hook_uses_each_evidence_owners_repository(world):
+    commit_pair(world)
+    worktree = world.root.parent / 'lore-worktree'
+    git(world.root, 'worktree', 'add', '-q', '-b', 'hook-evidence', str(worktree), 'HEAD')
+    hooks = worktree / 'fixture-no-hooks'
+    hooks.mkdir()
+    hook = hooks / 'pre-commit'
+    hook.write_text('#!/bin/sh\nexec ' + sys.executable + ' bin/assemble-instructions check\n')
+    hook.chmod(0o755)
+    (worktree / 'other.md').write_text('Unrelated staged content.\n')
+    git(worktree, 'add', 'other.md')
+    result = subprocess.run(['git', '-C', str(worktree), 'commit', '-q', '-m', 'test: hook evidence'],
+                            env=world.env, capture_output=True)
+    assert result.returncode == 0, result.stderr
+
+
+def test_hook_environment_preserves_the_selected_local_index(world):
+    commit_pair(world)
+    catalog = world.root / 'instructions/assembly.toml'
+    valid = catalog.read_bytes()
+    alternate = world.root.parent / 'hook-index'
+    shutil.copy(world.root / '.git/index', alternate)
+    world.env.update(GIT_DIR=str(world.root / '.git'), GIT_WORK_TREE=str(world.root), GIT_INDEX_FILE=str(alternate))
+    change_evidence(world, revision='0' * 40)
+    subprocess.run(['git', '-C', str(world.root), 'add', 'instructions/assembly.toml'],
+                   env=world.env, check=True, capture_output=True)
+    catalog.write_bytes(valid)
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert b'0' * 40 in result.stderr
+
+
 REQUIRED_PATHS = ['instructions/assembly.toml', 'instructions/AGENTS.md',
                   'instructions/AGENTS.manifest.json', 'bin/assemble-instructions'] + [
                       f'instructions/fragments/{name}.md' for name in IDS[:-1]]
@@ -368,7 +533,10 @@ def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(w
     script = world.root / 'bin/assemble-instructions'
     changed = script.read_text().replace('def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode=',
                                          'def renamed_current_assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode=')
+    changed = changed.replace('        catalog = catalog_from(catalog_bytes)\n',
+                              '        raise ValueError("current production validation must not run")\n')
     script.write_text(changed)
+    change_evidence(world, revision='0' * 40)
     (world.root / 'tools/instruction-assembly-proof-driver.py').write_text('raise RuntimeError("current driver must not run")\n')
     (world.ops / 'bin/ops-projects').write_text('raise RuntimeError("live renderer must not run")\n')
     assert invoke(world, 'verify-baseline', *args).returncode == 0

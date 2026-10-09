@@ -25,7 +25,13 @@ EVIDENCE_FIELDS = {'owner', 'path', 'revision', 'location', 'status'}
 
 
 def git_bytes(root, *args, data=None):
-    result = subprocess.run(['git', '-C', str(root), *args], input=data, capture_output=True)
+    env = os.environ
+    executing_root = Path(__file__).resolve().parents[1]
+    if root.resolve() != executing_root:
+        # Hooks select lore's Git directory/index; foreign repositories must select their own.
+        local = git_bytes(executing_root, 'rev-parse', '--local-env-vars').decode().split()
+        env = {key: value for key, value in env.items() if key not in local}
+    result = subprocess.run(['git', '-C', str(root), *args], input=data, capture_output=True, env=env)
     if result.returncode:
         raise ValueError('git failed: ' + result.stderr.decode('utf-8', errors='replace').strip())
     return result.stdout
@@ -94,8 +100,13 @@ def catalog_from(data):
             fields(evidence, EVIDENCE_FIELDS, 'evidence')
             for key in EVIDENCE_FIELDS:
                 text(evidence[key], 'evidence ' + key)
+            if not re.fullmatch(r'[a-z][a-z0-9]{1,7}', evidence['owner']):
+                raise ValueError('invalid evidence owner prefix')
             if evidence['status'] not in ('recorded', 'none recorded', 'n/a'):
                 raise ValueError('evidence status must be recorded, none recorded or n/a')
+            if evidence['path'] in ('none recorded', 'n/a') or evidence['revision'] in ('none recorded', 'n/a'):
+                if evidence['path'] != evidence['revision']:
+                    raise ValueError('evidence path and revision must use the same sentinel')
             if evidence['path'] not in ('none recorded', 'n/a'):
                 relative_path(evidence['path'])
     return catalog
@@ -168,7 +179,9 @@ def registry():
 
 def owner_roots(catalog, overrides, root, *, validate=False):
     selected = {}
-    owners = {f['owner'] for f in catalog['fragments']} - {'lore'}
+    owners = ({f['owner'] for f in catalog['fragments']} |
+              {e['owner'] for f in catalog['fragments'] for e in f['evidence']
+               if e['path'] not in ('none recorded', 'n/a')}) - {'lore'}
     for option in overrides:
         name, sep, path = option.partition('=')
         if not sep or not path or name == 'lore' or name not in owners or name in selected:
@@ -233,6 +246,22 @@ def build_parser():
 
 def resolve_commit(root, ref):
     return git_bytes(root, 'rev-parse', '--verify', '--end-of-options', f'{ref}^{{commit}}').decode().strip()
+
+
+def validate_evidence(catalog, owners):
+    for fragment in catalog['fragments']:
+        for evidence in fragment['evidence']:
+            owner, revision, path = (evidence[key] for key in ('owner', 'revision', 'path'))
+            if path in ('none recorded', 'n/a'): continue
+            try:
+                root = owners[owner]
+                if resolve_commit(root, revision) != revision:
+                    raise ValueError('revision must be a full immutable commit id')
+                if git_bytes(root, 'cat-file', '-t', f'{revision}:{path}') != b'blob\n':
+                    raise ValueError('historical path must identify a file blob')
+                read_local(root, path, revision=revision)
+            except ValueError as error:
+                raise ValueError(f'invalid evidence {owner} {revision}:{path}: {error}') from error
 
 
 def verify_proof(root, args):
@@ -314,6 +343,7 @@ def main(argv=None):
         catalog_bytes = read_local(root, CATALOG, index=index)
         catalog = catalog_from(catalog_bytes)
         owners = owner_roots(catalog, args.owner_root, root, validate=args.command in ('write', 'check'))
+        validate_evidence(catalog, owners)
         if args.command == 'check' and args.owner_root:
             for option in args.owner_root: sys.stderr.write(f'assemble-instructions: owner-root override {option}\n')
         sources = {f['id']: read_local(owners[f['owner']], f['source'], index=index and f['owner'] == 'lore') for f in catalog['fragments']}

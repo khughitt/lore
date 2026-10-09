@@ -11,7 +11,7 @@ rationale = "Keep explicit development preferences."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "A1–A3"
 status = "none recorded"
 
@@ -25,7 +25,7 @@ rationale = "Preserve compatibility and naming constraints."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "A4–A5"
 status = "recorded"
 
@@ -39,7 +39,7 @@ rationale = "Protect repository and host-state operations."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "A6–A12"
 status = "recorded"
 [[fragments.evidence]]
@@ -59,7 +59,7 @@ rationale = "Preserve profile and layer precedence."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/specs/2026-09-19-project-profiles-design.md"
-revision = "44a0fc88383f096feeeb1346991059351e050cbf"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "project-profiles spec"
 status = "recorded"
 
@@ -73,7 +73,7 @@ rationale = "Keep document authority and review conventions."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "A13–A16"
 status = "recorded"
 [[fragments.evidence]]
@@ -93,7 +93,7 @@ rationale = "Keep paths, routing and review sheets intelligible to the user."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "A11 and A21"
 status = "recorded"
 [[fragments.evidence]]
@@ -113,8 +113,8 @@ rationale = "Preserve approval and handoff limits."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/notes/2026-10-02-skill-stop-points-brief.md"
-revision = "8bba32405c6829151080980223d81f43fc46f83c"
-location = "A17–A20"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
+location = "Stop-points brief sections 1–5"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
@@ -133,7 +133,7 @@ rationale = "Keep cleanup, tracked waiting and host-use policy."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/notes/2026-09-27-waiting-loops-brief.md"
-revision = "1d23722f4fbcab652b78a2bb3dc879d0ea42bb7c"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "waiting-loops brief"
 status = "recorded"
 [[fragments.evidence]]
@@ -153,7 +153,7 @@ rationale = "Preserve project test entry points and incident closeout."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "none recorded"
 status = "none recorded"
 
@@ -167,7 +167,7 @@ rationale = "Preserve shell and platform conventions."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "n/a"
 status = "n/a"
 
@@ -181,7 +181,7 @@ rationale = "Keep the note formats consumed by outcome measures."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "none recorded"
 status = "none recorded"
 
@@ -195,7 +195,7 @@ rationale = "Preserve explicit trial assignment and override rules."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/notes/2026-09-21-flow-gates-brief.md"
-revision = "26bd02eb9695bcf59b2fb1211c643f66b4dfe356"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "flow-gates brief"
 status = "recorded"
 [[fragments.evidence]]
@@ -215,8 +215,8 @@ rationale = "Preserve immediate redacted feedback routing."
 [[fragments.evidence]]
 owner = "lore"
 path = "docs/instruction-provenance.md"
-revision = "9c3831982468ed35a157a86d216363ba3438096d"
-location = "Feedback rows T30/Q16"
+revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
+location = "Feedback row T30"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
@@ -247,6 +247,6 @@ rationale = "Preserve ops-owned project identity and feedback vocabulary."
 [[fragments.evidence]]
 owner = "ops"
 path = "docs/specs/2026-09-07-project-identity-design.md"
-revision = "8dfdefe62c07480a5939021c90176a25e89e5e86"
+revision = "3c176f25455291abb1eaf2d0fe917f16b7be797d"
 location = "Assembly amendment and original identity contract."
 status = "n/a"

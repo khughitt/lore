@@ -203,7 +203,12 @@ Two note shapes are read by obs's outcome measures; write them as plain
 
 - When a review of your spec, plan, or implementation arrives, before acting on
   it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | human>`
-  (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-5.6`).
+  (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
+  Use the actual reviewer's exact model identity when supplied by the reviewer or
+  verified dispatch/runtime metadata. Do not substitute the controller's model,
+  a generic model family, or a configuration default. When the reviewer's model
+  cannot be verified, record the harness alone without guessing; keep human
+  reviews labelled `human`.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a
   disposition record, not a round.

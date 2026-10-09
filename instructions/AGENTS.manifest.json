@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "140dfa65700833428cc1dc831837a7f1a11e7ddb6bf951374234f5baee267bc3"
+    "sha256": "80b8073c150ce4b5bf43b46a337c031a0436fbb24d324b6102ac5d1b0bb13046"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -270,13 +270,13 @@
         }
       ],
       "id": "outcome-notes",
-      "length": 1138,
+      "length": 1488,
       "offset": 16789,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
-      "revision": "f2a387027ee214d33f6afa33707d6ea6db385591",
-      "sha256": "fa9825afeef8f9958e1328d5378b6d2669ff08de3ed3886b46cbf38ed550c50a",
+      "revision": "180c142f370847142a666096b18afcccc24bad32",
+      "sha256": "763a90a5d4940b3bea984b573eab491975f256217929ee624ff668de3cb4e598",
       "source": "instructions/fragments/outcome-notes.md"
     },
     {
@@ -299,7 +299,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 17928,
+      "offset": 18278,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -341,7 +341,7 @@
       ],
       "id": "feedback",
       "length": 3050,
-      "offset": 18457,
+      "offset": 18807,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -362,7 +362,7 @@
       ],
       "id": "projects",
       "length": 3872,
-      "offset": 21508,
+      "offset": 21858,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

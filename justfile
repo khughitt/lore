@@ -26,8 +26,9 @@ tt := "python3 tools/tt"
 # With no affected-only mechanism, set fast_cmd to the same command as test_cmd and say
 # so here; the target must always exist and the report shows the gap as equal durations.
 # Fast and full run the same tools directory; there is no affected-only selection.
-fast_cmd := "python3 -m pytest tools -q"
-test_cmd := "python3 -m pytest tools -q"
+# Temporary JUnit reports let tt record each run's five slowest tests.
+fast_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+test_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
@@ -56,13 +57,13 @@ ci_remote := "origin"
 # to the fast set when the base cannot be resolved; testmon's own selection (fast_cmd
 # may serve); or the project's fixed fast set. Say which here.
 # The push gate runs the same complete tools directory as the fast loop.
-push_fast_cmd := "python3 -m pytest tools -q"
+push_fast_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which
 # forms work is the runner's business (pytest: a path, path::name, -k expr; vitest: a
 # filename filter, -t "<name>"); name them in AGENTS.md under Gates.
-one_cmd := "python3 -m pytest"
+one_cmd := "python3 -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # What a fresh checkout or worktree needs before the suite can run: dependency installs
 # (npm ci, uv sync) and any gitignored inputs the tests read, hydrated from the main

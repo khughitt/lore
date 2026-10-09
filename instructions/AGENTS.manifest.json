@@ -5,12 +5,12 @@
   },
   "assembler": {
     "path": "bin/assemble-instructions",
-    "revision": "358ac55df3919e0abfb47152d3068cce4cac28a0",
-    "sha256": "ab5dffae6688b5ff0ee6b79f53a61b67b857a445f7db631e16f642681f70b6f3"
+    "revision": "0e2b52d80bf861ae3881aa9de067c9b5ff53e3e2",
+    "sha256": "8be1fdb64355d97f1fd02627523b8dd6c29629022a082001cd04b31bc3708d3f"
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "42018da3b9d2d3bef75dce854a4820e61fef460b9dc6ac67ebb18b3cb355961a"
+    "sha256": "5a9e150d48726a084b525ce1f2390c895edb61bc95e9ac73829fbe0a836297b8"
   },
   "fragments": [
     {
@@ -20,7 +20,7 @@
           "location": "A1\u2013A3",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "none recorded"
         }
       ],
@@ -41,7 +41,7 @@
           "location": "A4\u2013A5",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         }
       ],
@@ -62,7 +62,7 @@
           "location": "A6\u2013A12",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -90,7 +90,7 @@
           "location": "project-profiles spec",
           "owner": "lore",
           "path": "docs/specs/2026-09-19-project-profiles-design.md",
-          "revision": "44a0fc88383f096feeeb1346991059351e050cbf",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         }
       ],
@@ -111,7 +111,7 @@
           "location": "A13\u2013A16",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -139,7 +139,7 @@
           "location": "A11 and A21",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -164,10 +164,10 @@
       "classification": "mandatory",
       "evidence": [
         {
-          "location": "A17\u2013A20",
+          "location": "Stop-points brief sections 1\u20135",
           "owner": "lore",
           "path": "docs/notes/2026-10-02-skill-stop-points-brief.md",
-          "revision": "8bba32405c6829151080980223d81f43fc46f83c",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -195,7 +195,7 @@
           "location": "waiting-loops brief",
           "owner": "lore",
           "path": "docs/notes/2026-09-27-waiting-loops-brief.md",
-          "revision": "1d23722f4fbcab652b78a2bb3dc879d0ea42bb7c",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -223,7 +223,7 @@
           "location": "none recorded",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "none recorded"
         }
       ],
@@ -244,7 +244,7 @@
           "location": "n/a",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "n/a"
         }
       ],
@@ -265,7 +265,7 @@
           "location": "none recorded",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "none recorded"
         }
       ],
@@ -286,7 +286,7 @@
           "location": "flow-gates brief",
           "owner": "lore",
           "path": "docs/notes/2026-09-21-flow-gates-brief.md",
-          "revision": "26bd02eb9695bcf59b2fb1211c643f66b4dfe356",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -311,10 +311,10 @@
       "classification": "mandatory",
       "evidence": [
         {
-          "location": "Feedback rows T30/Q16",
+          "location": "Feedback row T30",
           "owner": "lore",
           "path": "docs/instruction-provenance.md",
-          "revision": "9c3831982468ed35a157a86d216363ba3438096d",
+          "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "recorded"
         },
         {
@@ -356,7 +356,7 @@
           "location": "Assembly amendment and original identity contract.",
           "owner": "ops",
           "path": "docs/specs/2026-09-07-project-identity-design.md",
-          "revision": "8dfdefe62c07480a5939021c90176a25e89e5e86",
+          "revision": "3c176f25455291abb1eaf2d0fe917f16b7be797d",
           "status": "n/a"
         }
       ],

@@ -17,6 +17,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 IDS = ['core', 'refactoring', 'git', 'profiles', 'design-docs', 'communication',
        'decisions', 'processes', 'tests', 'shell', 'outcome-notes', 'trials', 'feedback', 'projects']
+CATALOG_IDS = IDS[:6] + ['notation'] + IDS[6:]
 
 
 def git(root, *args):
@@ -42,7 +43,12 @@ def world(tmp_path):
     boundary = baseline.index(b'<!-- ops:projects start')
     cuts = [m.start() for m in re.finditer(rb'^## ', baseline[:boundary], re.M)] + [boundary]
     historical = {name: baseline[a:b][:-1] for name, a, b in zip(IDS[:-1], cuts, cuts[1:])}
-    catalog = tomllib.loads((root / 'instructions/assembly.toml').read_text())
+    # Fragments cataloged after version one leave the reference world.
+    path = root / 'instructions/assembly.toml'
+    head, *blocks = path.read_text().split('\n[[fragments]]\n')
+    path.write_text('\n[[fragments]]\n'.join([head] + [
+        block for block in blocks if tomllib.loads('[[fragments]]\n' + block)['fragments'][0]['id'] in IDS]))
+    catalog = tomllib.loads(path.read_text())
     for fragment in catalog['fragments']:
         if fragment['owner'] == 'lore':
             (root / fragment['source']).write_bytes(historical[fragment['id']])
@@ -190,10 +196,14 @@ def test_evidence_only_external_owner_uses_registry_and_override_identity(world,
         assert build(world, 'check', *args).returncode == 0
 
 
+def inventory(root):
+    catalog = tomllib.loads((root / 'instructions/assembly.toml').read_text())
+    return ([f['id'] for f in catalog['fragments']],
+            {f['classification'] for f in catalog['fragments']})
+
+
 def test_catalog_inventory_preserves_v1_mandatory_ids():
-    catalog = tomllib.loads((ROOT / 'instructions/assembly.toml').read_text())
-    assert [f['id'] for f in catalog['fragments']] == IDS
-    assert {f['classification'] for f in catalog['fragments']} == {'mandatory'}
+    assert inventory(ROOT) == (CATALOG_IDS, {'mandatory'})
 
 
 def test_historical_reference_fixtures_match_independent_git_blobs():
@@ -605,12 +615,11 @@ def test_deployed_recipes_ignore_stale_preparation_environment(world):
         assert b'owner-root override' not in result.stderr
 
 
-def test_version_one_inventory_does_not_freeze_current_policy_text(world, monkeypatch):
+def test_version_one_inventory_does_not_freeze_current_policy_text(world):
     checkout = world.root
     source = checkout / 'instructions/fragments/core.md'
     source.write_bytes(source.read_bytes() + b'- Later reviewed policy.\n')
-    monkeypatch.setattr(sys.modules[__name__], 'ROOT', checkout)
-    test_catalog_inventory_preserves_v1_mandatory_ids()
+    assert inventory(checkout) == (IDS, {'mandatory'})
 
 
 def test_later_policy_bytes_are_rendered_without_changing_historical_fixtures(world):

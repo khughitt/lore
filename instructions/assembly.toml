@@ -104,6 +104,20 @@ location = "original report: a review grid labelled only by parameter codes, wit
 status = "recorded"
 
 [[fragments]]
+id = "notation"
+owner = "lore"
+source = "instructions/fragments/notation.md"
+classification = "mandatory"
+provenance_date = "2026-10-10"
+rationale = "Let agents read the user's shorthand in prompts, thoughts and task text."
+[[fragments.evidence]]
+owner = "lore"
+path = "tasks/lore-996d23.md"
+revision = "87875c8975767273046686c6c2d6564275efa98c"
+location = "scoped body: the user's request (item 1 of the source thought) and the adopted notation chosen from mindful's #mindful-syntax catalog and mind6's 2026-10-05 capture-syntax brief"
+status = "recorded"
+
+[[fragments]]
 id = "decisions"
 owner = "lore"
 source = "instructions/fragments/decisions.md"

@@ -318,6 +318,7 @@ to read one of them from anywhere.
 - `obs` — obs — Cross-project execution evidence, observability, and historical analysis
 - `ops` — ops — The hub for work spanning projects, and the shared tooling
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
+- `quarry` — quarry — One CLI and skills over scientific resources, with domains as lenses
 - `relay` — relay — Harness adapters, hook dispatch, and a host-local live-agent registry
 - `sci` — science — The daily surface of verifiably: the layer people and agents use
 - `sun` — sun — The heliophysics research program: a workspace over the verifiably stack

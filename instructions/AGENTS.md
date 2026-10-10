@@ -278,8 +278,8 @@ and `list`, `ready`, `next`, `prime`, `tree`, `tags`, and `sample` each take `--
 to read one of them from anywhere.
 
 - `atoms` — atoms — A recoverable filesystem effect engine: the crash-safe substrate
-- `autonomy` — autonomy — The envelope and orchestrator of Science: what may run unattended
-- `beliefs` — beliefs — The epistemic kernel of Science: recording scientific belief
+- `autonomy` — autonomy — The envelope and orchestrator of verifiably: what may run unattended
+- `beliefs` — beliefs — The epistemic kernel of verifiably: recording scientific belief
 - `dots` — dotfiles — The dotfiles: shell, editor, desktop, and terminal configuration
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them
@@ -297,7 +297,7 @@ to read one of them from anywhere.
 - `ops` — ops — The hub for work spanning projects, and the shared tooling
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
 - `relay` — relay — Harness adapters, hook dispatch, and a host-local live-agent registry
-- `sci` — science — The daily surface of Science: the layer people and agents use
+- `sci` — science — The daily surface of verifiably: the layer people and agents use
 - `tasks` — tasks — The file-based task tracker every project here uses
 - `tui` — tasks-tui — A keyboard-driven terminal front end for the tasks tracker
 - `vdocs` — docs (verifiably-docs) — The verifiably ecosystem's front door: its goal, overview, and repository map

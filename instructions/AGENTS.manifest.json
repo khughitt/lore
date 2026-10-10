@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "07869fbcf393169e17bff433c301179082c676e073cf6d3b9e102d7e91aa2ae3"
+    "sha256": "f39de0ff59004eabc750a4dca4b3e350a3fb3bd142d1ae3b0b0eac4bf7dea732"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "161d075dcd650a1734547f7f326946b8154a9ea7bb48561f6df4887ee4ef20b6"
+    "sha256": "9d602773e0aea73239cd67e39eeb8040873cf9a82a62c90aba6d9231be1600f3"
   },
   "fragments": [
     {
@@ -169,16 +169,23 @@
           "path": "tasks/lore-996d23.md",
           "revision": "87875c8975767273046686c6c2d6564275efa98c",
           "status": "recorded"
+        },
+        {
+          "location": "alignment with the capture vocabulary the user confirmed on 2026-10-05 in mind6 (~> retired, a ~ b formula or association, -> sequence or causation)",
+          "owner": "lore",
+          "path": "tasks/lore-852845.md",
+          "revision": "a2fe16263fe1f5950a82289beb0149155274a622",
+          "status": "recorded"
         }
       ],
       "id": "notation",
-      "length": 1091,
+      "length": 1474,
       "offset": 6986,
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
-      "revision": "5f03cba6ade26108c6ab911ccc4cd65bf226f9ac",
-      "sha256": "9d1f390c559281a62335fbc5edfd02e0394bd4e7a9cd7cdd13a8a99c1e9bc522",
+      "revision": "bc74e51aebaea5e4323cb2765cc15d77436d58bd",
+      "sha256": "91bac7bdbf8ec2463ca0ec42a2dd750de79b8cacd9f020119437e65b7a4ea6c0",
       "source": "instructions/fragments/notation.md"
     },
     {
@@ -201,7 +208,7 @@
       ],
       "id": "decisions",
       "length": 3675,
-      "offset": 8078,
+      "offset": 8461,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
@@ -229,7 +236,7 @@
       ],
       "id": "processes",
       "length": 3718,
-      "offset": 11754,
+      "offset": 12137,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -250,7 +257,7 @@
       ],
       "id": "tests",
       "length": 1230,
-      "offset": 15473,
+      "offset": 15856,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -271,7 +278,7 @@
       ],
       "id": "shell",
       "length": 1176,
-      "offset": 16704,
+      "offset": 17087,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -292,7 +299,7 @@
       ],
       "id": "outcome-notes",
       "length": 1488,
-      "offset": 17881,
+      "offset": 18264,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -320,7 +327,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 19370,
+      "offset": 19753,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -362,7 +369,7 @@
       ],
       "id": "feedback",
       "length": 3050,
-      "offset": 19899,
+      "offset": 20282,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -383,7 +390,7 @@
       ],
       "id": "projects",
       "length": 4178,
-      "offset": 22950,
+      "offset": 23333,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

@@ -66,18 +66,22 @@ this repository's own instructions, then the user in the session.
 ## Notation
 
 The user writes prompts, thoughts and task text in a shorthand (catalogued in mindful's
-`#mindful-syntax` thought). Read it this way:
+`#mindful-syntax` thought; vocabulary confirmed in mind6's capture-syntax brief). Read
+it this way:
 
-- `~word`: approximately, "something like word".
-- `a -> b`: a leads to or causes b. `a ~> b`: a may lead to b. `a ~ b`: a is
-  associated with, or proportional to, b. `a x b`: a interacts with b, or a and b
-  combined.
+- `~word` (no space): approximately, "something like word".
+- `a ~ b` has two readings: `y ~ x` as in a model formula (y is a function of,
+  distributed as, or proportional to x), or association (a is similar to, associated
+  with b). Read it only where the context makes one clear.
+- `a -> b` is either a sequence (a, then b) or causation (a causes b); when the
+  difference matters, say which you read. A `?` after a relation (`a -> b?`) makes the
+  relation uncertain. Older text writes that as `a ~> b`, now retired.
+- `a x b`: a combination of, or an interaction between, a and b.
 - `a|b` and `(a|b|…)`: alternatives.
-- A trailing `?` marks a question or an idea; `#tag?` is a proposed tag, not a
+- A trailing `?` marks a question or an idea; `#tag?` is a possible tag, not a
   confirmed one.
-- `(?)` after a phrase: tentative. The user believes it but has not verified it, or
-  does not fully understand it; never treat it as established.
-- `- [ ]` is an action item; `? []` is an open question.
+- `(?)` after a claim, plan or label: tentative, maybe. Never treat it as established.
+- `- [ ]` is an open action and `- [x]` a done one; `? []` is an open question.
 - Backticks name a thing or a method; quotation marks mark a term being coined or just
   learned.
 - A line label says what the line is: `context:`, `insp:` (inspiration),

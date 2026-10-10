@@ -116,6 +116,12 @@ path = "tasks/lore-996d23.md"
 revision = "87875c8975767273046686c6c2d6564275efa98c"
 location = "scoped body: the user's request (item 1 of the source thought) and the adopted notation chosen from mindful's #mindful-syntax catalog and mind6's 2026-10-05 capture-syntax brief"
 status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "tasks/lore-852845.md"
+revision = "a2fe16263fe1f5950a82289beb0149155274a622"
+location = "alignment with the capture vocabulary the user confirmed on 2026-10-05 in mind6 (~> retired, a ~ b formula or association, -> sequence or causation)"
+status = "recorded"
 
 [[fragments]]
 id = "decisions"

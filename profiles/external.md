@@ -16,4 +16,6 @@ promotes it); `--body` replaces the template, so prefer `--body-file` from a
 filled copy. When a convention cannot be met, say so instead of opening a PR
 that violates it. Design specs and plans stay out of the tree: write them at
 the skill's path, add that path to `.git/info/exclude`, and copy them out
-before removing a worktree. GitHub writes use the `khughitt` account.
+before removing a worktree. GitHub writes use the `khughitt` account, named per
+command: `GH_TOKEN=$(gh auth token --user khughitt) gh …`, with
+`gh auth switch --user khughitt` as the fallback.

@@ -290,6 +290,7 @@ to read one of them from anywhere.
 - `lore` — lore — Agent context: the instruction corpus, profiles, skills, and traceable assembly
 - `material` — niri-material (niri) — One glass material across niri, terminals, editor, and shell
 - `mind6` — mindful v6 (mindful) — Headless thought, mindmap, and journal store; the current mindful
+- `mm` — multiple-myeloma — The multiple myeloma research program: a workspace over the verifiably stack
 - `nodes` — nodes — A problem-agnostic knowledge substrate: typed markdown nodes
 - `ns` — natural-systems (natural-systems-v2) — Research on structure across representation, observation, scale, and coupling
 - `obs` — obs — Cross-project execution evidence, observability, and historical analysis

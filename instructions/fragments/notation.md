@@ -17,8 +17,6 @@ it this way:
   confirmed one.
 - `(?)` after a claim, plan or label: tentative, maybe. Never treat it as established.
 - `- [ ]` is an open action and `- [x]` a done one; `? []` is an open question.
-- Backticks name a thing or a method; quotation marks mark a term being coined or just
-  learned.
 - A line label says what the line is: `context:`, `insp:` (inspiration),
   `motivation:`, `question:`, `intuition:`, `basic idea:`, `basic approach:`,
   `challenge:`, `limitation:`, `side:` (an aside).

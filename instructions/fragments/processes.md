@@ -44,3 +44,8 @@
   ask at that moment, naming what will appear and for how long, or `tasks park --reason
   quiet` the work. A retry or a later capture asks again rather than reusing an earlier
   yes.
+- A dispatch that asks a subagent to write its report to a file names that file
+  `<slug>-report.md` (`task-3-report.md`, `audit-report.md`), never a name starting
+  with `report` (`report.md`, `report-*.md`). Claude Code refuses a subagent's write
+  to those names ("Subagents should return findings as text"), and the whole report
+  then lands in the subagent's final message instead of the file.

@@ -183,10 +183,12 @@ it this way:
   quiet` the work. A retry or a later capture asks again rather than reusing an earlier
   yes.
 - A dispatch that asks a subagent to write its report to a file names that file
-  `<slug>-report.md` (`task-3-report.md`, `audit-report.md`), never a name starting
-  with `report` (`report.md`, `report-*.md`). Claude Code refuses a subagent's write
+  `<slug>-report.md` (`task-3-report.md`, `audit-report.md`), never a `.md` name
+  starting with `report`, `summary`, `findings` or `analysis` in any case
+  (`report.md`, `Summary-x.md`, `findings.md`). Claude Code refuses a subagent's write
   to those names ("Subagents should return findings as text"), and the whole report
-  then lands in the subagent's final message instead of the file.
+  then lands in the subagent's final message instead of the file. hq's
+  `subagent-write-refused` capability fact records the rule and its probe.
 
 ## Tests
 

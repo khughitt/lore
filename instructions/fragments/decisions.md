@@ -32,6 +32,13 @@
   checkout, never merge on your own: present the integration choice. A push, a PR, or
   a merge that changes a live global surface (these global instructions, hooks,
   services) stays an action outside the repository.
+- Reviewers stay read-only and return their full review in their final message;
+  dispatches must not ask them to write report files. When persistence is needed,
+  the controller saves the full returned text in the plan workspace as
+  `<slug>-report.md`, with the reviewer identity recorded alongside it. This applies
+  to initial task reviews, scoped re-reviews and final whole-branch reviews. Keep
+  the existing ledger, ruling and retention rules; saving a report does not replace
+  those records.
 - After a final whole-branch review, in subagent-driven and inline (executing-plans)
   execution alike, fix (or rule on, as the skills allow) its Critical and Important
   findings in corrective rounds, up to five; then surface what remains. A round is one

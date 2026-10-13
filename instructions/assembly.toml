@@ -138,6 +138,12 @@ location = "Stop-points brief sections 1–5"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-41e948.md"
+revision = "beda6d686e6eee9c4c47212067acad386bf99068"
+location = "scoped body: read-only reviewer templates conflict with dispatches requesting report files; controller-owned persistence preserves full findings, reviewer identity and ledger/retention rules"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

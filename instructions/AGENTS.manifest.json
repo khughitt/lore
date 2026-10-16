@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "a9f49a87fb2f5da26e235e5f9e8b5f9a24b2357061b9555929dff08b454837d7"
+    "sha256": "0ded4c506b9613f487c456c84b704ba0d13891436671e928f87f8fb79e1a0383"
   },
   "fragments": [
     {
@@ -146,7 +146,7 @@
           "location": "original report: a review grid labelled only by parameter codes, with no title, axis headers or legend (review-sheet clause)",
           "owner": "lore",
           "path": "tasks/lore-9cd3e5.md",
-          "revision": "298bd8f1c997529efab848be211ebb995407b0b7",
+          "revision": "61bb3f3369bdd987adaf1681855ba9c3b2d3024b",
           "status": "recorded"
         }
       ],
@@ -167,14 +167,14 @@
           "location": "scoped body: the user's request (item 1 of the source thought) and the adopted notation chosen from mindful's #mindful-syntax catalog and mind6's 2026-10-05 capture-syntax brief",
           "owner": "lore",
           "path": "tasks/lore-996d23.md",
-          "revision": "87875c8975767273046686c6c2d6564275efa98c",
+          "revision": "4ef8fb3f6d072c5d0225344bfedd810567fd3659",
           "status": "recorded"
         },
         {
           "location": "alignment with the capture vocabulary the user confirmed on 2026-10-05 in mind6 (~> retired, a ~ b formula or association, -> sequence or causation)",
           "owner": "lore",
           "path": "tasks/lore-852845.md",
-          "revision": "a2fe16263fe1f5950a82289beb0149155274a622",
+          "revision": "2b2b3eeb382b4fe8ddf5fae432b670cdc46cab66",
           "status": "recorded"
         }
       ],
@@ -202,7 +202,7 @@
           "location": "scoped body: read-only reviewer templates conflict with dispatches requesting report files; controller-owned persistence preserves full findings, reviewer identity and ledger/retention rules",
           "owner": "lore",
           "path": "tasks/lore-41e948.md",
-          "revision": "beda6d686e6eee9c4c47212067acad386bf99068",
+          "revision": "a46a977c555f31c30857c3e36a76eae3de74cb3d",
           "status": "recorded"
         },
         {
@@ -363,7 +363,7 @@
           "location": "original report: owner feedback on an artifact saved only as a local memory, filed after a follow-up question (owner-feedback clause)",
           "owner": "lore",
           "path": "tasks/lore-c58645.md",
-          "revision": "4bcc37027f23b32135e346d68acf52a7a8e111e1",
+          "revision": "6ba73b6a798353ea557444e549cfdbea93b851bf",
           "status": "recorded"
         },
         {

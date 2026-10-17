@@ -391,6 +391,22 @@ def test_interrupted_pair_is_detected_and_repaired(world, monkeypatch):
     assert build(world, 'check').returncode == 0
 
 
+def test_blob_ids_match_git_without_a_subprocess(world, monkeypatch):
+    module = load_assembler(world)
+    catalog = tomllib.loads((world.root / 'instructions/assembly.toml').read_text())
+    inputs = [((world.root if f['owner'] == 'lore' else world.ops) / f['source']).read_bytes()
+              for f in catalog['fragments']]
+    current = tomllib.loads((ROOT / 'instructions/assembly.toml').read_text())
+    inputs += [(ROOT / f['source']).read_bytes() for f in current['fragments'] if f['owner'] == 'lore']
+    inputs.append((ROOT / 'bin/assemble-instructions').read_bytes())
+    expected = [subprocess.run(['git', '-C', str(world.root), 'hash-object', '--stdin'], input=data,
+                               capture_output=True, check=True).stdout.decode().strip() for data in inputs]
+    def refuse(*args, **kwargs):
+        raise AssertionError('blob must not start a subprocess')
+    monkeypatch.setattr(module.subprocess, 'run', refuse)
+    assert [module.blob(data) for data in inputs] == expected
+
+
 def commit_pair(world):
     assert build(world).returncode == 0
     git(world.root, 'add', '.')

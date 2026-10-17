@@ -250,6 +250,11 @@ Two note shapes are read by obs's outcome measures; write them as plain
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a
   disposition record, not a round.
+  One agent writes each round's note, once, before handing the findings on: the
+  controller when there is one, otherwise the agent the review arrives to. A worker
+  handed review findings (resumed or freshly dispatched) checks that the round's note
+  exists and writes none; if it is missing, the worker says so in its report for the
+  controller to add.
 - When you file a task because work closed as `done` fell short, changed, or grew,
   note it on the new task at filing: `concerns: <task-id> <defect|change|extension> — <one line>`.
   `defect`: the closed work did not do what its task asked or broke something that

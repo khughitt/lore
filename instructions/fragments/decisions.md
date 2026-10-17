@@ -12,7 +12,11 @@
   reviewed before the next phase starts. Within writing them, sections are not
   individually approved.
 - A question, when asked, carries your recommendation as the first option and is one
-  question, not a series.
+  question, not a series. A question that asks the user to describe what they want
+  (brainstorming's open questions, and its playback asking what is wrong or missing)
+  carries no options; a guess they can correct stands in for the recommendation. That
+  playback is not a "does this section look right" decision: what they want is theirs
+  to say.
 - A turn that ends with work still owed reports the observed status, not what the turn
   ending implies: which work has stopped and why, what is still running (a background
   check, a dispatched child) and how its result is picked up, and who owns the next step

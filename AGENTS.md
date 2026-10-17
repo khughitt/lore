@@ -48,6 +48,10 @@ Historical proof commands are acceptance checks outside the recurring gates.
 
 - The linked global artifact and manifest are generated; do not edit either by
   hand. Edit `instructions/fragments/…`, then run `just assemble`.
+- The manifest records `bin/assemble-instructions`' own blob id and sha256, so an
+  edit to the assembler stales it even when the rendered instructions are unchanged.
+  Run `just assemble` and stage the manifest in the same commit; only its assembler
+  entry may change.
 - Ops owns the Projects/Feedback-owners source. Edit identity declarations there,
   run just projects in ops, then `just assemble` here. Assembly is the only writer
   of delivered instructions and provenance; both checks must pass.

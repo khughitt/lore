@@ -1,12 +1,20 @@
 ## Tests
 
-- While changing code: `just test-one <runner args>` for the test you are working on,
-  then `just test-fast` before committing. Where a project's justfile has no `test-one`
-  yet, use the focused run its AGENTS.md names; if it names none, use `just test-fast`
-  until the project adopts `test-one`.
+- While changing code, run the test you are working on, then a fast check before
+  committing, by the first route the project defines:
+  - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;
+    where there is no `test-one` yet, the focused run its AGENTS.md names, or
+    `just test-fast` if it names none. Then `just test-fast` before committing.
+  - No `test-fast` recipe: `just test-one` when the justfile has it, otherwise the test
+    command the project's guide documents (or the package test script or README command
+    it points to); before committing, that documented command.
+  - Neither a recipe nor a documented command: say in your report that the project
+    declares no test route. Do not guess a runner, skip the check silently, or add
+    recipes to the project to fill the gap.
 - The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
-  hook. Run `just test` yourself only when the hooks are not installed, when the fast
-  target does not cover the affected behavior, or when you are asked to.
+  hook. Run it yourself (`just test`, or the guide's documented full-suite command where
+  there is no recipe) only when the hooks are not installed, when the fast check does
+  not cover the affected behavior, or when you are asked to.
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.

@@ -256,20 +256,84 @@ def resolve_commit(root, ref):
     return git_bytes(root, 'rev-parse', '--verify', '--end-of-options', f'{ref}^{{commit}}').decode().strip()
 
 
+FULL_ID = re.compile(r'[0-9a-f]{40}|[0-9a-f]{64}')
+BATCH_HEADER = re.compile(rb'([0-9a-f]{40}|[0-9a-f]{64}) (blob|commit|tree|tag) ([0-9]+)')
+UNRESOLVED = (b' missing', b' ambiguous')
+IMMUTABLE = 'revision must be a full immutable commit id'
+
+
+def batch_answers(output, count):
+    """Parse up to `count` complete `git cat-file --batch -Z` answers, in order.
+
+    An answer is (object name, type), or None for an input Git could not resolve.
+    Parsing stops at the first incomplete or malformed answer: where Git stopped streaming."""
+    answers, at = [], 0
+    while len(answers) < count:
+        end = output.find(b'\0', at)
+        if end < 0:
+            break
+        header = BATCH_HEADER.fullmatch(output, at, end)
+        if header is None:
+            # Every input holds ^ or :, so an unresolved answer never looks like a header.
+            if not output[at:end].endswith(UNRESOLVED):
+                break  # Not Git's format: the caller reports the answers as missing.
+            answers.append(None)
+            at = end + 1
+            continue
+        stop = end + 1 + int(header[3])
+        if output[stop:stop + 1] != b'\0':
+            break
+        answers.append((header[1].decode(), header[2].decode()))
+        at = stop + 1
+    return answers
+
+
+def owner_evidence_reasons(owner, root, indexed):
+    """Failure reasons by catalog position for one owner's pointers, from one content read.
+
+    Never raises for a Git failure: repository-level failures become a reason at the
+    position where today's per-pointer calls would first fail, so the caller's
+    catalog-order decision ranks them with every other verdict."""
+    reasons = {i: IMMUTABLE for i, p in indexed if not FULL_ID.fullmatch(p['revision'])}
+    queried = [(i, p) for i, p in indexed if i not in reasons]
+    if not queried:
+        return reasons
+    data = b''.join(f'{p["revision"]}^{{commit}}\0{p["revision"]}:{p["path"]}\0'.encode() for _, p in queried)
+    result = git_run(root, 'cat-file', '--batch', '-Z', data=data)
+    stderr = result.stderr.decode('utf-8', errors='replace').strip()
+    expected = 2 * len(queried)
+    answers = batch_answers(result.stdout, expected)
+    if not result.returncode:
+        failure = f'git cat-file returned {len(answers)} of {expected} answers'
+    elif 0 < len(answers) < expected:
+        failure = 'historical blob is unreadable: ' + stderr
+    else:
+        # The call failed as a whole: report it at the owner's first queried pointer.
+        failure, answers = 'git failed: ' + stderr, []
+    for n, (i, p) in enumerate(queried):
+        known = answers[2 * n:2 * n + 2]
+        if known[:1] == [None]:
+            reasons[i] = IMMUTABLE + '; Git cannot resolve it'
+        elif known[:1] and known[0] != (p['revision'], 'commit'):
+            reasons[i] = IMMUTABLE
+        elif len(known) < 2:
+            reasons[i] = failure
+        elif known[1] is None or known[1][1] != 'blob':
+            reasons[i] = 'historical path must identify a file blob'
+        if len(known) < 2:
+            break  # Git stopped here; later answers are unknown and later in catalog order.
+    return reasons
+
+
 def validate_evidence(catalog, owners):
-    for fragment in catalog['fragments']:
-        for evidence in fragment['evidence']:
-            owner, revision, path = (evidence[key] for key in ('owner', 'revision', 'path'))
-            if path in ('none recorded', 'n/a'): continue
-            try:
-                root = owners[owner]
-                if resolve_commit(root, revision) != revision:
-                    raise ValueError('revision must be a full immutable commit id')
-                if git_bytes(root, 'cat-file', '-t', f'{revision}:{path}') != b'blob\n':
-                    raise ValueError('historical path must identify a file blob')
-                read_local(root, path, revision=revision)
-            except ValueError as error:
-                raise ValueError(f'invalid evidence {owner} {revision}:{path}: {error}') from error
+    pointers = [e for f in catalog['fragments'] for e in f['evidence'] if e['path'] not in ('none recorded', 'n/a')]
+    reasons = {}
+    for owner in dict.fromkeys(p['owner'] for p in pointers):
+        reasons.update(owner_evidence_reasons(owner, owners[owner],
+                                              [(i, p) for i, p in enumerate(pointers) if p['owner'] == owner]))
+    for i, p in enumerate(pointers):
+        if i in reasons:
+            raise ValueError(f'invalid evidence {p["owner"]} {p["revision"]}:{p["path"]}: {reasons[i]}')
 
 
 def verify_proof(root, args):

@@ -420,6 +420,107 @@ def test_foreign_git_calls_ask_for_local_env_names_once(world, monkeypatch):
     assert sum('--local-env-vars' in argv for argv in calls) == 1
 
 
+def evidence_catalog(*pointers):
+    return {'fragments': [{'evidence': [{'owner': owner, 'revision': revision, 'path': path}
+                                        for owner, revision, path in pointers]}]}
+
+
+def commit_files(world, files):
+    for name, data in files.items():
+        (world.root / name).write_bytes(data)
+    git(world.root, 'add', '--', *files)
+    git(world.root, 'commit', '-q', '-m', 'test: historical evidence files')
+    return git(world.root, 'rev-parse', 'HEAD').decode().strip()
+
+
+def invalid(module, catalog, owners):
+    with pytest.raises(ValueError) as error:
+        module.validate_evidence(catalog, owners)
+    return str(error.value)
+
+
+def test_newline_paths_keep_their_answers_paired(world):
+    module = load_assembler(world)
+    head = commit_files(world, {'notes\nwith newline.md': b'kept\n', 'binary.dat': b'a\0b\0\0c\n',
+                                'plain.md': b'plain\n'})
+    owners = {'lore': world.root}
+    module.validate_evidence(evidence_catalog(('lore', head, 'notes\nwith newline.md'),
+                                              ('lore', head, 'binary.dat'), ('lore', head, 'plain.md')), owners)
+    assert invalid(module, evidence_catalog(('lore', head, 'notes\nwith newline.md'), ('lore', head, 'binary.dat'),
+                                            ('lore', head, 'docs')),
+                   owners) == f'invalid evidence lore {head}:docs: historical path must identify a file blob'
+
+
+def test_batch_call_failure_is_a_git_failure(world, monkeypatch):
+    module = load_assembler(world)
+    head = commit_files(world, {'plain.md': b'plain\n'})
+    def old_git(argv, *args, **kwargs):
+        return subprocess.CompletedProcess(argv, 129, b'', b"error: unknown switch `Z'")
+    monkeypatch.setattr(module.subprocess, 'run', old_git)
+    assert invalid(module, evidence_catalog(('lore', head, 'plain.md')),
+                   {'lore': world.root}) == f"invalid evidence lore {head}:plain.md: git failed: error: unknown switch `Z'"
+
+
+def test_missing_paths_are_not_file_blobs(world):
+    module = load_assembler(world)
+    head = commit_files(world, {'plain.md': b'plain\n'})
+    assert invalid(module, evidence_catalog(('lore', head, 'notes\nmissing.md'), ('lore', head, 'plain.md')),
+                   {'lore': world.root}) == f'invalid evidence lore {head}:notes\nmissing.md: historical path must identify a file blob'
+
+
+def test_first_failing_pointer_in_catalog_order_is_reported(world):
+    module = load_assembler(world)
+    head = commit_files(world, {'plain.md': b'plain\n'})
+    ops_head = git(world.ops, 'rev-parse', 'HEAD').decode().strip()
+    owners = {'lore': world.root, 'ops': world.ops}
+    assert invalid(module, evidence_catalog(('lore', head, 'plain.md'), ('ops', ops_head, 'missing.md'),
+                                            ('lore', 'HEAD', 'plain.md')),
+                   owners) == f'invalid evidence ops {ops_head}:missing.md: historical path must identify a file blob'
+    assert invalid(module, evidence_catalog(('lore', 'HEAD', 'plain.md'), ('ops', ops_head, 'missing.md')),
+                   owners) == 'invalid evidence lore HEAD:plain.md: revision must be a full immutable commit id'
+
+
+def test_earlier_invalid_pointer_outranks_a_later_repository_failure(world):
+    module = load_assembler(world)
+    head = commit_files(world, {'plain.md': b'plain\n'})
+    owners = {'lore': world.root, 'ops': world.root.parent / 'no-such-ops'}
+    unavailable = ('ops', '0' * 40, 'docs/notes.md')
+    assert invalid(module, evidence_catalog(('lore', head, 'missing.md'), unavailable),
+                   owners) == f'invalid evidence lore {head}:missing.md: historical path must identify a file blob'
+    assert invalid(module, evidence_catalog(unavailable, ('lore', head, 'missing.md')),
+                   owners).startswith(f'invalid evidence ops {"0" * 40}:docs/notes.md: git failed: ')
+
+
+def test_unreadable_historical_blob_is_rejected(world):
+    module = load_assembler(world)
+    head = commit_files(world, {'damaged.md': b'content that will not survive truncation\n', 'plain.md': b'plain\n'})
+    object_id = git(world.root, 'rev-parse', f'{head}:damaged.md').decode().strip()
+    loose = world.root / '.git/objects' / object_id[:2] / object_id[2:]
+    loose.chmod(0o644)
+    loose.write_bytes(loose.read_bytes()[:12])
+    message = invalid(module, evidence_catalog(('lore', head, 'plain.md'), ('lore', head, 'damaged.md'),
+                                               ('lore', head, 'plain.md')), {'lore': world.root})
+    assert message.startswith(f'invalid evidence lore {head}:damaged.md: historical blob is unreadable: ')
+
+
+def test_evidence_validation_spawns_one_git_per_owner(world, monkeypatch):
+    module = load_assembler(world)
+    catalog = module.catalog_from((world.root / 'instructions/assembly.toml').read_bytes())
+    owners = {'lore': world.root, 'ops': world.ops}
+    concrete = {e['owner'] for f in catalog['fragments'] for e in f['evidence']
+                if e['path'] not in ('none recorded', 'n/a')}
+    calls = []
+    run = module.subprocess.run
+    def counting(argv, *args, **kwargs):
+        calls.append(argv)
+        return run(argv, *args, **kwargs)
+    monkeypatch.setattr(module.subprocess, 'run', counting)
+    module.validate_evidence(catalog, owners)
+    lookups = [argv for argv in calls if '--local-env-vars' in argv]
+    assert len(calls) - len(lookups) <= len(concrete)
+    assert len(lookups) <= 1
+
+
 def commit_pair(world):
     assert build(world).returncode == 0
     git(world.root, 'add', '.')

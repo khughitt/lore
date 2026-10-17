@@ -85,15 +85,15 @@ def world(tmp_path):
         git(repo, 'config', 'commit.gpgsign', 'false')
         git(repo, 'add', '.')
         git(repo, 'commit', '-q', '-m', 'test: bootstrap sources without manifest')
+    heads = {repo: git(repo, 'rev-parse', 'HEAD').decode().strip() for repo in (root, ops)}
     path = root / 'instructions/assembly.toml'
     text = path.read_text()
     for fragment in catalog['fragments']:
         for evidence in fragment['evidence']:
             if evidence['path'] in ('none recorded', 'n/a'): continue
             repo = root if evidence['owner'] == 'lore' else ops
-            revision = git(repo, 'rev-parse', 'HEAD').decode().strip()
             text = text.replace('revision = ' + json.dumps(evidence['revision']),
-                                'revision = ' + json.dumps(revision))
+                                'revision = ' + json.dumps(heads[repo]))
     path.write_text(text)
     return SimpleNamespace(root=root, ops=ops, config=config,
                            env={**os.environ, 'XDG_CONFIG_HOME': str(config.parent)}, initial=initial)

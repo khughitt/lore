@@ -18,10 +18,13 @@ ROOT = Path(__file__).resolve().parents[1]
 IDS = ['core', 'refactoring', 'git', 'profiles', 'design-docs', 'communication',
        'decisions', 'processes', 'tests', 'shell', 'outcome-notes', 'trials', 'feedback', 'projects']
 CATALOG_IDS = IDS[:6] + ['notation'] + IDS[6:]
+# Fixture repositories ignore the host's global and system Git config and its hooks.
+HERMETIC_GIT = {'GIT_CONFIG_GLOBAL': os.devnull, 'GIT_CONFIG_NOSYSTEM': '1'}
 
 
 def git(root, *args):
-    return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True).stdout
+    return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True,
+                          env={**os.environ, **HERMETIC_GIT}).stdout
 
 
 def invoke(world, *args):
@@ -96,7 +99,8 @@ def world(tmp_path):
                                 'revision = ' + json.dumps(heads[repo]))
     path.write_text(text)
     return SimpleNamespace(root=root, ops=ops, config=config,
-                           env={**os.environ, 'XDG_CONFIG_HOME': str(config.parent)}, initial=initial)
+                           env={**os.environ, **HERMETIC_GIT, 'XDG_CONFIG_HOME': str(config.parent)},
+                           initial=initial)
 
 
 def outputs(world):

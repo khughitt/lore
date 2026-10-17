@@ -407,6 +407,19 @@ def test_blob_ids_match_git_without_a_subprocess(world, monkeypatch):
     assert [module.blob(data) for data in inputs] == expected
 
 
+def test_foreign_git_calls_ask_for_local_env_names_once(world, monkeypatch):
+    module = load_assembler(world)
+    calls = []
+    run = module.subprocess.run
+    def counting(argv, *args, **kwargs):
+        calls.append(argv)
+        return run(argv, *args, **kwargs)
+    monkeypatch.setattr(module.subprocess, 'run', counting)
+    heads = {module.git_bytes(world.ops, 'rev-parse', 'HEAD') for _ in range(3)}
+    assert len(heads) == 1
+    assert sum('--local-env-vars' in argv for argv in calls) == 1
+
+
 def commit_pair(world):
     assert build(world).returncode == 0
     git(world.root, 'add', '.')

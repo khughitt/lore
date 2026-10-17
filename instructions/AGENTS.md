@@ -13,7 +13,7 @@
 
 - Use conventional commits.
 - No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, "Generated with Claude Code") stay out everywhere. The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR; `gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write.
-- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, run `just setup` in the new worktree when its justfile defines it: it installs dependencies and hydrates gitignored inputs. A suite that fails there before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
+- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, run `just setup` in the new worktree when its justfile defines it: it installs dependencies and hydrates gitignored inputs. Without that recipe, run only the setup command the root guide names explicitly; never guess an installer from manifest filenames, which the worktree skill's Step 2 detection would do. A suite that fails there before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
 - A live test of a worktree's code runs it by explicit path (`.worktrees/<name>/bin/<tool>`) or an environment override, never by repointing a shared launcher, symlink, service unit, or config include on the host at the worktree. When a host pointer must be repointed, record it in a task note at that moment (what, from, to, how to restore) and restore it before `tasks park` or `tasks done`; while it stands, the park note names it. Before removing a worktree, check that no host pointer resolves into it (`readlink -f` over `~/bin/*`, `~/.local/bin/*`, user systemd units, known config includes) and refuse while one does. A rollout that hands live state to another project's tool checks where that tool resolves on `PATH` first, rather than assuming the main checkout.
 - Plain `git worktree remove` deletes ignored files without `--force`. Before any
   removal, list them (`git -C <path> status --ignored --porcelain`) and copy out what is
@@ -203,13 +203,21 @@ it this way:
 
 ## Tests
 
-- While changing code: `just test-one <runner args>` for the test you are working on,
-  then `just test-fast` before committing. Where a project's justfile has no `test-one`
-  yet, use the focused run its AGENTS.md names; if it names none, use `just test-fast`
-  until the project adopts `test-one`.
+- While changing code, run the test you are working on, then a fast check before
+  committing, by the first route the project defines:
+  - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;
+    where there is no `test-one` yet, the focused run its AGENTS.md names, or
+    `just test-fast` if it names none. Then `just test-fast` before committing.
+  - No `test-fast` recipe: `just test-one` when the justfile has it, otherwise the test
+    command the project's guide documents (or the package test script or README command
+    it points to); before committing, that documented command.
+  - Neither a recipe nor a documented command: say in your report that the project
+    declares no test route. Do not guess a runner, skip the check silently, or add
+    recipes to the project to fill the gap.
 - The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
-  hook. Run `just test` yourself only when the hooks are not installed, when the fast
-  target does not cover the affected behavior, or when you are asked to.
+  hook. Run it yourself (`just test`, or the guide's documented full-suite command where
+  there is no recipe) only when the hooks are not installed, when the fast check does
+  not cover the affected behavior, or when you are asked to.
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.

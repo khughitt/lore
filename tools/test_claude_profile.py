@@ -29,6 +29,7 @@ home = "personal"
 design_docs = "commit"
 gh_account = "khughitt"
 pr_draft = "by-permission"
+git_identity = "Me <khughitt@example.invalid>"
 
 [profile.work]
 fragment = "work"
@@ -36,6 +37,7 @@ home = "work"
 design_docs = "exclude"
 gh_account = "work-account"
 pr_draft = "by-permission"
+git_identity = "Me <work-account@example.invalid>"
 
 [profile.external]
 fragment = "external"
@@ -43,6 +45,7 @@ home = "personal"
 design_docs = "exclude"
 gh_account = "khughitt"
 pr_draft = "required"
+git_identity = "Me <khughitt@example.invalid>"
 
 [profile.science]
 fragment = "science"

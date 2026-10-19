@@ -30,7 +30,7 @@ Historical proof commands are acceptance checks outside the recurring gates.
 - `skills/`: seven vendored skills, `skills/references/` and the skill README.
 - `vendor/superpowers`: the pinned submodule; `just setup` initializes it.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
-- `docs/notes/`: eight dated briefs. `docs/`: coding advice and the provenance audit.
+- `docs/notes/`: 20 dated briefs. `docs/`: coding advice and the provenance audit.
   `docs/archive/`: old instruction text awaiting review; its README lists it.
   `docs/specs/` and `docs/plans/`: the profiles documents and this extraction's design
   and plan.

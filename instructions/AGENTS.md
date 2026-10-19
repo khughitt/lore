@@ -343,6 +343,7 @@ to read one of them from anywhere.
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
 - `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene
 - `lit` — lit — Science literature as a world model, a personal corpus, and a walk over both
+- `look` — lookout — A read-only glance at live agents, task state and obs signals in a niri dropdown
 - `lore` — lore — Agent context: the instruction corpus, profiles, skills, and traceable assembly
 - `material` — niri-material (niri) — One glass material across niri, terminals, editor, and shell
 - `mind6` — mindful v6 (mindful) — Headless thought, mindmap, and journal store; the current mindful

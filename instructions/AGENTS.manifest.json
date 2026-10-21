@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "c020e07b69689e0319b975862d3c559b517783b4faddd3f4e5fb6b7216becfdd"
+    "sha256": "f22f816843663cecee7b331196369e2228dcfae2f77c4f71872249237dbdbc90"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -375,13 +375,13 @@
         }
       ],
       "id": "feedback",
-      "length": 3050,
+      "length": 3537,
       "offset": 25407,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
-      "revision": "d871ceba4e366b90da0f661f563bb20995e6c6d5",
-      "sha256": "e3f92e7adceba2706d073a5459be61e04702c2e3b78adb4a443e516efd018c09",
+      "revision": "6a3a94343a1a07aab07a219d399bb00e4b648c91",
+      "sha256": "ebaa65aacfdffa596ebe85155d0178ae9a0251013af65c9f923f5d8e10a179e5",
       "source": "instructions/fragments/feedback.md"
     },
     {
@@ -397,7 +397,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 28458,
+      "offset": 28945,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

@@ -144,6 +144,12 @@ location = "scoped body: read-only reviewer templates conflict with dispatches r
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-5d5c0b.md"
+revision = "eee28eeaef6d88567c033dfadf4399bc11ce0cb7"
+location = "scoped body: the profile sets the local-merge default; an explicit repository or session instruction authorizes reviewed local merges in a user-owned checkout under another profile; push, PR and live-global approval unchanged"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

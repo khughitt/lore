@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "77eb66394e25d09be632187bf7965c35bd1bf7648641e4ab30e5cb2c2e3a9993"
+    "sha256": "3fccb29a0def90005ec98159bf5f7a86f1e0887abb812f1ad58f75a3f686cf00"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "f69b3b7617b8571d500f4d2568bf5af82042b61953da3cdbe46665c1a2248369"
+    "sha256": "b8bd1e673714f671c3b4e1a21a122c7b57895778ed0e6fed0064dea2076d6f77"
   },
   "fragments": [
     {
@@ -66,6 +66,20 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body: an overridden HOME let git config --global write the real XDG config, and a hook-inherited GIT_DIR sent a fixture's git config into a real repository",
+          "owner": "lore",
+          "path": "tasks/lore-e1c2db.md",
+          "revision": "454efabedea36a66abd7d4eac85881333b7e7e49",
+          "status": "recorded"
+        },
+        {
+          "location": "reported (not reproduced locally): a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing",
+          "owner": "lore",
+          "path": "tasks/lore-c51b7c.md",
+          "revision": "94d30593adcbfecf9f98b9a631a05f9d30359ab3",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -74,13 +88,13 @@
         }
       ],
       "id": "git",
-      "length": 5554,
+      "length": 7162,
       "offset": 261,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Protect repository and host-state operations.",
-      "revision": "f4bb8a8202db4fce082b13b92ceb4fec2101ae02",
-      "sha256": "01e07500f8689e90baa523678f1cfa83cbf6163c8d6f128c80f75e36722ec9c5",
+      "revision": "9d357c07e935a8bdca62709b04c343b5eed45da4",
+      "sha256": "42d1465758e3c1d4cec5cbcd0c7f57d6c4563b90286e9acb7eab4c6fa3b2d334",
       "source": "instructions/fragments/git.md"
     },
     {
@@ -96,7 +110,7 @@
       ],
       "id": "profiles",
       "length": 537,
-      "offset": 5816,
+      "offset": 7424,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve profile and layer precedence.",
@@ -124,7 +138,7 @@
       ],
       "id": "design-docs",
       "length": 293,
-      "offset": 6354,
+      "offset": 7962,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep document authority and review conventions.",
@@ -152,7 +166,7 @@
       ],
       "id": "communication",
       "length": 1442,
-      "offset": 6648,
+      "offset": 8256,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
@@ -180,7 +194,7 @@
       ],
       "id": "notation",
       "length": 1376,
-      "offset": 8091,
+      "offset": 9699,
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
@@ -221,13 +235,13 @@
         }
       ],
       "id": "decisions",
-      "length": 5445,
-      "offset": 9468,
+      "length": 5543,
+      "offset": 11076,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
-      "revision": "e361a0d1d2dd5874f537b18d0877007e6219cfe9",
-      "sha256": "60b8527b409d2f50ae7239875e50b409388454eeb87607c2bacdbefe1475b734",
+      "revision": "6bd22fd7170c4847b8ab8e244c88852d892c3d89",
+      "sha256": "6b0745bacd010d2926c8e81945d6555a829d5e4ceaa482f5174cc130bb1aea0c",
       "source": "instructions/fragments/decisions.md"
     },
     {
@@ -241,6 +255,20 @@
           "status": "recorded"
         },
         {
+          "location": "Daemon handoff finding: a tracked channel stays open while a child holds stdout or stderr; setsid stays in the terminal scope; systemd-run --user without --scope starts a detached transient service",
+          "owner": "lore",
+          "path": "docs/notes/2026-10-13-execution-fallbacks-brief.md",
+          "revision": "6c8f17191d55165fd1d9e6c050cb6895743a086d",
+          "status": "recorded"
+        },
+        {
+          "location": "scoped body: a multi-session experiment kept its canonical frozen input on tmpfs, parked across a reboot and lost it; the park named the path only in prose",
+          "owner": "lore",
+          "path": "tasks/lore-4620de.md",
+          "revision": "c226acb941c18b6f4e06ff0efd2882475c0e9e2c",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -249,13 +277,13 @@
         }
       ],
       "id": "processes",
-      "length": 4270,
-      "offset": 14914,
+      "length": 6275,
+      "offset": 16620,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
-      "revision": "1d18e3c74aad559d748f47b6b8552080f2ae5e67",
-      "sha256": "b80bda4961e734b25a1344a393d80ccfedf90ef94b8066d33081846069c20832",
+      "revision": "d10f3746a914fb16b00127d92c36cffb52ed46d0",
+      "sha256": "e958d5ee5d029defd32fb706c3040b9477a64bda07bbe8adc973c3dab7624e91",
       "source": "instructions/fragments/processes.md"
     },
     {
@@ -267,16 +295,23 @@
           "path": "docs/instruction-provenance.md",
           "revision": "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67",
           "status": "none recorded"
+        },
+        {
+          "location": "reported (not reproduced locally): a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing",
+          "owner": "lore",
+          "path": "tasks/lore-c51b7c.md",
+          "revision": "94d30593adcbfecf9f98b9a631a05f9d30359ab3",
+          "status": "recorded"
         }
       ],
       "id": "tests",
-      "length": 2431,
-      "offset": 19185,
+      "length": 2645,
+      "offset": 22896,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
-      "revision": "35593a42dcaa07c6e648455b1915e12940c5edcd",
-      "sha256": "774150fa0755fe4b9c575c8cf56bd5d65d19833d037f84227c732b4feeca839a",
+      "revision": "2706af4b4c4a79fdc6005e3eee59b83b83d80359",
+      "sha256": "ccdf9e7f69da861eafc7994a117f6d70ee2fb49d673a95619e0173b306fa0785",
       "source": "instructions/fragments/tests.md"
     },
     {
@@ -292,7 +327,7 @@
       ],
       "id": "shell",
       "length": 1667,
-      "offset": 21617,
+      "offset": 25542,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -312,13 +347,13 @@
         }
       ],
       "id": "outcome-notes",
-      "length": 2484,
-      "offset": 23285,
+      "length": 2564,
+      "offset": 27210,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
-      "revision": "f94165d2564489acaad02b780a701319ab181c76",
-      "sha256": "0f386ae95e532b0af7212f87958281098a893eda9240f948c1d7c4aead503d65",
+      "revision": "64c4ce68dda07fa7cb8c29cc3d4f50150e0a840f",
+      "sha256": "1e28d6d7ef57307919a607ec7982eec1dfbe10c35db81608ac1d7744bbd3c5a0",
       "source": "instructions/fragments/outcome-notes.md"
     },
     {
@@ -341,7 +376,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 25770,
+      "offset": 29775,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -383,7 +418,7 @@
       ],
       "id": "feedback",
       "length": 3692,
-      "offset": 26299,
+      "offset": 30304,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -404,7 +439,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 29992,
+      "offset": 33997,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

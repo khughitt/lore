@@ -28,6 +28,11 @@ Run `just assemble` to generate `instructions/AGENTS.md` and
 `instructions/AGENTS.manifest.json`. Do not hand-edit either output. Provenance
 stays out of the delivered text.
 
+To preview an activation without writing the delivered pair, run
+`bin/assemble-instructions render` for the artifact and `render --manifest` for its
+manifest, adding `--owner-root ops=<prepared ops worktree>` when the Projects input is
+not yet merged. The manifest's artifact hash ties the two outputs together.
+
 Ops owns instructions/fragments/projects.md in its checkout. Refresh that source
 with just projects in ops, then assemble here. The assembler's read-only check
 validates the catalog, sources, manifest, artifact and live Projects renderer;

@@ -136,7 +136,7 @@ def change_evidence(world, **changes):
     return tomllib.loads(body)
 
 
-@pytest.mark.parametrize('command', ['render', 'write', 'check'])
+@pytest.mark.parametrize('command', ['render', 'render --manifest', 'write', 'check'])
 @pytest.mark.parametrize('status', ['recorded', 'none recorded', 'n/a'])
 @pytest.mark.parametrize('bad', ['missing-commit', 'blob', 'mutable', 'abbreviated', 'missing-path', 'tree'])
 def test_invalid_concrete_evidence_is_rejected_before_output(world, command, status, bad):
@@ -153,7 +153,7 @@ def test_invalid_concrete_evidence_is_rejected_before_output(world, command, sta
         evidence['path'] = 'disk-only.md'
         (world.root / evidence['path']).write_text('Not in the historical commit.\n')
     change_evidence(world, **evidence)
-    result = build(world, command)
+    result = build(world, *command.split())
     assert result.returncode == 1, result.stdout
     assert b'evidence' in result.stderr
     for key in ('owner', 'revision', 'path'):
@@ -250,6 +250,41 @@ def test_render_reproduces_initial_bytes_without_writing(world):
     assert result.returncode == 0, result.stderr
     assert result.stdout == world.initial
     assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
+
+
+def files(root):
+    return {path: path.read_bytes() for path in sorted(root.rglob('*')) if path.is_file()}
+
+
+def test_render_manifest_previews_the_pair_write_produces_without_writing(world):
+    before = files(world.root.parent)
+    plain, preview = build(world, 'render'), build(world, 'render', '--manifest')
+    assert files(world.root.parent) == before
+    assert plain.returncode == 0 and preview.returncode == 0, preview.stderr
+    assert json.loads(preview.stdout)['artifact']['sha256'] == hashlib.sha256(plain.stdout).hexdigest()
+    assert build(world).returncode == 0
+    assert outputs(world) == (plain.stdout, preview.stdout)
+
+
+def test_render_manifest_reads_the_owner_root_override(world):
+    prepared = world.root.parent / 'prepared-ops'
+    git(world.ops, 'worktree', 'add', '-q', '--detach', str(prepared), 'HEAD')
+    projects = added_projects(world)
+    (prepared / 'instructions/fragments/projects.md').write_bytes(projects)
+    override = ('--owner-root', f'ops={prepared}')
+    plain, preview = invoke(world, 'render', *override), invoke(world, 'render', '--manifest', *override)
+    assert plain.returncode == 0 and preview.returncode == 0, preview.stderr
+    assert plain.stdout.endswith(projects)
+    assert invoke(world, 'write', *override).returncode == 0
+    assert outputs(world) == (plain.stdout, preview.stdout)
+
+
+@pytest.mark.parametrize('args', [(), ('--manifest',)])
+def test_render_with_a_missing_source_prints_nothing(world, args):
+    (world.root / 'instructions/fragments/core.md').unlink()
+    result = build(world, 'render', *args)
+    assert result.returncode == 1
+    assert not result.stdout
 
 
 def test_write_reproducible_manifest_spans_and_no_rewrite(world):

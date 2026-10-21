@@ -661,6 +661,114 @@ def test_renderer_drift_and_failure_are_reported_and_skip_is_narrow(world):
     assert result.returncode == 1 and b'render failed' in result.stderr and b'bad renderer' in result.stderr
 
 
+END_MARKER = b'<!-- ops:projects end -->\n'
+
+
+def added_projects(world, count=1):
+    """Projects bytes with `count` new entries, as a host registration would render them."""
+    current = (world.ops / 'instructions/fragments/projects.md').read_bytes()
+    entries = b''.join(b'- `zz%02d` -- fixture %02d -- A newly registered project\n' % (n, n) for n in range(count))
+    return current.replace(END_MARKER, entries + END_MARKER)
+
+
+def set_renderer(world, data):
+    (world.ops / 'bin/ops-projects').write_text(f'import sys\nsys.stdout.buffer.write({data!r})\n')
+
+
+def refresh_ops(world, data):
+    (world.ops / 'instructions/fragments/projects.md').write_bytes(data)
+    set_renderer(world, data)
+
+
+def snapshot(world):
+    return outputs(world) + ((world.ops / 'instructions/fragments/projects.md').read_bytes(),)
+
+
+def check_without_writes(world, *args):
+    before = snapshot(world)
+    result = build(world, 'check', *args)
+    assert snapshot(world) == before
+    assert result.returncode == 1
+    assert b'Traceback' not in result.stderr
+    return result.stderr.decode()
+
+
+def test_renderer_drift_names_the_registry_owner_and_both_repairs(world):
+    commit_pair(world)
+    set_renderer(world, added_projects(world))
+    err = check_without_writes(world)
+    assert 'Projects input differs from this host' in err
+    assert 'owner ops' in err
+    assert 'just projects in ops, then just assemble in lore' in err
+    assert '+ - `zz00` -- fixture 00' in err
+
+
+def test_refreshed_projects_input_with_stale_artifact_is_projects_only(world):
+    commit_pair(world)
+    refresh_ops(world, added_projects(world))
+    err = check_without_writes(world)
+    assert 'artifact Projects block stale' in err
+    assert 'just assemble in lore' in err
+    assert 'just projects' not in err and 'instructions/fragments/' not in err
+    assert '+ - `zz00` -- fixture 00' in err
+
+
+def test_projects_evidence_is_bounded(world):
+    commit_pair(world)
+    refresh_ops(world, added_projects(world, 40))
+    err = check_without_writes(world)
+    changed = [line for line in err.splitlines() if line.lstrip().startswith(('+ ', '- '))]
+    assert 0 < len(changed) < 40
+    assert 'more changed lines' in err
+
+
+@pytest.mark.parametrize('drift', ['local', 'mixed'])
+def test_local_or_mixed_artifact_drift_keeps_the_fragment_hint(world, drift):
+    commit_pair(world)
+    core = world.root / 'instructions/fragments/core.md'
+    core.write_bytes(core.read_bytes() + b'- Unassembled policy.\n')
+    if drift == 'mixed': refresh_ops(world, added_projects(world))
+    err = check_without_writes(world)
+    assert 'artifact stale; edit instructions/fragments/' in err
+    assert 'Projects block' not in err
+
+
+@pytest.mark.parametrize('damage', ['missing', 'duplicated'])
+def test_unrecognised_markers_keep_the_general_failure(world, damage):
+    commit_pair(world)
+    refresh_ops(world, added_projects(world))
+    artifact = world.root / 'instructions/AGENTS.md'
+    data = artifact.read_bytes()
+    artifact.write_bytes(data.replace(END_MARKER, b'') if damage == 'missing' else data + END_MARKER)
+    err = check_without_writes(world)
+    assert 'artifact stale; edit instructions/fragments/' in err
+    assert 'Projects block' not in err
+
+
+def test_projects_only_classification_reads_the_staged_artifact(world):
+    commit_pair(world)
+    core = world.root / 'instructions/fragments/core.md'
+    core.write_bytes(core.read_bytes() + b'- Approved policy update.\n')
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    refresh_ops(world, added_projects(world))
+    assert build(world).returncode == 0
+    err = check_without_writes(world)
+    assert 'artifact Projects block stale' in err
+    assert build(world, 'check', '--working-tree').returncode == 0
+
+
+def test_unrelated_staging_classifies_the_working_tree_artifact(world):
+    commit_pair(world)
+    (world.root / 'other.md').write_text('unrelated\n')
+    git(world.root, 'add', 'other.md')
+    refresh_ops(world, added_projects(world))
+    err = check_without_writes(world)
+    assert 'artifact Projects block stale' in err
+    assert build(world).returncode == 0
+    assert build(world, 'check').returncode == 0
+
+
 def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(world):
     commit_pair(world)
     lore_rev = git(world.root, 'rev-parse', 'HEAD').decode().strip()

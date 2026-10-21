@@ -24,8 +24,9 @@
   process reads (such as `USER`), with a fake value for any credential. It never passes
   the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,
   `{**os.environ, …}`, a denylist filter), so a failing case's traceback, captured
-  output or log cannot print a credential. Build that environment before the first run,
-  the RED run included: an expected failure is exactly where it gets printed.
+  output or log cannot print a credential held in the environment or under `HOME`.
+  Build that environment before the first run, the RED run included: an expected
+  failure is exactly where a credential gets printed.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and

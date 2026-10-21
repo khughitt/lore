@@ -116,11 +116,12 @@ it this way:
   individually approved.
 - A request to review a spec or plan names the frozen revision under review: the
   repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`
-  rather than the working file, or, where the profile keeps the document out of the
-  tree, its path and sha256. While that review is open, never amend or rebase the
-  commit, and leave an out-of-tree file unedited. A later draft reaches review only as
-  a new frozen revision, named in the next round's request, and each finding is judged
-  against the revision it reviewed.
+  rather than the working file. Where the profile keeps the document out of the tree,
+  the request names its path and sha256, and the reviewer checks that sha256 before
+  reading. While that review is open, never amend or rebase the commit, and leave an
+  out-of-tree file unedited. A later draft reaches review only as a new frozen
+  revision, named in the next round's request, and each finding is judged against the
+  revision its request named.
 - A question, when asked, carries your recommendation as the first option and is one
   question, not a series. A question that asks the user to describe what they want
   (brainstorming's open questions, and its playback asking what is wrong or missing)
@@ -274,8 +275,9 @@ it this way:
   process reads (such as `USER`), with a fake value for any credential. It never passes
   the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,
   `{**os.environ, …}`, a denylist filter), so a failing case's traceback, captured
-  output or log cannot print a credential. Build that environment before the first run,
-  the RED run included: an expected failure is exactly where it gets printed.
+  output or log cannot print a credential held in the environment or under `HOME`.
+  Build that environment before the first run, the RED run included: an expected
+  failure is exactly where a credential gets printed.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
@@ -320,13 +322,14 @@ Two note shapes are read by obs's outcome measures; write them as plain
   verified dispatch/runtime metadata. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
-  reviews labelled `human`. A Codex session that performed a review reads its identity,
-  never another session's, in the turn that performed it with a fresh command (never a
-  terminal left from an earlier turn): `timeout 2 relay model --harness codex --pretty`
-  prints `codex/<model>` when verified and `codex` otherwise. Copy the printed value;
-  when the command exits non-zero or times out, the value is `codex`. Whenever it is
-  bare `codex`, name the stderr reason or the exit status in your report. A reviewer
-  writes no note: it states that value in its review for the note writer to record.
+  reviews labelled `human`. A Codex session that performed a review reads its own
+  identity (never on another session's behalf), in the turn that performed it with a
+  fresh command (never a terminal left from an earlier turn):
+  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when
+  verified and `codex` otherwise. Copy the printed value; when the command exits
+  non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the
+  stderr reason or the exit status alongside the value (in the review, or the final
+  message for a self-review). A reviewer writes no note: it states that value in its review for the note writer to record.
   Only a session noting its own self-review records it directly.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a

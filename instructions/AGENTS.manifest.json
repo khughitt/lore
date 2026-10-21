@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "b22854bb9c8bf9236cab8bfc6cdbd00af70486a6cb928397439eb845842592cb"
+    "sha256": "77eb66394e25d09be632187bf7965c35bd1bf7648641e4ab30e5cb2c2e3a9993"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "0ded4c506b9613f487c456c84b704ba0d13891436671e928f87f8fb79e1a0383"
+    "sha256": "f69b3b7617b8571d500f4d2568bf5af82042b61953da3cdbe46665c1a2248369"
   },
   "fragments": [
     {
@@ -206,6 +206,13 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body: the profile sets the local-merge default; an explicit repository or session instruction authorizes reviewed local merges in a user-owned checkout under another profile; push, PR and live-global approval unchanged",
+          "owner": "lore",
+          "path": "tasks/lore-5d5c0b.md",
+          "revision": "eee28eeaef6d88567c033dfadf4399bc11ce0cb7",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -214,13 +221,13 @@
         }
       ],
       "id": "decisions",
-      "length": 5044,
+      "length": 5445,
       "offset": 9468,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
-      "revision": "9f31856a1280f63c1f3e43e010b02f88e6200dfc",
-      "sha256": "1daa0ccdc8e75cd92673feecac192b3cd95298c06e4b273c74feaa670cd87710",
+      "revision": "e361a0d1d2dd5874f537b18d0877007e6219cfe9",
+      "sha256": "60b8527b409d2f50ae7239875e50b409388454eeb87607c2bacdbefe1475b734",
       "source": "instructions/fragments/decisions.md"
     },
     {
@@ -243,7 +250,7 @@
       ],
       "id": "processes",
       "length": 4270,
-      "offset": 14513,
+      "offset": 14914,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -264,7 +271,7 @@
       ],
       "id": "tests",
       "length": 2431,
-      "offset": 18784,
+      "offset": 19185,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -285,7 +292,7 @@
       ],
       "id": "shell",
       "length": 1667,
-      "offset": 21216,
+      "offset": 21617,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -306,7 +313,7 @@
       ],
       "id": "outcome-notes",
       "length": 2484,
-      "offset": 22884,
+      "offset": 23285,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -334,7 +341,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 25369,
+      "offset": 25770,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -376,7 +383,7 @@
       ],
       "id": "feedback",
       "length": 3692,
-      "offset": 25898,
+      "offset": 26299,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -397,7 +404,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 29591,
+      "offset": 29992,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

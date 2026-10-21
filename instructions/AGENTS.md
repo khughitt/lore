@@ -289,10 +289,22 @@ it this way:
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
 the session-start message name it. To start other blocked work, use `tasks start
-<id> --force --reason "<why>"` so the override is recorded. Close a latency
-incident tagged `test-latency` only after `tt-latency verify <id> --after <remedy
-timestamp>` exits 0 for every host named in its breach notes, and include the
-verify output in the `tasks done` message.
+<id> --force --reason "<why>"` so the override is recorded.
+
+A latency incident tagged `test-latency` closes in three phases. In the remedy's
+worktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and
+records nothing. After the remedy branch merges, the cutoff is the merge commit's time
+in UTC (`2026-09-26T18:35:55Z`): only successful, uncontended, unwidened runs that start
+strictly after it count, so let them accumulate on every host named in the breach notes.
+Then, on each of those hosts, record from the registered checkout with the task's claim
+moved there (`tasks start <id>` in it), keeping the output and the exit status apart:
+`out=$(mktemp); tt-latency verify <id> --after <cutoff> >"$out" 2>&1; rc=$?`, then
+`tasks attach <id> "$out" --name verify-<host>.txt --caption "<verdict line>"`, then
+read `rc`. A successful attach is not a successful verify. Each run notes the
+obligations its host meets and exits 1 while another host still owes one; close only
+after a run exits 0 with `verified: every obligation is met`, with a one-line `tasks
+done` message naming that verdict, the cutoff and the attachment names, never the
+output itself.
 
 ## Shell
 

@@ -70,3 +70,10 @@
   Without a subagent tool, the re-review is a self-review, recorded as such in the
   ledger and the final message, as executing-plans' final-review fallback does. External
   actions stay gated.
+- A review correction to a task already closed as `done`, before its branch is
+  integrated, reopens that record: the agent that makes the fix (the fix subagent, or
+  you inline) runs `tasks edit <id> --status todo`, then `tasks start <id>`, since a
+  bare `start` refuses a done record. A task still open, parked or not, needs only
+  `tasks start <id>`. The fix owner releases it with `tasks done` or `tasks park`
+  before reporting. Such a correction stays a review finding; a `concerns:` task is
+  filed only for work that fell short after its branch landed.

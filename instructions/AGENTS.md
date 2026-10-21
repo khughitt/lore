@@ -132,10 +132,15 @@ it this way:
   findings" step) is a bounded decision under this rule unless it falls in the stop
   list above; this rule outranks the skill's "exactly as written".
 - Integrating a finished, reviewed branch by local merge is a bounded decision only in
-  a repository the user owns (a `personal` profile checkout). In a work or external
-  checkout, never merge on your own: present the integration choice. A push, a PR, or
-  a merge that changes a live global surface (these global instructions, hooks,
-  services) stays an action outside the repository.
+  a repository the user owns. The profile sets the default: a `personal` checkout
+  allows it; in a `work` or `external` checkout, never merge on your own: present the
+  integration choice. A user-owned checkout under another profile allows it only when
+  its repository instructions or the user in the session say so explicitly (for
+  example, "Reviewed branches may be merged locally into main without asking."). Never
+  infer that permission from the account, the path, the profile's name or assumed
+  ownership. A push, a PR, or a merge that changes a live global surface (these global
+  instructions, hooks, services) stays an action outside the repository under every
+  profile and authorization.
 - Reviewers stay read-only and return their full review in their final message;
   dispatches must not ask them to write report files. When persistence is needed,
   the controller saves the full returned text in the plan workspace as

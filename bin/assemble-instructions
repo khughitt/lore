@@ -220,9 +220,12 @@ def output_path(root, name):
     return path
 
 
+def manifest_bytes(manifest):
+    return (json.dumps(manifest, sort_keys=True, indent=2) + '\n').encode()
+
+
 def write_pair(root, artifact, manifest):
-    values = [(output_path(root, ARTIFACT), artifact),
-              (output_path(root, MANIFEST), (json.dumps(manifest, sort_keys=True, indent=2) + '\n').encode())]
+    values = [(output_path(root, ARTIFACT), artifact), (output_path(root, MANIFEST), manifest_bytes(manifest))]
     prepared = []
     try:
         for path, data in values:
@@ -248,6 +251,8 @@ def build_parser():
         if name.startswith('verify-'):
             command.add_argument('--revision', required=True)
             if name == 'verify-initial': command.add_argument('--projects-revision', required=True)
+        if name == 'render':
+            command.add_argument('--manifest', action='store_true')
         if name == 'check':
             command.add_argument('--working-tree', action='store_true')
             command.add_argument('--skip-projects-render', action='store_true')
@@ -447,7 +452,7 @@ def main(argv=None):
             for option in args.owner_root: sys.stderr.write(f'assemble-instructions: owner-root override {option}\n')
         sources = {f['id']: read_local(owners[f['owner']], f['source'], index=index and f['owner'] == 'lore') for f in catalog['fragments']}
         artifact, manifest = assemble(catalog_bytes, sources, assembler_bytes, committed_minimum(root))
-        if args.command == 'render': sys.stdout.buffer.write(artifact)
+        if args.command == 'render': sys.stdout.buffer.write(manifest_bytes(manifest) if args.manifest else artifact)
         elif args.command == 'write': write_pair(root, artifact, manifest)
         else:
             if not args.skip_projects_render:
@@ -456,10 +461,9 @@ def main(argv=None):
                 if rendered.stdout != sources['projects']:
                     raise ValueError('Projects input differs from this host\'s current project rendering (a project was registered, renamed or retired; owner ops); '
                                      'run just projects in ops, then just assemble in lore\n' + changed_lines(sources['projects'], rendered.stdout))
-            expected = (json.dumps(manifest, sort_keys=True, indent=2) + '\n').encode()
             selected = read_local(root, ARTIFACT, index=index)
             if selected != artifact: raise ValueError(artifact_drift(selected, artifact))
-            if read_local(root, MANIFEST, index=index) != expected:
+            if read_local(root, MANIFEST, index=index) != manifest_bytes(manifest):
                 raise ValueError('manifest stale; run just assemble in lore')
         return 0
     except (ValueError, OSError, UnicodeError) as error:

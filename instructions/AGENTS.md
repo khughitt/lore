@@ -220,6 +220,13 @@ it this way:
   not cover the affected behavior, or when you are asked to.
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
+- A test that starts a subprocess passes it an environment built key by key: `PATH`,
+  `HOME` pointed at a temporary directory the test owns, and each other variable the
+  process reads (such as `USER`), with a fake value for any credential. It never passes
+  the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,
+  `{**os.environ, …}`, a denylist filter), so a failing case's traceback, captured
+  output or log cannot print a credential. Build that environment before the first run,
+  the RED run included: an expected failure is exactly where it gets printed.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and

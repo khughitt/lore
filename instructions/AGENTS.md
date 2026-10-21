@@ -253,6 +253,12 @@ verify output in the `tasks done` message.
   shell tool runs the login shell, zsh. Under zsh an unquoted word starting with `=`
   (`echo ===`) or a glob that matches nothing (`--include=*.py`) fails the whole
   command line: quote them (`echo '==='`, `--include='*.py'`).
+- `tasks root <task-id>` takes a full task id and prints the registered root of its
+  project (`--pretty` for the bare path); it refuses a bare prefix. To find a project
+  by prefix, read `tasks projects --paths --pretty`, or the `root` field of its default
+  JSON rows. Never invent an id to feed `root` or hardcode a host path. Both name the
+  registered root, the main checkout: a command run without a scope inside a worktree
+  still reads that worktree, and neither lookup replaces it.
 - `pkill -f <pattern>` also matches the shell running it, whose command line contains
   the pattern, and kills it: use `pkill -f '[p]attern'` or kill the pid you recorded.
 - A skill read through the shell rather than loaded natively is read completely before

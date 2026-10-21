@@ -11,6 +11,13 @@
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not
   individually approved.
+- A request to review a spec or plan names the frozen revision under review: the
+  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`
+  rather than the working file, or, where the profile keeps the document out of the
+  tree, its path and sha256. While that review is open, never amend or rebase the
+  commit, and leave an out-of-tree file unedited. A later draft reaches review only as
+  a new frozen revision, named in the next round's request, and each finding is judged
+  against the revision it reviewed.
 - A question, when asked, carries your recommendation as the first option and is one
   question, not a series. A question that asks the user to describe what they want
   (brainstorming's open questions, and its playback asking what is wrong or missing)

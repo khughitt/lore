@@ -50,6 +50,12 @@ location = "scoped body: an overridden HOME let git config --global write the re
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-c51b7c.md"
+revision = "94d30593adcbfecf9f98b9a631a05f9d30359ab3"
+location = "scoped body: a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."
@@ -206,6 +212,12 @@ path = "docs/instruction-provenance.md"
 revision = "4e5aa132f452a0a8c6170261d6a3e7f1592a6d67"
 location = "none recorded"
 status = "none recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "tasks/lore-c51b7c.md"
+revision = "94d30593adcbfecf9f98b9a631a05f9d30359ab3"
+location = "scoped body: a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
+status = "recorded"
 
 [[fragments]]
 id = "shell"

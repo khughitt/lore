@@ -49,6 +49,10 @@ this repository's own instructions, then the user in the session.
 ## Communication
 
 - If the user suddenly switches the conversation to a different project, confirm that it was intentional.
+- Use no emoji in what you write: replies, reports, and task text (titles, bodies,
+  notes). Their fixed colours cannot follow a project's identity colour. Content a
+  project itself asks for, and other Unicode such as arrows or box drawing, is not
+  covered.
 - A path you show the user is one they can open from where they stand, the main
   checkout: relative to it when the file lives there, absolute otherwise. Never write
   it relative to a directory only you know, such as the scratchpad (`scratchpad/x.md`

@@ -176,6 +176,12 @@ location = "Daemon handoff finding: a tracked channel stays open while a child h
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-4620de.md"
+revision = "c226acb941c18b6f4e06ff0efd2882475c0e9e2c"
+location = "scoped body: a multi-session experiment kept its canonical frozen input on tmpfs, parked across a reboot and lost it; the park named the path only in prose"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

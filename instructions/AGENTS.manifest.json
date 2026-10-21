@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "8bce9df7807fbcd630689fc6c7263899f50b6aa87ff6c18f1147cf331a917314"
+    "sha256": "82c8a59e809c968ca8974f2e4e92e3f0ae202ebb50f0f6f0af00c50ef3fdb050"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -263,13 +263,13 @@
         }
       ],
       "id": "tests",
-      "length": 1835,
+      "length": 2431,
       "offset": 17980,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
-      "revision": "c37a9d409cc3a10f3b3416da554f61f58ace93fa",
-      "sha256": "a01c6164c63620c413c42fc9fa1af9fa150cc338458dda0ea2b6c173d96725bc",
+      "revision": "35593a42dcaa07c6e648455b1915e12940c5edcd",
+      "sha256": "774150fa0755fe4b9c575c8cf56bd5d65d19833d037f84227c732b4feeca839a",
       "source": "instructions/fragments/tests.md"
     },
     {
@@ -285,7 +285,7 @@
       ],
       "id": "shell",
       "length": 1176,
-      "offset": 19816,
+      "offset": 20412,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -306,7 +306,7 @@
       ],
       "id": "outcome-notes",
       "length": 1844,
-      "offset": 20993,
+      "offset": 21589,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -334,7 +334,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 22838,
+      "offset": 23434,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -376,7 +376,7 @@
       ],
       "id": "feedback",
       "length": 3050,
-      "offset": 23367,
+      "offset": 23963,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -397,7 +397,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 26418,
+      "offset": 27014,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

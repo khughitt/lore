@@ -29,10 +29,19 @@
   only `GIT_DIR` set, the top level reads as the current directory while writes still
   reach the real repository).
 - Plain `git worktree remove` deletes ignored files without `--force`. Before any
-  removal, list them (`git -C <path> status --ignored --porcelain`) and copy out what is
-  still needed. Each plan workspace (`ls <path>/.superpowers/sdd/`) goes only after its
-  ledger's `Ruling:` and `minor (deferred)` lines have reached a final message, other
-  plans' included; otherwise copy its ledger out first.
+  removal, list them (`git -C <path> status --ignored --porcelain`) and give each entry
+  a disposition rather than archiving the lot. Discard what is regenerable (caches,
+  build output, installed dependencies, config `just setup` hydrates) or already kept
+  elsewhere (committed on a branch, attached to a task). Attach each small file still
+  needed (a review screenshot, a report, a log) to the task it serves, one
+  `tasks attach <id> <file> --caption "<what it shows>"` per file. Move the rare needed
+  item too large to commit with a task record to that task's
+  `$WORK_ROOT/<project>/<task-id>/` and note its path and sha256 on the task. Each plan
+  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
+  `minor (deferred)` lines have reached a final message, other plans' included;
+  otherwise attach its ledger, or move and note it as above, on the task its plan
+  served, so the ledger is found from that task's record alone. Remove the tree only
+  after `tasks show` lists each attachment and each moved copy's sha256 matches.
 - `git worktree remove` refuses a worktree that holds a submodule, even a clean one.
   Force it (`git worktree unlock <path>`, then `git worktree remove --force <path>`)
   only when every check holds, and stop to resolve the first that fails: it is the

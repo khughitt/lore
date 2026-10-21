@@ -16,8 +16,9 @@ Two note shapes are read by obs's outcome measures; write them as plain
   `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when
   verified and `codex` otherwise. Copy the printed value; when the command exits
   non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the
-  stderr reason or the exit status alongside the value (in the review, or the final
-  message for a self-review). A reviewer writes no note: it states that value in its review for the note writer to record.
+  stderr reason or the exit status in the review, or in the final message for a
+  self-review, never in the note. A reviewer writes no note: it states that value in
+  its review for the note writer to record.
   Only a session noting its own self-review records it directly.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a

@@ -52,7 +52,7 @@ status = "recorded"
 owner = "lore"
 path = "tasks/lore-c51b7c.md"
 revision = "94d30593adcbfecf9f98b9a631a05f9d30359ab3"
-location = "scoped body: a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
+location = "reported (not reproduced locally): a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
@@ -216,7 +216,7 @@ status = "none recorded"
 owner = "lore"
 path = "tasks/lore-c51b7c.md"
 revision = "94d30593adcbfecf9f98b9a631a05f9d30359ab3"
-location = "scoped body: a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
+location = "reported (not reproduced locally): a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
 status = "recorded"
 
 [[fragments]]

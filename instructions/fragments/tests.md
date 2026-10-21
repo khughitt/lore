@@ -14,9 +14,9 @@
 - The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
   there is no recipe) only when the hooks are not installed, when the fast check does
-  not cover the affected behavior, or when you are asked to. The one scheduled
-  exception is a new worktree's baseline, which runs the full suite as the Git rule
-  says.
+  not cover the affected behavior, or when you are asked to. The baseline the Git rule
+  requires (at a new worktree's creation, or at execution's Setup for planned work) is
+  a scheduled exception and runs the full suite.
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
 - A test that starts a subprocess passes it an environment built key by key: `PATH`,

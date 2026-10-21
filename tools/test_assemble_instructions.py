@@ -272,8 +272,11 @@ def test_render_manifest_reads_the_owner_root_override(world):
     projects = added_projects(world)
     (prepared / 'instructions/fragments/projects.md').write_bytes(projects)
     override = ('--owner-root', f'ops={prepared}')
+    before = files(world.root.parent)
     plain, preview = invoke(world, 'render', *override), invoke(world, 'render', '--manifest', *override)
+    assert files(world.root.parent) == before
     assert plain.returncode == 0 and preview.returncode == 0, preview.stderr
+    assert plain.stderr == preview.stderr == b''
     assert plain.stdout.endswith(projects)
     assert invoke(world, 'write', *override).returncode == 0
     assert outputs(world) == (plain.stdout, preview.stdout)
@@ -284,6 +287,7 @@ def test_render_with_a_missing_source_prints_nothing(world, args):
     (world.root / 'instructions/fragments/core.md').unlink()
     result = build(world, 'render', *args)
     assert result.returncode == 1
+    assert b'instructions/fragments/core.md' in result.stderr
     assert not result.stdout
 
 

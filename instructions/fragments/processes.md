@@ -52,6 +52,13 @@
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
   retrying. When asking for the machine, name the pilot and what it showed.
+- A task that spans sessions keeps its inputs where a reboot cannot take them. Its
+  scratch lives in a per-task directory on persistent host-local storage off the synced
+  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user
+  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only
+  per-run copies made from that persistent canonical copy, and a park names the
+  canonical copy's path and sha256. A resume checks that its inputs exist and match the
+  recorded hash before it claims an idle-host window or the user's machine.
 - Work that takes the live desktop (opens windows on it, moves focus, switches
   workspaces, captures the screen) is a host-use action, and approving a plan does not
   grant it. Prefer a nested or headless compositor where the project has one; otherwise

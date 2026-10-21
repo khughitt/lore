@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "b96dede4ba3e625999575684f4192c4894a03138044aaf392d812e4a99e8c128"
+    "sha256": "5a8675c62b5148e445c7847ab9c5245a27a0dcc53773dec3bed16f9e61392df2"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "1f298e32788c841f0d6a6f3ce110345d852744378381b245f627316e29dd68bd"
+    "sha256": "f26c6d0200278c3aa5c965bc90c414413bcd84c5df478185a9e7d01eda5d968b"
   },
   "fragments": [
     {
@@ -248,6 +248,13 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body: a multi-session experiment kept its canonical frozen input on tmpfs, parked across a reboot and lost it; the park named the path only in prose",
+          "owner": "lore",
+          "path": "tasks/lore-4620de.md",
+          "revision": "c226acb941c18b6f4e06ff0efd2882475c0e9e2c",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -256,13 +263,13 @@
         }
       ],
       "id": "processes",
-      "length": 5373,
+      "length": 5960,
       "offset": 14914,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
-      "revision": "6f693202eb0f58bde16170029443dd25058e023a",
-      "sha256": "1097a115ee2b608e775237d42a6508b37b134eaac29b94ee07d7ba336d5d3475",
+      "revision": "bf5f128fae0a412896009bafb47007be231f08b2",
+      "sha256": "99bf07d2758a1fe94ad4c9572e3139e8089a3dda505ec7caf96ab9df8406711f",
       "source": "instructions/fragments/processes.md"
     },
     {
@@ -278,7 +285,7 @@
       ],
       "id": "tests",
       "length": 2431,
-      "offset": 20288,
+      "offset": 20875,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -299,7 +306,7 @@
       ],
       "id": "shell",
       "length": 1667,
-      "offset": 22720,
+      "offset": 23307,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -320,7 +327,7 @@
       ],
       "id": "outcome-notes",
       "length": 2484,
-      "offset": 24388,
+      "offset": 24975,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -348,7 +355,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 26873,
+      "offset": 27460,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -390,7 +397,7 @@
       ],
       "id": "feedback",
       "length": 3692,
-      "offset": 27402,
+      "offset": 27989,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -411,7 +418,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 31095,
+      "offset": 31682,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

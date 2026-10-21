@@ -44,6 +44,12 @@ location = "A6–A12"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "tasks/lore-e1c2db.md"
+revision = "454efabedea36a66abd7d4eac85881333b7e7e49"
+location = "scoped body: an overridden HOME let git config --global write the real XDG config, and a hook-inherited GIT_DIR sent a fixture's git config into a real repository"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

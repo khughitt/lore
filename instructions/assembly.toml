@@ -170,6 +170,12 @@ location = "waiting-loops brief"
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "docs/notes/2026-10-13-execution-fallbacks-brief.md"
+revision = "6c8f17191d55165fd1d9e6c050cb6895743a086d"
+location = "Daemon handoff finding: a tracked channel stays open while a child holds stdout or stderr; setsid stays in the terminal scope; systemd-run --user without --scope starts a detached transient service"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."

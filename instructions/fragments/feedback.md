@@ -5,6 +5,12 @@
   `tasks feedback --project <owner> "<one line about the tool>" --category <friction|gap|idea|positive>`.
   "Feedback owners" under Projects below lists who owns what; the tasks skill has the
   mechanics (`-b`, `--recur`, `--new`, following up).
+- A report that relays the user's request, or carries more than one ask, is still one
+  command, with a body (`-b`, one line on a recurrence) of a few concrete sentences: each
+  distinct outcome asked for, in tool terms; the action that hit the friction; what
+  happened against what was expected; and any constraint that matters. Keep what the
+  user asked apart from your reading of it, and write it to stand without the
+  transcript. The body describes the tool too (the rule below).
 - Report when a hook or gate blocked you wrongly, or its message did not say what to do
   (`friction`, to the owner it names); when an instruction or skill told you to do
   something a tool refused, or two instructions contradicted each other (`friction`, to

@@ -175,6 +175,20 @@ it this way:
   `~/.local/bin`) lists what this session's scope left running, and the report repeats
   it or says nothing was left. `host-load` also names the load a preflight refuses on
   and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.
+- A launcher that leaves a process running behind a tracked channel (the harness's
+  shell tool, `ssh host cmd`, a hook) redirects all three of that process's standard
+  streams (`</dev/null >log 2>&1`): a child that inherits stdout or stderr holds the
+  call open after the launcher returns, and `&`, `nohup` and `setsid` close nothing.
+- A process the user has authorized to outlive the session starts as a transient user
+  service: `systemd-run --user --unit=<name> --service-type=exec
+  --working-directory=<dir> [-E VAR=value] <cmd>`, once `systemctl --user` answers and,
+  for a launch over ssh, lingering is on (`loginctl show-user <user> -p Linger`;
+  enabling it is the user's decision). Its return means started, not ready, so a
+  bounded readiness check (its port, a health command) follows, and the report names
+  the unit, `journalctl --user -u <name>` and `systemctl --user stop <name>`. `setsid`
+  and `systemd-run --scope` leave the process in the terminal's scope and are not
+  service launches. A server that a later step of this session drives stays under the
+  cleanup bullet above.
 - Never end a turn waiting on work the harness does not track. Run a long check in the
   foreground with a timeout that covers it, or through the harness's own background
   mechanism; a job detached with `&` or `nohup` never wakes you, so no turn ends waiting

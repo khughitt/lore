@@ -22,9 +22,26 @@ CATALOG_IDS = IDS[:6] + ['notation'] + IDS[6:]
 HERMETIC_GIT = {'GIT_CONFIG_GLOBAL': os.devnull, 'GIT_CONFIG_NOSYSTEM': '1'}
 
 
+def isolated_env(home, **extra):
+    """A fixture subprocess's environment, built key by key: the host's PATH, a HOME the
+    test owns and hermetic Git, never the inherited environment or a copy of it."""
+    return {'PATH': os.environ['PATH'], 'HOME': str(home), **HERMETIC_GIT, **extra}
+
+
+GIT_ENV: dict[str, str]  # bound per test by `home`; unbound outside a test
+
+
+@pytest.fixture(autouse=True)
+def home(tmp_path, monkeypatch):
+    path = tmp_path / 'home'
+    path.mkdir()
+    monkeypatch.setitem(globals(), 'GIT_ENV', isolated_env(path))
+    return path
+
+
 def git(root, *args):
     return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True,
-                          env={**os.environ, **HERMETIC_GIT}).stdout
+                          env=GIT_ENV).stdout
 
 
 def invoke(world, *args):
@@ -37,7 +54,7 @@ def build(world, command='write', *args):
 
 
 @pytest.fixture
-def world(tmp_path):
+def world(tmp_path, home):
     root, ops = tmp_path / 'lore', tmp_path / 'ops'
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
@@ -99,7 +116,7 @@ def world(tmp_path):
                                 'revision = ' + json.dumps(heads[repo]))
     path.write_text(text)
     return SimpleNamespace(root=root, ops=ops, config=config,
-                           env={**os.environ, **HERMETIC_GIT, 'XDG_CONFIG_HOME': str(config.parent)},
+                           env=isolated_env(home, XDG_CONFIG_HOME=str(config.parent)),
                            initial=initial)
 
 
@@ -217,6 +234,15 @@ def test_historical_reference_fixtures_match_independent_git_blobs():
         fixture = (ROOT / 'tools/fixtures/instruction-assembly' / name).read_bytes()
         assert fixture == git(ROOT, 'cat-file', 'blob', object_id)
         assert hashlib.sha256(fixture).hexdigest() == expected
+
+
+def test_fixture_subprocesses_receive_no_inherited_environment(world, tmp_path, monkeypatch):
+    monkeypatch.setenv('LORE_TEST_CANARY', 'fake-credential')
+    assert set(world.env) == {'PATH', 'HOME', *HERMETIC_GIT, 'XDG_CONFIG_HOME'}
+    assert world.env['HOME'] == str(tmp_path / 'home')
+    shown = git(world.root, '-c', 'alias.show-env=!env', 'show-env').decode()
+    assert 'LORE_TEST_CANARY' not in shown
+    assert f'HOME={tmp_path / "home"}\n' in shown
 
 
 def test_render_reproduces_initial_bytes_without_writing(world):
@@ -847,8 +873,7 @@ def test_deployed_recipes_ignore_stale_preparation_environment(world):
     stale = world.root.parent / 'old-ops-worktree'
     git(world.ops, 'worktree', 'add', '-q', '--detach', str(stale), 'HEAD')
     (stale / 'instructions/fragments/projects.md').write_text('stale source\n')
-    env = {**world.env, 'PATH': str(world.root / 'bin') + os.pathsep + os.environ['PATH']}
-    env.pop('LORE_ASSEMBLY_OPS_ROOT', None)
+    env = {**world.env, 'PATH': str(world.root / 'bin') + os.pathsep + world.env['PATH']}
     for value in (None, str(stale), 'stale path with spaces'):
         selected = dict(env)
         if value is not None: selected['LORE_ASSEMBLY_OPS_ROOT'] = value

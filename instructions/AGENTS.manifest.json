@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "5a8675c62b5148e445c7847ab9c5245a27a0dcc53773dec3bed16f9e61392df2"
+    "sha256": "3e87510a5c446d290d5f889a04def2b7f6c610ee2fd7f5a09fb1e91bd6428e88"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "f26c6d0200278c3aa5c965bc90c414413bcd84c5df478185a9e7d01eda5d968b"
+    "sha256": "3cb1d07300cbc6b3a81ec6b6872a02665a22ba1845160b81c2e54e408f634559"
   },
   "fragments": [
     {
@@ -66,6 +66,13 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body: an overridden HOME let git config --global write the real XDG config, and a hook-inherited GIT_DIR sent a fixture's git config into a real repository",
+          "owner": "lore",
+          "path": "tasks/lore-e1c2db.md",
+          "revision": "454efabedea36a66abd7d4eac85881333b7e7e49",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -74,13 +81,13 @@
         }
       ],
       "id": "git",
-      "length": 5554,
+      "length": 6334,
       "offset": 261,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Protect repository and host-state operations.",
-      "revision": "f4bb8a8202db4fce082b13b92ceb4fec2101ae02",
-      "sha256": "01e07500f8689e90baa523678f1cfa83cbf6163c8d6f128c80f75e36722ec9c5",
+      "revision": "56af7f2712d1471d1eb7368ddfd93b929cc41f65",
+      "sha256": "30a0372bf7e6caec0d7906e25ba64e565a22878ada29e9dc134ceee3766b287f",
       "source": "instructions/fragments/git.md"
     },
     {
@@ -96,7 +103,7 @@
       ],
       "id": "profiles",
       "length": 537,
-      "offset": 5816,
+      "offset": 6596,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve profile and layer precedence.",
@@ -124,7 +131,7 @@
       ],
       "id": "design-docs",
       "length": 293,
-      "offset": 6354,
+      "offset": 7134,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep document authority and review conventions.",
@@ -152,7 +159,7 @@
       ],
       "id": "communication",
       "length": 1442,
-      "offset": 6648,
+      "offset": 7428,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
@@ -180,7 +187,7 @@
       ],
       "id": "notation",
       "length": 1376,
-      "offset": 8091,
+      "offset": 8871,
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
@@ -222,7 +229,7 @@
       ],
       "id": "decisions",
       "length": 5445,
-      "offset": 9468,
+      "offset": 10248,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
@@ -264,7 +271,7 @@
       ],
       "id": "processes",
       "length": 5960,
-      "offset": 14914,
+      "offset": 15694,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -285,7 +292,7 @@
       ],
       "id": "tests",
       "length": 2431,
-      "offset": 20875,
+      "offset": 21655,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -306,7 +313,7 @@
       ],
       "id": "shell",
       "length": 1667,
-      "offset": 23307,
+      "offset": 24087,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -327,7 +334,7 @@
       ],
       "id": "outcome-notes",
       "length": 2484,
-      "offset": 24975,
+      "offset": 25755,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -355,7 +362,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 27460,
+      "offset": 28240,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -397,7 +404,7 @@
       ],
       "id": "feedback",
       "length": 3692,
-      "offset": 27989,
+      "offset": 28769,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -418,7 +425,7 @@
       ],
       "id": "projects",
       "length": 4466,
-      "offset": 31682,
+      "offset": 32462,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

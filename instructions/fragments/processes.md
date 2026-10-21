@@ -10,6 +10,23 @@
   `~/.local/bin`) lists what this session's scope left running, and the report repeats
   it or says nothing was left. `host-load` also names the load a preflight refuses on
   and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.
+- A launcher that leaves a process running behind a tracked channel (the harness's
+  shell tool, `ssh host cmd`, a hook) redirects all three of that process's standard
+  streams (`</dev/null >log 2>&1`): a child that inherits stdout or stderr holds the
+  call open after the launcher returns, and `&`, `nohup` and `setsid` close nothing.
+- A process meant to outlive the session needs the user's approval at that moment (a
+  persistent service is a host change), then starts as a transient user service:
+  `systemd-run --user --unit=<name> --service-type=exec --working-directory=<dir>
+  [-E VAR=value] <cmd>`, once `systemctl --user` answers and, for a launch over ssh,
+  lingering is on (`loginctl show-user <user> -p Linger`; enabling it is the user's
+  decision). When a check fails, report which one and launch nothing; `setsid` and
+  `nohup` are no fallback. Its return means started, not ready, so a bounded readiness
+  check (its port, a health command) follows, and the report names the unit,
+  `journalctl --user -u <name>` and `systemctl --user stop <name>`. Neither `setsid`,
+  which leaves the process in the terminal's scope, nor `systemd-run --scope`, which
+  runs it as systemd-run's own child with the caller's environment and blocks until it
+  exits, is a service launch. A server that a later step of this session drives stays
+  under the cleanup bullet above.
 - Never end a turn waiting on work the harness does not track. Run a long check in the
   foreground with a timeout that covers it, or through the harness's own background
   mechanism; a job detached with `&` or `nohup` never wakes you, so no turn ends waiting
@@ -38,6 +55,14 @@
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
   retrying. When asking for the machine, name the pilot and what it showed.
+- A task that spans sessions keeps its inputs where a reboot cannot take them. Its
+  scratch lives in a per-task directory on persistent host-local storage off the synced
+  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user
+  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only
+  per-run copies made from that persistent canonical copy, and a park names the
+  canonical copy's path and sha256 (a sha256 manifest for a directory). A resume
+  checks that its inputs exist and match the recorded hash before it claims an
+  idle-host window or the user's machine.
 - Work that takes the live desktop (opens windows on it, moves focus, switches
   workspaces, captures the screen) is a host-use action, and approving a plan does not
   grant it. Prefer a nested or headless compositor where the project has one; otherwise

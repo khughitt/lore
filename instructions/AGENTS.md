@@ -13,8 +13,21 @@
 
 - Use conventional commits.
 - No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, "Generated with Claude Code") stay out everywhere. The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR; `gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write.
-- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
+- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. The baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
 - A live test of a worktree's code runs it by explicit path (`.worktrees/<name>/bin/<tool>`) or an environment override, never by repointing a shared launcher, symlink, service unit, or config include on the host at the worktree. When a host pointer must be repointed, record it in a task note at that moment (what, from, to, how to restore) and restore it before `tasks park` or `tasks done`; while it stands, the park note names it. Before removing a worktree, check that no host pointer resolves into it (`readlink -f` over `~/bin/*`, `~/.local/bin/*`, user systemd units, known config includes) and refuse while one does. A rollout that hands live state to another project's tool checks where that tool resolves on `PATH` first, rather than assuming the main checkout.
+- A test, fixture or scratch script that runs git keeps it off the host's real config
+  and repositories. Overriding `HOME` alone is not enough: with `XDG_CONFIG_HOME`
+  still exported and no `~/.gitconfig` in the new `HOME`, `git config --global` writes
+  to an existing `$XDG_CONFIG_HOME/git/config`, the user's real one. Set
+  `GIT_CONFIG_GLOBAL` to a temporary file (or `/dev/null`, with `GIT_AUTHOR_*` and
+  `GIT_COMMITTER_*` set) plus `GIT_CONFIG_NOSYSTEM=1`, or override `XDG_CONFIG_HOME`
+  along with `HOME`, and prefer `git -c key=value` to `git config --global`. A git
+  hook can export `GIT_DIR`, `GIT_INDEX_FILE` and `GIT_WORK_TREE`, which win over
+  `git -C <dir>`: unset every inherited `GIT_*` variable before building a fixture,
+  and before its first write assert both that `git rev-parse --show-toplevel` is the
+  fixture directory and that `git rev-parse --absolute-git-dir` lies inside it (with
+  only `GIT_DIR` set, the top level reads as the current directory while writes still
+  reach the real repository).
 - Plain `git worktree remove` deletes ignored files without `--force`. Before any
   removal, list them (`git -C <path> status --ignored --porcelain`) and copy out what is
   still needed. Each plan workspace (`ls <path>/.superpowers/sdd/`) goes only after its
@@ -106,11 +119,12 @@ it this way:
   individually approved.
 - A request to review a spec or plan names the frozen revision under review: the
   repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`
-  rather than the working file, or, where the profile keeps the document out of the
-  tree, its path and sha256. While that review is open, never amend or rebase the
-  commit, and leave an out-of-tree file unedited. A later draft reaches review only as
-  a new frozen revision, named in the next round's request, and each finding is judged
-  against the revision it reviewed.
+  rather than the working file. Where the profile keeps the document out of the tree,
+  the request names its path and sha256, and the reviewer checks that sha256 before
+  reading and stops on a mismatch. While that review is open, never amend or rebase
+  the commit, and leave an out-of-tree file unedited. A later draft reaches review only
+  as a new frozen revision, named in the next round's request, and each finding is
+  judged against the revision its request named.
 - A question, when asked, carries your recommendation as the first option and is one
   question, not a series. A question that asks the user to describe what they want
   (brainstorming's open questions, and its playback asking what is wrong or missing)
@@ -175,6 +189,23 @@ it this way:
   `~/.local/bin`) lists what this session's scope left running, and the report repeats
   it or says nothing was left. `host-load` also names the load a preflight refuses on
   and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.
+- A launcher that leaves a process running behind a tracked channel (the harness's
+  shell tool, `ssh host cmd`, a hook) redirects all three of that process's standard
+  streams (`</dev/null >log 2>&1`): a child that inherits stdout or stderr holds the
+  call open after the launcher returns, and `&`, `nohup` and `setsid` close nothing.
+- A process meant to outlive the session needs the user's approval at that moment (a
+  persistent service is a host change), then starts as a transient user service:
+  `systemd-run --user --unit=<name> --service-type=exec --working-directory=<dir>
+  [-E VAR=value] <cmd>`, once `systemctl --user` answers and, for a launch over ssh,
+  lingering is on (`loginctl show-user <user> -p Linger`; enabling it is the user's
+  decision). When a check fails, report which one and launch nothing; `setsid` and
+  `nohup` are no fallback. Its return means started, not ready, so a bounded readiness
+  check (its port, a health command) follows, and the report names the unit,
+  `journalctl --user -u <name>` and `systemctl --user stop <name>`. Neither `setsid`,
+  which leaves the process in the terminal's scope, nor `systemd-run --scope`, which
+  runs it as systemd-run's own child with the caller's environment and blocks until it
+  exits, is a service launch. A server that a later step of this session drives stays
+  under the cleanup bullet above.
 - Never end a turn waiting on work the harness does not track. Run a long check in the
   foreground with a timeout that covers it, or through the harness's own background
   mechanism; a job detached with `&` or `nohup` never wakes you, so no turn ends waiting
@@ -203,6 +234,14 @@ it this way:
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
   retrying. When asking for the machine, name the pilot and what it showed.
+- A task that spans sessions keeps its inputs where a reboot cannot take them. Its
+  scratch lives in a per-task directory on persistent host-local storage off the synced
+  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user
+  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only
+  per-run copies made from that persistent canonical copy, and a park names the
+  canonical copy's path and sha256 (a sha256 manifest for a directory). A resume
+  checks that its inputs exist and match the recorded hash before it claims an
+  idle-host window or the user's machine.
 - Work that takes the live desktop (opens windows on it, moves focus, switches
   workspaces, captures the screen) is a host-use action, and approving a plan does not
   grant it. Prefer a nested or headless compositor where the project has one; otherwise
@@ -233,7 +272,9 @@ it this way:
 - The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
   there is no recipe) only when the hooks are not installed, when the fast check does
-  not cover the affected behavior, or when you are asked to.
+  not cover the affected behavior, or when you are asked to. The baseline the Git rule
+  requires (at a new worktree's creation, or at execution's Setup for planned work) is
+  a scheduled exception and runs the full suite.
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
 - A test that starts a subprocess passes it an environment built key by key: `PATH`,
@@ -241,8 +282,9 @@ it this way:
   process reads (such as `USER`), with a fake value for any credential. It never passes
   the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,
   `{**os.environ, …}`, a denylist filter), so a failing case's traceback, captured
-  output or log cannot print a credential. Build that environment before the first run,
-  the RED run included: an expected failure is exactly where it gets printed.
+  output or log cannot print a credential held in the environment or under `HOME`.
+  Build that environment before the first run, the RED run included: an expected
+  failure is exactly where a credential gets printed.
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
@@ -287,13 +329,15 @@ Two note shapes are read by obs's outcome measures; write them as plain
   verified dispatch/runtime metadata. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
-  reviews labelled `human`. A Codex session that performed a review reads its identity,
-  never another session's, in the turn that performed it with a fresh command (never a
-  terminal left from an earlier turn): `timeout 2 relay model --harness codex --pretty`
-  prints `codex/<model>` when verified and `codex` otherwise. Copy the printed value;
-  when the command exits non-zero or times out, the value is `codex`. Whenever it is
-  bare `codex`, name the stderr reason or the exit status in your report. A reviewer
-  writes no note: it states that value in its review for the note writer to record.
+  reviews labelled `human`. A Codex session that performed a review reads its own
+  identity (never on another session's behalf), in the turn that performed it with a
+  fresh command (never a terminal left from an earlier turn):
+  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when
+  verified and `codex` otherwise. Copy the printed value; when the command exits
+  non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the
+  stderr reason or the exit status in the review, or in the final message for a
+  self-review, never in the note. A reviewer writes no note: it states that value in
+  its review for the note writer to record.
   Only a session noting its own self-review records it directly.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a

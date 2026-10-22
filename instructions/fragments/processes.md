@@ -55,6 +55,13 @@
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
   retrying. When asking for the machine, name the pilot and what it showed.
+- A plan or runbook that verifies a rollout across hosts and profiles verifies one host
+  and one profile end to end, and treats the other hosts and profiles configured by the
+  same process (the same installer, links and settings source) as covered: an issue that
+  shows up on one of them later is debugged then. A different harness, or a host or
+  profile reached through a different configuration path, gets its own end-to-end check.
+  An obligation a tool measures per host, such as a `test-latency` verify, is not a
+  rollout check and stays per host.
 - A task that spans sessions keeps its inputs where a reboot cannot take them. Its
   scratch lives in a per-task directory on persistent host-local storage off the synced
   tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user

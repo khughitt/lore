@@ -58,16 +58,17 @@ Read these whole, in this order; the note lists exactly what was read.
   from the README. Of what remains, read first the documents the root README links,
   then the rest by path, whole documents only, until 800 lines of reference documents
   have been read; list the rest under `excluded: unread` so the next pass starts there.
-  Root and subsystem guides are always read whole and count against no budget.
-  Criterion 10's git check is cheap and runs over every reference document, read or
-  unread.
+  Root and subsystem guides are always read whole and count against no budget. An
+  unread document still gets criterion 10's self-date check (its last commit against
+  its own `updated` or status line), not the behaviour check, which needs its text.
 - **Authority documents:** each `identity.toml` `authority` path is read under
   criterion 2 alone, whatever directory holds it, including an excluded one: its head
   and status lines, not the body. Listed as `<path> (authority)`.
 
 The global-layer project (lore, whose `instructions/AGENTS.md` is the file every
-session loads) is read under every criterion for its README and under criterion 5
-only for that generated file.
+session loads) is read like any project for its root guides, and under criterion 5
+only for that generated file; a finding there names the fragment under
+`instructions/fragments/` that renders the rule.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
 manifest, the module list. The pass runs nothing the judged documents describe: no
@@ -78,8 +79,8 @@ example, no test, no tool of the project beyond the mechanical checks in §1.
 Each criterion names its evidence and the verdicts it can produce. Verdicts are the
 ones `curate` uses: `keep` (nothing to change), `refined` (edited in the pass; meaning
 unchanged or a fact corrected), `stale` (the text contradicts the tree or its own
-authority; proposal in the note), `decision` (a choice the human owns; proposal in the
-note). A `refined` edit the pass may not make (§4) is recorded as `proposed` with the
+authority, or omits an orientation its reader needs, criterion 8; proposal in the
+note), `decision` (a choice the human owns; proposal in the note). A `refined` edit the pass may not make (§4) is recorded as `proposed` with the
 edit. A pass that reaches no verdict on a criterion writes `not judged: <why>`.
 
 A **finding** is one defect with one fix. Several documents sharing a defect and its
@@ -90,7 +91,9 @@ than one criterion (a claim that is criterion 9 in the README and criterion 10 i
 runbook): each criterion's line in §6 names it, the note and the resolution carry it
 once.
 
-**Root guides (project-guides design §8):**
+**Root and declared subsystem guides (project-guides design §8), judged once per guide
+set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
+`AGENTS.md`:**
 
 1. **Identity fits.** The purpose says what the thing is; the abstract says what it
    does and for whom; neither restates the other. Evidence: the two strings in
@@ -100,12 +103,13 @@ once.
    The status line is the document's newest dated line of its own: a front-matter
    `updated` or `status` date, or the dated heading of its current-state section; a
    document with none is `not judged` here. The last landed goal is the newest `done`
-   task whose record links the document (`tasks -C <root> list --status done --sort
-   updated --plan <path>`, then `--ref <path>`); when none links it, the newest `done`
-   task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`,
+   task whose record names the document (`tasks -C <root> list --status done --sort
+   updated --plan <path>`, then `--ref <path>`; a spec link has no list filter, so
+   `grep -l '<path>' tasks/*.md` finds those records, read with `tasks show`); when
+   none names it, the newest `done` task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`,
    or `not judged` when the pass cannot tell whether the document was meant to record
    that goal.
-3. **No status prose.** The root guides make no claim of the form "X is implemented",
+3. **No status prose.** The guides make no claim of the form "X is implemented",
    "as of <date>", "in progress", and carry no dated measurements that are history
    rather than guidance; in the README the rendered `ops:status` region is exempt. A
    failure a rule cites (a commit, task or cut id) is guidance, not status. Evidence:
@@ -172,7 +176,8 @@ once.
 branch the session works on, and land as one `docs:` commit through the project's own
 gates. From another project (`--project`), the edit is recorded as `proposed` and
 resolved like a `stale` finding (§5): the owning project edits its own tree. An edit
-shortens or corrects; it never adds a section, reorders, or deletes a rule. A README
+shortens or corrects; it never adds a section, reorders, or deletes a rule, except
+text criterion 4 finds restated from the global layer. A README
 some test reads as input (grep `tests/` for its name) gets that test run before the
 commit.
 
@@ -195,7 +200,8 @@ the human and are not counted.
 
     tasks -C <root> note <review-id> "curate-docs: rubric v1; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
-Review completion and finding resolution are separate states. After the review note,
+Review completion and finding resolution are separate states, so a pass writes two
+notes: the review note above, then the resolution note below. After the review note,
 for each `stale`, `proposed` and mechanical finding: reuse the open task that owns it
 (`tasks -C <root> search "<distinctive phrase>"`, `tasks -C <root> list --tag docs`),
 adding one note on it (`curate-docs: <review-id> at <sha> confirms: <what>`), or file
@@ -237,13 +243,23 @@ Nothing else. A pass with nothing in those groups says so in one line.
   exception, under criterion 2 alone.
 - Prefer shorter. An edit that grows a document is a proposal.
 - Keep defects apart from preference: `stale` is reserved for text the tree or its own
-  authority contradicts.
+  authority contradicts, and for an orientation a reader needs and cannot find
+  (criterion 8).
 
 ## Rubric history
 
 - **v1** (2026-10-23): criteria 1–7 from ops
-  `docs/specs/2026-09-22-project-guides-design.md` §8, with criterion 3 widened from
-  `AGENTS.md` to both root guides; 8–11 added for completeness by reader needs, factual
-  drift kept apart from preference, reference documents, and undeclared guides. The
-  ops documentation-review pilot applies v1 by hand; criteria that produce no
-  actionable finding, or many false positives, are revised into v2 on its report.
+  `docs/specs/2026-09-22-project-guides-design.md` §8; 8–11 added for completeness by
+  reader needs, factual drift kept apart from preference, reference documents, and
+  undeclared guides. Deliberate departures from §8's text, each to be confirmed or
+  reverted by the pilot: every criterion may return `not judged: <why>`; criteria 1–7
+  are judged per guide set, declared subsystems included; criterion 2 returns `not
+  judged` for an undated authority document or an unattributable goal; criterion 3
+  covers both root guides (the README's rendered status region exempt) and dated
+  measurements, exempts a rule's cited failure, allows `refined` where deleting a word
+  or clause leaves true guidance, and names a dated note as a destination; criterion 5
+  returns `keep` for a boundary rule that cites its authority document, and over
+  lore's generated file is the provenance audit lore's `docs/` holds (§8 cites it as
+  ai-9ec1eb); criterion 6 names `keep` explicitly. The ops documentation-review pilot
+  applies v1 by hand; criteria that produce no actionable finding, or many false
+  positives, are revised into v2 on its report.

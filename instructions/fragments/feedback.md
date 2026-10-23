@@ -28,7 +28,7 @@
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.
-- File from where you stand. A registered checkout (one `tasks where` names a project
+- File from where you stand. A project checkout (one `tasks where` names a project
   for, whatever its `kind`: records in the tree, under the records root, or linked)
   reports under its project's prefix; outside every project the report
   is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would

@@ -24,11 +24,16 @@ outcome-measure note.
 
 ## 1. Root, revision, mechanical
 
-1. **Root.** `--project` given: the root is the last column of that project's row in
-   `tasks projects --paths --pretty`. Otherwise: the nearest ancestor of the current
-   directory holding `tasks/.config.toml`. Every `tasks`, `git` and `grep` below runs
-   in that root (`tasks -C <root> …`, `git -C <root> …`).
-2. **Revision.** `git -C <root> rev-parse --short HEAD`; `git -C <root> status
+1. **Where.** Resolve the project through the tracker, never by walking the tree.
+   `--project` given: that project's row in `tasks projects` (JSON) carries `checkout`,
+   the code checkout, and `records`, where its task records live. Otherwise `tasks
+   where` prints the same two fields for the project the current directory belongs to.
+   They differ for a linked project, whose registered root is a records overlay. Every
+   `git`, `ls` and `grep` over code and guides, and every mechanical check, runs in the
+   checkout (`git -C <checkout> …`); every `tasks` command runs from it too (`tasks -C
+   <checkout> …`, which opens the linked project where there is one); a read of record
+   files uses `<records>/tasks/*.md`.
+2. **Revision.** `git -C <checkout> rev-parse --short HEAD`; `git -C <checkout> status
    --porcelain`. The note records the commit and, when the tree has changes, `dirty:`
    with the covered documents among them or `none covered`. The pass judges the
    working tree.
@@ -87,11 +92,10 @@ a criterion writes `not judged: <why>`.
 
 A **finding** is one defect with one fix. Several documents sharing a defect and its
 fix (six pages whose `updated` date lags, one check that would catch all six) are one
-finding; two defects in one document are two; every `proposed` edit to one document is
-one finding, since one docs commit makes them all. A finding may surface under more
-than one criterion (a claim that is criterion 9 in the README and criterion 10 in a
-runbook): each criterion's line in §6 names it, the note and the resolution carry it
-once.
+finding; two defects in one document are two, `proposed` edits included, though several
+findings may land in one commit. A finding may surface under more than one criterion
+(a claim that is criterion 9 in the README and criterion 10 in a runbook): each
+criterion's line in §6 names it, the note and the resolution carry it once.
 
 **Root and declared subsystem guides (project-guides design §8), judged once per guide
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
@@ -105,8 +109,9 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    line is the document's newest dated line of its own: a front-matter `updated` or
    `status` date, or the dated heading of its current-state section; a document with none
    is `not judged` here. The last landed goal is the newest `done` task whose record
-   names the document (`tasks -C <root> list --status done --sort updated --plan <path>`,
-   then `--ref <path>`; a spec link has no list filter, so `grep -l '<path>' tasks/*.md`
+   names the document (`tasks -C <checkout> list --status done --sort updated --plan
+   <path>`, then `--ref <path>`; a spec link has no list filter, so `grep -l '<path>'
+   <records>/tasks/*.md`
    finds those records, read with `tasks show`); when none names it, the newest `done`
    task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`, or
    `not judged` when the pass cannot tell whether the document was meant to record that
@@ -124,9 +129,10 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    the section deleted and the line count saved. Text that fails here is not judged again
    under criterion 5.
 5. **Every rule has a failure.** Each rule (a sentence under Rules) names, or the pass
-   finds in `git log`, a retro note, or a task (`tasks -C <root> search "<phrase>"`,
-   `grep -ril <word> tasks/`), the failure it prevents. A rule that states a boundary its
-   authority document draws is `keep` when it cites that document. Evidence: the search.
+   finds in `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
+   `grep -ril <word> <records>/tasks/`), the failure it prevents. A rule that states a
+   boundary its authority document draws is `keep` when it cites that document.
+   Evidence: the search.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared raise
    still has every section pulling weight. Evidence: line counts by section. `decision`
@@ -154,9 +160,9 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
 **Reference documents and user guides:**
 
 10. **Updated by the change that altered its behaviour.** For each document: the last
-    commit touching it (`git -C <root> log -1 --full-history --format=%h -- <doc>`,
+    commit touching it (`git -C <checkout> log -1 --full-history --format=%h -- <doc>`,
     so a merge that resolved a conflict in it counts), then the commits since that
-    touch the paths, commands or modules the document names (`git -C <root> log
+    touch the paths, commands or modules the document names (`git -C <checkout> log
     <that>..HEAD --stat -- <paths>`). Read each such diff. `stale` naming the
     commit when behaviour the document describes changed. A document whose own
     `updated` or status line is older than its last content change is `stale` under
@@ -187,7 +193,7 @@ The project's documentation review task is the record every pass reuses. File or
 find it with one idempotent command (same `--source` and title return the existing id
 as `action: "reused"`):
 
-    tasks -C <root> add "Documentation review" --source curate-docs --tag docs \
+    tasks -C <checkout> add "Documentation review" --source curate-docs --tag docs \
       -p 3 --size s --complexity low --process direct \
       -b "The reusable record of curate-docs passes over this project: one note per pass naming the rubric version, commit, documents covered, exclusions and findings by verdict; resolution of findings is recorded apart from the review. Never closed by a pass; ops owns its lifecycle."
 
@@ -198,13 +204,13 @@ document they judged; a criterion with mixed verdicts appears only under the oth
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <root> note <review-id> "curate-docs: rubric v1; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v1; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
 for each `stale`, `proposed` and mechanical finding: reuse the open task that owns it
-(`tasks -C <root> search "<distinctive phrase>"`, `tasks -C <root> list --tag docs`),
-adding one note on it (`curate-docs: <review-id> at <sha> confirms: <what>`), or file
+(`tasks -C <checkout> search "<distinctive phrase>"`, `tasks -C <checkout> list --tag
+docs`), adding one note on it (`curate-docs: <review-id> at <sha> confirms: <what>`), or file
 one in the owning project with `--source <review-id> --tag docs -p 3 --size xs
 --complexity low --process direct`, sized up when the fix is larger. A closed owner is
 not reused; when the finding shows that closed work fell short, the new task's first
@@ -212,7 +218,7 @@ note is the `concerns:` line the global instructions define. One task per findin
 §3 defines it; unrelated findings are never bundled. Then one resolution note on the
 review task:
 
-    tasks -C <root> note <review-id> "curate-docs: resolution; <doc>: <what> -> <task-id> (reused|filed); …; decision: <n> awaiting the human"
+    tasks -C <checkout> note <review-id> "curate-docs: resolution; <doc>: <what> -> <task-id> (reused|filed); …; decision: <n> awaiting the human"
 
 A `decision` finding is filed as a task only after the human rules on it; until then
 it lives in the review note.

@@ -28,8 +28,9 @@
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.
-- File from where you stand. A project checkout (one with `tasks/.config.toml`) or a
-  linked checkout reports under its project's prefix; outside every project the report
+- File from where you stand. A project checkout (one `tasks where` names a project
+  for, whatever its `kind`: records in the tree, under the records root, or linked)
+  reports under its project's prefix; outside every project the report
   is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would
   misstate the source. If filing fails (a broken config, `tasks` missing), name the
   tool, its owner, and the error in your end-of-turn report, and the user decides.

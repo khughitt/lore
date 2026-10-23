@@ -65,7 +65,8 @@ this repository's own instructions, then the user in the session.
 
 ## Design & Plan Docs
 
-- Whether design specs and plans are committed is the profile's call; the repository's own instructions override it, and the hook that guards staging names both.
+- Where design specs, plans, briefs and handoffs go, and whether they are committed, is the profile's call: the session line's `design docs:` clause names the value or the directory, and the profile's text says the rest. The repository's own instructions override it, and the hook that guards staging names both.
+- A code repository's `docs/` holds reference documents: each describes current behaviour, is named for its subject rather than dated, and is updated by the change that alters that behaviour. A design spec is a decision record, not a reference document; it becomes one only by being rewritten as one, never by being left in place. Which specs a repository rewrites is filed by that project as its own task when it next changes the subsystem they describe, never done as a side task of other work.
 - Verify document status against the code before relying on it; update it and related docs when work lands.
 
 ## Communication
@@ -449,8 +450,9 @@ If it exits non-zero, show the user its error and do not choose flow on or off u
 - Describe the tool, never the project: no repository names, paths, people, or project
   content, whatever the checkout's profile. One report per distinct issue; never triage
   your own.
-- File from where you stand. A project checkout (one with `tasks/.config.toml`) or a
-  linked checkout reports under its project's prefix; outside every project the report
+- File from where you stand. A project checkout (one `tasks where` names a project
+  for, whatever its `kind`: records in the tree, under the records root, or linked)
+  reports under its project's prefix; outside every project the report
   is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would
   misstate the source. If filing fails (a broken config, `tasks` missing), name the
   tool, its owner, and the error in your end-of-turn report, and the user decides.

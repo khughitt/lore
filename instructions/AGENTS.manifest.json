@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "a2d15b5eb76e0ecd89feb9d8308e935cd146067d5fdea4a6fa23ba0d47ea44c3"
+    "sha256": "6c2c5de0446e02d06c972c36081e76ab62297da775ac9d82f66d2892e2679eff"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "b8bd1e673714f671c3b4e1a21a122c7b57895778ed0e6fed0064dea2076d6f77"
+    "sha256": "8c6e5ac55f83dfb8b5220f6e0b67621231226fd60e312fa81dd7e4a6b1542b4c"
   },
   "fragments": [
     {
@@ -129,6 +129,13 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body citing tasks docs/specs/2026-10-22-records-home-design.md \u00a77.1 and \u00a77.2 (approved revision 3): working documents under the records root; a code repository's docs/ holds reference documents (location and reference-document clauses)",
+          "owner": "lore",
+          "path": "tasks/lore-ef7e5b.md",
+          "revision": "b3e92a7bbd43ee5e4ca27bb91e6793e995342dbc",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -137,13 +144,13 @@
         }
       ],
       "id": "design-docs",
-      "length": 293,
+      "length": 735,
       "offset": 9897,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep document authority and review conventions.",
-      "revision": "5e68d764967ccb45c2699c2c8c247ee18de83966",
-      "sha256": "5fbee1a653de3d6d088ec9a5f99904eb27b1d2eb4e75bf18fd024d42b22abb74",
+      "revision": "eda04e41608e87ae33e641384b7f2109f0b51a94",
+      "sha256": "72927756bc7f9f4535def28b3928821a112cb3a1c725ff39d45e5314c969679f",
       "source": "instructions/fragments/design-docs.md"
     },
     {
@@ -166,7 +173,7 @@
       ],
       "id": "communication",
       "length": 3148,
-      "offset": 10191,
+      "offset": 10633,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
@@ -194,7 +201,7 @@
       ],
       "id": "notation",
       "length": 1376,
-      "offset": 13340,
+      "offset": 13782,
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
@@ -236,7 +243,7 @@
       ],
       "id": "decisions",
       "length": 6105,
-      "offset": 14717,
+      "offset": 15159,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
@@ -278,7 +285,7 @@
       ],
       "id": "processes",
       "length": 6833,
-      "offset": 20823,
+      "offset": 21265,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -306,7 +313,7 @@
       ],
       "id": "tests",
       "length": 3544,
-      "offset": 27657,
+      "offset": 28099,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -327,7 +334,7 @@
       ],
       "id": "shell",
       "length": 1667,
-      "offset": 31202,
+      "offset": 31644,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -348,7 +355,7 @@
       ],
       "id": "outcome-notes",
       "length": 2564,
-      "offset": 32870,
+      "offset": 33312,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -376,7 +383,7 @@
       ],
       "id": "trials",
       "length": 528,
-      "offset": 35435,
+      "offset": 35877,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -409,6 +416,13 @@
           "status": "recorded"
         },
         {
+          "location": "scoped body: the feedback fragment names a registered checkout instead of one with tasks/.config.toml, since a checkout whose records moved to the records root holds no config (file-from-where-you-stand clause)",
+          "owner": "lore",
+          "path": "tasks/lore-ef7e5b.md",
+          "revision": "b3e92a7bbd43ee5e4ca27bb91e6793e995342dbc",
+          "status": "recorded"
+        },
+        {
           "location": "Later or unmapped clauses: no incident evidence established by the dated source.",
           "owner": "lore",
           "path": "none recorded",
@@ -417,13 +431,13 @@
         }
       ],
       "id": "feedback",
-      "length": 3692,
-      "offset": 35964,
+      "length": 3761,
+      "offset": 36406,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
-      "revision": "60d89dc1a59bca52d8c37fa47a4492666e562977",
-      "sha256": "d49d5393e68f4864aa32f53144c4287def93466a9a6d79a4859648470f20354a",
+      "revision": "7dcc65e7037ba83e880acc687622df04d1541aca",
+      "sha256": "21d93019b92c661e358326a679795243cc1f64bd801a6a17f4c497c0b068c168",
       "source": "instructions/fragments/feedback.md"
     },
     {
@@ -439,7 +453,7 @@
       ],
       "id": "projects",
       "length": 4572,
-      "offset": 39657,
+      "offset": 40168,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

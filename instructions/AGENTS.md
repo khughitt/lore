@@ -484,6 +484,7 @@ to read one of them from anywhere.
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them
 - `forge` — familiar-forge — Generative art CAS behind familiar's pet themes
+- `forge2` — forge v2 — Make familiar pet themes by picking images; the forgemaster fills in the rest
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
 - `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene
 - `lit` — lit — Science literature as a world model, a personal corpus, and a walk over both

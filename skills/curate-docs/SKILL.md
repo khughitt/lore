@@ -10,9 +10,9 @@ project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
 found. It edits prose only to shorten or correct; every structural change, deletion of
-a section, or addition of content is a proposal. It creates at most one task during
-the review, the project's documentation review task, and never closes one. Invoke
-deliberately:
+a section (except one criterion 4 finds restated from the global layer), or addition
+of content is a proposal. It creates at most one task during the review, the project's
+documentation review task, and never closes one. Invoke deliberately:
 
     /curate-docs [--project <prefix>]
 
@@ -59,8 +59,9 @@ Read these whole, in this order; the note lists exactly what was read.
   then the rest by path, whole documents only, until 800 lines of reference documents
   have been read; list the rest under `excluded: unread` so the next pass starts there.
   Root and subsystem guides are always read whole and count against no budget. An
-  unread document still gets criterion 10's self-date check (its last commit against
-  its own `updated` or status line), not the behaviour check, which needs its text.
+  unread document still gets criterion 10's self-date check (its last content change
+  against its own `updated` or status line), not the behaviour check, which needs its
+  text.
 - **Authority documents:** each `identity.toml` `authority` path is read under
   criterion 2 alone, whatever directory holds it, including an excluded one: its head
   and status lines, not the body. Listed as `<path> (authority)`.
@@ -76,12 +77,13 @@ example, no test, no tool of the project beyond the mechanical checks in §1.
 
 ## 3. The rubric
 
-Each criterion names its evidence and the verdicts it can produce. Verdicts are the
-ones `curate` uses: `keep` (nothing to change), `refined` (edited in the pass; meaning
+Each criterion names its evidence and the verdicts it can produce. Verdicts are the ones
+`curate` uses: `keep` (nothing to change), `refined` (edited in the pass; meaning
 unchanged or a fact corrected), `stale` (the text contradicts the tree or its own
-authority, or omits an orientation its reader needs, criterion 8; proposal in the
-note), `decision` (a choice the human owns; proposal in the note). A `refined` edit the pass may not make (§4) is recorded as `proposed` with the
-edit. A pass that reaches no verdict on a criterion writes `not judged: <why>`.
+authority, or omits an orientation its reader needs, criterion 8; proposal in the note),
+`decision` (a choice the human owns; proposal in the note). A `refined` edit the pass may
+not make (§4) is recorded as `proposed` with the edit. A pass that reaches no verdict on
+a criterion writes `not judged: <why>`.
 
 A **finding** is one defect with one fix. Several documents sharing a defect and its
 fix (six pages whose `updated` date lags, one check that would catch all six) are one
@@ -95,44 +97,41 @@ once.
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
 `AGENTS.md`:**
 
-1. **Identity fits.** The purpose says what the thing is; the abstract says what it
-   does and for whom; neither restates the other. Evidence: the two strings in
-   `identity.toml`. `refined` with the rewrite, or `keep`.
-2. **Authority is named and current.** Each `authority` path is the document that
-   decides what is built, and its status line is not older than the last landed goal.
-   The status line is the document's newest dated line of its own: a front-matter
-   `updated` or `status` date, or the dated heading of its current-state section; a
-   document with none is `not judged` here. The last landed goal is the newest `done`
-   task whose record names the document (`tasks -C <root> list --status done --sort
-   updated --plan <path>`, then `--ref <path>`; a spec link has no list filter, so
-   `grep -l '<path>' tasks/*.md` finds those records, read with `tasks show`); when
-   none names it, the newest `done` task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`,
-   or `not judged` when the pass cannot tell whether the document was meant to record
-   that goal.
-3. **No status prose.** The guides make no claim of the form "X is implemented",
-   "as of <date>", "in progress", and carry no dated measurements that are history
-   rather than guidance; in the README the rendered `ops:status` region is exempt. A
-   failure a rule cites (a commit, task or cut id) is guidance, not status. Evidence:
-   the text. `refined` when deleting a word or clause leaves true guidance; otherwise
-   `stale` with the proposal: delete the claim and, when it says something the tracker
-   or a dated note does not, file or move it there.
-4. **Nothing the global layer already says.** No section restates the tasks skill, the
-   worktree rule, the commit conventions, or a profile's instructions. Evidence: the
-   text against the global `AGENTS.md` the session loaded and the tasks skill.
-   `refined` with the section deleted and the line count saved. Text that fails here
-   is not judged again under criterion 5.
-5. **Every rule has a failure.** Each rule (a sentence under Rules) names, or the pass
-   finds in `git log`, a retro note, or a task (`tasks -C <root> search "<phrase>"`,
-   `grep -ril <word> tasks/`), the failure it prevents. A rule that states a boundary
-   its authority document draws is `keep` when it cites that document. Evidence: the
-   search. `decision`: the rule is a removal candidate for the human, never deleted by
-   the pass.
-6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared
+1. **Identity fits.** The purpose says what the thing is; the abstract says what it does
+   and for whom; neither restates the other. Evidence: the two strings in
+   `identity.toml`. `refined` with the rewrite, or `keep`. 2. **Authority is named and
+   current.** Each `authority` path is the document that decides what is built, and its
+   status line is not older than the last landed goal. The status line is the document's
+   newest dated line of its own: a front-matter `updated` or `status` date, or the dated
+   heading of its current-state section; a document with none is `not judged` here. The
+   last landed goal is the newest `done` task whose record names the document (`tasks -C
+   <root> list --status done --sort updated --plan <path>`, then `--ref <path>`; a spec
+   link has no list filter, so `grep -l '<path>' tasks/*.md` finds those records, read
+   with `tasks show`); when none names it, the newest `done` task, and the verdict says
+   so. `stale` naming the goal and the newer entry, `keep`, or `not judged` when the pass
+   cannot tell whether the document was meant to record that goal. 3. **No status
+   prose.** The guides make no claim of the form "X is implemented", "as of <date>", "in
+   progress", and carry no dated measurements that are history rather than guidance; in
+   the README the rendered `ops:status` region is exempt. A failure a rule cites (a
+   commit, task or cut id) is guidance, not status. Evidence: the text. `refined` when
+   deleting a word or clause leaves true guidance; otherwise `stale` with the proposal:
+   delete the claim and, when it says something the tracker or a dated note does not,
+   file or move it there. 4. **Nothing the global layer already says.** No section
+   restates the tasks skill, the worktree rule, the commit conventions, or a profile's
+   instructions. Evidence: the text against the global `AGENTS.md` the session loaded and
+   the tasks skill. `refined` with the section deleted and the line count saved. Text
+   that fails here is not judged again under criterion 5. 5. **Every rule has a
+   failure.** Each rule (a sentence under Rules) names, or the pass finds in `git log`, a
+   retro note, or a task (`tasks -C <root> search "<phrase>"`, `grep -ril <word>
+   tasks/`), the failure it prevents. A rule that states a boundary its authority
+   document draws is `keep` when it cites that document. Evidence: the search.
+   `decision`: the rule is a removal candidate for the human, never deleted by the pass.
+   6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared
    raise still has every section pulling weight. Evidence: line counts by section.
-   `decision` naming the sections a reader could lose, or `keep`.
-7. **Projections agree.** README and `AGENTS.md` do not contradict each other on
-   setup, gates, or layout. Evidence: the two texts. `refined` with the correction, or
-   `stale` when the tree disagrees with both.
+   `decision` naming the sections a reader could lose, or `keep`. 7. **Projections
+   agree.** README and `AGENTS.md` do not contradict each other on setup, gates, or
+   layout. Evidence: the two texts. `refined` with the correction, or `stale` when the
+   tree disagrees with both.
 
 **Completeness and facts, every covered document:**
 
@@ -177,9 +176,8 @@ branch the session works on, and land as one `docs:` commit through the project'
 gates. From another project (`--project`), the edit is recorded as `proposed` and
 resolved like a `stale` finding (§5): the owning project edits its own tree. An edit
 shortens or corrects; it never adds a section, reorders, or deletes a rule, except
-text criterion 4 finds restated from the global layer. A README
-some test reads as input (grep `tests/` for its name) gets that test run before the
-commit.
+text criterion 4 finds restated from the global layer. A README some test reads as
+input (grep `tests/` for its name) gets that test run before the commit.
 
 ## 5. The review task and its notes
 
@@ -239,8 +237,9 @@ Nothing else. A pass with nothing in those groups says so in one line.
   resolution step, after the review note, one per finding.
 - Read-only on the host: nothing from the judged documents is executed.
 - Only covered documents are judged; a defect noticed in a decision record or a
-  vendored file is named in `excluded:`, not judged. An authority document is the one
-  exception, under criterion 2 alone.
+  vendored file is named in `excluded:`, not judged. Two exceptions: an authority
+  document under criterion 2 alone, and an unread reference document under criterion
+  10's self-date check alone.
 - Prefer shorter. An edit that grows a document is a proposal.
 - Keep defects apart from preference: `stale` is reserved for text the tree or its own
   authority contradicts, and for an orientation a reader needs and cannot find
@@ -252,14 +251,17 @@ Nothing else. A pass with nothing in those groups says so in one line.
   `docs/specs/2026-09-22-project-guides-design.md` §8; 8–11 added for completeness by
   reader needs, factual drift kept apart from preference, reference documents, and
   undeclared guides. Deliberate departures from §8's text, each to be confirmed or
-  reverted by the pilot: every criterion may return `not judged: <why>`; criteria 1–7
-  are judged per guide set, declared subsystems included; criterion 2 returns `not
-  judged` for an undated authority document or an unattributable goal; criterion 3
-  covers both root guides (the README's rendered status region exempt) and dated
-  measurements, exempts a rule's cited failure, allows `refined` where deleting a word
-  or clause leaves true guidance, and names a dated note as a destination; criterion 5
-  returns `keep` for a boundary rule that cites its authority document, and over
-  lore's generated file is the provenance audit lore's `docs/` holds (§8 cites it as
-  ai-9ec1eb); criterion 6 names `keep` explicitly. The ops documentation-review pilot
-  applies v1 by hand; criteria that produce no actionable finding, or many false
-  positives, are revised into v2 on its report.
+  reverted by the pilot: every criterion may return `not judged: <why>`; criteria 1–7 are
+  judged per guide set, declared subsystems included; criterion 2 returns `not judged`
+  for an undated authority document or an unattributable goal; criterion 2 compares the
+  status line with the newest `done` task that names the document before falling back to
+  §8's newest `done` task; criterion 3 covers the README as well as `AGENTS.md` (the
+  README's rendered status region exempt) and dated measurements, exempts a rule's cited
+  failure, allows `refined` where deleting a word or clause leaves true guidance, and
+  names a dated note as a destination; text that fails criterion 4 is not judged again
+  under criterion 5; criterion 5 reads a rule as a sentence under Rules, not a line,
+  returns `keep` for a boundary rule that cites its authority document, and over lore's
+  generated file is the provenance audit lore's `docs/` holds (§8 cites it as ai-9ec1eb);
+  criterion 6 names `keep` explicitly. The ops documentation-review pilot applies v1 by
+  hand; criteria that produce no actionable finding, or many false positives, are revised
+  into v2 on its report.

@@ -99,39 +99,41 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
 
 1. **Identity fits.** The purpose says what the thing is; the abstract says what it does
    and for whom; neither restates the other. Evidence: the two strings in
-   `identity.toml`. `refined` with the rewrite, or `keep`. 2. **Authority is named and
-   current.** Each `authority` path is the document that decides what is built, and its
-   status line is not older than the last landed goal. The status line is the document's
-   newest dated line of its own: a front-matter `updated` or `status` date, or the dated
-   heading of its current-state section; a document with none is `not judged` here. The
-   last landed goal is the newest `done` task whose record names the document (`tasks -C
-   <root> list --status done --sort updated --plan <path>`, then `--ref <path>`; a spec
-   link has no list filter, so `grep -l '<path>' tasks/*.md` finds those records, read
-   with `tasks show`); when none names it, the newest `done` task, and the verdict says
-   so. `stale` naming the goal and the newer entry, `keep`, or `not judged` when the pass
-   cannot tell whether the document was meant to record that goal. 3. **No status
-   prose.** The guides make no claim of the form "X is implemented", "as of <date>", "in
-   progress", and carry no dated measurements that are history rather than guidance; in
-   the README the rendered `ops:status` region is exempt. A failure a rule cites (a
-   commit, task or cut id) is guidance, not status. Evidence: the text. `refined` when
-   deleting a word or clause leaves true guidance; otherwise `stale` with the proposal:
-   delete the claim and, when it says something the tracker or a dated note does not,
-   file or move it there. 4. **Nothing the global layer already says.** No section
-   restates the tasks skill, the worktree rule, the commit conventions, or a profile's
-   instructions. Evidence: the text against the global `AGENTS.md` the session loaded and
-   the tasks skill. `refined` with the section deleted and the line count saved. Text
-   that fails here is not judged again under criterion 5. 5. **Every rule has a
-   failure.** Each rule (a sentence under Rules) names, or the pass finds in `git log`, a
-   retro note, or a task (`tasks -C <root> search "<phrase>"`, `grep -ril <word>
-   tasks/`), the failure it prevents. A rule that states a boundary its authority
-   document draws is `keep` when it cites that document. Evidence: the search.
+   `identity.toml`. `refined` with the rewrite, or `keep`.
+2. **Authority is named and current.** Each `authority` path is the document that decides
+   what is built, and its status line is not older than the last landed goal. The status
+   line is the document's newest dated line of its own: a front-matter `updated` or
+   `status` date, or the dated heading of its current-state section; a document with none
+   is `not judged` here. The last landed goal is the newest `done` task whose record
+   names the document (`tasks -C <root> list --status done --sort updated --plan <path>`,
+   then `--ref <path>`; a spec link has no list filter, so `grep -l '<path>' tasks/*.md`
+   finds those records, read with `tasks show`); when none names it, the newest `done`
+   task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`, or
+   `not judged` when the pass cannot tell whether the document was meant to record that
+   goal.
+3. **No status prose.** The guides make no claim of the form "X is implemented", "as of
+   <date>", "in progress", and carry no dated measurements that are history rather than
+   guidance; in the README the rendered `ops:status` region is exempt. A failure a rule
+   cites (a commit, task or cut id) is guidance, not status. Evidence: the text.
+   `refined` when deleting a word or clause leaves true guidance; otherwise `stale` with
+   the proposal: delete the claim and, when it says something the tracker or a dated note
+   does not, file or move it there.
+4. **Nothing the global layer already says.** No section restates the tasks skill, the
+   worktree rule, the commit conventions, or a profile's instructions. Evidence: the text
+   against the global `AGENTS.md` the session loaded and the tasks skill. `refined` with
+   the section deleted and the line count saved. Text that fails here is not judged again
+   under criterion 5.
+5. **Every rule has a failure.** Each rule (a sentence under Rules) names, or the pass
+   finds in `git log`, a retro note, or a task (`tasks -C <root> search "<phrase>"`,
+   `grep -ril <word> tasks/`), the failure it prevents. A rule that states a boundary its
+   authority document draws is `keep` when it cites that document. Evidence: the search.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
-   6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared
-   raise still has every section pulling weight. Evidence: line counts by section.
-   `decision` naming the sections a reader could lose, or `keep`. 7. **Projections
-   agree.** README and `AGENTS.md` do not contradict each other on setup, gates, or
-   layout. Evidence: the two texts. `refined` with the correction, or `stale` when the
-   tree disagrees with both.
+6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared raise
+   still has every section pulling weight. Evidence: line counts by section. `decision`
+   naming the sections a reader could lose, or `keep`.
+7. **Projections agree.** README and `AGENTS.md` do not contradict each other on setup,
+   gates, or layout. Evidence: the two texts. `refined` with the correction, or `stale`
+   when the tree disagrees with both.
 
 **Completeness and facts, every covered document:**
 

@@ -13,6 +13,10 @@ from a directory here or in its owner's checkout. Codex shows each as `r0/<name>
 is the one an agent guesses; nested skill directories were read back with a level
 dropped or added. Keep new skills at this depth.
 
+- `curate-docs/` — the documentation-review rubric (ops
+  `docs/specs/2026-09-22-project-guides-design.md` §8, extended), shaped like `curate`
+  and written here because a skill that judges prose belongs with the skill corpus.
+  Declared in hq's `links.toml` as `lore:skills/curate-docs` for each home surface.
 - `tasks`, `curate`, `scope`, `quick-add` — served from the tasks and ops checkouts by
   declarations in hq's `links.toml`, so the skills those repositories ship are always
   the checked-out version. A new skill is a declaration there for each home surface;

@@ -27,7 +27,8 @@ Historical proof commands are acceptance checks outside the recurring gates.
 - `instructions/assembly.toml` and `instructions/fragments/`: editable catalog and
   policy sources. Ops owns the external Projects fragment.
 - `profiles/`: the personal, work and external fragments resolved by ops-profile.
-- `skills/`: seven vendored skills, `skills/references/` and the skill README.
+- `skills/`: seven vendored skills, the `curate-docs` skill, `skills/references/` and
+  the skill README.
 - `vendor/superpowers`: the pinned submodule; `just setup` initializes it.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
 - `docs/notes/`: 21 dated briefs. `docs/`: coding advice and the provenance audit.

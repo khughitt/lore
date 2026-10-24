@@ -6,6 +6,9 @@
   No fixed lead marker or word cap. The report stands alone without progress updates
   or a harness recap; omit empty sections and use plain paragraphs when a brief reply
   suffices. This shape does not shorten reviewers' full reports to controllers.
+- Write task ids in replies and reports bare in their canonical form
+  (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;
+  an id inside a command shown as code stays in that command.
 - Follow with the salient findings or landed changes, one claim per bullet when a
   list helps. Keep each claim's conditions, reasons, scope and uncertainty with it;
   do not pack independent changes into one sentence. Include verification and its

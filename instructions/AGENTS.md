@@ -95,9 +95,12 @@ this repository's own instructions, then the user in the session.
   each ruling its own entry with the decision, labelled `Why:` (reason) and `Cost:`
   (if wrong), and revision references; an entry may wrap. Say when a reason or cost
   was not recorded rather than inventing one. Close with a concise line of applicable
-  disclosures about pushes, this session's surviving processes, others' work and
-  worktree state; retain required process ids and stop instructions. These rules
-  govern final reports, not progress updates or task notes.
+  disclosures about pushes, this session's surviving processes, others' work,
+  worktree state, and each branch this session left unmerged: its location and
+  what integrates it (who approves, which command). Repeat this integration state
+  from the lead paragraph; "nothing was pushed" does not establish it. Retain
+  required process ids and stop instructions. These rules govern final reports,
+  not progress updates or task notes.
 - Use no emoji in what you write: replies, reports, and task text (titles, bodies,
   notes). Their fixed colours cannot follow a project's identity colour. Content a
   project itself asks for, and other Unicode such as arrows or box drawing, is not

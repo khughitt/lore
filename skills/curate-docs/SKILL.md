@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 1.** The note names it, so a later pass can tell which criteria a
+**Rubric version 2.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -45,7 +45,8 @@ outcome-measure note.
 
 ## 2. Documents covered
 
-Read these whole, in this order; the note lists exactly what was read.
+Read these in order; the note lists exactly what was read. Root and subsystem
+guides are read whole; reference-document sampling is defined below.
 
 - **Root guides:** `identity.toml`, `README.md`, `AGENTS.md`.
 - **Declared subsystem guides:** for each directory in `identity.toml`'s
@@ -61,20 +62,31 @@ Read these whole, in this order; the note lists exactly what was read.
   `docs/notes/`, `docs/archive/`, `docs/superpowers/`, any dated filename (`2026-…`),
   and vendored trees (`tools/`, `vendor/`, submodules); an exclusion wins over a link
   from the README. Of what remains, read first the documents the root README links,
-  then the rest by path, whole documents only, until 800 lines of reference documents
-  have been read; list the rest under `excluded: unread` so the next pass starts there.
-  Root and subsystem guides are always read whole and count against no budget. An
-  unread document still gets criterion 10's self-date check (its last content change
-  against its own `updated` or status line), not the behaviour check, which needs its
-  text.
+  then the rest by path, with an 800-line reading budget for reference documents.
+  Read documents of at most 300 lines whole when they fit the remaining budget. For
+  longer documents, read complete sections in document order while they fit; record
+  the headings and line ranges actually read under `covered:` and the remaining
+  ranges under `excluded: unread`. If the next document or section cannot fit, stop
+  reference reading and leave the rest unread. The next pass reads previously unread
+  material before resuming the README-first order. A section over 800 lines stays
+  unread and is named under questions as needing a separately scoped read. For every covered
+  document over 300 lines, name the sections read, even when all were read.
+  Root and subsystem guides count against no budget. Criteria 8–10 judge only read
+  sections; an unread portion receives only criterion 10's self-date check (last
+  content change against its own `updated` or status line), not a behaviour judgment.
+  A partial read never establishes that the whole document is complete or current.
 - **Authority documents:** each `identity.toml` `authority` path is read under
   criterion 2 alone, whatever directory holds it, including an excluded one: its head
   and status lines, not the body. Listed as `<path> (authority)`.
 
 The global-layer project (lore, whose `instructions/AGENTS.md` is the file every
 session loads) is read like any project for its root guides, and under criterion 5
-only for that generated file; a finding there names the fragment under
-`instructions/fragments/` that renders the rule.
+only for that generated file. Its provenance audit is lore's
+`docs/instruction-provenance.md`; use it as evidence, checking the current rule.
+A finding names the owner and source in `instructions/AGENTS.manifest.json`:
+lore-owned rules resolve to their `instructions/fragments/` source; the Projects /
+Feedback owners fragment resolves to ops, whose identity declarations and renderer
+own it. A rendered copy in lore does not make lore its owner.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
 manifest, the module list. The pass runs nothing the judged documents describe: no
@@ -128,15 +140,22 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    against the global `AGENTS.md` the session loaded and the tasks skill. `refined` with
    the section deleted and the line count saved. Text that fails here is not judged again
    under criterion 5.
-5. **Every rule has a failure.** Each rule (a sentence under Rules) names, or the pass
+5. **Every rule has a failure — baseline and Rules changes.** Run this on a guide
+   set's first review and when its Rules text changed since the last completed review.
+   Read that review's commit from the reusable review task and compare the Rules text
+   with the working tree; for lore's generated global file, compare the whole file.
+   If the earlier revision or coverage cannot establish a baseline, run it now.
+   When the baseline is established and Rules are unchanged, record
+   `not judged: Rules unchanged since <sha>`. When running it, each rule (a sentence
+   under Rules) names, or the pass
    finds in `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
    `grep -ril <word> <records>/tasks/`), the failure it prevents. A rule that states a
    boundary its authority document draws is `keep` when it cites that document.
    Evidence: the search.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
-6. **Budget earned.** A project over the default `AGENTS.md` budget with a declared raise
-   still has every section pulling weight. Evidence: line counts by section. `decision`
-   naming the sections a reader could lose, or `keep`.
+6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
+   mechanically`. §1 records `ops-docs check`'s line-limit findings. It does not judge
+   whether sections earn a declared raise; v2 retires that separate prose judgment.
 7. **Projections agree.** README and `AGENTS.md` do not contradict each other on setup,
    gates, or layout. Evidence: the two texts. `refined` with the correction, or `stale`
    when the tree disagrees with both.
@@ -152,7 +171,10 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    four. A layout table that names one module of sixty misleads and is `stale`.
 9. **Facts match the tree.** Every named path, command, recipe, module, package name
    and primary-implementation claim exists or holds in the tree. Evidence: `ls`,
-   `git ls-files`, the justfile, the manifest. A contradiction is a defect: `refined`
+   `git ls-files`, the justfile, the manifest. Compare documented tables and command
+   lists directly with their tracked source (key definitions, CLI-help source, justfile
+   `*_cmd` values); read the source rather than executing the CLI. Check each named
+   path, recipe and package against the tree. A contradiction is a defect: `refined`
    when one word corrects it (`npm install` where the lockfile and justfile say `npm
    ci`), `stale` when the claim needs rewriting. Wording the pass would merely prefer is
    never `stale`: it is `refined` when shortened in place, otherwise `keep`.
@@ -204,13 +226,14 @@ document they judged; a criterion with mixed verdicts appears only under the oth
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v1; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v2; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
 for each `stale`, `proposed` and mechanical finding: reuse the open task that owns it
-(`tasks -C <checkout> search "<distinctive phrase>"`, `tasks -C <checkout> list --tag
-docs`), adding one note on it (`curate-docs: <review-id> at <sha> confirms: <what>`), or file
+(`tasks -C <checkout> search "<literal path or distinctive phrase>"`, `tasks -C <checkout> list --tag
+docs`; avoid broad terms such as `AGENTS.md` alone), adding one note on it
+(`curate-docs: <review-id> at <sha> confirms: <what>`), or file
 one in the owning project with `--source <review-id> --tag docs -p 3 --size xs
 --complexity low --process direct`, sized up when the fix is larger. A closed owner is
 not reused; when the finding shows that closed work fell short, the new task's first
@@ -229,7 +252,7 @@ One line per criterion: its number, verdict, and one phrase (or `not judged: <wh
 Then the review task id and the commit judged. Then the decisions that are the human's,
 grouped, omitting empty groups:
 
-- **removal candidates** (criteria 5, 6): the rule or section, and what was searched;
+- **removal candidates** (criterion 5): the rule or section, and what was searched;
 - **declarations** (criterion 11): the directory, and the two options;
 - **stale text** (criteria 2, 3, 7, 8, 9, 10): the document, the claim, the evidence,
   and the task that now owns it;
@@ -247,7 +270,7 @@ Nothing else. A pass with nothing in those groups says so in one line.
 - Only covered documents are judged; a defect noticed in a decision record or a
   vendored file is named in `excluded:`, not judged. Two exceptions: an authority
   document under criterion 2 alone, and an unread reference document under criterion
-  10's self-date check alone.
+  10's self-date check alone. Partial reference reads cover only their recorded sections.
 - Prefer shorter. An edit that grows a document is a proposal.
 - Keep defects apart from preference: `stale` is reserved for text the tree or its own
   authority contradicts, and for an orientation a reader needs and cannot find
@@ -270,6 +293,43 @@ Nothing else. A pass with nothing in those groups says so in one line.
   under criterion 5; criterion 5 reads a rule as a sentence under Rules, not a line,
   returns `keep` for a boundary rule that cites its authority document, and over lore's
   generated file is the provenance audit lore's `docs/` holds (§8 cites it as ai-9ec1eb);
-  criterion 6 names `keep` explicitly. The ops documentation-review pilot applies v1 by
-  hand; criteria that produce no actionable finding, or many false positives, are revised
-  into v2 on its report.
+  criterion 6 names `keep` explicitly. Two further departures: `proposed` is a fifth
+  recorded verdict for edits the pass cannot make; lore's root `AGENTS.md` is judged
+  under every applicable criterion, distinct from its generated global file. The ops
+  pilot applied the seven source criteria plus completeness and drift before final v1;
+  it did not test the final eleven-criterion skill end to end.
+
+- **v2** (2026-10-24, lore-1e46ee): revised from ops-65a068's
+  `docs/notes/2026-10-23-doc-review-pilot-report.md` (in ops). Three personal-profile
+  projects yielded 24 actionable findings and 24 rejected candidates; the report
+  gives no candidate breakdown sufficient to attribute false positives to each
+  criterion. Low yield alone does not establish a defective criterion. The 40-line
+  v1 dry run likewise gave no actionable 1, 6, 7 or 11 finding; its criterion 5 false
+  positive on a design boundary prompted the authority-citation keep clause.
+
+  Disposition of every recorded v1 departure from project-guides §8:
+
+  | Departure | v2 decision and reason |
+  |---|---|
+  | `not judged` available to every criterion | Confirm: missing evidence must remain visible, distinct from `keep`. |
+  | Criteria 1–7 per root and declared subsystem guide set | Confirm scope, with 5 conditional and 6 retired below: stale subsystem guides were a positive control. |
+  | 2: undated authority or unattributable goal is `not judged` | Confirm: neither absence proves staleness; pilot supplies no contrary evidence. |
+  | 2: document-linked done task before newest done fallback | Confirm: unrelated completions cannot date a document's authority; fallback remains disclosed. |
+  | 3: README and dated measurements included; rendered status exempt | Confirm: pilot found dated gate history; generated status has its own check. |
+  | 3: cited failures exempt; small deletions may be `refined`; dated note destination | Confirm: preserve rule evidence and useful history without leaving status prose in guides. |
+  | 4 before 5, without judging restatements twice | Confirm: all three projects had restatements; one defect needs one resolution. |
+  | 5: sentences rather than lines; cited design boundary is `keep` | Confirm: wrapping is not a rule boundary; the dry-run false positive supports the keep clause. |
+  | 5: generated global file uses the provenance audit | Confirm and move the pointer into §2; resolve findings by manifest owner, including ops. |
+  | 6: explicit `keep` for earned raises | Retire with the prose criterion, rather than revert: it never applied in the pilot. Mechanical limits remain in §1; their success is not an earned-budget judgment. |
+  | Fifth recorded verdict `proposed` | Confirm: distinguishes an unmade edit from `refined`; cross-project edits must remain proposals. |
+  | Lore root guide judged normally; generated global file under 5 alone | Confirm: these are now separate files with separate roles. |
+
+  Further v2 decisions: keep 1–2 as quick checks and 3, 4, 7–9 in each pass;
+  run 5 at baseline and after Rules changes (only decisions in the pilot); retain
+  the criterion numbers so old notes remain interpretable. Criterion 9 now names
+  source-table comparison explicitly. Long reference guides may be sampled by section,
+  with exact coverage and unread ranges recorded; the pilot's partial CLI-guide read
+  cannot stand for a whole-document review. Duplicate searches use literal paths and
+  distinctive phrases. Retain 8's stub signal and 10–11: the pilot did not evaluate
+  final v1's latter two criteria, so removal would be unsupported. These are bounded
+  judgments from a small selected sample, not measured corpus-wide validation.

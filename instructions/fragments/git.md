@@ -25,7 +25,9 @@
   needed (a review screenshot, a report, a log) to the task it serves, one
   `tasks attach <id> <file> --caption "<what it shows>"` per file. Move the rare needed
   item too large to commit with a task record to that task's
-  `$WORK_ROOT/<project>/<task-id>/` and note its path and sha256 on the task. Each plan
+  `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item
+  rule. If the layout gate refuses a small attachment, use that rule's raw/portable
+  fallback. Each plan
   workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
   `minor (deferred)` lines have reached a final message, other plans' included;
   otherwise attach its ledger, or move and note it as above, on the task its plan

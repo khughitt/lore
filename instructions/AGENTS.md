@@ -199,7 +199,12 @@ it this way:
   fix pass plus one scoped re-review of it, and another follows while that re-review
   reports any Critical or Important finding, persisting or introduced by the fix. Minor
   findings never enter a round; they go to the ledger as `minor (deferred)`, as both
-  skills say. A fix subagent makes the fixes under subagent-driven execution; inline,
+  skills say. In either execution mode, a final review's "fix before merge" call on a
+  deferred minor is a re-grade proposal: the controller confirms or rejects it by its
+  consequence for the person, records each decision as a ledger `Ruling:` line, and
+  admits confirmed proposals to corrective rounds as Important; rejected proposals
+  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes
+  under subagent-driven execution; inline,
   you make them yourself, each still proven RED→GREEN with a green suite. A fresh
   reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks
   executing-plans' "do not dispatch a re-review" and "no second fix pass" and

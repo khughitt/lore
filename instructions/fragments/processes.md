@@ -62,12 +62,29 @@
   profile reached through a different configuration path, gets its own end-to-end check.
   An obligation a tool measures per host, such as a `test-latency` verify, is not a
   rollout check and stays per host.
+- At park and before `tasks done`, account on the task for each retained worktree,
+  task scratch directory and off-tree evidence copy: path, purpose, next owner and
+  cleanup trigger, plus SHA-256 for evidence files or a scratch/evidence directory
+  manifest and its hash.
+  Read `~/.agents/skills/references/retained-item-records.md` when creating,
+  refreshing or releasing these records; keep uncertainty explicit. An open task
+  owns items across activation review; only a closing session disposing of them
+  in the same turn may temporarily own integration, and anything kept longer
+  needs an open follow-up or agreed user handoff. A cleanup trigger, merge or done
+  grants no deletion permission; preserve unfinished work and the only needed raw
+  copy. Refresh carried resource and wait descriptions from observations. For a
+  layout-refused attachment, preserve hashed raw bytes as a retained item and
+  attach a placeholder-substituted derivative through normal checks, following
+  the reference. Keep that fallback until the executing checker admits a shipped
+  exemption, without treating design completion as shipment or discarding the
+  only raw copy.
 - A task that spans sessions keeps its inputs where a reboot cannot take them. Its
   scratch lives in a per-task directory on persistent host-local storage off the synced
   tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user
   where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only
-  per-run copies made from that persistent canonical copy, and a park names the
-  canonical copy's path and sha256 (a sha256 manifest for a directory). A resume
+  per-run copies made from that persistent canonical copy. Note directory creation
+  immediately (host, path, purpose and current task owner; contents still mutable),
+  then checkpoint under the retained-item rule above at park and done. A resume
   checks that its inputs exist and match the recorded hash before it claims an
   idle-host window or the user's machine.
 - Work that takes the live desktop (opens windows on it, moves focus, switches

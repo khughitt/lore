@@ -22,6 +22,10 @@ dropped or added. Keep new skills at this depth.
   the checked-out version. A new skill is a declaration there for each home surface;
   `just link --apply` creates the links.
 - `flow` and `session-logs` — served from the flows and hq checkouts, declared the same way.
+- `references/retained-item-records.md` — lore-authored closeout record guidance,
+  read on demand from the global Processes rule. The existing hq directory link
+  serves it at `~/.agents/skills/references/retained-item-records.md`; it is separate
+  from the vendored checklists below and is not a skill.
 - `api-and-interface-design/`, `code-simplification/`, `context-engineering/`,
   `documentation-and-adrs/`, `observability-and-instrumentation/`,
   `performance-optimization/`, `security-and-hardening/` — vendored copies from

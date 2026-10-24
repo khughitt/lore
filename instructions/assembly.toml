@@ -56,6 +56,12 @@ location = "reported (not reproduced locally): a worktree baseline ran a changed
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"
+path = "docs/notes/2026-10-23-closeout-artifacts-brief.md"
+revision = "b480e35eb6cec28134f57bcabcf6828417a184f7"
+location = "Scoping evidence (reported, not reproduced here): retained large copies lack purpose, next owner and cleanup trigger; layout-refused small attachments need preserved raw bytes and a portable derivative. Approved contract: spec b480e35, Record convention and Attachment layout refusal."
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
 path = "none recorded"
 revision = "none recorded"
 location = "Later or unmapped clauses: no incident evidence established by the dated source."
@@ -197,6 +203,12 @@ owner = "lore"
 path = "tasks/lore-4620de.md"
 revision = "c226acb941c18b6f4e06ff0efd2882475c0e9e2c"
 location = "scoped body: a multi-session experiment kept its canonical frozen input on tmpfs, parked across a reboot and lost it; the park named the path only in prose"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore"
+path = "docs/notes/2026-10-23-closeout-artifacts-brief.md"
+revision = "b480e35eb6cec28134f57bcabcf6828417a184f7"
+location = "Scoping evidence (reported, not reproduced here): done leaves scratch unrecorded, retained worktrees lack ownership and expiry, and layout gates refuse evidence attachments. Approved contract: spec b480e35 and plan 57c8cd8; short shared obligation with on-demand retained-item reference, creation note and bounded same-turn ownership."
 status = "recorded"
 [[fragments.evidence]]
 owner = "lore"

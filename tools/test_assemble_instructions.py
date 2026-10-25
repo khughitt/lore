@@ -44,6 +44,16 @@ def git(root, *args):
                           env=GIT_ENV).stdout
 
 
+def commit_all(repo):
+    git(repo, 'init', '-q', '-b', 'main')
+    git(repo, 'config', 'user.name', 'Assembly fixture')
+    git(repo, 'config', 'user.email', 'assembly-fixture@example.invalid')
+    git(repo, 'config', 'core.hooksPath', 'fixture-no-hooks')
+    git(repo, 'config', 'commit.gpgsign', 'false')
+    git(repo, 'add', '.')
+    git(repo, 'commit', '-q', '-m', 'test: bootstrap sources without manifest')
+
+
 def invoke(world, *args):
     return subprocess.run([sys.executable, str(world.root / 'bin/assemble-instructions'), *args],
                           cwd=world.root, env=world.env, capture_output=True)
@@ -55,7 +65,7 @@ def build(world, command='write', *args):
 
 @pytest.fixture
 def world(tmp_path, home):
-    root, ops = tmp_path / 'lore', tmp_path / 'ops'
+    root, ops, store = tmp_path / 'lore', tmp_path / 'ops', tmp_path / 'records'
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
     # Reference worlds use immutable initial policy, not today's editable prose.
@@ -88,34 +98,33 @@ def world(tmp_path, home):
                                          f'sys.stdout.buffer.write({projects!r})\n')
     config = tmp_path / 'config/tasks'
     config.mkdir(parents=True)
+    # Evidence owned by lore:records lives in a records directory inside a records repository.
     (config / 'projects.toml').write_text('[projects]\nops = ' + json.dumps(str(ops)) +
-                                          '\nlore = ' + json.dumps(str(tmp_path / 'wrong-lore')) + '\n')
+                                          '\nlore = ' + json.dumps(str(tmp_path / 'wrong-lore')) +
+                                          '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n')
+    directories = {'lore': root, 'ops': ops, 'lore:records': store / 'lore'}
+    (store / 'lore').mkdir(parents=True)
     for fragment in catalog['fragments']:
         for evidence in fragment['evidence']:
             if evidence['path'] in ('none recorded', 'n/a'): continue
-            repo = root if evidence['owner'] == 'lore' else ops
-            file = repo / evidence['path']
+            file = directories[evidence['owner']] / evidence['path']
             file.parent.mkdir(parents=True, exist_ok=True)
             file.write_text('Disposable historical evidence.\n')
-    for repo in (root, ops):
-        git(repo, 'init', '-q', '-b', 'main')
-        git(repo, 'config', 'user.name', 'Assembly fixture')
-        git(repo, 'config', 'user.email', 'assembly-fixture@example.invalid')
-        git(repo, 'config', 'core.hooksPath', 'fixture-no-hooks')
-        git(repo, 'config', 'commit.gpgsign', 'false')
-        git(repo, 'add', '.')
-        git(repo, 'commit', '-q', '-m', 'test: bootstrap sources without manifest')
-    heads = {repo: git(repo, 'rev-parse', 'HEAD').decode().strip() for repo in (root, ops)}
+    (store / 'lore/.keep').touch()
+    for repo in (root, ops, store):
+        commit_all(repo)
+    heads = {'lore': git(root, 'rev-parse', 'HEAD').decode().strip(),
+             'ops': git(ops, 'rev-parse', 'HEAD').decode().strip(),
+             'lore:records': git(store, 'rev-parse', 'HEAD').decode().strip()}
     path = root / 'instructions/assembly.toml'
     text = path.read_text()
     for fragment in catalog['fragments']:
         for evidence in fragment['evidence']:
             if evidence['path'] in ('none recorded', 'n/a'): continue
-            repo = root if evidence['owner'] == 'lore' else ops
             text = text.replace('revision = ' + json.dumps(evidence['revision']),
-                                'revision = ' + json.dumps(heads[repo]))
+                                'revision = ' + json.dumps(heads[evidence['owner']]))
     path.write_text(text)
-    return SimpleNamespace(root=root, ops=ops, config=config,
+    return SimpleNamespace(root=root, ops=ops, store=store, config=config,
                            env=isolated_env(home, XDG_CONFIG_HOME=str(config.parent)),
                            initial=initial)
 
@@ -183,7 +192,7 @@ def test_paired_evidence_sentinels_preserve_metadata_without_owner_lookup(world,
     assert json.loads(outputs(world)[1])['fragments'][0]['evidence'][0] == expected
 
 
-@pytest.mark.parametrize('owner', ['Bad', 'bad/name'])
+@pytest.mark.parametrize('owner', ['Bad', 'bad/name', 'lore:notes', ':records'])
 def test_evidence_owner_requires_a_project_prefix(world, owner):
     change_evidence(world, owner=owner)
     result = build(world)
@@ -199,7 +208,7 @@ def test_evidence_only_external_owner_uses_registry_and_override_identity(world,
     expected = change_evidence(world, owner='notes')
     if case != 'unregistered':
         registry = world.config / 'projects.toml'
-        registry.write_text(registry.read_text() + 'notes = ' + json.dumps(str(external)) + '\n')
+        registry.write_text(registry.read_text().replace('[projects]\n', '[projects]\nnotes = ' + json.dumps(str(external)) + '\n', 1))
     args = ()
     if case in ('worktree', 'alien'):
         selected = world.root.parent / 'notes-override'
@@ -215,6 +224,36 @@ def test_evidence_only_external_owner_uses_registry_and_override_identity(world,
         assert result.returncode == 0, result.stderr
         assert json.loads(outputs(world)[1])['fragments'][0]['evidence'][0] == expected
         assert build(world, 'check', *args).returncode == 0
+
+
+@pytest.mark.parametrize('case', ['registered', 'unregistered', 'missing-path', 'alien'])
+def test_records_evidence_owner_reads_the_registered_records_directory(world, case):
+    store = world.store
+    record = store / 'lore/tasks/lore-000000.md'
+    record.parent.mkdir(parents=True, exist_ok=True)
+    record.write_text('Disposable task record.\n')
+    git(store, 'add', '.')
+    git(store, 'commit', '-q', '-m', 'test: add a task record')
+    path = 'tasks/absent.md' if case == 'missing-path' else 'tasks/lore-000000.md'
+    expected = change_evidence(world, owner='lore:records', path=path,
+                               revision=git(store, 'rev-parse', 'HEAD').decode().strip())
+    registry = world.config / 'projects.toml'
+    records = '' if case == 'unregistered' else '[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n'
+    registry.write_text(registry.read_text().partition('[records]\n')[0] + records)
+    args = ()
+    if case == 'alien':
+        alien = world.root.parent / 'records-alien'
+        git(world.root.parent, 'clone', '-q', str(store), str(alien))
+        args = ('--owner-root', f'lore:records={alien / "lore"}')
+    result = build(world, 'write', *args)
+    if case == 'registered':
+        assert result.returncode == 0, result.stderr
+        assert json.loads(outputs(world)[1])['fragments'][0]['evidence'][0] == expected
+        assert build(world, 'check').returncode == 0
+    else:
+        assert result.returncode == 1
+        assert b'lore:records' in result.stderr and b'Traceback' not in result.stderr
+        assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
 
 
 def inventory(root):
@@ -575,7 +614,7 @@ def test_unreadable_historical_blob_is_rejected(world):
 def test_evidence_validation_spawns_one_git_per_owner(world, monkeypatch):
     module = load_assembler(world)
     catalog = module.catalog_from((world.root / 'instructions/assembly.toml').read_bytes())
-    owners = {'lore': world.root, 'ops': world.ops}
+    owners = {'lore': world.root, 'ops': world.ops, 'lore:records': world.store / 'lore'}
     concrete = {e['owner'] for f in catalog['fragments'] for e in f['evidence']
                 if e['path'] not in ('none recorded', 'n/a')}
     calls = []
@@ -873,11 +912,12 @@ def test_pinned_proof_rejects_changed_snapshot_and_missing_revision(world):
     assert result.returncode == 1 and b'git' in result.stderr.lower()
 
 
-@pytest.mark.parametrize('change', ['missing', 'unregistered', 'bad-path'])
+@pytest.mark.parametrize('change', ['missing', 'unregistered', 'bad-path', 'bad-records'])
 def test_registry_errors_are_clear_validation_failures(world, change):
     registry = world.config / 'projects.toml'
     if change == 'missing': registry.unlink()
     elif change == 'unregistered': registry.write_text('[projects]\n')
+    elif change == 'bad-records': registry.write_text('records = 1\n' + registry.read_text().partition('[records]\n')[0])
     else: registry.write_text('[projects]\nops = 123\n')
     result = build(world)
     assert result.returncode == 1

@@ -112,7 +112,8 @@ def catalog_from(data):
             fields(evidence, EVIDENCE_FIELDS, 'evidence')
             for key in EVIDENCE_FIELDS:
                 text(evidence[key], 'evidence ' + key)
-            if not re.fullmatch(r'[a-z][a-z0-9]{1,7}', evidence['owner']):
+            # PREFIX names a project's checkout; PREFIX:records its records directory.
+            if not re.fullmatch(r'[a-z][a-z0-9]{1,7}(:records)?', evidence['owner']):
                 raise ValueError('invalid evidence owner prefix')
             if evidence['status'] not in ('recorded', 'none recorded', 'n/a'):
                 raise ValueError('evidence status must be recorded, none recorded or n/a')
@@ -181,10 +182,13 @@ def registry():
     data = tomllib.loads((config / 'tasks/projects.toml').read_text())
     if not isinstance(data.get('projects'), dict):
         raise ValueError('tasks registry requires project roots')
-    for name, path in data['projects'].items():
+    if not isinstance(data.get('records', {}), dict):
+        raise ValueError('tasks registry records must be a table')
+    roots = {**data['projects'], **{f'{name}:records': path for name, path in data.get('records', {}).items()}}
+    for name, path in roots.items():
         if not isinstance(path, str) or not path.strip():
             raise ValueError(f'tasks registry root for {name} must be a nonempty path')
-    return {name: Path(path).expanduser() for name, path in data['projects'].items()}
+    return {name: Path(path).expanduser() for name, path in roots.items()}
 
 
 def owner_roots(catalog, overrides, root, *, validate=False):
@@ -305,7 +309,9 @@ def owner_evidence_reasons(owner, root, indexed):
     queried = [(i, p) for i, p in indexed if i not in reasons]
     if not queried:
         return reasons
-    data = b''.join(f'{p["revision"]}^{{commit}}\0{p["revision"]}:{p["path"]}\0'.encode() for _, p in queried)
+    # A records directory sits inside its repository, so its paths resolve from that directory.
+    base = './' if owner.endswith(':records') else ''
+    data = b''.join(f'{p["revision"]}^{{commit}}\0{p["revision"]}:{base}{p["path"]}\0'.encode() for _, p in queried)
     result = git_run(root, 'cat-file', '--batch', '-Z', data=data)
     stderr = result.stderr.decode('utf-8', errors='replace').strip()
     expected = 2 * len(queried)
@@ -355,7 +361,7 @@ def verify_proof(root, args):
         ops_revision = resolve_commit(owners['ops'], args.projects_revision)
         reference['ops_revision'] = ops_revision
     else:
-        reference['extraction_commit'] = '4e5aa132f452a0a8c6170261d6a3e7f1592a6d67'
+        reference['extraction_commit'] = 'e8104e0c6b51655100ac96dd83daba82649d0755'
         reference['global_blob'] = '5297be329c58bc758b20c48a504a87887be5470a'
         reference['projects_snapshot'] = {'owner': 'lore', 'path': 'tools/fixtures/instruction-assembly/baseline-projects.md', 'revision': revision}
     for f in catalog['fragments']:

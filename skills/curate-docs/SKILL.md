@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 2.** The note names it, so a later pass can tell which criteria a
+**Rubric version 3.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -75,9 +75,11 @@ guides are read whole; reference-document sampling is defined below.
   sections; an unread portion receives only criterion 10's self-date check (last
   content change against its own `updated` or status line), not a behaviour judgment.
   A partial read never establishes that the whole document is complete or current.
-- **Authority documents:** each `identity.toml` `authority` path is read under
+- **Authority documents:** each `identity.toml` `authority` path is judged under
   criterion 2 alone, whatever directory holds it, including an excluded one: its head
   and status lines, not the body. Listed as `<path> (authority)`.
+  For criterion 3, consult relevant intent passages in linked authority and task/source
+  records as evidence; that read does not add excluded documents to the judged coverage.
 
 The global-layer project (lore, whose `instructions/AGENTS.md` is the file every
 session loads) is read like any project for its root guides, and under criterion 5
@@ -128,13 +130,25 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    task, and the verdict says so. `stale` naming the goal and the newer entry, `keep`, or
    `not judged` when the pass cannot tell whether the document was meant to record that
    goal.
-3. **No status prose.** The guides make no claim of the form "X is implemented", "as of
-   <date>", "in progress", and carry no dated measurements that are history rather than
-   guidance; in the README the rendered `ops:status` region is exempt. A failure a rule
-   cites (a commit, task or cut id) is guidance, not status. Evidence: the text.
-   `refined` when deleting a word or clause leaves true guidance; otherwise `stale` with
-   the proposal: delete the claim and, when it says something the tracker or a dated note
-   does not, file or move it there.
+3. **Intent and capability stay distinct from progress.** When a passage describes an
+   initial slice, provisional limit or future direction, read its linked authority and
+   relevant task/source records for intended scope before proposing a rewrite. Keep the
+   intended direction and the limit's provisional meaning beside tree-verified current
+   capabilities. Such a constraint grounded in recorded intent is guidance (`keep`);
+   a shorter rewrite is `refined` only when it preserves both meanings (§4 still applies).
+   The code establishes current capability under 9, not the project's eventual scope.
+   When intent is unavailable or records conflict, record `not judged` on intent with
+   the missing or conflicting evidence under questions; continue capability checks.
+   A proposed change to intended scope is a `decision` for the human.
+
+   Pure progress/history prose ("X is implemented", "as of <date>", "in progress",
+   dated measurements) is removed when it supplies no operating guidance or intent
+   distinction. In the README the rendered `ops:status` region is exempt. A failure a
+   rule cites (a commit, task or cut id) is guidance, not status. Evidence: the text,
+   recorded intent and tree. `refined` when deleting a word or clause leaves true
+   guidance and preserves the scope/capability distinction; otherwise `stale` with
+   the proposal: delete the pure progress claim and, when it says something the tracker
+   or a dated note does not, file or move it there.
 4. **Nothing the global layer already says.** No section restates the tasks skill, the
    worktree rule, the commit conventions, or a profile's instructions. Evidence: the text
    against the global `AGENTS.md` the session loaded and the tasks skill. `refined` with
@@ -226,7 +240,7 @@ document they judged; a criterion with mixed verdicts appears only under the oth
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v2; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v3; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -333,3 +347,14 @@ Nothing else. A pass with nothing in those groups says so in one line.
   distinctive phrases. Retain 8's stub signal and 10–11: the pilot did not evaluate
   final v1's latter two criteria, so removal would be unsupported. These are bounded
   judgments from a small selected sample, not measured corpus-wide validation.
+
+- **v3** (2026-10-25, lore-ae0e0b): criterion 3 distinguishes provisional constraints
+  grounded in recorded intent from progress/history prose. crew-56ee1c's README edit
+  (crew `9b45d43`) removed the first-slice qualification; the user's correction in
+  crew-aaab30 asked to preserve both intended scope and delivered capabilities.
+  lore-1d6126's seven-case study supports this bounded change, not a measured failure
+  rate or review threshold. Rewrites retain intended direction and accurate current
+  support together; missing/conflicting intent stays explicit and an intended-scope
+  change needs a human decision. Other criteria and their numbers are unchanged;
+  date semantics and payload classification retain their separate tasks. Application
+  probes are synthetic checks, not independent natural-case validation.

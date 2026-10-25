@@ -170,6 +170,23 @@ it this way:
   carries no options; a guess they can correct stands in for the recommendation. That
   playback is not a "does this section look right" decision: what they want is theirs
   to say.
+- Before a question asks the user what work should achieve or why (brainstorming's
+  opening questions, its playback, its builder check's "theirs" pile), find out who
+  holds that intent. Work the user describes in this session starts with the
+  question; naming a task to take up is not describing it. Other work (filed by
+  another session or agent, captured earlier, grown by scope passes, or derived as a
+  follow-up, feedback report or decomposition child) starts by reading what already
+  exists: the task's body, notes and references, its `source` and parent chain, and
+  the session that filed it, whose human turns around the filing the session-logs
+  skill recovers. Reading needs no offer or permission. Play back
+  what you found and where each part came from, keeping the user's recorded words
+  apart from what agents added. Then ask only what the evidence leaves to the user (a
+  choice of taste, scope or priority, or a premise the evidence contradicts), each
+  question naming what you found; when nothing remains, write the design and mark each
+  call as yours. Never ask the user to recall what a record or transcript holds; when
+  a source cannot be found, say so and offer your reading for them to correct. The
+  written design's review stays the user's gate. This outranks brainstorming's first
+  message and its offer to go look.
 - A turn that ends with work still owed reports the observed status, not what the turn
   ending implies: which work has stopped and why, what is still running (a background
   check, a dispatched child) and how its result is picked up, and who owns the next step

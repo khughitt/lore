@@ -37,9 +37,13 @@ dropped or added. Keep new skills at this depth.
   see: the Codex remote plugin `superpowers@openai-curated-remote` is uninstalled
   (`codex plugin remove`). A `[plugins.…] enabled = false` entry does not hide a remote
   plugin, whose install state syncs from the account; if it returns, remove it again.
-  Claude Code loads superpowers as the `superpowers@claude-plugins-official` plugin, so
-  keep the submodule on the same version as the installed plugin (`~/.claude/plugins/installed_plugins.json`)
-  or the two harnesses run different skills. Bump with
+  Claude Code loads superpowers as the `superpowers@superpowers-marketplace` plugin
+  (obra's marketplace, auto-update off in hq's Claude settings; the official
+  `superpowers@claude-plugins-official` entry is disabled because it lagged 7.0.1), so
+  keep the submodule on the same commit as the installed plugin (`gitCommitSha` in
+  `~/.claude/plugins/installed_plugins.json`) or the two harnesses run different skills.
+  That marketplace entry pins no commit, so install or update the plugin only while
+  upstream's default branch is at the release tag. Bump with
   `git -C vendor/superpowers checkout <tag>` and commit the pointer; when the
   release adds or removes a skill, add or remove its declaration in hq's `links.toml`
   (`lore:vendor/superpowers/skills/<name>`), in the commit after the bump here.

@@ -35,7 +35,7 @@ check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks c
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
 # when docs/ holds executable examples, fixtures, or anything a test reads; set it to
 # "" to always run the full check.
-docs_paths := "*.md docs/* tasks/* instructions/* profiles/* skills/*"
+docs_paths := "*.md docs/* instructions/* profiles/* skills/*"
 docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check"
 
 # Remote refs whose push makes CI run the full suite (test_cmd or its equivalent), as

@@ -268,6 +268,8 @@ grouped, omitting empty groups:
 
 - **removal candidates** (criterion 5): the rule or section, and what was searched;
 - **declarations** (criterion 11): the directory, and the two options;
+- **scope decisions** (criterion 3): the passage, recorded intent, proposed scope
+  change and evidence; present it for the human's ruling before filing a finding task;
 - **stale text** (criteria 2, 3, 7, 8, 9, 10): the document, the claim, the evidence,
   and the task that now owns it;
 - **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9): the document,
@@ -355,6 +357,7 @@ Nothing else. A pass with nothing in those groups says so in one line.
   lore-1d6126's seven-case study supports this bounded change, not a measured failure
   rate or review threshold. Rewrites retain intended direction and accurate current
   support together; missing/conflicting intent stays explicit and an intended-scope
-  change needs a human decision. Other criteria and their numbers are unchanged;
+  change needs a human decision, presented under §6's scope decisions before filing
+  a finding task. Other criteria and their numbers are unchanged;
   date semantics and payload classification retain their separate tasks. Application
   probes are synthetic checks, not independent natural-case validation.

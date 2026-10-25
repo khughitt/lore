@@ -33,7 +33,6 @@ Historical proof commands are acceptance checks outside the recurring gates.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
 - `docs/notes/`, `docs/specs/`, `docs/plans/`: the briefs, designs and plans the code
   cites; the rest live in the records root (`tasks where` names it). `docs/`: coding advice and the provenance audit.
-  `docs/archive/`: old instruction text awaiting review; its README lists it.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from hq's hook files; it reaches ops's resolver through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.

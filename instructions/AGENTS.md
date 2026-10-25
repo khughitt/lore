@@ -528,7 +528,7 @@ to read one of them from anywhere.
 - `atoms` — atoms — A recoverable filesystem effect engine: the crash-safe substrate
 - `autonomy` — autonomy — The envelope and orchestrator of verifiably: what may run unattended
 - `beliefs` — beliefs — The epistemic kernel of verifiably: recording scientific belief
-- `crew` — crew — An agent harness on pi: runs work from tasks and science on their own terms
+- `crew` — crew — Single-agent and multi-agent orchestration across harnesses and domains
 - `dots` — dotfiles — The dotfiles: shell, editor, desktop, and terminal configuration
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them

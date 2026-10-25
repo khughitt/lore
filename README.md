@@ -49,8 +49,9 @@ they run during acceptance and audits, outside the normal checks.
 - Root `AGENTS.md`: the project guide; `bin/assemble-instructions`: assembler and guard.
 - `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
-- `docs/notes/`, `docs/archive/`, `docs/specs/`, `docs/plans/`: briefs, archives and designs.
-- `tasks/`: task records. `tools/`: assembly tests/fixtures, pinned proof driver and vendored tooling.
+- `docs/notes/`, `docs/archive/`, `docs/specs/`, `docs/plans/`: archives, and the briefs and designs the code cites;
+  the rest, and task records, live in the records root (`tasks where` names it).
+- `tools/`: assembly tests/fixtures, pinned proof driver and vendored tooling.
 
 ## Consumers
 

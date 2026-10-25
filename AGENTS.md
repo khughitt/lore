@@ -31,15 +31,14 @@ Historical proof commands are acceptance checks outside the recurring gates.
   the skill README.
 - `vendor/superpowers`: the pinned submodule; `just setup` initializes it.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
-- `docs/notes/`: 21 dated briefs. `docs/`: coding advice and the provenance audit.
+- `docs/notes/`, `docs/specs/`, `docs/plans/`: the briefs, designs and plans the code
+  cites; the rest live in the records root (`tasks where` names it). `docs/`: coding advice and the provenance audit.
   `docs/archive/`: old instruction text awaiting review; its README lists it.
-  `docs/specs/` and `docs/plans/`: the profiles documents and this extraction's design
-  and plan.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from hq's hook files; it reaches ops's resolver through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.
   `tools/`: assembly tests, pinned proof driver and vendored tooling;
-  `tasks/`: task records.
+  task records live in the records root.
 
 ## Rules
 

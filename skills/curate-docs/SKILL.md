@@ -92,7 +92,8 @@ own it. A rendered copy in lore does not make lore its owner.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
 manifest, the module list. The pass runs nothing the judged documents describe: no
-example, no test, no tool of the project beyond the mechanical checks in §1.
+example, no test, no tool of the project beyond the mechanical checks in §1 and
+the tracker and acknowledgment commands in §5.
 
 ## 3. The rubric
 
@@ -233,9 +234,12 @@ as `action: "reused"`):
       -p 3 --size s --complexity low --process direct \
       -b "The reusable record of curate-docs passes over this project: one note per pass naming the rubric version, commit, documents covered, exclusions and findings by verdict; resolution of findings is recorded apart from the review. Never closed by a pass; ops owns its lifecycle."
 
-It is the only task the review creates. Change nothing else on it: not status,
-priority, or body. Then exactly one review note, one line, segments in this order. An
-empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
+It is the only task the review creates. Record the pass without claiming it. If this
+pass started it, run `tasks -C <checkout> edit <review-id> --status todo` before
+closeout, and check `tasks -C <checkout> show <review-id>` confirms the claim was
+released. Never take over another session's claim. Leave its priority and body to
+ops, which owns its lifecycle. Then exactly one review note, one line, segments in
+this order. An empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
 document they judged; a criterion with mixed verdicts appears only under the others.
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
@@ -260,11 +264,38 @@ review task:
 A `decision` finding is filed as a task only after the human rules on it; until then
 it lives in the review note.
 
+After both notes and the finding-owner handoffs, acknowledge every completed pass,
+including a direct invocation outside the weekly generator. Open finding tasks and
+human decisions keep their recorded owners; acknowledgment records the pass, not
+their resolution. First confirm the review record has no live claim as above.
+
+Resolve the reachable `ops` row's `checkout` through `tasks projects` (JSON). From
+that registered checkout, using its configuration, run:
+
+    python3 bin/doc-review --acknowledge-only --project <prefix> --dry-run
+
+Inspect the exit status, the reviewed project's row and proposed writes: only that
+project may receive acknowledgment writes, with no replacement selections. If the
+preview succeeds and acknowledges this pass, run the same command without `--dry-run`.
+Inspect its exit status and actual result, then `tasks -C <checkout> show <review-id>`.
+A successful acknowledgment leaves the reusable record P3/todo; a future configured
+eligibility floor is its defer date. Confirm it is absent from
+`tasks -C <checkout> ready` while deferred. The date or a later generator-observed
+commit trigger makes it eligible again.
+
+Report command errors, unreachable ops, skipped/in-progress rows, or an unusable
+review note as acknowledgment blockers with the next action and owner; a live claim
+is not dormancy, and another session's claim stays untouched. If the configured floor
+has already expired, acknowledgment leaves the task undeferred: report that it may
+remain ready. An already acknowledged pass needs no repeat writes; report the
+observed state. Keep the generator's settings and use only acknowledgment mode.
+
 ## 6. Summary to the human
 
 One line per criterion: its number, verdict, and one phrase (or `not judged: <why>`).
-Then the review task id and the commit judged. Then the decisions that are the human's,
-grouped, omitting empty groups:
+Then the review task id, the commit judged, and the acknowledgment result (priority,
+status and defer date, or blocker with next action and owner). Then the decisions
+that are the human's, grouped, omitting empty groups:
 
 - **removal candidates** (criterion 5): the rule or section, and what was searched;
 - **declarations** (criterion 11): the directory, and the two options;
@@ -282,7 +313,8 @@ Nothing else. A pass with nothing in those groups says so in one line.
 
 - The review creates one task at most, the review task. Findings become tasks in the
   resolution step, after the review note, one per finding.
-- Read-only on the host: nothing from the judged documents is executed.
+- Execute only §1's mechanical checks and §5's tracker/acknowledgment commands;
+  nothing from the judged documents is executed.
 - Only covered documents are judged; a defect noticed in a decision record or a
   vendored file is named in `excluded:`, not judged. Two exceptions: an authority
   document under criterion 2 alone, and an unread reference document under criterion

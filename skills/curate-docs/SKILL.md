@@ -83,8 +83,9 @@ guides are read whole; reference-document sampling is defined below.
 
 The global-layer project (lore, whose `instructions/AGENTS.md` is the file every
 session loads) is read like any project for its root guides, and under criterion 5
-only for that generated file. Its provenance audit is lore's
-`docs/instruction-provenance.md`; use it as evidence, checking the current rule.
+only for that generated file. Its provenance audit is `docs/instruction-provenance.md`
+in lore's records directory (`tasks where` in lore names it); use it as evidence,
+checking the current rule.
 A finding names the owner and source in `instructions/AGENTS.manifest.json`:
 lore-owned rules resolve to their `instructions/fragments/` source; the Projects /
 Feedback owners fragment resolves to ops, whose identity declarations and renderer

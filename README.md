@@ -5,11 +5,13 @@ What a session is told: the global instructions and profile fragments, the skill
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest.
 
-Authority: `docs/specs/2026-09-19-project-profiles-design.md`, `docs/specs/2026-10-04-extract-from-tack-design.md`, `docs/specs/2026-10-05-instruction-assembly-design.md`, `docs/specs/2026-10-05-profile-hook-move-design.md`
+Authority: `docs/instruction-formats.md`, `docs/profile-delivery.md`, `docs/instruction-assembly.md`
 <!-- ops:identity end -->
 
-The instruction corpus was extracted from an earlier agent-configuration repository.
-Assembly evidence is in docs/notes/2026-10-05-instruction-assembly-acceptance.md.
+Reference documents: [instruction formats](docs/instruction-formats.md) (data model:
+catalog and manifest version 1), [profile delivery](docs/profile-delivery.md)
+(protocol: the SessionStart hook) and [instruction assembly](docs/instruction-assembly.md)
+(operations guide). The [skill guide](skills/README.md) covers the skill corpus.
 
 lore is one piece of a personal toolchain. Its gates (`just check`, the SessionStart hook,
 the assembler's check) read the `tasks` registry and an ops checkout, which a fresh clone
@@ -41,12 +43,12 @@ relevant staged files select the whole prospective index. The session-start noti
 still detects a forgotten assembly step after an ops refresh.
 
 Evidence pointers name an owner and a full commit: a project prefix reads that project's
-checkout, and `lore:records` reads lore's task records, which live in a separate records
-repository rather than in this one.
+checkout, and `lore:records` reads lore's records directory, which lives in a separate
+records repository rather than in this one ([instruction formats](docs/instruction-formats.md)).
 
-`profiles/` and `skills/` remain separately delivered sources. Historical
-`verify-baseline` and `verify-initial` commands read recorded lore/ops revisions;
-they run during acceptance and audits, outside the normal checks.
+`profiles/` and `skills/` remain separately delivered sources. The historical
+`verify-baseline` and `verify-initial` proofs run during acceptance and audits, outside
+the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 
 ## Layout
 
@@ -54,16 +56,15 @@ they run during acceptance and audits, outside the normal checks.
 - Root `AGENTS.md`: the project guide; `bin/assemble-instructions`: assembler and guard.
 - `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
-- `docs/notes/`, `docs/specs/`, `docs/plans/`: the briefs and designs the code cites;
-  the rest, and task records, live in the records root (`tasks where` names it).
+- `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
+  task records live in the records root (`tasks where` names it).
 - `tools/`: assembly tests/fixtures, pinned proof driver and vendored tooling.
 
 ## Consumers
 
 Every harness home through hq's declared links; ops-profile reads profile fragments,
-and ops-projects supplies its owned Projects fragment. The assembly plan coordinates
-the single-writer activation and proof verification on both hosts.
+and ops-projects supplies its owned Projects fragment.
 
 `hooks/claude-profile` is the SessionStart hook that puts a checkout's profile text in front
 of every Claude Code and Codex session; hq's hook files name it, and it resolves profiles
-through ops.
+through ops ([profile delivery](docs/profile-delivery.md)).

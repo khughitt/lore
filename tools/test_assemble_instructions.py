@@ -145,10 +145,22 @@ def change_evidence(world, **changes):
     return tomllib.loads(body)
 
 
+def lore_evidence(world):
+    """Point the first evidence at a committed lore file, whatever owners the real catalog uses."""
+    file = world.root / 'docs/evidence.md'
+    file.parent.mkdir(exist_ok=True)
+    file.write_text('Disposable historical evidence.\n')
+    git(world.root, 'add', 'docs/evidence.md')
+    git(world.root, 'commit', '-q', '-m', 'test: add lore-owned evidence')
+    return change_evidence(world, owner='lore', path='docs/evidence.md',
+                           revision=git(world.root, 'rev-parse', 'HEAD').decode().strip())
+
+
 @pytest.mark.parametrize('command', ['render', 'render --manifest', 'write', 'check'])
 @pytest.mark.parametrize('status', ['recorded', 'none recorded', 'n/a'])
 @pytest.mark.parametrize('bad', ['missing-commit', 'blob', 'mutable', 'abbreviated', 'missing-path', 'tree'])
 def test_invalid_concrete_evidence_is_rejected_before_output(world, command, status, bad):
+    lore_evidence(world)
     assert build(world).returncode == 0
     before = outputs(world)
     evidence = change_evidence(world, status=status)
@@ -203,6 +215,7 @@ def test_evidence_owner_requires_a_project_prefix(world, owner):
 
 @pytest.mark.parametrize('case', ['registered', 'unregistered', 'worktree', 'alien'])
 def test_evidence_only_external_owner_uses_registry_and_override_identity(world, case):
+    lore_evidence(world)
     external = world.root.parent / 'notes'
     git(world.root.parent, 'clone', '-q', str(world.root), str(external))
     expected = change_evidence(world, owner='notes')

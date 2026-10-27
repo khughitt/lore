@@ -54,4 +54,4 @@ dropped or added. Keep new skills at this depth.
 Profile fragments — the instructions that differ between kinds of project —
 live in `profiles/` here, one file per profile. ops
 `profiles.toml` names them and `ops-profile session` prints the ones a
-checkout selects; the design is `docs/specs/2026-09-19-project-profiles-design.md`.
+checkout selects; the delivery contract is [`../docs/profile-delivery.md`](../docs/profile-delivery.md).

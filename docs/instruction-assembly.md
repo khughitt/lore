@@ -71,7 +71,7 @@ edit. External owners are always read from their checkouts.
 | `executing assembler differs from index; …` | Stage the intended assembler or restore the index copy. |
 | `missing or downgraded committed mandatory fragments: …` | A mandatory fragment was removed or made adaptable; restore it. |
 | `invalid evidence OWNER REVISION:PATH: …` | The pointer's commit or blob cannot be read, or its revision is not a full commit id. Fix the pointer, or fetch the owner's history. |
-| `X is not registered in the tasks registry` | Register the owner (`tasks init` in it) or pass `--owner-root`. |
+| `X is not registered in the tasks registry` | Register the owner (`tasks init` in it). `--owner-root` works around it only for `render`; `write` and `check` require every owner, overridden or not, to be registered. |
 
 The SessionStart notice from ops also reports a forgotten assembly after an ops
 refresh.

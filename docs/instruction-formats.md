@@ -46,10 +46,23 @@ Each evidence table has exactly `owner`, `path`, `revision`, `location` and
 | `path` | Owner-relative canonical path, or a sentinel. A records path is relative to the project's records directory, not its repository root. |
 | `revision` | Full 40- or 64-hex commit id, or the same sentinel as `path`. |
 | `location` | Where in the document the evidence is (sections, rule labels). |
-| `status` | `recorded`, `none recorded` or `n/a`. |
+| `status` | Whether incident evidence supports the fragment; see below. |
 
-The sentinels are `none recorded` and `n/a`. When either `path` or `revision` is a
-sentinel, both must be the same sentinel, and the pointer is not read. Otherwise
+Status values:
+
+- `recorded`: the pointer cites recorded incident evidence for the fragment's rules.
+- `none recorded`: no incident evidence was recorded. Absence of evidence is never
+  read as evidence that a rule works.
+- `n/a`: the fragment states preferences or environment facts, for which incident
+  evidence does not apply.
+
+Status never controls lookup: a concrete pointer with status `none recorded` or
+`n/a` (for example the audit that found nothing for a rule) is read and validated
+like any other.
+
+The path/revision sentinels are `none recorded` and `n/a`. When either `path` or
+`revision` is a sentinel, both must be the same sentinel, and the pointer is not
+read. Otherwise
 the revision must resolve to exactly that commit in the owner's repository and
 `revision:path` must name a file blob there. A branch name, short id or tag is
 rejected. Evidence is checked for content at an immutable commit; the commit

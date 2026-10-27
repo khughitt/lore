@@ -361,7 +361,7 @@ def verify_proof(root, args):
         ops_revision = resolve_commit(owners['ops'], args.projects_revision)
         reference['ops_revision'] = ops_revision
     else:
-        reference['extraction_commit'] = 'e8104e0c6b51655100ac96dd83daba82649d0755'
+        reference['extraction_commit'] = '49568066eeb8a6b4a09e453a10e81fade87919e7'
         reference['global_blob'] = '5297be329c58bc758b20c48a504a87887be5470a'
         reference['projects_snapshot'] = {'owner': 'lore', 'path': 'tools/fixtures/instruction-assembly/baseline-projects.md', 'revision': revision}
     for f in catalog['fragments']:

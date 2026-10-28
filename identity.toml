@@ -11,3 +11,4 @@ subsystems = []
 
 [documents]
 standard = 1
+references = ["skills/references/retained-item-records.md"]

@@ -1,8 +1,10 @@
 # Retained item records
 
-Read this when creating, refreshing or releasing a task's retained-item record.
-It is lore-authored guidance, not a parser or a new tasks CLI interface. Existing
-process/service, Git removal and publication rules still apply.
+Type: guide, data model; document types 1. The record fields are currently
+unversioned: they are lore-authored guidance, not a parser's format or a new tasks
+CLI interface. Read this when creating, refreshing or releasing a task's
+retained-item record. Existing process/service, Git removal and publication rules
+still apply.
 
 ## Record an item
 

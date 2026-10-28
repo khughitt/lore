@@ -38,6 +38,12 @@ def ops_root(env):
     return pathlib.Path(os.path.expanduser(root))
 
 
+def unresolved(error, advice="run ops-profile session after fixing it"):
+    reason = " ".join(str(error).splitlines())
+    sys.stdout.write(f"profile: unresolved — {reason}; {advice}\n")
+    return 0
+
+
 def main(text, env, fallback_cwd):
     try:
         payload = json.loads(text or "null")
@@ -49,24 +55,23 @@ def main(text, env, fallback_cwd):
     try:
         profiles = _load(ops_root(env) / "bin" / "ops-profile")
     except Exception as error:  # every failure before the resolver loads is one visible line
-        sys.stdout.write(f"profile: unresolved — {error}; register or repair the ops checkout, then run ops-profile session\n")
-        return 0
+        return unresolved(error, "register or repair the ops checkout, then run ops-profile session")
     try:
         res = profiles.resolve(cwd or fallback_cwd, env, payload)
-    except (profiles.ProfileError, ValueError) as error:
-        sys.stdout.write(f"profile: unresolved — {error}; run ops-profile session after fixing it\n")
-        return 0
-    sys.stdout.write(profiles.session_text(res))
-    if env_file := env.get("CLAUDE_ENV_FILE"):
-        with open(env_file, "a") as handle:
-            names = ",".join(item["name"] for item in res["profiles"])
-            handle.write(f"export AGENT_PROFILE={names}\n")
+        session_text = profiles.session_text(res)
+        if env_file := env.get("CLAUDE_ENV_FILE"):
+            with open(env_file, "a") as handle:
+                names = ",".join(item["name"] for item in res["profiles"])
+                handle.write(f"export AGENT_PROFILE={names}\n")
+    except Exception as error:
+        return unresolved(error)
+    sys.stdout.write(session_text)
     return 0
 
 
 if __name__ == "__main__":
     try:
         code = main(sys.stdin.read(), os.environ, os.getcwd())
-    except Exception:
-        code = 0
+    except Exception as error:
+        code = unresolved(error)
     sys.exit(code)

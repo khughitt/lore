@@ -17,7 +17,6 @@ import sys
 import tempfile
 import tomllib
 import unittest
-from unittest.mock import patch
 
 HOOK = pathlib.Path(__file__).resolve().parent.parent / "hooks" / "claude-profile"
 OPS_SIBLINGS = ("ops-profile", "ops-projects", "tt")
@@ -75,7 +74,6 @@ def live_ops_root():
 class ProfileSandbox(unittest.TestCase):
     def setUp(self):
         self.base = pathlib.Path(self.enterContext(tempfile.TemporaryDirectory())).resolve()
-        self.enterContext(patch.dict(os.environ, {"GIT_CEILING_DIRECTORIES": str(self.base.parent)}))
         self.config = self.base / ".config" / "tasks"
         self.config.mkdir(parents=True)
         self.ops = self.base / "ops"
@@ -99,7 +97,11 @@ class ProfileSandbox(unittest.TestCase):
         self.ns = self.base / "d" / "ns"
         for path in (self.tack, self.lore, self.wrk4, self.ns):
             path.mkdir(parents=True, exist_ok=True)
-            subprocess.run(["git", "-C", str(path), "init", "-q"], check=True)
+            subprocess.run(["git", "-C", str(path), "init", "-q"], env=self.env(), check=True)
+            for flag, expected in (("--show-toplevel", path), ("--absolute-git-dir", path / ".git")):
+                result = subprocess.run(["git", "-C", str(path), "rev-parse", flag],
+                                        env=self.env(), capture_output=True, text=True, check=True)
+                self.assertEqual(pathlib.Path(result.stdout.strip()), expected)
         self.registry(lore=self.lore, tack=self.tack, ops=self.ops, wrk4=self.wrk4, ns=self.ns)
 
     def registry(self, **roots):
@@ -114,7 +116,8 @@ class ProfileSandbox(unittest.TestCase):
 
     def env(self, **extra):
         env = {"HOME": str(self.base), "XDG_CONFIG_HOME": str(self.base / ".config"), "PATH": os.environ["PATH"],
-               "GIT_CEILING_DIRECTORIES": os.environ["GIT_CEILING_DIRECTORIES"]}
+               "GIT_CEILING_DIRECTORIES": str(self.base.parent),
+               "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
         env.update(extra)
         return env
 
@@ -151,6 +154,45 @@ class ProfileHookTests(ProfileSandbox):
         self.assertEqual(result.stdout, "profile: unresolved — tack is registered but identity-mirror.toml [tack] declares no profiles; "
                                         "run ops-profile session after fixing it\n")
         self.assertEqual(exports, "")
+
+    def assert_unresolved(self, result, reason):
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stderr, "")
+        self.assertEqual(len(result.stdout.splitlines()), 1, result.stdout)
+        self.assertTrue(result.stdout.startswith("profile: unresolved — "), result.stdout)
+        self.assertIn(reason, result.stdout)
+
+    def test_an_unreadable_fragment_is_one_line_without_an_export(self):
+        (self.lore / "profiles" / "science.md").write_bytes(b"\xff")
+        result, exports = self.run_hook(self.ns)
+        self.assert_unresolved(result, "codec can't decode")
+        self.assertEqual(exports, "")
+
+    def test_a_failed_env_append_emits_no_success_text(self):
+        (self.base / "env.sh").symlink_to(self.base / "missing" / "env.sh")
+        result, exports = self.run_hook(self.ns)
+        self.assert_unresolved(result, "env.sh")
+        self.assertEqual(exports, "")
+
+    def test_unexpected_load_and_resolve_errors_stay_on_one_line(self):
+        for code in ("raise RuntimeError('first line\\nsecond line')\n",
+                     "class ProfileError(Exception): pass\n"
+                     "def resolve(*args):\n    raise RuntimeError('first line\\nsecond line')\n"):
+            with self.subTest(code=code):
+                (self.ops / "bin" / "ops-profile").write_text(code)
+                result, exports = self.run_hook(self.ns)
+                self.assert_unresolved(result, "first line second line")
+                self.assertEqual(exports, "")
+
+    def test_a_missing_process_cwd_is_one_visible_line(self):
+        cwd = self.base / "removed"
+        cwd.mkdir()
+        result = subprocess.run(
+            [sys.executable, "-c",
+             "import os, runpy, sys; os.chdir(sys.argv[1]); os.rmdir(sys.argv[1]); "
+             "runpy.run_path(sys.argv[2], run_name='__main__')", str(cwd), str(HOOK)],
+            input="{}", env=self.env(), capture_output=True, text=True)
+        self.assert_unresolved(result, "No such file or directory")
 
     def test_bad_input_falls_back_to_the_process_cwd(self):
         result = subprocess.run([sys.executable, str(HOOK)], input="not json", env=self.env(CLAUDECODE="1"),

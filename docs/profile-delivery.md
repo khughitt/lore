@@ -45,9 +45,10 @@ Sequence:
    `bin/ops-profile` as a module.
 2. Call its `resolve(path, env, payload)`. Selection, layout and warnings are the
    resolver's; `ops-profile explain` shows each value's source.
-3. Write `session_text(result)` to standard output.
+3. Compose `session_text(result)` in memory.
 4. If `CLAUDE_ENV_FILE` is set, append `export AGENT_PROFILE=<names>` to it, the
    selected profile names joined by commas.
+5. Write the composed text to standard output after both steps succeed.
 
 Standard output, in order:
 
@@ -69,11 +70,9 @@ evidence of success; verify a change by the text a fresh session shows.
 | Failure | Output |
 | --- | --- |
 | Registry missing, unparsable, or without an `ops` string entry; resolver fails to load | `profile: unresolved — <reason>; register or repair the ops checkout, then run ops-profile session` |
-| Resolver raises its configuration error or a registry `ValueError` | `profile: unresolved — <reason>; run ops-profile session after fixing it` |
+| Resolution, text composition, environment-file append, or hook input/cwd read raises an exception | `profile: unresolved — <reason>; run ops-profile session after fixing it` |
 
-Intended invariant: every failure produces exactly one `profile: unresolved` line.
-Known gap in the current implementation: any other exception (for example an
-unreadable fragment file while composing the text, or a failed append to
-`CLAUDE_ENV_FILE`) is caught only at the top level, so the hook exits 0 with no
-`unresolved` line, and in the second case after the profile text was already
-printed. Treat a session that shows no profile line at all as this case.
+Every handled failure produces exactly one `profile: unresolved` line, with line
+breaks in the reason replaced by spaces. Rendering and environment-file failures
+emit no success text. A rendering failure writes no environment export; a failed
+append reports failure rather than claiming the export succeeded.

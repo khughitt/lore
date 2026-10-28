@@ -1,10 +1,11 @@
 # Instruction formats
 
-Type: data model. Covers the assembly catalog (`instructions/assembly.toml`,
-version 1) and the provenance manifest (`instructions/AGENTS.manifest.json`,
-version 1). `bin/assemble-instructions` accepts only version 1 of each and rejects
-anything else; there is no compatibility path to another version. How to run the
-assembler and diagnose its checks is in [instruction-assembly.md](instruction-assembly.md).
+Type: data model; document types 1. Covers the assembly catalog
+(`instructions/assembly.toml`, version 1) and the provenance manifest
+(`instructions/AGENTS.manifest.json`, version 1). `bin/assemble-instructions`
+accepts only version 1 of each and rejects anything else; there is no compatibility
+path to another version. How to run the assembler and diagnose its checks is in
+[instruction-assembly.md](instruction-assembly.md).
 
 ## Catalog
 

@@ -8,3 +8,6 @@ provenance manifest.
 """
 authority = ["docs/instruction-formats.md", "docs/profile-delivery.md", "docs/instruction-assembly.md"]
 subsystems = []
+
+[documents]
+standard = 1

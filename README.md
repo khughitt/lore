@@ -57,7 +57,9 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 - `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
 - `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
-  task records live in the records root (`tasks where` names it).
+  task records live in the records root (`tasks where` names it). The archived documents'
+  history is in the records repository's lore directory; [AGENTS.md](AGENTS.md) says where
+  to look up a commit id from before the 2026-10-27 history rewrite.
 - `tools/`: assembly tests/fixtures, pinned proof driver and vendored tooling.
 
 ## Consumers

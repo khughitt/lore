@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 5.** The note names it, so a later pass can tell which criteria a
+**Rubric version 6.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -17,8 +17,10 @@ documentation review task, and never closes one. Invoke deliberately:
     /curate-docs [--project <prefix>]
 
 Default: the current project. The mechanical checks (`ops-docs check`, `ops-check`)
-judge shape, regions, budgets and paths; this pass judges what they cannot: whether
-the prose is true, complete for its reader, and earning its lines. A pass is
+judge shape, regions, budgets, paths and type markers; this pass judges what they
+cannot: whether the prose is true, complete for its reader, and earning its lines,
+and, in a project that has adopted the document-types standard, whether each typed
+reference carries what its declared type requires (criterion 12). A pass is
 curation, not a review round of an artifact under approval: it writes no `review:`
 outcome-measure note.
 
@@ -42,6 +44,11 @@ outcome-measure note.
    each exit status and, when non-zero, one phrase per finding. A mechanical finding is
    not a rubric finding: it is fixed by `just docs` or by editing `identity.toml`,
    named in the note's `mechanical:` segment, and never hand-edited by the pass.
+   `ops-docs` v5's document-type findings (the `[documents]` declaration, marker
+   grammar and position, required headings, a marker on a decision record) are
+   mechanical too: the project edits the marker, not the pass, and a document the
+   check reports without a parseable marker is `not judged: no marker` under
+   criterion 12 rather than judged against a guessed type.
 
 ## 2. Documents covered
 
@@ -75,6 +82,22 @@ guides are read whole; reference-document sampling is defined below.
   sections; an unread portion receives only criterion 10's self-date check (last
   content change against its own `updated` or status line), not a behaviour judgment.
   A partial read never establishes that the whole document is complete or current.
+- **Type set (adopted projects):** when the root `identity.toml` carries a
+  `[documents]` table, criterion 12's set is exactly the standard's: every tracked,
+  top-level, undated `docs/*.md`, plus each path the table declares under
+  `references`, including one outside `docs/`. A `README.md`, `AGENTS.md` or
+  `CLAUDE.md` is never in it, declared or not. A member the reference bullet above
+  already covers is listed `<path> (typed <N>)`, N being its marker's version; a
+  declared path the rubric would not otherwise read is read for criterion 12 alone,
+  after the reference reading order and within the same 800-line budget, listed
+  `<path> (declared, typed <N>)`, and judged under no other criterion. A nested
+  reference that is not declared, and every document of a project without the
+  table, gets no type judgment; the other criteria keep their scope either way.
+  Criterion 12 judges only read sections, like 8–10, and a member left unread is
+  `not judged: unread` there. The current standard version is the newest entry
+  under `## Versions` in ops's `docs/document-types.md`, read from the ops
+  checkout `tasks projects` names (§5 resolves it the same way); the note records
+  it as `standard:`.
 - **Authority documents:** each `identity.toml` `authority` path is judged under
   criterion 2 alone, whatever directory holds it, including an excluded one: its head
   and status lines, not the body. Listed as `<path> (authority)`.
@@ -272,6 +295,37 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
     `decision`: declare the subsystem (its own `identity.toml`, `README.md`,
     `AGENTS.md`) or reduce the file to a pointer.
 
+**Document types, every read member of the type set (§2), in a project that
+declares `[documents]`:**
+
+12. **Typed references carry what their type requires.** The rules are the
+    document-types standard's (ops `docs/document-types.md`, sections "Types and
+    required content", "Marker and hybrids" and "Evolution"); cite them by the
+    version judged, never restate them, and leave marker grammar and required
+    headings to the mechanical rule. Each document is judged against the version
+    its marker names. Check that the opening paragraph says what the document
+    covers and links each related reference; that the version clause is the one
+    its declared types require, including `currently unversioned` for a model or
+    protocol with no accepted version, and that a guide claims none of its own (a
+    hybrid's model or protocol clause does not breach this); that each declared
+    type's required content is present in the sections carrying that type; that a
+    hybrid earns its combination (its parts serve one reader in one sitting) and
+    is a split proposal when it exceeds the size guideline by more than twice or
+    a part has readers the others do not; that the size guideline is met or the
+    excess is contract detail; and that the text describes current behaviour, not
+    decision history. Evidence: the standard at the version judged, the marker,
+    the read sections, and the linked references. `refined` when a word corrects
+    the coverage statement or version clause; `stale` when a coverage statement,
+    a related link, a version clause or a type's required content is missing or
+    wrong, naming the type and what is absent; `decision` for a split proposal, a
+    size overrun the content does not justify, or a document whose marker names
+    an older version than the current standard, recorded as `stale standard
+    (document types <marker> -> <current>)` with a proposal to migrate the
+    project's documents together: a migration proposal, never a failure, and
+    never a mechanical finding. `keep` otherwise; `not judged: not adopted` in a
+    project without the table, and `not judged: no marker` or `not judged:
+    unread` as §1 and §2 define.
+
 ## 4. Edits
 
 `refined` edits happen only when the pass runs in the project's own checkout, on the
@@ -279,8 +333,10 @@ branch the session works on, and land as one `docs:` commit through the project'
 gates. From another project (`--project`), the edit is recorded as `proposed` and
 resolved like a `stale` finding (§5): the owning project edits its own tree. An edit
 shortens or corrects; it never adds a section, reorders, or deletes a rule, except
-text criterion 4 finds restated from the global layer. A README some test reads as
-input (grep `tests/` for its name) gets that test run before the commit.
+text criterion 4 finds restated from the global layer. A marker, a version clause,
+a related link or a type's missing content is an addition and so a proposal. A
+README some test reads as input (grep `tests/` for its name) gets that test run
+before the commit.
 
 ## 5. The review task and its notes
 
@@ -291,6 +347,10 @@ as `action: "reused"`):
     tasks -C <checkout> add "Documentation review" --source curate-docs --tag docs \
       -p 3 --size s --complexity low --process direct \
       -b "The reusable record of curate-docs passes over this project: one note per pass naming the rubric version, commit, documents covered, exclusions and findings by verdict; resolution of findings is recorded apart from the review. Never closed by a pass; ops owns its lifecycle."
+
+`standard:` names the current document-types version the pass judged against
+(§2), or `not adopted`; each typed document's own marker version sits in its
+`covered:` entry, so a later pass can tell which rules each was held to.
 
 It is the only task the review creates. Record the pass without claiming it. If this
 pass started it, run `tasks -C <checkout> edit <review-id> --status todo` before
@@ -304,7 +364,7 @@ from the preceding criterion numbers, even when every rule was kept; write 5 onc
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v5; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N>|declared, typed <N>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -363,10 +423,12 @@ that are the human's, grouped, omitting empty groups:
 - **declarations** (criterion 11): the directory, and the two options;
 - **scope decisions** (criterion 3): the passage, recorded intent, proposed scope
   change and evidence; present it for the human's ruling before filing a finding task;
-- **stale text** (criteria 2, 3, 7, 8, 9, 10): the document, the claim, the evidence,
-  and the task that now owns it;
-- **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9): the document,
-  the edit, and the task that now owns it;
+- **stale text** (criteria 2, 3, 7, 8, 9, 10, 12): the document, the claim, the
+  evidence, and the task that now owns it;
+- **type decisions** (criterion 12): the document, its marker version against the
+  current standard, and the split, size or `stale standard` migration proposal;
+- **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9, 12): the
+  document, the edit, and the task that now owns it;
 - **questions**: anything the pass could not judge, including a rule with a removal
   reason but unknown origin or purpose, with the reason and what was searched.
 
@@ -379,9 +441,11 @@ Nothing else. A pass with nothing in those groups says so in one line.
 - Execute only §1's mechanical checks and §5's tracker/acknowledgment commands;
   nothing from the judged documents is executed.
 - Only covered documents are judged; a defect noticed in a decision record or a
-  vendored file is named in `excluded:`, not judged. Two exceptions: an authority
-  document under criterion 2 alone, and an unread reference document under criterion
-  10's self-date check alone. Partial reference reads cover only their recorded sections.
+  vendored file is named in `excluded:`, not judged. Three exceptions: an authority
+  document under criterion 2 alone, an unread reference document under criterion
+  10's self-date check alone, and a declared reference outside the rubric's own
+  reference set under criterion 12 alone. Partial reference reads cover only their
+  recorded sections, and criterion 12 widens no other criterion's set.
 - Prefer shorter. An edit that grows a document is a proposal.
 - Keep defects apart from preference: `stale` is reserved for text the tree or its own
   authority contradicts, and for an orientation a reader needs and cannot find
@@ -493,3 +557,18 @@ Nothing else. A pass with nothing in those groups says so in one line.
   keep subsumes v3's authority-citation keep and environment facts; neither is an
   unconditional exemption from evidenced defects. Criterion numbers are unchanged.
   Application probes are synthetic checks, not independent natural-case validation.
+
+- **v6** (2026-10-28, lore-cb5531): criterion 12 adds the semantic half of the
+  document-types standard (ops `docs/document-types.md`, version 1; accepted design
+  ops-ebff8f at `cda74ee`, §5.1–5.6 and §7, which assigns the semantic judgments to
+  this rubric and the marker and heading rules to `ops-docs` v5). It reads exactly
+  the standard's set in adopting projects (top-level undated `docs/*.md` plus
+  declared references, guide filenames excluded whatever a declaration says), so a
+  declared path outside `docs/` is read for it alone while criteria 8–10 keep their
+  recursive scope and reading budget; it judges only read material, cites the
+  standard by version instead of restating it, records that version as `standard:`
+  and each marker's version in `covered:`, and reports an older marker as a `stale
+  standard` migration decision, never a failure. Criterion numbers 1–11 are
+  unchanged. Application probes (adopter, non-adopter, declared out-of-`docs/`
+  reference, undeclared nested reference, hybrid, older marker) are synthetic
+  checks, not independent natural-case validation.

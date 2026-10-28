@@ -42,6 +42,14 @@
   a source cannot be found, say so and offer your reading for them to correct. The
   written design's review stays the user's gate. This outranks brainstorming's first
   message and its offer to go look.
+- In assessments and reviews, distinguish tree-verified current capability from
+  recorded intended direction. Before characterising intended scope, read the relevant
+  goals, authority and task/source records. Code establishes current behaviour, not
+  eventual scope: preserve the recorded goal and any limit's provisional meaning
+  beside what works today. When intent is missing or records conflict, state what is
+  unknown and which evidence is missing or conflicting; neither invent intent nor
+  replace it with implemented behaviour. A proposed change to intended scope remains
+  a human decision.
 - A turn that ends with work still owed reports the observed status, not what the turn
   ending implies: which work has stopped and why, what is still running (a background
   check, a dispatched child) and how its result is picked up, and who owns the next step

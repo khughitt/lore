@@ -1,8 +1,8 @@
 # Instruction assembly
 
-Type: operations guide. How to build, check and diagnose the delivered global
-instructions. Field definitions for the catalog and manifest are in
-[instruction-formats.md](instruction-formats.md); this guide does not repeat them.
+Type: operations guide; document types 1. How to build, check and diagnose the
+delivered global instructions. Field definitions for the catalog and manifest are
+in [instruction-formats.md](instruction-formats.md); this guide does not repeat them.
 
 ## What it produces
 

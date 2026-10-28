@@ -192,13 +192,14 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    failure has `no incident recorded`, which is never part of a removal's rationale.
    A rule is a removal candidate only when the pass states its origin, its purpose
    and a positive reason under that clause, such as a lapsed purpose. When such a
-   reason exists but the origin is unknown, the rule is `not judged: origin unknown`
-   and goes to §6's questions with the reason and what was searched. Every other rule,
-   including one whose purpose is unrecorded or unclear, is `keep` with purpose
-   `unknown`. Rules kept with `no incident recorded` are listed by short name, grouped
-   by origin, in the note's `keep:` segment (`5 (no incident recorded, origin unknown:
-   <names>)`) even when criterion 5 has other verdicts, and on its §6 line with what
-   was searched; this is the one exception to §6's one phrase. Evidence: the search
+   reason exists but the origin or purpose is unknown, the rule is `not judged: origin
+   unknown` or `not judged: purpose unknown` and goes to §6's questions with the
+   reason and what was searched. Every other rule, including one whose purpose is
+   unrecorded or unclear, is `keep` with purpose `unknown`. Rules kept with `no
+   incident recorded` are listed by short name, grouped by origin with `|` between
+   groups and no `;`, in the note's `keep:` segment even when criterion 5 has other
+   verdicts, and on its §6 line with what was searched; this is the one exception to
+   §6's one phrase. Evidence: the search
    and the trace.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
@@ -278,7 +279,7 @@ except criterion 5's `no incident recorded` list.
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v4; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v4; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -341,7 +342,7 @@ that are the human's, grouped, omitting empty groups:
 - **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9): the document,
   the edit, and the task that now owns it;
 - **questions**: anything the pass could not judge, including a rule with a removal
-  reason but unknown origin, with the reason and what was searched.
+  reason but unknown origin or purpose, with the reason and what was searched.
 
 Nothing else. A pass with nothing in those groups says so in one line.
 
@@ -440,9 +441,10 @@ Nothing else. A pass with nothing in those groups says so in one line.
   rather than unwanted and asked for origin and intent to be assessed, the pass
   withdrew them; the user then added that origin and merit are separate questions.
   Criterion 5 now keeps any rule whose purpose still holds, whatever its origin; a
-  fixed incident does not end a purpose; `no incident recorded` rules are listed in
+  fixed incident does not end a purpose; a rule with unclear purpose and no removal
+  reason is kept with purpose `unknown`; `no incident recorded` rules are listed in
   the note and on the §6 line, grouped by origin; a removal reason with unknown origin
-  is `not judged: origin unknown`, sent to questions; criterion 4 names the global
+  or purpose is `not judged`, sent to questions; criterion 4 names the global
   section that carries a deleted section's purpose; the note carries each removal's
   origin and purpose, and §6's removal candidates carry both. Criterion numbers are
   unchanged. Application probes are synthetic checks, not independent natural-case

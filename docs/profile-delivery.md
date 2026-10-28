@@ -1,9 +1,10 @@
 # Profile delivery
 
-Type: protocol, currently unversioned. It describes how the SessionStart hook
-`hooks/claude-profile` puts a checkout's profile layer in front of a Claude Code or
-Codex session. Changing what it reads, prints or writes changes this protocol for
-every harness at once.
+Type: protocol; document types 1. Currently unversioned. It describes how the
+SessionStart hook `hooks/claude-profile` puts a checkout's profile layer in front of
+a Claude Code or Codex session, on top of the core layer that
+[instruction-assembly.md](instruction-assembly.md) builds. Changing what it reads,
+prints or writes changes this protocol for every harness at once.
 
 ## Layers and owners
 
@@ -76,3 +77,7 @@ Every handled failure produces exactly one `profile: unresolved` line, with line
 breaks in the reason replaced by spaces. Rendering and environment-file failures
 emit no success text. A rendering failure writes no environment export; a failed
 append reports failure rather than claiming the export succeeded.
+
+Known gap: the handlers catch `Exception`, not `SystemExit` or `KeyboardInterrupt`.
+If resolver code raises either, the hook exits with that status and prints nothing,
+so a session that shows no profile line at all is this case.

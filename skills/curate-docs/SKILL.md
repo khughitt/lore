@@ -191,13 +191,14 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    `grep -ril <word> <records>/tasks/`), the failure it prevents. Trace each rule's
    origin and purpose (removal-provenance clause). A rule is `keep` whatever its
    origin unless the pass finds an evidenced reason against it under that clause. A
-   rule with no found failure has `no incident recorded`, which is never such a
-   reason; nor is an unrecorded purpose (purpose `unknown`). A fixed incident does not
+   rule with no found failure has `no incident recorded`, which is never part of such
+   a reason; nor is an unrecorded purpose (purpose `unknown`) or a difference of taste
+   with a standing preference. A fixed incident does not
    end a purpose; a purpose lapses only when what the rule governs (a component, tool,
    path or condition) no longer exists in the tree or its authority. A purpose that
-   still holds does not cancel a reason against the means the rule prescribes (its
-   check never sees what the step changes; it costs more than it catches): merit is
-   judged apart from purpose and origin. With such a reason, a rule whose origin and
+   still holds does not cancel an evidenced reason against the means the rule
+   prescribes (its check never sees what the step changes): merit is judged apart
+   from purpose and origin. With such a reason, a rule whose origin and
    purpose the pass can state is a removal candidate carrying both; when either is
    unknown, the rule is `not judged: origin unknown` or `not judged: purpose unknown`
    and goes to §6's questions with the reason and what was searched. Rules kept with
@@ -446,14 +447,15 @@ Nothing else. A pass with nothing in those groups says so in one line.
   recorded. After the user pointed out that a requested goal may be unimplemented rather
   than unwanted and asked for origin and intent to be assessed, the pass withdrew them;
   the user then added that origin and merit are separate questions. Criterion 5 now
-  keeps a rule whatever its origin unless an evidenced reason stands against it, and a
-  purpose that still holds does not cancel a reason against its means; a fixed incident
-  does not end a purpose; a rule with unclear purpose and no reason against it is kept
-  with purpose `unknown`; a reason against a rule whose origin or purpose is unknown is
-  `not judged`, sent to questions; `no incident recorded` rules are listed in the note
-  and on the §6 line, grouped by origin. A proposal under any criterion to delete a rule
-  takes criterion 5's route, never a task filed before the human rules. Criterion 4
-  names the global section that carries a deleted section's purpose; the note carries
-  each removal's origin and purpose, and §6's removal candidates carry both. Criterion
+  keeps a rule whatever its origin unless an evidenced reason stands against it (a
+  difference of taste with a standing preference is not one), and a purpose that still
+  holds does not cancel an evidenced reason against its means; a fixed incident does not
+  end a purpose; a rule with unclear purpose and no reason against it is kept with
+  purpose `unknown`; a reason against a rule whose origin or purpose is unknown is `not
+  judged`, sent to questions; `no incident recorded` rules are listed in the note and on
+  the §6 line, grouped by origin. A proposal under any criterion to delete a rule takes
+  criterion 5's route, never a task filed before the human rules. Criterion 4 names the
+  global section that carries a deleted section's purpose; the note carries each
+  removal's origin and purpose, and §6's removal candidates carry both. Criterion
   numbers are unchanged. Application probes are synthetic checks, not independent
   natural-case validation.

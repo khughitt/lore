@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 4.** The note names it, so a later pass can tell which criteria a
+**Rubric version 5.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -89,7 +89,11 @@ checking the current rule.
 A finding names the owner and source in `instructions/AGENTS.manifest.json`:
 lore-owned rules resolve to their `instructions/fragments/` source; the Projects /
 Feedback owners fragment resolves to ops, whose identity declarations and renderer
-own it. A rendered copy in lore does not make lore its owner.
+own it. A rendered copy in lore does not make lore its owner. For a global rule,
+"the tree" means the registered checkout of the component or tool it governs,
+or its host installation and source records, not just lore or the fragment owner.
+Inspect those sources read-only; do not execute the governed tool. Unavailable
+sources leave existence uncertain, not evidence of retirement or a lapsed purpose.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
 manifest, the module list. The pass runs nothing the judged documents describe: no
@@ -118,21 +122,34 @@ criterion's line in §6 names it, the note and the resolution carry it once.
 text's origin (`user statement`, `agent proposal` or `unknown`, with what was searched),
 its current purpose (the failure, preference, boundary or intent it serves, and whether
 that still holds), and the pass's judgment of its merit. Origin does not settle merit,
-and merit does not erase or reassign origin. Trace origin through the guide's git
-history, the task and source records it cites or that name it, and the filing session
+and merit does not erase or reassign origin. An agent proposal later adopted by the
+user stays `agent proposal (adopted: <evidence>)`; adoption does not reassign its
+origin. A standing user preference is one the user stated or adopted. A purpose
+stated in the rule itself counts as recorded: distinguish that stated purpose from
+evidence that it still holds. Trace origin through the guide's git history, the task
+and source records it cites or that name it, and the filing session
 where a record carries a session stamp. Missing origin, incident or effectiveness
 evidence is recorded as such and is never part of a removal's rationale; neither is a
-shorter document or a simpler rule set. A removal's rationale names, with its
-evidence, what makes the text wrong or unneeded now: for example, it contradicts the
-tree or its authority, restates the global layer, is progress prose with no guidance,
+shorter document, a simpler rule set, or the pass's taste differing from a standing
+user preference. Taste alone is no evidenced defect in other text either. A removal's
+rationale names, with its evidence, what makes the text wrong or unneeded now: for
+example, it contradicts the tree or its authority, restates the global layer, is
+progress prose with no guidance,
 or serves a purpose that has lapsed. The note's entry for the removal carries
 `[origin <value>, purpose <…>]`, with no `;` inside; what was searched goes to §6.
 Whatever criterion finds it, a proposal to delete a rule (a sentence under Rules, or
 any rule in lore's generated file) takes criterion 5's route: a `decision` removal
 candidate, or a question when its origin or purpose is unknown, and never a `stale`
-or `proposed` finding filed as a task before the human rules. A correction that keeps
-the rule (a renamed path, a fixed command) keeps its own criterion's route, and so
-does criterion 4's deletion of text the global layer already carries.
+or `proposed` finding filed as a task before the human rules. This includes pure
+progress prose under Rules (§3 criterion 3). A correction keeps the rule when it
+preserves its obligation or constraint, including replacing a deleted tool with a
+recipe that performs the same required operation; dropping that obligation or
+constraint is a deletion. A reason cured by such a correction belongs to criterion 9,
+not a removal candidate under 5: use 9's correction route. Criterion 4's deletion of
+text the global layer already carries keeps its own route. For a deletion routed to
+questions, record `not judged: <finding criterion>: <rule> — origin unknown`,
+`purpose unknown`, or `origin and purpose unknown` as applicable, and put the
+reason and searches in §6's questions; do not file a finding task before the ruling.
 
 **Root and declared subsystem guides (project-guides design §8), judged once per guide
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
@@ -200,13 +217,14 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    prescribes (its check never sees what the step changes): merit is judged apart
    from purpose and origin. With such a reason, a rule whose origin and
    purpose the pass can state is a removal candidate carrying both; when either is
-   unknown, the rule is `not judged: origin unknown` or `not judged: purpose unknown`
-   and goes to §6's questions with the reason and what was searched. Rules kept with
-   `no incident recorded` are listed by short name, grouped by origin with `|`
+   unknown, the rule is `not judged: origin unknown`, `not judged: purpose unknown`, or
+   `not judged: origin and purpose unknown`, as applicable, and goes to §6's questions
+   with the reason and what was searched. Rules kept with `no incident recorded` are
+   listed by short name, grouped by origin with `|`
    between groups and no `;`, in the note's `keep:` segment even when criterion 5 has
    other verdicts, and on its §6 line with what was searched; this is the one
-   exception to §6's one phrase. Evidence: the search and the trace.
-   `decision`: the rule is a removal candidate for the human, never deleted by the pass.
+   exception to §6's one phrase. Evidence: the search and the trace. `decision`: the
+   rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
    mechanically`. §1 records `ops-docs check`'s line-limit findings. It does not judge
    whether sections earn a declared raise; v2 retires that separate prose judgment.
@@ -281,11 +299,12 @@ released. Never take over another session's claim. Leave its priority and body t
 ops, which owns its lifecycle. Then exactly one review note, one line, segments in
 this order. An empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
 document they judged; a criterion with mixed verdicts appears only under the others,
-except criterion 5's `no incident recorded` list.
+except criterion 5's `no incident recorded` list. When that list follows, omit 5
+from the preceding criterion numbers, even when every rule was kept; write 5 once.
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v4; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v5; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -459,3 +478,18 @@ Nothing else. A pass with nothing in those groups says so in one line.
   removal's origin and purpose, and §6's removal candidates carry both. Criterion
   numbers are unchanged. Application probes are synthetic checks, not independent
   natural-case validation.
+
+- **v5** (2026-10-28, lore-780ce9): settles v4's deferred routing and labelling
+  minors. Corrections preserve an obligation or constraint, including an equivalent
+  replacement recipe; reasons they cure belong to criterion 9 rather than removal
+  under 5. Pure progress prose under Rules still takes the rule-deletion route.
+  Deletions routed to questions name their finding criterion in `not judged:`, with
+  an explicit both-unknown label. The keep template writes 5 once. Adopted agent
+  proposals retain their origin and record adoption; standing user preferences are
+  stated or adopted by the user, and taste is excluded in the general clause. A
+  rule's own stated purpose counts as recorded, distinct from its current validity.
+  For global rules, existence is checked at the governed tool's registered checkout
+  or host installation/source, with unavailable sources left uncertain. V4's default
+  keep subsumes v3's authority-citation keep and environment facts; neither is an
+  unconditional exemption from evidenced defects. Criterion numbers are unchanged.
+  Application probes are synthetic checks, not independent natural-case validation.

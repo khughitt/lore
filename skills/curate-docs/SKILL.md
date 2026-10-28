@@ -91,7 +91,7 @@ guides are read whole; reference-document sampling is defined below.
   `typed none` when the mechanical check reports no parseable marker; a declared
   path, or a location member the reference bullet does not cover, is read for
   criterion 12 alone, after the reference reading order and within the same
-  800-line budget, listed `<path> (declared, typed <N|none>)`, and judged under no
+  800-line budget, listed `<path> (type set, typed <N|none>)`, and judged under no
   other criterion. A nested
   reference that is not declared, and every document of a project without the
   table, gets no type judgment; the other criteria keep their scope either way.
@@ -320,9 +320,11 @@ declares `[documents]`:**
     naming the type and what is absent; `decision` for a split the standard's rule
     calls for, written `split proposal (<types>, <lines> lines, <why>)`, for a size
     overrun the content does not justify, and for markers older than the current
-    standard, written once per project over every such document (`decision: <doc>,
-    <doc>: stale standard (document types <marker> -> <current>, migrate
-    together)`): a migration proposal, never a failure or a mechanical finding,
+    standard, written once per project with the oldest marker's document in the
+    head slot and every other such document inside the parentheses (`decision:
+    <doc>: stale standard (document types <marker> -> <current>, migrate together[
+    with <doc> <marker>, …])`): a migration proposal, never a failure or a
+    mechanical finding,
     and never counted in `unresolved`. No `;` inside a criterion 12 entry. `keep`
     otherwise; `not judged: not adopted` in a project without the table, and `not
     judged: no marker` or `not judged: unread` as §1 and §2 define.
@@ -366,7 +368,7 @@ from the preceding criterion numbers, even when every rule was kept; write 5 onc
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|declared, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -445,7 +447,7 @@ Nothing else. A pass with nothing in those groups says so in one line.
 - Only covered documents are judged; a defect noticed in a decision record or a
   vendored file is named in `excluded:`, not judged. Three exceptions: an authority
   document under criterion 2 alone, an unread reference document under criterion
-  10's self-date check alone, and a declared reference outside the rubric's own
+  10's self-date check alone, and a type-set member outside the rubric's own
   reference set under criterion 12 alone. Partial reference reads cover only their
   recorded sections, and criterion 12 widens no other criterion's set.
 - Prefer shorter. An edit that grows a document is a proposal.

@@ -121,12 +121,12 @@ that still holds), and the pass's judgment of its merit. Origin does not settle 
 and merit does not erase or reassign origin. Trace origin through the guide's git
 history, the task and source records it cites or that name it, and the filing session
 where a record carries a session stamp. Missing origin, incident or effectiveness
-evidence is recorded as such and never alone justifies a removal; neither does a
+evidence is recorded as such and is never part of a removal's rationale; neither is a
 shorter document or a simpler rule set. A removal's rationale names, with its
 evidence, what makes the text wrong or unneeded now: for example, it contradicts the
 tree or its authority, restates the global layer, is progress prose with no guidance,
 or serves a purpose that has lapsed. The note's entry for the removal carries
-`[origin <value>, purpose <…>]`.
+`[origin <value>, purpose <…>]`, with no `;` inside; what was searched goes to §6.
 
 **Root and declared subsystem guides (project-guides design §8), judged once per guide
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
@@ -182,19 +182,24 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    `not judged: Rules unchanged since <sha>`. When running it, each rule (a sentence
    under Rules) names, or the pass
    finds in `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
-   `grep -ril <word> <records>/tasks/`), the failure it prevents. A rule with a found
-   failure that can still occur, or one that states a boundary its authority document
-   draws and cites that document, is `keep`. A rule with no found failure has `no
-   incident recorded`, which alone never makes a removal candidate. Trace the rule's
-   origin and purpose (removal-provenance clause). A standing preference, an
-   environment fact, or an instruction whose purpose still holds is `keep` whatever
-   its origin; the §6 line names each rule kept with `no incident recorded`, its
-   origin (`unknown` included) and what was searched. A rule is a removal candidate
-   only when the pass states its origin, its purpose and a positive reason under that
-   clause, such as a found failure that can no longer occur. When such a reason exists
-   but the origin is unknown, the rule is `not judged: origin unknown` and goes to
-   §6's questions with the reason and what was searched, not to removal candidates.
-   Evidence: the search and the trace.
+   `grep -ril <word> <records>/tasks/`), the failure it prevents. Trace each rule's
+   origin and purpose (removal-provenance clause). A rule whose purpose still holds is
+   `keep` whatever its origin: one with a found failure, one that states a boundary its
+   authority document draws and cites that document, a standing preference, an
+   environment fact or a current instruction. A fixed incident does not end a purpose;
+   a purpose lapses only when what the rule governs (a component, tool, path or
+   condition) no longer exists in the tree or its authority. A rule with no found
+   failure has `no incident recorded`, which is never part of a removal's rationale.
+   A rule is a removal candidate only when the pass states its origin, its purpose
+   and a positive reason under that clause, such as a lapsed purpose. When such a
+   reason exists but the origin is unknown, the rule is `not judged: origin unknown`
+   and goes to §6's questions with the reason and what was searched. Every other rule,
+   including one whose purpose is unrecorded or unclear, is `keep` with purpose
+   `unknown`. Rules kept with `no incident recorded` are listed by short name, grouped
+   by origin, in the note's `keep:` segment (`5 (no incident recorded, origin unknown:
+   <names>)`) even when criterion 5 has other verdicts, and on its §6 line with what
+   was searched; this is the one exception to §6's one phrase. Evidence: the search
+   and the trace.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
    mechanically`. §1 records `ops-docs check`'s line-limit findings. It does not judge
@@ -268,7 +273,8 @@ closeout, and check `tasks -C <checkout> show <review-id>` confirms the claim wa
 released. Never take over another session's claim. Leave its priority and body to
 ops, which owns its lifecycle. Then exactly one review note, one line, segments in
 this order. An empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
-document they judged; a criterion with mixed verdicts appears only under the others.
+document they judged; a criterion with mixed verdicts appears only under the others,
+except criterion 5's `no incident recorded` list.
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
@@ -426,13 +432,18 @@ Nothing else. A pass with nothing in those groups says so in one line.
 
 - **v4** (2026-10-28, lore-650b32): a §3 removal-provenance clause, cited by criteria 3,
   4 and 5, makes every proposed or considered removal state the text's origin and
-  current purpose apart from its merit, and bars missing evidence or simplification as
-  the rationale. The lore pass at `209cf39` (lore-a4f7e2) listed the composition,
-  explicitness, compatibility-layer, Unified and project-switch rules as criterion 5
-  removal candidates because no incident was recorded; the pass withdrew them after
-  the user noted that a requested goal may be unimplemented rather than unwanted and
-  that origin and merit are separate questions. Criterion 5 now records `no incident recorded`, keeps
-  standing preferences, environment facts and current instructions whatever their
-  origin, and sends a removal reason with unknown origin to questions; §6's removal
-  candidates carry origin and purpose. Criterion numbers are unchanged. Application
-  probes are synthetic checks, not independent natural-case validation.
+  current purpose apart from its merit, and keeps missing evidence and simplification
+  out of the rationale. The lore pass at `209cf39` (lore-a4f7e2) recommended keeping
+  the composition, explicitness, compatibility-layer, Unified and project-switch rules
+  but classified them as criterion 5 `decision` removal candidates because no incident
+  was recorded. After the user pointed out that a requested goal may be unimplemented
+  rather than unwanted and asked for origin and intent to be assessed, the pass
+  withdrew them; the user then added that origin and merit are separate questions.
+  Criterion 5 now keeps any rule whose purpose still holds, whatever its origin; a
+  fixed incident does not end a purpose; `no incident recorded` rules are listed in
+  the note and on the §6 line, grouped by origin; a removal reason with unknown origin
+  is `not judged: origin unknown`, sent to questions; criterion 4 names the global
+  section that carries a deleted section's purpose; the note carries each removal's
+  origin and purpose, and §6's removal candidates carry both. Criterion numbers are
+  unchanged. Application probes are synthetic checks, not independent natural-case
+  validation.

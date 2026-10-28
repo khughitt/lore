@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 3.** The note names it, so a later pass can tell which criteria a
+**Rubric version 4.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -113,6 +113,21 @@ findings may land in one commit. A finding may surface under more than one crite
 (a claim that is criterion 9 in the README and criterion 10 in a runbook): each
 criterion's line in §6 names it, the note and the resolution carry it once.
 
+**Removal provenance.** Every removal a pass proposes or considers, under any criterion
+(a deleted sentence or section, a removal candidate), states three things apart: the
+text's origin (`user statement`, `agent proposal` or `unknown`, with what was searched),
+its current purpose (the failure, preference, boundary or intent it serves, and whether
+that still holds), and the pass's judgment of its merit. Origin does not settle merit,
+and merit does not erase or reassign origin. Trace origin through the guide's git
+history, the task and source records it cites or that name it, and the filing session
+where a record carries a session stamp. Missing origin, incident or effectiveness
+evidence is recorded as such and never alone justifies a removal; neither does a
+shorter document or a simpler rule set. A removal's rationale names, with its
+evidence, what makes the text wrong or unneeded now: for example, it contradicts the
+tree or its authority, restates the global layer, is progress prose with no guidance,
+or serves a purpose that has lapsed. The note's entry for the removal carries
+`[origin <value>, purpose <…>]`.
+
 **Root and declared subsystem guides (project-guides design §8), judged once per guide
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
 `AGENTS.md`:**
@@ -150,11 +165,13 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    recorded intent and tree. `refined` when deleting a word or clause leaves true
    guidance and preserves the scope/capability distinction; otherwise `stale` with
    the proposal: delete the pure progress claim and, when it says something the tracker
-   or a dated note does not, file or move it there.
+   or a dated note does not, file or move it there. Either deletion follows the
+   removal-provenance clause.
 4. **Nothing the global layer already says.** No section restates the tasks skill, the
    worktree rule, the commit conventions, or a profile's instructions. Evidence: the text
    against the global `AGENTS.md` the session loaded and the tasks skill. `refined` with
-   the section deleted and the line count saved. Text that fails here is not judged again
+   the section deleted, the line count saved and the global section that carries its
+   purpose (removal-provenance clause). Text that fails here is not judged again
    under criterion 5.
 5. **Every rule has a failure — baseline and Rules changes.** Run this on a guide
    set's first review and when its Rules text changed since the last completed review.
@@ -165,9 +182,19 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    `not judged: Rules unchanged since <sha>`. When running it, each rule (a sentence
    under Rules) names, or the pass
    finds in `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
-   `grep -ril <word> <records>/tasks/`), the failure it prevents. A rule that states a
-   boundary its authority document draws is `keep` when it cites that document.
-   Evidence: the search.
+   `grep -ril <word> <records>/tasks/`), the failure it prevents. A rule with a found
+   failure that can still occur, or one that states a boundary its authority document
+   draws and cites that document, is `keep`. A rule with no found failure has `no
+   incident recorded`, which alone never makes a removal candidate. Trace the rule's
+   origin and purpose (removal-provenance clause). A standing preference, an
+   environment fact, or an instruction whose purpose still holds is `keep` whatever
+   its origin; the §6 line names each rule kept with `no incident recorded`, its
+   origin (`unknown` included) and what was searched. A rule is a removal candidate
+   only when the pass states its origin, its purpose and a positive reason under that
+   clause, such as a found failure that can no longer occur. When such a reason exists
+   but the origin is unknown, the rule is `not judged: origin unknown` and goes to
+   §6's questions with the reason and what was searched, not to removal candidates.
+   Evidence: the search and the trace.
    `decision`: the rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
    mechanically`. §1 records `ops-docs check`'s line-limit findings. It does not judge
@@ -245,7 +272,7 @@ document they judged; a criterion with mixed verdicts appears only under the oth
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v3; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v4; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers>; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -298,7 +325,8 @@ Then the review task id, the commit judged, and the acknowledgment result (prior
 status and defer date, or blocker with next action and owner). Then the decisions
 that are the human's, grouped, omitting empty groups:
 
-- **removal candidates** (criterion 5): the rule or section, and what was searched;
+- **removal candidates** (criterion 5): the rule or section, its origin and current
+  purpose, the reason for removal kept apart from them, and what was searched;
 - **declarations** (criterion 11): the directory, and the two options;
 - **scope decisions** (criterion 3): the passage, recorded intent, proposed scope
   change and evidence; present it for the human's ruling before filing a finding task;
@@ -306,7 +334,8 @@ that are the human's, grouped, omitting empty groups:
   and the task that now owns it;
 - **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9): the document,
   the edit, and the task that now owns it;
-- **questions**: anything the pass could not judge.
+- **questions**: anything the pass could not judge, including a rule with a removal
+  reason but unknown origin, with the reason and what was searched.
 
 Nothing else. A pass with nothing in those groups says so in one line.
 
@@ -393,4 +422,17 @@ Nothing else. A pass with nothing in those groups says so in one line.
   change needs a human decision, presented under §6's scope decisions before filing
   a finding task. Other criteria and their numbers are unchanged;
   date semantics and payload classification retain their separate tasks. Application
+  probes are synthetic checks, not independent natural-case validation.
+
+- **v4** (2026-10-28, lore-650b32): a §3 removal-provenance clause, cited by criteria 3,
+  4 and 5, makes every proposed or considered removal state the text's origin and
+  current purpose apart from its merit, and bars missing evidence or simplification as
+  the rationale. The lore pass at `209cf39` (lore-a4f7e2) listed the composition,
+  explicitness, compatibility-layer, Unified and project-switch rules as criterion 5
+  removal candidates because no incident was recorded; the pass withdrew them after
+  the user noted that a requested goal may be unimplemented rather than unwanted and
+  that origin and merit are separate questions. Criterion 5 now records `no incident recorded`, keeps
+  standing preferences, environment facts and current instructions whatever their
+  origin, and sends a removal reason with unknown origin to questions; §6's removal
+  candidates carry origin and purpose. Criterion numbers are unchanged. Application
   probes are synthetic checks, not independent natural-case validation.

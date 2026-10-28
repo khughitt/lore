@@ -173,6 +173,12 @@ revision = "3daeb2eeac817f8d7feb4008e057a055a01120f1"
 location = "scoped body: the profile sets the local-merge default; an explicit repository or session instruction authorizes reviewed local merges in a user-owned checkout under another profile; push, PR and live-global approval unchanged"
 status = "recorded"
 [[fragments.evidence]]
+owner = "lore:records"
+path = "tasks/lore-ba3432.md"
+revision = "986b58b8da602945126d324f8e81f24b5ba65d31"
+location = "original report and scoped body: assessments conflated deterministic current implementation with a recorded stochastic/generative goal; extend curate-docs criterion 3's intent/capability distinction to assessments and reviews, retaining uncertainty and human scope decisions"
+status = "recorded"
+[[fragments.evidence]]
 owner = "lore"
 path = "none recorded"
 revision = "none recorded"

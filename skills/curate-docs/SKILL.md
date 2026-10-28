@@ -87,10 +87,12 @@ guides are read whole; reference-document sampling is defined below.
   top-level, undated `docs/*.md`, plus each path the table declares under
   `references`, including one outside `docs/`. A `README.md`, `AGENTS.md` or
   `CLAUDE.md` is never in it, declared or not. A member the reference bullet above
-  already covers is listed `<path> (typed <N>)`, N being its marker's version; a
-  declared path the rubric would not otherwise read is read for criterion 12 alone,
-  after the reference reading order and within the same 800-line budget, listed
-  `<path> (declared, typed <N>)`, and judged under no other criterion. A nested
+  already covers is listed `<path> (typed <N>)`, N being its marker's version, or
+  `typed none` when the mechanical check reports no parseable marker; a declared
+  path, or a location member the reference bullet does not cover, is read for
+  criterion 12 alone, after the reference reading order and within the same
+  800-line budget, listed `<path> (declared, typed <N|none>)`, and judged under no
+  other criterion. A nested
   reference that is not declared, and every document of a project without the
   table, gets no type judgment; the other criteria keep their scope either way.
   Criterion 12 judges only read sections, like 8–10, and a member left unread is
@@ -303,28 +305,27 @@ declares `[documents]`:**
     required content", "Marker and hybrids" and "Evolution"); cite them by the
     version judged, never restate them, and leave marker grammar and required
     headings to the mechanical rule. Each document is judged against the version
-    its marker names. Check that the opening paragraph says what the document
-    covers and links each related reference; that the version clause is the one
-    its declared types require, including `currently unversioned` for a model or
-    protocol with no accepted version, and that a guide claims none of its own (a
-    hybrid's model or protocol clause does not breach this); that each declared
-    type's required content is present in the sections carrying that type; that a
-    hybrid earns its combination (its parts serve one reader in one sitting) and
-    is a split proposal when it exceeds the size guideline by more than twice or
-    a part has readers the others do not; that the size guideline is met or the
-    excess is contract detail; and that the text describes current behaviour, not
-    decision history. Evidence: the standard at the version judged, the marker,
-    the read sections, and the linked references. `refined` when a word corrects
-    the coverage statement or version clause; `stale` when a coverage statement,
-    a related link, a version clause or a type's required content is missing or
-    wrong, naming the type and what is absent; `decision` for a split proposal, a
-    size overrun the content does not justify, or a document whose marker names
-    an older version than the current standard, recorded as `stale standard
-    (document types <marker> -> <current>)` with a proposal to migrate the
-    project's documents together: a migration proposal, never a failure, and
-    never a mechanical finding. `keep` otherwise; `not judged: not adopted` in a
-    project without the table, and `not judged: no marker` or `not judged:
-    unread` as §1 and §2 define.
+    its marker names; a marker naming a version the standard's `## Versions` does
+    not list is `not judged: unknown version`. Check that the opening paragraph
+    says what the document covers and links each related reference; that the
+    version clause is what the standard requires of each declared type, and that
+    a guide claims none of its own; that each declared type's required content is
+    present in the sections carrying that type; that a hybrid meets the standard's
+    keep-or-split rule; that the size guideline is met or the excess is contract
+    detail; and that the text describes current behaviour, not decision history.
+    Evidence: the standard at the version judged, the marker, the read sections,
+    and the linked references. `refined` when a word corrects the coverage
+    statement or version clause; `stale` when a coverage statement, a related
+    link, a version clause or a type's required content is missing or wrong,
+    naming the type and what is absent; `decision` for a split the standard's rule
+    calls for, written `split proposal (<types>, <lines> lines, <why>)`, for a size
+    overrun the content does not justify, and for markers older than the current
+    standard, written once per project over every such document (`decision: <doc>,
+    <doc>: stale standard (document types <marker> -> <current>, migrate
+    together)`): a migration proposal, never a failure or a mechanical finding,
+    and never counted in `unresolved`. No `;` inside a criterion 12 entry. `keep`
+    otherwise; `not judged: not adopted` in a project without the table, and `not
+    judged: no marker` or `not judged: unread` as §1 and §2 define.
 
 ## 4. Edits
 
@@ -333,8 +334,9 @@ branch the session works on, and land as one `docs:` commit through the project'
 gates. From another project (`--project`), the edit is recorded as `proposed` and
 resolved like a `stale` finding (§5): the owning project edits its own tree. An edit
 shortens or corrects; it never adds a section, reorders, or deletes a rule, except
-text criterion 4 finds restated from the global layer. A marker, a version clause,
-a related link or a type's missing content is an addition and so a proposal. A
+text criterion 4 finds restated from the global layer. A version clause, a related
+link or a type's missing content is an addition and so a proposal; a marker is
+mechanical (§1). A
 README some test reads as input (grep `tests/` for its name) gets that test run
 before the commit.
 
@@ -364,7 +366,7 @@ from the preceding criterion numbers, even when every rule was kept; write 5 onc
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N>|declared, typed <N>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|declared, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -425,8 +427,8 @@ that are the human's, grouped, omitting empty groups:
   change and evidence; present it for the human's ruling before filing a finding task;
 - **stale text** (criteria 2, 3, 7, 8, 9, 10, 12): the document, the claim, the
   evidence, and the task that now owns it;
-- **type decisions** (criterion 12): the document, its marker version against the
-  current standard, and the split, size or `stale standard` migration proposal;
+- **type decisions** (criterion 12): the documents, their marker versions against
+  the current standard, and the split, size or `stale standard` migration proposal;
 - **proposed edits** (from another project; criteria 1, 3, 4, 7, 8, 9, 12): the
   document, the edit, and the task that now owns it;
 - **questions**: anything the pass could not judge, including a rule with a removal

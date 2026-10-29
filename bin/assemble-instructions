@@ -822,18 +822,24 @@ def assess_rules(records, contexts, scans):
                 add('unknown-origin', ('Historic authorship unresolved; ' if origin['historic_authorship'] == 'unknown' else '') + 'no evidenced exact-current human adoption.')
             judgments = judgments_by_subject.get(sid, [])
             superseded = {reference_identity(owner, ref) for owner, a in judgments for ref in a['supersedes']}
+            def projected_reference(owner, ref):
+                return ref if '#' in ref or owner == subject['parent'] else owner + '#' + ref
+            def projected_evidence(owner, a):
+                return [projected_reference(owner, ref) for ref in a['evidence']]
             current = []
             for owner, a in judgments:
                 if (owner, a['id']) in superseded: continue
                 comparison = compare_assessment(a, subject, context, available, known_local)
-                if comparison['changed']: add('stale-assessment', 'Recorded judgment differs: ' + a['id'], comparison['changed'], a['evidence'])
-                if comparison['unknown']: add('currency-unverifiable', 'Cannot establish judgment currency: ' + a['id'], comparison['unknown'], a['evidence'])
-                if comparison['drift']: add('unassessed-context-drift', 'Other observed instructions drifted: ' + a['id'], comparison['drift'], a['evidence'])
-                if not comparison['changed'] and not comparison['unknown']: current.append(a)
-            fits = [a for a in current if a['kind'] == 'applicability']
-            if not fits or any(a['result']['verdict'] != 'applicable' for a in fits):
-                add('uncertain-applicability', 'No matching applicable judgment, or negative/uncertain/conflicting judgments remain.', evidence=[e for a in fits for e in a['evidence']])
-            if not any(a['kind'] == 'effectiveness' for a in current): add('untested-effectiveness', 'No observation or experiment matches this subject and target context.')
+                ident = projected_reference(owner, a['id'])
+                evidence = projected_evidence(owner, a)
+                if comparison['changed']: add('stale-assessment', 'Recorded judgment differs: ' + ident, comparison['changed'], evidence)
+                if comparison['unknown']: add('currency-unverifiable', 'Cannot establish judgment currency: ' + ident, comparison['unknown'], evidence)
+                if comparison['drift']: add('unassessed-context-drift', 'Other observed instructions drifted: ' + ident, comparison['drift'], evidence)
+                if not comparison['changed'] and not comparison['unknown']: current.append((owner, a))
+            fits = [(owner, a) for owner, a in current if a['kind'] == 'applicability']
+            if not fits or any(a['result']['verdict'] != 'applicable' for _, a in fits):
+                add('uncertain-applicability', 'No matching applicable judgment, or negative/uncertain/conflicting judgments remain.', evidence=[e for owner, a in fits for e in projected_evidence(owner, a)])
+            if not any(a['kind'] == 'effectiveness' for _, a in current): add('untested-effectiveness', 'No observation or experiment matches this subject and target context.')
         # Each container/kind appears once, while all clause findings remain inspectable.
         grouped = {}
         for f in findings:

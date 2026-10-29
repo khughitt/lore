@@ -1,6 +1,120 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent wrote the complete cleanup, pid/report, host-load and explicit-kill-decision rule in the named task.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+      ],
+      "id": "B2-b819-L197",
+      "kind": "proposal",
+      "occurred_at": "2026-09-21T21:03:39.097Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:17:54.574449+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-2-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "8b90821b6942dd6f4fda3e04d2e33d7e7d2cfa6873552a781966106a823e637e",
+        "id": "rule:12e31cf7fafe40db95ec74909738b868",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-887a4f/session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl",
+          "reference": "Exact original JSONL line 197, packet line 24, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:ops-38be00",
+            "revision": null,
+            "scope": "Paraphrase: Execute the named host-load and detached-cleanup task, including its harness-rule portion; request predates drafting, so no prepared wording revision exists."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+      ],
+      "id": "B2-b819-L9",
+      "kind": "adoption",
+      "occurred_at": "2026-09-21T20:55:53.019Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:17:54.574449+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-2-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "def9cfbf9a3e79905f7e95b7286193a4107a277f9ddcfb3139cb758682c7da41",
+        "id": "rule:12e31cf7fafe40db95ec74909738b868",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-887a4f/session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl",
+          "reference": "Exact original JSONL line 9, packet line 1, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:12e31cf7fafe40db95ec74909738b868",
   "impact": {
     "categories": [
@@ -11,9 +125,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Keep detached processes owned, reaped and visible at closeout."
   },
   "relations": [],
   "revisions": [
@@ -21,12 +135,196 @@
       "clauses": [],
       "locator": null,
       "sha256": "ea3daca3e0b5114b37c120c7b14a6e20c15d09a95f8023f16c6acc29911cba02",
-      "text": "- A smoke or live-run script an agent launches detached (`setsid nohup \u2026 & disown`, a\n  background `bun`, `node` or `weston`, a tmux server) owns its cleanup: it records the\n  pids it spawns and reaps them on its own exit and on the harness's stop (a `trap` on\n  EXIT, TERM and INT, or killing the tmux session), so a closed terminal never leaves a\n  child burning CPU in a dead `kitty-*.scope`. A process that must outlive the turn (a\n  server a later step drives) is named in the end-of-turn report with its pid and how to\n  stop it; before that report, `host-load --section session` (ops's `bin/host-load`, on\n  `~/.local/bin`) lists what this session's scope left running, and the report repeats\n  it or says nothing was left. `host-load` also names the load a preflight refuses on\n  and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.\n"
+      "text": "- A smoke or live-run script an agent launches detached (`setsid nohup … & disown`, a\n  background `bun`, `node` or `weston`, a tmux server) owns its cleanup: it records the\n  pids it spawns and reaps them on its own exit and on the harness's stop (a `trap` on\n  EXIT, TERM and INT, or killing the tmux session), so a closed terminal never leaves a\n  child burning CPU in a dead `kitty-*.scope`. A process that must outlive the turn (a\n  server a later step drives) is named in the end-of-turn report with its pid and how to\n  stop it; before that report, `host-load --section session` (ops's `bin/host-load`, on\n  `~/.local/bin`) lists what this session's scope left running, and the report repeats\n  it or says nothing was left. `host-load` also names the load a preflight refuses on\n  and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:17:54.574449+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-2-bound",
+      "recorder": "codex",
+      "scope": "Read hq-7a1b66 and its source ops-38be00; inspected the named b8195a28 session, original cleanup-rule write at line 197, its result and later report. Compared imported policy and fragment extraction. One targeted session.",
+      "unresolved": [
+        "The agent composed the observed rule; an earlier originating human goal was not recovered. Starting the wider ops task authorized scope before wording existed, not exact text."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-0c32662-context.txt",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "bd58f223116b0f3af1b48544b2326cb374290b80c69856c607ab0ae2f74768a0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-0c32662.md",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/processes.md",
+        "reference": "Original blob 8068ec0aa3430c952cc0b7783c944ef1964b2261; commit metadata and path diff in matching -context.txt",
+        "revision": "0c326620c08870406a847d8397786c044775a236"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "ae18587085dae671fe2f8286a7cc4e95712bb8d5c8a446e662a521930af5196f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-fa04196-context.txt",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8969573dd55792d9288154f42337488ab025293216af23ffb97d3fa6560eac5d",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-fa04196.md",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Original blob 1a7a59de6e7fbcfb3e8998c2ce9e16bbfbdadba3; commit metadata and path diff in matching -context.txt",
+        "revision": "fa041961b4d186818e45ed119c6e82aa754e84f1"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "b8195a28-17fd-4ebc-a65c-00a2a97213e8; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/session-b8195a28-17fd-4ebc-a65c-00a2a97213e8.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "0be53939c13c2f5419b4815f401b1b8d9ccf71d7aa4b231cdff642f56e1f0d0d",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-hq-7a1b66.json",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-hq-7a1b66.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-hq-7a1b66.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "aafffe7bd98bff7540b2a113545802741885f10b25744f077e0d8dd3cab20bf9",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-ops-38be00.json",
+      "inspected_at": "2026-10-29T17:17:54.574449+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-ops-38be00.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-ops-38be00.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "613ab287e142a069c5067d2910d2a81bc58cc8898cb2b20e2cc260ead8188b67",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Own detached process cleanup"
 }

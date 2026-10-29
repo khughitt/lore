@@ -153,3 +153,11 @@ Missing or renamed required files cannot fall back to disk. Records are validate
 from that same view. Included evidence copies with a hash use selected local bytes;
 external evidence locators are shape-checked without fetching transcripts or the
 network. Availability is recorded independently from the truth of a claim.
+
+The initial Git backfill maps the pilot's nine containers and 26 sub-rows to
+identities, including two historical-only clauses. Its excerpt bindings hash
+exact rows of the preserved secondary pilot report, not reconstructed original
+transcripts. Original Git locators were checked for readability; original session
+interpretations remain reported-only. Historical adoption targets name that scope,
+not today's text hash. lore-45303d owns preservation of the vulnerable originals.
+No current applicability or effectiveness assessment is inferred from this backfill.

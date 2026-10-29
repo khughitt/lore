@@ -162,7 +162,7 @@ def rule_schemas():
     locator = object_schema(kind=enum('git', 'session', 'attachment', 'retained'), owner=nullable,
                             path=nullable, revision=nullable, reference=string)
     revision_subject = object_schema(binding=enum('revision'), id={'type': 'string', 'pattern': '^(' + RULE_ID + '|' + CLAUSE_ID + ')$'}, sha256=digest_schema)
-    historical = object_schema(binding=enum('historical-excerpt'), id=rid, sha256={'anyOf': [digest_schema, {'type': 'null'}]},
+    historical = object_schema(binding=enum('historical-excerpt'), id=revision_subject['properties']['id'], sha256={'anyOf': [digest_schema, {'type': 'null'}]},
                                source=string, excerpt_sha256=digest_schema, preservation=locator)
     target = {'anyOf': [revision_subject, object_schema(binding=enum('scope'), reference=string, revision=nullable, scope=string)]}
     unknown = object_schema(value=nullable, reason=nullable)
@@ -315,7 +315,7 @@ def subject_bytes(record, subject):
 def validate_locator(locator):
     if locator is None: return
     if locator['path'] is not None: relative_path(locator['path'])
-    if locator['kind'] == 'git' and (not locator['owner'] or not locator['path'] or not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', locator['revision'] or '')):
+    if locator['kind'] == 'git' and (not locator['owner'] or not locator['path'] or (locator['revision'] is not None and not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', locator['revision']))):
         raise ValueError('git locator requires owner/path/full commit')
 
 
@@ -361,6 +361,8 @@ def validate_rule(record):
         authorship = event['claim']['authorship']
         if authorship['basis'] == 'inferred' and not authorship['reason']: raise ValueError('inference needs reason')
         adoption = event['claim']['adoption']
+        if event['subject']['binding'] == 'historical-excerpt' and adoption['target'] and adoption['target']['binding'] == 'revision':
+            raise ValueError('historical excerpt cannot assert exact revision adoption')
         references(adoption['evidence'], 'sources')
         references([q['source'] for q in event['claim']['evidence_quality']], 'sources')
         if adoption['status'] in ('accepted', 'restated'):
@@ -608,7 +610,11 @@ def refresh_rule(record, data, replacements):
             if change == {'retire': True} and cid in historic and cid not in current: continue
             if cid not in current or change != {k: current[cid][k] for k in ('text', 'offset')}:
                 raise ValueError('cannot replace selectors on a retained revision')
-        return json.loads(json.dumps(record))
+        updated = json.loads(json.dumps(record))
+        # Order records the last explicit refresh, not event chronology. Rendering
+        # still resolves the active revision by the current source hash.
+        updated['revisions'] = [r for r in updated['revisions'] if r['sha256'] != sha] + [json.loads(json.dumps(retained))]
+        return updated
     old = record['revisions'][-1]
     if set(replacements) - {c['id'] for c in old['clauses']}: raise ValueError('selector does not name a current clause')
     clauses = []
@@ -643,7 +649,7 @@ def refresh(root, args):
     for rid in live.keys() - records.keys():
         if committed_record(root, rid): raise ValueError('missing committed record is corruption; restore retained history: ' + record_path(rid))
         raise ValueError('marked rule missing record; resume its add-rule operation: ' + rid)
-    selected = set(args.rules) if args.rules else {rid for rid, (_, r) in live.items() if not any(v['sha256'] == r['sha256'] for v in records[rid]['revisions'])}
+    selected = set(args.rules) if args.rules else {rid for rid, (_, r) in live.items() if records[rid]['revisions'][-1]['sha256'] != r['sha256']}
     if selected - live.keys(): raise ValueError('refresh requires live rule IDs')
     replacements = json.loads(Path(args.selectors).read_bytes()) if args.selectors else {}
     if not isinstance(replacements, dict): raise ValueError('selectors must be an object')

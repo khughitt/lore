@@ -1621,3 +1621,98 @@ def historical_pair(world):
     revision = git(world.root, 'rev-parse', 'HEAD').decode().strip()
     for path, data in saved.items(): path.write_bytes(data)
     return revision
+
+
+def test_git_pilot_claim_boundaries(world):
+    module = load_assembler(world)
+    r = clause_record(module)
+    pilot = json.loads((ROOT / 'tools/fixtures/rule-provenance/historical-excerpt.json').read_bytes())
+    r['events'], r['sources'] = pilot['events'], pilot['sources']
+    event = r['events'][0]
+    event['subject']['id'] = r['revisions'][0]['clauses'][0]['id']
+    module.validate_rule(r)  # Historical clause origins do not require whole old prose.
+    assert event['occurred_at'] is None and event['claim']['authorship']['actor'] == 'unknown'
+    _, scans, ctx = judgment_world(module)
+    event['claim']['adoption'] = dict(status='authorized-scope', actor='human', target=dict(binding='scope', reference='task:fixture', revision=None, scope='Named work only.'), evidence=['source-1'], covers_clauses=False)
+    assert 'unknown-origin' in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+    a = assessment(r, ctx); a['subject'] = event['subject']; r['assessments'] = [a]
+    with pytest.raises(ValueError): module.validate_rule(r)
+    r['assessments'] = []
+    event['claim']['adoption']['status'] = 'accepted'
+    event['claim']['adoption']['target'] = dict(binding='revision', id=r['id'], sha256=r['revisions'][0]['sha256'])
+    with pytest.raises(ValueError, match='historical'): module.validate_rule(r)
+
+
+def test_git_pilot_unknown_commit_locator(world):
+    module = load_assembler(world)
+    r = module.new_rule_record(RULE_A, 'Uncommitted', b'- Keep this.\n')
+    r['revisions'][0]['locator'] = dict(kind='git', owner='lore', path='instructions/fragments/core.md', revision=None, reference='Uncommitted text, identified by subject hash.')
+    module.validate_rule(r)
+    r['revisions'][0]['locator']['revision'] = 'HEAD'
+    with pytest.raises(ValueError): module.validate_rule(r)
+
+
+def test_git_pilot_authoring_workflow(world):
+    commit_pair(world)
+    module = load_assembler(world)
+    source = world.root / 'instructions/fragments/core.md'
+    source.write_bytes(source.read_bytes() + b'- New standing preference.\n')
+    rejected = build(world, 'check')
+    assert b'add-rule' in rejected.stderr and b'exclusion' in rejected.stderr
+    line = len(source.read_bytes().splitlines())
+    result = invoke(world, 'add-rule', 'core', '--start-line', str(line), '--end-line', str(line), '--title', 'New preference')
+    assert result.returncode == 0, result.stderr
+    rid = re.search(rb'rule:[0-9a-f]{32}', result.stdout)[0].decode()
+    path = world.root / module.record_path(rid); r = json.loads(path.read_bytes())
+    r['impact'] = dict(tier='low', categories=['style'], reason='Fixture standing style preference.')
+    adopted = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'], r['events'] = adopted['sources'], adopted['events']
+    subject = dict(binding='revision', id=rid, sha256=r['revisions'][0]['sha256'])
+    r['events'][0]['subject'] = subject; r['events'][0]['claim']['adoption']['target'] = subject
+    path.write_bytes(module.manifest_bytes(r))
+    assert build(world).returncode == 0
+    before = outputs(world)
+    r['purpose'] = dict(text='Paraphrase: keep a fixture preference.', basis='inferred', sources=['source-1'])
+    path.write_bytes(module.manifest_bytes(r))
+    assert build(world, 'check').returncode == 0 and outputs(world) == before
+    commit_pair(world)
+    source.write_bytes(source.read_bytes().replace(b'New standing preference', b'Edited standing preference'))
+    git(world.root, 'add', str(source))
+    stale = build(world, 'check')
+    assert stale.returncode == 1 and b'unstage' in stale.stderr and b'keeping' in stale.stderr
+    assert invoke(world, 'refresh').returncode == 1
+    git(world.root, 'reset', '--', str(source))
+    assert invoke(world, 'refresh').returncode == 0
+    assert build(world).returncode == 0
+    git(world.root, 'add', '.')
+    assert build(world, 'check').returncode == 0
+    _, _, ctx = judgment_world(module)
+    ctx['instructions'] = [dict(ref=rid, owner='lore', sha256=json.loads(path.read_bytes())['revisions'][-1]['sha256'], reason=None)]
+    paths=[]
+    for name in ('claude', 'codex'):
+        ctx['name']=name;ctx['harness']['name']=name
+        target=world.root/(name+'.json');target.write_bytes(module.manifest_bytes(ctx));paths.extend(['--context',str(target)])
+    result=invoke(world,'provenance','--json',*paths)
+    assert result.returncode==0,result.stderr
+    report=json.loads(result.stdout)
+    assert {c['name'] for c in report['contexts']}=={'claude','codex'}
+    assert len([f for f in report['findings'] if f['subject']==rid and f['kind']=='unknown-origin'])==2
+
+
+def test_refresh_reverted_revision_preserves_its_clauses(world):
+    path = authoring_world(world); module = load_assembler(world)
+    record = clause_record(module); original = record['revisions'][0]['text'].encode()
+    cid = record['revisions'][0]['clauses'][0]['id']
+    record = module.refresh_rule(record, b'- Different policy.\n', {cid: {'retire': True}})
+    directory = world.root / 'instructions/rules'; directory.mkdir()
+    sidecar = directory / (record['id'][5:] + '.json'); sidecar.write_bytes(module.manifest_bytes(record))
+    # Reverting to retained text revives that revision's bindings, without rewriting its history.
+    path.write_bytes(marked(record['id'], original))
+    assert invoke(world, 'refresh').returncode == 0
+    path.write_bytes(marked(record['id'], original.replace(b'Use ', b'Always use ')))
+    result = invoke(world, 'refresh')
+    assert result.returncode == 0, result.stderr
+    actual = json.loads(sidecar.read_bytes())
+    current = next(r for r in actual['revisions'] if r['sha256'] == module.digest(original.replace(b'Use ', b'Always use ')))
+    assert [c['id'] for c in current['clauses']] == [cid]
+    assert all(old in actual['revisions'] for old in record['revisions'])

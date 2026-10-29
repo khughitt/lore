@@ -1,6 +1,155 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "inferred",
+          "original_author": null,
+          "reason": "Attribution is imported from the inspected pilot; original source interpretation is not independently reverified here.",
+          "role": "mechanism",
+          "statement": "Paraphrase of pilot: The human adopted the force-removal checklist; a later ignored-file cross-reference did not originate its other conditions anew.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E14-lore-0c6e58b"
+          },
+          {
+            "quality": "unknown",
+            "source": "E14-lore-432258d"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E14-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E14-lore-0c6e58b",
+        "E14-lore-432258d",
+        "E14-session-1"
+      ],
+      "id": "G7-origin",
+      "kind": "appearance",
+      "occurred_at": "2026-10-07",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "f56a6a124458bc7f24dc54f70501c565a70e98a928b419e75ca992c01f0e3ba2",
+        "id": "rule:eadfc260a2134d269009cae210212fdf",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G7; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "human",
+          "covers_clauses": false,
+          "evidence": [
+            "pilot-report",
+            "E14-lore-0c6e58b",
+            "E14-lore-432258d",
+            "E14-session-1"
+          ],
+          "status": "accepted",
+          "target": {
+            "binding": "scope",
+            "reference": "lore-6b0063:G7",
+            "revision": null,
+            "scope": "Paraphrase: the historical contribution described in pilot row G7; no current exact-text hash is asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Adoption and authorship remain separate.",
+          "role": "mechanism",
+          "statement": "Paraphrase: the pilot reports human adoption of the named historical contribution; this does not identify its wording author.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E14-lore-0c6e58b"
+          },
+          {
+            "quality": "unknown",
+            "source": "E14-lore-432258d"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E14-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E14-lore-0c6e58b",
+        "E14-lore-432258d",
+        "E14-session-1"
+      ],
+      "id": "G7-adoption",
+      "kind": "adoption",
+      "occurred_at": "2026-10-07T10:43:00Z",
+      "predecessors": [
+        "G7-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "f56a6a124458bc7f24dc54f70501c565a70e98a928b419e75ca992c01f0e3ba2",
+        "id": "rule:eadfc260a2134d269009cae210212fdf",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G7; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    }
+  ],
   "id": "rule:eadfc260a2134d269009cae210212fdf",
   "impact": {
     "categories": [
@@ -9,24 +158,139 @@
     "reason": "Gates forced submodule worktree deletion on explicit safety conditions.",
     "tier": "high"
   },
-  "incidents": [],
+  "incidents": [
+    {
+      "evidence": [
+        "pilot-report"
+      ],
+      "id": "pilot-incident-scope",
+      "rationale": "Paraphrase: the pilot names historical incident or task reports relevant to this rule. This is reported history, not a reproduced failure or current effectiveness finding.",
+      "status": "recorded",
+      "subject": {
+        "binding": "revision",
+        "id": "rule:eadfc260a2134d269009cae210212fdf",
+        "sha256": "4cf0ae497cbfcddac72c3c8e245fb55dcb4efacab869bf68545d6d241d970933"
+      }
+    }
+  ],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: submodule worktree removal."
   },
   "relations": [],
   "revisions": [
     {
       "clauses": [],
-      "locator": null,
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/git.md",
+        "reference": "Public policy text before marker-only migration; identity bound by exact text hash.",
+        "revision": "37d06342e376dec1a257b037a48ec03337de5410"
+      },
       "sha256": "4cf0ae497cbfcddac72c3c8e245fb55dcb4efacab869bf68545d6d241d970933",
       "text": "- `git worktree remove` refuses a worktree that holds a submodule, even a clean one.\n  Force it (`git worktree unlock <path>`, then `git worktree remove --force <path>`)\n  only when every check holds, and stop to resolve the first that fails: it is the\n  task's own worktree; its branch is merged or kept; `git -C <path> status --porcelain`\n  and `git -C <path> submodule foreach --recursive git status --porcelain` print\n  nothing; `git -C <path> submodule status --recursive` shows no `+`, `-` or `U` prefix;\n  the ignored-file check above holds; `tt-report` has run; no host pointer resolves\n  into it. Never force by default.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-28",
+      "exclusions": [
+        "No new archive-wide origin search.",
+        "Original session turns not re-read; use the pilot report as secondary evidence.",
+        "lore-45303d still owns preservation of vulnerable original sources."
+      ],
+      "id": "pilot-bound",
+      "recorder": "codex",
+      "scope": "Secondary import of the finite lore-6b0063 pilot: its nine coverage and 26 amendment rows; original Git locators checked for readability only.",
+      "unresolved": [
+        "Initial request/authorship gaps remain as reported by the pilot.",
+        "Original session interpretation and exact historical adoption were not independently reverified in this import."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "pilot-report",
+      "inspected_at": "2026-10-29T10:55:37.777495+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "910bf36b9278b1d02868658461f54f0e915ebe76c4d5b3dfe54b1896d7efc21a",
+      "source_time": "2026-10-28",
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E14-lore-0c6e58b",
+      "inspected_at": "2026-10-29T10:52:14.885216+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/git.md",
+        "reference": "Pilot E14; reported revision 0c6e58b; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "0c6e58b4dbce057432dfaf4299b1a922b5d7fa71"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E14-lore-432258d",
+      "inspected_at": "2026-10-29T10:52:14.893390+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/git.md",
+        "reference": "Pilot E14; reported revision 432258d; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "432258dfe53cceee05085ca23e0793f7d702d50a"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "not-checked",
+      "id": "E14-session-1",
+      "inspected_at": null,
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:e02ceb9f-667b-4029-8e06-f7afbc5fa86a; JSONL assistant 252, 446, 473; user 256, 478; reported by pilot E14, not independently reread.",
+        "revision": null
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Submodule worktree removal"
 }

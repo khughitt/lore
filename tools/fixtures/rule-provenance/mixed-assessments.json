@@ -1,0 +1,218 @@
+{
+  "assessments": [
+    {
+      "assessor": {
+        "label": "human",
+        "session": null
+      },
+      "context": {
+        "environment": {
+          "sandbox": {
+            "reason": null,
+            "value": "isolated"
+          }
+        },
+        "harness": {
+          "name": "claude-code",
+          "reason": null,
+          "version": "1"
+        },
+        "instructions": [
+          {
+            "owner": "lore",
+            "reason": null,
+            "ref": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+          },
+          {
+            "owner": "external",
+            "reason": null,
+            "ref": "guide",
+            "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "owner": "external",
+            "reason": null,
+            "ref": "profile",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "owner": "lore",
+            "reason": null,
+            "ref": "instructions/AGENTS.md",
+            "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "model": {
+          "reason": null,
+          "value": "model-a"
+        },
+        "name": "claude"
+      },
+      "evidence": [],
+      "id": "a1",
+      "instruction_dependencies": {
+        "items": [
+          {
+            "ref": "guide",
+            "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "ref": "profile",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+          }
+        ],
+        "rationale": "These establish the relevant policy."
+      },
+      "kind": "applicability",
+      "limitations": [
+        "Fixture only."
+      ],
+      "question": "Does this rule fit?",
+      "recorded_at": "2026-10-02T00:00:00Z",
+      "result": {
+        "conditions": "This fixture context.",
+        "goal": "Preserve intent.",
+        "rationale": "Observed fixture fit.",
+        "verdict": "applicable"
+      },
+      "schema": 1,
+      "subject": {
+        "binding": "revision",
+        "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+      },
+      "supersedes": []
+    },
+    {
+      "assessor": {
+        "label": "human",
+        "session": null
+      },
+      "context": {
+        "environment": {
+          "sandbox": {
+            "reason": null,
+            "value": "isolated"
+          }
+        },
+        "harness": {
+          "name": "claude-code",
+          "reason": null,
+          "version": "1"
+        },
+        "instructions": [
+          {
+            "owner": "lore",
+            "reason": null,
+            "ref": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+          },
+          {
+            "owner": "external",
+            "reason": null,
+            "ref": "guide",
+            "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "owner": "external",
+            "reason": null,
+            "ref": "profile",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+          },
+          {
+            "owner": "lore",
+            "reason": null,
+            "ref": "instructions/AGENTS.md",
+            "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "model": {
+          "reason": null,
+          "value": "model-a"
+        },
+        "name": "claude"
+      },
+      "evidence": [],
+      "id": "e1",
+      "instruction_dependencies": {
+        "items": [
+          {
+            "ref": "guide",
+            "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "ref": "profile",
+            "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+          }
+        ],
+        "rationale": "These establish the relevant policy."
+      },
+      "kind": "effectiveness",
+      "limitations": [
+        "Fixture only."
+      ],
+      "question": "Does this rule fit?",
+      "recorded_at": "2026-10-02T00:00:00Z",
+      "result": {
+        "cases": [
+          {
+            "count": 0,
+            "executed_at": "2026-10-02T00:00:00Z",
+            "id": "case-1",
+            "inputs": {
+              "artifact": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            "intervention": "Rule present.",
+            "observations": "No improvement.",
+            "selected_at": "2026-10-01T00:00:00Z",
+            "unit": "successes"
+          }
+        ],
+        "comparator": "Without intervention.",
+        "limitations": [
+          "Synthetic case."
+        ],
+        "mode": "experiment",
+        "outcome": "No improvement.",
+        "procedure": "A fixed fixture comparison."
+      },
+      "schema": 1,
+      "subject": {
+        "binding": "revision",
+        "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+      },
+      "supersedes": []
+    }
+  ],
+  "events": [],
+  "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "impact": {
+    "categories": [
+      "permissions"
+    ],
+    "reason": "Fixture permission consequence.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0",
+      "text": "- Use conventional commits.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Standing preference"
+}

@@ -107,3 +107,20 @@ stales the manifest even when the artifact is unchanged.
 A committed manifest is read only for its `mandatory` ids; it must have the keys
 above, `version` 1, `mode` `production`, the newline separator and a nonempty
 `fragments` array whose entries carry an `id` and a valid `classification`.
+
+## Rule authoring and assessment data
+
+The authoring and `provenance` commands validate JSON against the closed contracts
+in `instructions/schemas/`. A rule retains exact public policy revisions and clause
+byte selectors separately from events, incidents and assessments. Unknown origin,
+purpose and impact are explicit skeleton values. Claims and rationales paraphrase
+private evidence; source locators and held-byte hashes identify evidence kept in
+records attachments. Policy text itself remains exact, since it binds identity.
+
+A schema-1 assessment has a kind-specific result (`approval`, `applicability` or
+`effectiveness`) and an exact retained subject hash. Context snapshots record
+observed inputs; dependency declarations select surrounding instructions. Explicit
+supersession must address the same kind and subject and cannot form a cycle.
+Use `human` or `user` as an adoption actor for human authority; an agent action is
+not human adoption. The JSON fixtures under `tools/fixtures/rule-provenance/` are
+synthetic examples, including separate Claude/Codex/unknown target snapshots.

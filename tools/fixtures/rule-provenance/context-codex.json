@@ -1,0 +1,45 @@
+{
+  "environment": {
+    "sandbox": {
+      "reason": null,
+      "value": "isolated"
+    }
+  },
+  "harness": {
+    "name": "codex",
+    "reason": null,
+    "version": "1"
+  },
+  "instructions": [
+    {
+      "owner": "lore",
+      "reason": null,
+      "ref": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+    },
+    {
+      "owner": "external",
+      "reason": null,
+      "ref": "guide",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "owner": "external",
+      "reason": null,
+      "ref": "profile",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "owner": "lore",
+      "reason": null,
+      "ref": "instructions/AGENTS.md",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "model": {
+    "reason": null,
+    "value": "model-b"
+  },
+  "name": "codex",
+  "schema": 1
+}

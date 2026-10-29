@@ -146,3 +146,34 @@ records. Unstage the named files **keeping working edits**, refresh, inspect,
 restage and rerun check. After authoring, record available proposal and approval
 sources separately; exact-text adoption must bind the hash actually accepted.
 Evidence-only changes need no refresh. Command execution is never adoption.
+
+## Reading judgments in a target context
+
+```
+python3 bin/assemble-instructions provenance
+python3 bin/assemble-instructions provenance --context claude.json --context codex.json --json
+python3 bin/assemble-instructions provenance --tier high --warning unknown-origin
+```
+
+Context files follow `instructions/schemas/context.json`. Names are unique; model,
+harness name/version, ordered instruction references/hashes and named environment
+values are supplied explicitly. No shell values are inferred. Omitted context
+means unknown runtime comparisons. Relevant staged inputs select the index;
+`--working-tree` explicitly selects disk. JSON stdout is a deterministic complete
+report; human output names findings, actions, historical gaps and judgments.
+Structural errors fail; warnings alone exit successfully.
+
+An assessment's ordered `instruction_dependencies.items` select the comparisons;
+its rationale explains the selection (including an empty list). Compare those
+items, the subject hash, model, harness and every environment field it names.
+Missing values or a snapshot inconsistent with local source are unverifiable.
+Other instruction/artifact drift is informational. Matching inputs mean only
+that no mismatch is recorded. Approval, applicability and measured effectiveness
+remain independent; a negative experiment still counts as tested.
+
+An evidenced human/user adoption of an exact current hash clears the actionable
+origin warning for that subject. Historical authorship remains unknown when it
+was unknown before. Scope authorization does not count. One review of a set's
+exact texts may supply one adoption per hash; container adoption covers clauses
+only when `covers_clauses` is true. A new hash needs new affirmation. Unknowns
+never authorize removing an obligation.

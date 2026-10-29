@@ -190,11 +190,19 @@ def rule_schemas():
             evidence=refs, searches=refs),
         'context': context,
     }
-    assessment = object_schema(id=string, kind=enum('approval', 'applicability', 'effectiveness'), subject=revision_subject,
+    assessment = object_schema(schema=enum(1), id=string, kind=enum('approval', 'applicability', 'effectiveness'), subject=revision_subject,
         question=string, assessor=object_schema(label=string, session=nullable), recorded_at=string, evidence=refs,
         context=ref('context'), instruction_dependencies=object_schema(items=array_schema(object_schema(ref=string, sha256=digest_schema)), rationale=nullable),
         result={'type': 'object'}, limitations=refs, supersedes=refs)
-    defs['assessment'] = assessment
+    results = {
+        'approval': object_schema(verdict=enum('accepted', 'rejected', 'authorized-scope'), authority=string, target=target),
+        'applicability': object_schema(verdict=enum('applicable', 'not-applicable', 'uncertain'), goal=string, conditions=string, rationale=string),
+        'effectiveness': object_schema(mode=enum('observation', 'experiment'), procedure=string,
+            cases=array_schema(object_schema(id=string, inputs={'type': 'object', 'additionalProperties': digest_schema},
+                observations=string, count={'type': ['number', 'null']}, unit=nullable, selected_at=string, executed_at=string, intervention=string)),
+            comparator=nullable, outcome=string, limitations=refs),
+    }
+    defs['assessment'] = {'anyOf': [dict(assessment, properties=dict(assessment['properties'], kind=enum(kind), result=result)) for kind, result in results.items()]}
     rule = object_schema(schema=enum(1), id=rid, title=string, state=enum('active', 'retired'),
         purpose=object_schema(text=string, basis=enum('observed', 'inferred', 'unknown'), sources=refs),
         impact=object_schema(tier=enum('high', 'work', 'low', 'unknown'), categories=refs, reason=string),
@@ -223,10 +231,10 @@ def validate_schema(value, schema, label, definitions=None):
         raise ValueError(f'{label}: invalid variant')
     if 'enum' in schema and not any(type(value) is type(v) and value == v for v in schema['enum']):
         raise ValueError(f'{label}: expected one of {schema["enum"]}')
-    types = {'object': dict, 'array': list, 'string': str, 'integer': int, 'boolean': bool, 'null': type(None)}
+    types = {'object': dict, 'array': list, 'string': str, 'integer': int, 'number': (int, float), 'boolean': bool, 'null': type(None)}
     expected = schema.get('type', list(types))
     if isinstance(expected, str): expected = [expected]
-    if not any(type(value) is types[t] for t in expected): raise ValueError(f'{label}: wrong type')
+    if not any(type(value) in (types[t] if isinstance(types[t], tuple) else (types[t],)) for t in expected): raise ValueError(f'{label}: wrong type')
     if isinstance(value, str):
         if len(value) < schema.get('minLength', 0) or ('pattern' in schema and not re.fullmatch(schema['pattern'], value)):
             raise ValueError(f'{label}: invalid text')
@@ -360,11 +368,24 @@ def validate_rule(record):
             if adoption['target']['binding'] == 'revision': subject_bytes(record, adoption['target'])
     for a in record['assessments']:
         references(a['supersedes'], 'assessments')
-        if a['id'] in a['supersedes']: raise ValueError('assessment cannot supersede itself')
+        for ref in a['supersedes']:
+            if '#' in ref: continue
+            other = groups['assessments'][ref]
+            if other['kind'] != a['kind'] or other['subject']['id'] != a['subject']['id']:
+                raise ValueError('superseding assessment must address the same kind and subject')
+        def visit(ident, path):
+            if ident in path: raise ValueError('assessment supersession cycle')
+            for ref in groups['assessments'][ident]['supersedes']:
+                if '#' not in ref: visit(ref, path | {ident})
+        visit(a['id'], set())
         validate_context(a['context'], external=False)
         dependencies = a['instruction_dependencies']
         if dependencies['items'] and not dependencies['rationale']: raise ValueError('dependencies need rationale')
-        if any(d['ref'] in (a['subject']['id'], ARTIFACT) for d in dependencies['items']): raise ValueError('subject cannot be its own surrounding dependency')
+        dependent_ids = [d['ref'] for d in dependencies['items']]
+        if len(dependent_ids) != len(set(dependent_ids)): raise ValueError('duplicate instruction dependency')
+        forbidden = {a['subject']['id'], record['id'], ARTIFACT}
+        if a['subject']['id'] == record['id']: forbidden |= {c['id'] for rev in record['revisions'] for c in rev['clauses']}
+        if any(d['ref'] in forbidden for d in dependencies['items']): raise ValueError('subject cannot be its own surrounding dependency')
         result = a['result']
         if a['kind'] == 'approval':
             fields(result, {'verdict', 'authority', 'target'}, 'approval result')
@@ -640,6 +661,204 @@ def refresh(root, args):
     print('refreshed: ' + (', '.join(sorted(selected)) or 'none') + '; written: ' + ', '.join(written))
 
 
+TIERS = ('high', 'work', 'low', 'unknown')
+WARNING_KINDS = ('unknown-origin', 'uncertain-applicability', 'untested-effectiveness',
+                 'stale-assessment', 'currency-unverifiable', 'unassessed-context-drift')
+
+
+def unknown_context():
+    return dict(schema=1, name='unspecified', model=dict(value=None, reason='No context supplied.'),
+                harness=dict(name=None, version=None, reason='No context supplied.'), instructions=[], environment={})
+
+
+def current_subjects(records, scans):
+    subjects = {}
+    for scan in scans.values():
+        for rule in scan['rules']:
+            record = records[rule['id']]
+            revision = next(r for r in record['revisions'] if r['sha256'] == rule['sha256'])
+            subjects[rule['id']] = dict(id=rule['id'], sha256=rule['sha256'], parent=rule['id'])
+            for c in revision['clauses']:
+                if c['id'] in subjects: raise ValueError('clause identity belongs to multiple current rules')
+                subjects[c['id']] = dict(id=c['id'], sha256=c['sha256'], parent=rule['id'])
+    return subjects
+
+
+def compare_assessment(a, subject, target, available):
+    changed, unknown, drift = [], [], []
+    def compare(name, old, new):
+        if old is None or new is None: unknown.append(name)
+        elif old != new: changed.append(name)
+    compare('subject.sha256', a['subject']['sha256'], subject['sha256'])
+    observed = a['context']
+    compare('model', observed['model']['value'], target['model']['value'])
+    for key in ('name', 'version'): compare('harness.' + key, observed['harness'][key], target['harness'][key])
+    supplied = {i['ref']: i['sha256'] for i in target['instructions']}
+    prior = {i['ref']: i['sha256'] for i in observed['instructions']}
+    # A snapshot is evidence of supplied context, not permission to replace local bytes.
+    for ref, sha in supplied.items():
+        if ref in available and sha != available[ref]: unknown.append('snapshot mismatch: ' + ref)
+    if subject['id'] not in supplied:
+        # Clauses may be delivered only as part of their container.
+        if subject['parent'] not in supplied: unknown.append('subject delivery snapshot')
+    dependencies = a['instruction_dependencies']
+    if not dependencies['rationale']: unknown.append('instruction dependency declaration')
+    refs = [i['ref'] for i in dependencies['items']]
+    if [r for r in prior if r in refs] != refs: unknown.append('assessment dependency order')
+    for item in dependencies['items']:
+        ref = item['ref']
+        compare('instruction:' + ref, item['sha256'], supplied.get(ref))
+        if prior.get(ref) != item['sha256']: unknown.append('assessment dependency snapshot: ' + ref)
+    if [r for r in supplied if r in refs] != refs:
+        if set(refs) <= supplied.keys(): changed.append('instruction dependency order')
+        else: unknown.append('instruction dependency order')
+    for field, value in observed['environment'].items():
+        compare('environment.' + field, value['value'], target['environment'].get(field, {}).get('value'))
+    for ref in sorted(prior.keys() | supplied.keys()):
+        if ref not in refs and ref not in (subject['id'], subject['parent']) and prior.get(ref) != supplied.get(ref): drift.append('instruction:' + ref)
+    return dict(changed=sorted(set(changed)), unknown=sorted(set(unknown)), drift=drift)
+
+
+def origin_state(record, subject, subjects):
+    historic = False
+    adopted = False
+    for event in record['events']:
+        bound = event['subject']
+        if bound['id'] == subject['id']:
+            author = event['claim']['authorship']
+            if author['actor'] != 'unknown' and author['basis'] != 'unknown' and event['evidence'] and any(q['quality'] == 'originating-request/proposal' for q in event['claim']['evidence_quality']): historic = True
+        adoption = event['claim']['adoption']
+        target = adoption['target']
+        if adoption['status'] not in ('accepted', 'restated') or adoption['actor'] not in ('human', 'user') or not adoption['evidence'] or not target or target['binding'] != 'revision': continue
+        if target['id'] == subject['id'] and target['sha256'] == subject['sha256']: adopted = True
+        if subject['id'] != subject['parent'] and adoption['covers_clauses'] and target['id'] == subject['parent'] and target['sha256'] == subjects[subject['parent']]['sha256']: adopted = True
+    return dict(subject=subject['id'], historic_authorship='recorded' if historic else 'unknown', current_adoption=adopted,
+                origin='reaffirmed-current' if adopted and not historic else 'recorded' if adopted and historic else 'unresolved')
+
+
+def assess_rules(records, contexts, scans):
+    for record in records.values(): validate_rule(record)
+    contexts = contexts or [unknown_context()]
+    for context in contexts: validate_context(context)
+    if len({c['name'] for c in contexts}) != len(contexts): raise ValueError('context names must be unique')
+    subjects = current_subjects(records, scans)
+    available = {sid: subject['sha256'] for sid, subject in subjects.items()}
+    available.update({'fragment:' + name: digest(scan['rendered']) for name, scan in scans.items()})
+    report = dict(schema=1, coverage=dict(rules=sum(s['id'] == s['parent'] for s in subjects.values()),
+        clauses=sum(s['id'] != s['parent'] for s in subjects.values()), retired=sum(r['state'] == 'retired' for r in records.values()),
+        tiers={tier: sum(r['state'] == 'active' and r['impact']['tier'] == tier for r in records.values()) for tier in TIERS}), contexts=[], findings=[], history=[])
+    origins = {sid: origin_state(records[s['parent']], s, subjects) for sid, s in subjects.items()}
+    for rid, record in sorted(records.items()):
+        report['history'].append(dict(id=rid, title=record['title'], state=record['state'], subjects=[origins[s] for s in sorted(origins) if subjects[s]['parent'] == rid],
+            purpose=record['purpose'], impact=record['impact'], relations=record['relations'], revisions=record['revisions'],
+            events=record['events'], incidents=record['incidents'], assessments=record['assessments'], sources=record['sources'], searches=record['searches']))
+    for context in sorted(contexts, key=lambda c: c['name']):
+        diagnostics = []
+        if context['model']['value'] is None: diagnostics.append('model unknown')
+        if context['harness']['name'] is None or context['harness']['version'] is None: diagnostics.append('harness unknown')
+        if not context['instructions']: diagnostics.append('instruction snapshot absent')
+        for item in context['instructions']:
+            if item['ref'] in available and item['sha256'] != available[item['ref']]: diagnostics.append('snapshot mismatch: ' + item['ref'])
+        report['contexts'].append(dict(name=context['name'], snapshot=context, diagnostics=diagnostics))
+        findings = []
+        for sid, subject in sorted(subjects.items()):
+            record = records[subject['parent']]
+            def add(kind, reason, differences=None, evidence=None):
+                findings.append(dict(context=context['name'], subject=sid, container=subject['parent'], title=record['title'], tier=record['impact']['tier'],
+                    kind=kind, reason=reason, differences=differences or [], evidence=evidence or [], sha256=subject['sha256'],
+                    next_action={'unknown-origin': 'Recover bounded source evidence or present exact text for human adoption; preserve unknown history.',
+                        'uncertain-applicability': 'Assess this subject in the named target context.', 'untested-effectiveness': 'Record an observation or experiment; approval is not effectiveness.',
+                        'stale-assessment': 'Make a new assessment against current inputs; retain the old judgment.',
+                        'currency-unverifiable': 'Refresh or complete the explicit context snapshot and dependency declaration.',
+                        'unassessed-context-drift': 'Consider whether instruction dependencies need a new assessment.'}[kind]))
+            origin = origins[sid]
+            if not origin['current_adoption']:
+                add('unknown-origin', ('Historic authorship unresolved; ' if origin['historic_authorship'] == 'unknown' else '') + 'no evidenced exact-current human adoption.')
+            judgments = [a for a in record['assessments'] if a['subject']['id'] == sid]
+            superseded = {ref for a in judgments for ref in a['supersedes']}
+            current = []
+            for a in judgments:
+                if a['id'] in superseded: continue
+                comparison = compare_assessment(a, subject, context, available)
+                if comparison['changed']: add('stale-assessment', 'Recorded judgment differs: ' + a['id'], comparison['changed'], a['evidence'])
+                if comparison['unknown']: add('currency-unverifiable', 'Cannot establish judgment currency: ' + a['id'], comparison['unknown'], a['evidence'])
+                if comparison['drift']: add('unassessed-context-drift', 'Other observed instructions drifted: ' + a['id'], comparison['drift'], a['evidence'])
+                if not comparison['changed'] and not comparison['unknown']: current.append(a)
+            fits = [a for a in current if a['kind'] == 'applicability']
+            if not fits or any(a['result']['verdict'] != 'applicable' for a in fits):
+                add('uncertain-applicability', 'No matching applicable judgment, or negative/uncertain/conflicting judgments remain.', evidence=[e for a in fits for e in a['evidence']])
+            if not any(a['kind'] == 'effectiveness' for a in current): add('untested-effectiveness', 'No observation or experiment matches this subject and target context.')
+        # Each container/kind appears once, while all clause findings remain inspectable.
+        grouped = {}
+        for f in findings:
+            key = (f['container'], f['kind'])
+            if key not in grouped:
+                grouped[key] = dict(f, subject=f['container'], sha256=subjects[f['container']]['sha256'], clauses=[], details=[])
+            group = grouped[key]
+            group['details'].append(f)
+            if f['subject'] != f['container']: group['clauses'].append(f)
+            group['differences'] = sorted(set(group['differences']) | set(f['differences']))
+            group['evidence'] = sorted(set(group['evidence']) | set(f['evidence']))
+        report['findings'].extend(grouped.values())
+    report['findings'].sort(key=lambda f: (f['context'], TIERS.index(f['tier']), f['subject'], f['kind']))
+    return report
+
+
+def warning_summary(report, baseline, changed):
+    counts = {}
+    for f in report['findings']:
+        key = f['tier'] + '/' + f['kind']; counts[key] = counts.get(key, 0) + 1
+    line = f'provenance: {report["coverage"]["rules"]} rules, {report["coverage"]["clauses"]} clauses; tiers ' + ', '.join(f'{k}={v}' for k, v in report['coverage']['tiers'].items())
+    line += '; ' + ', '.join(f'{k}={v}' for k, v in sorted(counts.items()))
+    lines = [line]
+    for c in report['contexts']:
+        if c['diagnostics']: lines.append(f'  context {c["name"]}: ' + '; '.join(c['diagnostics']))
+    if baseline is None:
+        lines.append('  baseline unavailable (initial migration or failed HEAD inventory); totals only. Run provenance for details.')
+        return '\n'.join(lines)
+    def key(f): return f['context'], f['subject'], f['kind']
+    old = {key(f): f for f in baseline['findings']}
+    eligible = []
+    for f in report['findings']:
+        if f['kind'] in ('untested-effectiveness', 'unassessed-context-drift'): continue
+        if f['kind'] == 'currency-unverifiable' and next(c for c in report['contexts'] if c['name'] == f['context'])['diagnostics']: continue
+        if f['tier'] != 'high' and f['subject'] not in changed: continue
+        before = old.get(key(f))
+        if f['subject'] in changed or before is None or set(f['differences']) - set(before['differences']) or len(f['clauses']) > len(before['clauses']): eligible.append(f)
+    for f in eligible[:5]: lines.append(f'  {f["context"]} {f["subject"][:13]} {f["title"]}: {f["kind"]} — {f["reason"]}')
+    if len(eligible) > 5: lines.append(f'  {len(eligible) - 5} details omitted; run provenance for the complete report.')
+    return '\n'.join(lines)
+
+
+def provenance_text(report):
+    lines = [f'Provenance: {report["coverage"]["rules"]} rules; {report["coverage"]["clauses"]} clauses. Warnings do not authorize removal.']
+    for c in report['contexts']:
+        lines.append('Context ' + c['name'] + ': ' + ('; '.join(c['diagnostics']) or 'explicit snapshot supplied; matching inputs do not establish lasting validity.'))
+    for f in report['findings']:
+        lines.extend([f'{f["context"]} {f["tier"]} {f["subject"]} {f["title"]}: {f["kind"]}', '  ' + f['reason'], '  Next: ' + f['next_action']])
+        for detail in f['details']:
+            if detail['differences']: lines.append('  ' + detail['subject'] + ': ' + ', '.join(detail['differences']))
+        for clause in f['clauses']: lines.append('  Clause ' + clause['subject'] + ': ' + clause['reason'])
+    for item in report['history']:
+        for subject in item['subjects']: lines.append(f'History {subject["subject"]}: {subject["origin"]}; historic authorship {subject["historic_authorship"]}')
+        for a in item['assessments']: lines.append(f'  Assessment {a["id"]} {a["kind"]}: ' + json.dumps(a['result'], sort_keys=True))
+        for source in item['sources']: lines.append(f'  Evidence {source["id"]}: {source["access"]}; {source["representation"]}')
+    return '\n'.join(lines)
+
+
+def provenance(root, args):
+    index = index_selected(root, args.working_tree)
+    if index and read_local(root, ASSEMBLER, index=True) != Path(__file__).read_bytes(): raise ValueError('executing assembler differs from index')
+    _, scans = local_scans(root, index=index)
+    records = read_rule_set(root, index=index)
+    check_authoring_set(records, scans)
+    contexts = [json.loads(Path(path).read_bytes()) for path in args.context]
+    report = assess_rules(records, contexts, scans)
+    report['findings'] = [f for f in report['findings'] if (not args.tier or f['tier'] in args.tier) and (not args.warning or f['kind'] in args.warning)]
+    if args.json: sys.stdout.buffer.write(manifest_bytes(report))
+    else: print(provenance_text(report))
+
+
 def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='production'):
     catalog = catalog_from(catalog_bytes)
     mandatory = {f['id'] for f in catalog['fragments'] if f['classification'] == 'mandatory'}
@@ -779,6 +998,12 @@ def build_parser():
     refresh_parser = sub.add_parser('refresh', help='Refresh changed rule text without carrying claims forward')
     refresh_parser.add_argument('rules', nargs='*')
     refresh_parser.add_argument('--selectors', help='JSON clause-ID map: {text, offset} or {retire: true}')
+    report = sub.add_parser('provenance', help='Read complete provenance and independent context-specific findings')
+    report.add_argument('--context', action='append', default=[])
+    report.add_argument('--json', action='store_true')
+    report.add_argument('--tier', action='append', choices=TIERS, default=[])
+    report.add_argument('--warning', action='append', choices=WARNING_KINDS, default=[])
+    report.add_argument('--working-tree', action='store_true')
     return parser
 
 
@@ -964,6 +1189,9 @@ def main(argv=None):
     try:
         if args.command.startswith('verify-'):
             verify_proof(root, args)
+            return 0
+        if args.command == 'provenance':
+            provenance(root, args)
             return 0
         if args.command in ('add-rule', 'refresh'):
             (add_rule if args.command == 'add-rule' else refresh)(root, args)

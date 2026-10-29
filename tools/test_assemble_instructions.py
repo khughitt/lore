@@ -1114,3 +1114,197 @@ def test_record_schema_historical_and_duplicate_events(world):
     record['assessments'] = [{'id': 'a1', 'kind': 'applicability', 'subject': record['events'][0]['subject']}]
     with pytest.raises(ValueError):
         module.validate_rule(record)
+
+
+def authoring_world(world):
+    path = world.root / 'instructions/assembly.toml'
+    head, *blocks = path.read_text().split('\n[[fragments]]\n')
+    path.write_text(head + '\n[[fragments]]\n' + blocks[0])
+    shutil.rmtree(world.root / 'instructions/rules', ignore_errors=True)
+    path = world.root / 'instructions/fragments/core.md'
+    path.write_bytes(b'## Rules\n\n- First intent.\n\n- Second intent.\n')
+    return path
+
+
+def add_args(module, line=3, **kwargs):
+    args = ['add-rule', 'core', '--start-line', str(line), '--end-line', str(line), '--title', kwargs.pop('title', 'First')]
+    for key, value in kwargs.items(): args.extend(['--' + key.replace('_', '-'), value])
+    return module.build_parser().parse_args(args)
+
+
+def test_add_rule_skeleton_and_relations(world):
+    path = authoring_world(world)
+    old = path.read_bytes()
+    result = invoke(world, 'add-rule', 'core', '--start-line', '3', '--end-line', '3', '--title', 'First')
+    assert result.returncode == 0, result.stderr
+    rid = re.search(rb'rule:[0-9a-f]{32}', result.stdout)[0].decode()
+    module = load_assembler(world)
+    scan = module.scan_rules(path.read_bytes())
+    assert scan['rendered'] == old
+    records = module.read_rule_set(world.root)
+    assert records[rid] == module.new_rule_record(rid, 'First', b'- First intent.\n')
+    before = json.dumps(records, sort_keys=True)
+    module.add_rule(world.root, add_args(module, 7, split_from=rid, title='Second'))
+    records = module.read_rule_set(world.root)
+    second = next(r for r in records.values() if r['id'] != rid)
+    assert second['relations'] == [{'kind': 'split_from', 'targets': [rid]}]
+    assert json.dumps({rid: records[rid]}, sort_keys=True) == before
+    with pytest.raises(ValueError): module.add_rule(world.root, add_args(module, 4))
+    assert not git(world.root, 'diff', '--cached', '--name-only')
+
+
+@pytest.mark.parametrize('extra', [['--split-from', RULE_B], ['--split-from', RULE_A, '--merged-from', RULE_B]])
+def test_add_rule_rejects_invalid_predecessors(world, extra):
+    path = authoring_world(world)
+    before = path.read_bytes()
+    result = invoke(world, 'add-rule', 'core', '--start-line', '3', '--end-line', '3', '--title', 'First', *extra)
+    assert result.returncode != 0
+    assert path.read_bytes() == before
+    assert not list((world.root / 'instructions/rules').glob('*.json'))
+
+
+def clause_record(module):
+    return json.loads((ROOT / 'tools/fixtures/rule-provenance/compound.json').read_bytes())
+
+
+def test_refresh_unique_quote_only(world):
+    module = load_assembler(world)
+    old = clause_record(module)
+    changed = b'- Always use conventional commits.\n'
+    updated = module.refresh_rule(old, changed, {})
+    assert updated['revisions'][0] == old['revisions'][0]
+    assert len(updated['revisions']) == 2
+    assert updated['revisions'][-1]['clauses'][0]['offset'] == 13
+    assert updated['assessments'] == old['assessments']
+    assert module.refresh_rule(updated, changed, {}) == updated
+    for data, count in [(b'- Different intent.\n', 0), (b'- conventional commits conventional commits\n', 2)]:
+        with pytest.raises(ValueError, match=f'{count} matches'):
+            module.refresh_rule(old, data, {})
+    assert len(old['revisions']) == 1
+
+
+def test_refresh_explicit_selector(world):
+    module = load_assembler(world)
+    old = clause_record(module)
+    cid = old['revisions'][0]['clauses'][0]['id']
+    changed = b'- Use clear commits.\n'
+    updated = module.refresh_rule(old, changed, {cid: {'text': 'clear commits', 'offset': 6}})
+    assert updated['revisions'][-1]['clauses'][0]['text'] == 'clear commits'
+    assert updated['revisions'][0] == old['revisions'][0]
+    retired = module.refresh_rule(old, changed, {cid: {'retire': True}})
+    assert retired['revisions'][-1]['clauses'] == []
+    with pytest.raises(ValueError): module.refresh_rule(old, changed, {cid: {'text': 'clear', 'offset': 0}})
+    with pytest.raises(ValueError): module.refresh_rule(old, changed, {CLAUSE_A: {'retire': False}})
+
+
+def test_add_rule_staged_source_and_symlink(world):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    git(world.root, 'add', str(path))
+    with pytest.raises(ValueError, match='unstage.*keeping.*refresh.*restage'):
+        module.add_rule(world.root, add_args(module))
+    git(world.root, 'reset', '--', str(path))
+    target = world.root / 'safe-copy.md'
+    path.rename(target)
+    path.symlink_to(target)
+    with pytest.raises(ValueError, match='symlink'): module.add_rule(world.root, add_args(module))
+
+
+@pytest.mark.parametrize('fail_at', [1, 2, 3])
+def test_add_rule_partial_creation_resume(world, monkeypatch, capsys, fail_at):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    original, replacements = module.os.replace, []
+    def interrupt(src, dst):
+        replacements.append(str(dst))
+        if len(replacements) == fail_at: raise OSError('injected interruption')
+        return original(src, dst)
+    monkeypatch.setattr(module.os, 'replace', interrupt)
+    with pytest.raises((ValueError, OSError), match='interruption'):
+        module.add_rule(world.root, add_args(module))
+    output = capsys.readouterr()
+    rid = re.search(r'rule:[0-9a-f]{32}', output.out + output.err)[0]
+    monkeypatch.setattr(module.os, 'replace', original)
+    if fail_at > 1:
+        with pytest.raises(ValueError): module.add_rule(world.root, add_args(module, resume=rid, title='Changed'))
+    module.add_rule(world.root, add_args(module, resume=rid))
+    assert [r['id'] for r in module.scan_rules(path.read_bytes())['rules']] == [rid]
+    assert list(module.read_rule_set(world.root)) == [rid]
+    assert not list((world.root / 'instructions/rules/pending').glob('*.json'))
+
+
+def test_refresh_partial_and_missing_history(world, monkeypatch):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    module.add_rule(world.root, add_args(module, 5, title='Second'))
+    module.add_rule(world.root, add_args(module))
+    records = module.read_rule_set(world.root)
+    git(world.root, 'add', '.')
+    git(world.root, 'commit', '-qm', 'test: retain records')
+    path.write_bytes(path.read_bytes().replace(b'intent.', b'new intent.'))
+    args = module.build_parser().parse_args(['refresh'])
+    replace = module.os.replace
+    written = []
+    def interrupt(src, dst):
+        if written: raise OSError('injected interruption')
+        replace(src, dst); written.append(dst)
+    monkeypatch.setattr(module.os, 'replace', interrupt)
+    with pytest.raises(ValueError, match='written.*unwritten'): module.refresh(world.root, args)
+    monkeypatch.setattr(module.os, 'replace', replace)
+    module.refresh(world.root, args)
+    assert all(len(r['revisions']) == 2 for r in module.read_rule_set(world.root).values())
+    module.refresh(world.root, args)
+    assert all(len(r['revisions']) == 2 for r in module.read_rule_set(world.root).values())
+    missing = world.root / 'instructions/rules' / (next(iter(records))[5:] + '.json')
+    missing.unlink()
+    with pytest.raises(ValueError, match='corruption.*restore'): module.refresh(world.root, args)
+
+
+def test_refresh_batch_prevalidation_and_staged_record(world):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    old = clause_record(module)
+    second = module.new_rule_record(RULE_B, 'Second', b'- Second intent.\n')
+    directory = world.root / 'instructions/rules'
+    directory.mkdir()
+    for record in [old, second]: (directory / (record['id'][5:] + '.json')).write_bytes(module.manifest_bytes(record))
+    path.write_bytes(b'## Rules\n\n' + marked(old['id'], b'- No matching quote.\n') + b'\n' + marked(RULE_B, b'- Second new intent.\n'))
+    before = {p: p.read_bytes() for p in directory.glob('*.json')}
+    args = module.build_parser().parse_args(['refresh'])
+    with pytest.raises(ValueError, match='0 matches'): module.refresh(world.root, args)
+    assert {p: p.read_bytes() for p in before} == before
+    path.write_bytes(path.read_bytes().replace(b'No matching quote.', b'Use conventional commits.'))
+    git(world.root, 'add', 'instructions/rules')
+    with pytest.raises(ValueError, match='unstage'): module.refresh(world.root, args)
+
+
+def test_refresh_selector_file_survives_partial_retry(world, monkeypatch):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    a = clause_record(module)
+    b = json.loads(json.dumps(a)); b['id'] = RULE_B; b['revisions'][0]['clauses'][0]['id'] = 'clause:' + 'd' * 32
+    directory = world.root / 'instructions/rules'; directory.mkdir()
+    for record in (a, b): (directory / (record['id'][5:] + '.json')).write_bytes(module.manifest_bytes(record))
+    path.write_bytes(b'## Rules\n\n' + marked(a['id'], b'- Use clear commits.\n') + b'\n' + marked(b['id'], b'- Use clear commits.\n'))
+    selectors = world.root / 'selectors.json'
+    selectors.write_text(json.dumps({r['revisions'][0]['clauses'][0]['id']: {'text': 'clear commits', 'offset': 6} for r in (a, b)}))
+    args = module.build_parser().parse_args(['refresh', '--selectors', str(selectors)])
+    replace = module.os.replace; completed = []
+    def interrupt(src, dst):
+        if completed: raise OSError('injected interruption')
+        replace(src, dst); completed.append(dst)
+    monkeypatch.setattr(module.os, 'replace', interrupt)
+    with pytest.raises(ValueError): module.refresh(world.root, args)
+    monkeypatch.setattr(module.os, 'replace', replace)
+    module.refresh(world.root, args)
+    assert all(len(r['revisions']) == 2 for r in module.read_rule_set(world.root).values())
+    module.refresh(world.root, args)
+
+
+def test_add_rule_refuses_record_directory_symlink(world):
+    authoring_world(world)
+    module = load_assembler(world)
+    directory = world.root / 'elsewhere'; directory.mkdir()
+    (world.root / 'instructions/rules').symlink_to(directory, target_is_directory=True)
+    with pytest.raises(ValueError, match='symlink'): module.add_rule(world.root, add_args(module))
+    assert not list(directory.iterdir())

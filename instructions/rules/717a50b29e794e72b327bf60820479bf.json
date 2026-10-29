@@ -1,6 +1,120 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent proposed making scripted skill stops bounded decisions unless the standing human-only stop list applies.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+          }
+        ]
+      },
+      "evidence": [
+        "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+      ],
+      "id": "B1-c9fd-L312",
+      "kind": "proposal",
+      "occurred_at": "2026-10-02T14:53:56.349Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "3a5d91381d6977e868b7dc1c2418c251489d44f8a02f2611fa9c6fa21e88e1f7",
+        "id": "rule:717a50b29e794e72b327bf60820479bf",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d.jsonl",
+          "reference": "Exact JSONL record including newline: original line 312, packet line 4; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:hq-170418",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad"
+          }
+        ]
+      },
+      "evidence": [
+        "session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad"
+      ],
+      "id": "B1-e8e1-L9",
+      "kind": "adoption",
+      "occurred_at": "2026-10-02T15:35:57.374Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "6af7c169e20f1a75683c2a4c86b573acaad8240811ac6cbe5718c0865267e06f",
+        "id": "rule:717a50b29e794e72b327bf60820479bf",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad.jsonl",
+          "reference": "Exact JSONL record including newline: original line 9, packet line 1; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:717a50b29e794e72b327bf60820479bf",
   "impact": {
     "categories": [
@@ -12,9 +126,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: scripted stops versus human gates."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +140,97 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read pinned skill-stop-points brief, hq-36f493/hq-170418 and source/parent records. Targeted task tool-call lookup recovered c9fdc19a proposal and responses; e8e1b806 contains explicit request to take the named implementation task.",
+      "unresolved": [
+        "The historical proposal is agent-authored; task execution was authorized. No exact-current wording adoption recovered. Earlier general bounded-decision rule origin remains unresolved.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-5a17b81",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Exact historical blob 9eda70a4e1e45fbf0c5dab8733b0cb1396e73ae1; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "5a17b81c5807bd6b9a80c69c4888299fa55e8eea"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-5a17b81.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "956b9a4611daaacb0645561205246cbe6a6db4d7f67d03a0e445228b6ba3d850",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "c9fdc19a-5da9-4ff6-8a59-ffface631d1d; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "45787c652c4f598396ec287d8d0a431b49717f965cb908e10015efb3410fa80e",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-e8e1b806-1b76-4ade-bab5-f0cdc5fe34ad.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "eac39f3d4fb7fe80d666459e35bbca6af034ff8ce93ea0ae9925b2685b1e7479",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Scripted stops versus human gates"
 }

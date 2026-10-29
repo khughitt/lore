@@ -1,6 +1,120 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent proposed reopening a done task before review corrections, releasing it before reporting, and keeping pre-integration corrections separate from post-landing concerns.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-079e524a-68d0-4004-9e67-97d740229997"
+          }
+        ]
+      },
+      "evidence": [
+        "session-079e524a-68d0-4004-9e67-97d740229997"
+      ],
+      "id": "B1-079e-L149",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T22:29:14.697Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "c25b6c95991f3ab10541f208dea3161e1461b8e158fffa2d7bb8969cefb4c6a7",
+        "id": "rule:e5201d5768794401bf9d88a39b1ee445",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-079e524a-68d0-4004-9e67-97d740229997.jsonl",
+          "reference": "Exact JSONL record including newline: original line 149, packet line 14; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-079e524a-68d0-4004-9e67-97d740229997"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-079e524a-68d0-4004-9e67-97d740229997"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-e9fb39",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-079e524a-68d0-4004-9e67-97d740229997"
+          }
+        ]
+      },
+      "evidence": [
+        "session-079e524a-68d0-4004-9e67-97d740229997"
+      ],
+      "id": "B1-079e-L157",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T22:44:09.385Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "f99ded253af14ac4a9d0f99d8e0626938a10b63445211dfe6c90e39492220850",
+        "id": "rule:e5201d5768794401bf9d88a39b1ee445",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-079e524a-68d0-4004-9e67-97d740229997.jsonl",
+          "reference": "Exact JSONL record including newline: original line 157, packet line 16; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-079e524a-68d0-4004-9e67-97d740229997"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:e5201d5768794401bf9d88a39b1ee445",
   "impact": {
     "categories": [
@@ -11,9 +125,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: reopen unfinished review corrections."
   },
   "relations": [],
   "revisions": [
@@ -25,8 +139,73 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read lore-e9fb39 source/body/notes; inspected session 079e524a proposal with CLI reproduction and user merge approval, then 5dda396 resulting policy.",
+      "unresolved": [
+        "The agent proposed the reopening route after checking CLI behavior; merge approval covers the task scope. No causal test of agent compliance or exact-current adoption is claimed.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-5dda396",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob b476c412c262cb8489353e669ae440be62812dc0; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "5dda39602b21322fa3861b16720301d1245ed89d"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-5dda396.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "c1b5a3b2becf3a5eeaab7e68e30bd5176da3b311242675cfb09bccab3edf3a73",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-079e524a-68d0-4004-9e67-97d740229997",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "079e524a-68d0-4004-9e67-97d740229997; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-079e524a-68d0-4004-9e67-97d740229997.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "243271529d233d4aa76256f75bcca8f567268855c4f36d315b53ca56ae483b29",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Reopen unfinished review corrections"
 }

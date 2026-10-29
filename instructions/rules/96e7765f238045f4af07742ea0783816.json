@@ -1,6 +1,226 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "observed",
+          "original_author": "user",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "goal",
+          "statement": "Paraphrase: The user corrected confusion between current implementation and intended future scope and asked for better preservation of intent.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+          }
+        ]
+      },
+      "evidence": [
+        "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+      ],
+      "id": "B1-6cc9-L161",
+      "kind": "proposal",
+      "occurred_at": "2026-10-28T01:39:03.780Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "e82a690c89e79cd2179c3f1d850ef566e6791ac26a67fe0719eaa21723785380",
+        "id": "rule:96e7765f238045f4af07742ea0783816",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d.jsonl",
+          "reference": "Exact JSONL record including newline: original line 161, packet line 6; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent proposed separating current capability from recorded intended direction in assessments.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+          }
+        ]
+      },
+      "evidence": [
+        "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+      ],
+      "id": "B1-6cc9-L198",
+      "kind": "proposal",
+      "occurred_at": "2026-10-28T01:40:16.948Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "93d66057bf5f951aaaec4d61d2022ccd01e40e255fac03c517ae0d2720a7d211",
+        "id": "rule:96e7765f238045f4af07742ea0783816",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d.jsonl",
+          "reference": "Exact JSONL record including newline: original line 198, packet line 8; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent presented the generalized assessment rule for activation.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+      ],
+      "id": "B1-01a1821e-L254",
+      "kind": "proposal",
+      "occurred_at": "2026-10-28T10:55:03.622Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "d897803117760924147331cef28b2ad82be72f542a3dbc1826a34a1d8bd886b4",
+        "id": "rule:96e7765f238045f4af07742ea0783816",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-01a1821e-a7ef-7f71-9a86-41706467836b.jsonl",
+          "reference": "Exact JSONL record including newline: original line 254, packet line 21; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-ba3432",
+            "revision": "1a4e14b2effb80ed33cc105ee8277d338ee44bb4",
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+      ],
+      "id": "B1-01a1821e-L261",
+      "kind": "adoption",
+      "occurred_at": "2026-10-28T11:01:15.302Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "15ed0c89aa1ff49073b193c137066dc7c5b46efaddabf85a12dd4eefe661c8da",
+        "id": "rule:96e7765f238045f4af07742ea0783816",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-01a1821e-a7ef-7f71-9a86-41706467836b.jsonl",
+          "reference": "Exact JSONL record including newline: original line 261, packet line 22; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a1821e-a7ef-7f71-9a86-41706467836b"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:96e7765f238045f4af07742ea0783816",
   "impact": {
     "categories": [
@@ -12,9 +232,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: separate current capability from intended scope."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +246,97 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read lore-ba3432 and source session 6cc98af5 at the actual user clarification and agent response, then implementation session 01a1821e proposal/approval; compare 1a4e14b.",
+      "unresolved": [
+        "The user criticized loss of intended scope; the general policy mechanism was an agent proposal. The approval responds to reflowed text and named integration scope, not an exact byte hash.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-1a4e14b",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob 4ced4a84967f76ceff0d35742988555ba41e3277; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "1a4e14b2effb80ed33cc105ee8277d338ee44bb4"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-1a4e14b.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "f47923541659a52feabc3443bfa0617a7160b900ae74fa1f977e2c1eaf07704c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-01a1821e-a7ef-7f71-9a86-41706467836b",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "codex",
+        "path": null,
+        "reference": "01a1821e-a7ef-7f71-9a86-41706467836b; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-01a1821e-a7ef-7f71-9a86-41706467836b.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "23e6f8d36f08e95e1e4f2fa14bb433d02edca250156a6c3f2b7d776cf8c64b8a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "6cc98af5-2bd3-430b-a351-e1c7fb67bf5d; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-6cc98af5-2bd3-430b-a351-e1c7fb67bf5d.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "a567f196ea447cf347a7b4273c3008793d5466f4b533e27f6058ea2e6c496d20",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Separate current capability from intended scope"
 }

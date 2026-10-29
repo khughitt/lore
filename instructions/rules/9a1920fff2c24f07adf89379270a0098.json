@@ -1,6 +1,75 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "inferred-only",
+          "target": null
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "The pilot leaves original authorship unresolved for this scope.",
+          "role": "wording",
+          "statement": "Paraphrase of pilot: Host-specific examples appear in the initial snapshot. Generalized portable wording is only bounded by later snapshots, with no recovered originating request.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E1-hq-b0e3454"
+          },
+          {
+            "quality": "unknown",
+            "source": "E7-hq-555ebec"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E7-hq-c28e2da"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E1-hq-b0e3454",
+        "E7-hq-555ebec",
+        "E7-hq-c28e2da"
+      ],
+      "id": "G9-origin",
+      "kind": "appearance",
+      "occurred_at": "2026-08-14",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "f6ee8d9ad9c7a1968ae768ba662137b68bfee91a1f5c0f6f74e46448c70c090a",
+        "id": "rule:9a1920fff2c24f07adf89379270a0098",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G9; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    }
+  ],
   "id": "rule:9a1920fff2c24f07adf89379270a0098",
   "impact": {
     "categories": [
@@ -9,24 +78,139 @@
     "reason": "Prescribes portable paths in code and docs as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
     "tier": "low"
   },
-  "incidents": [],
+  "incidents": [
+    {
+      "evidence": [
+        "pilot-report"
+      ],
+      "id": "pilot-incident-scope",
+      "rationale": "Paraphrase: standing style/portability preference; incident absence is not a removal reason.",
+      "status": "n/a",
+      "subject": {
+        "binding": "revision",
+        "id": "rule:9a1920fff2c24f07adf89379270a0098",
+        "sha256": "f3c2d73ff68689992078ec49df796f0762466a61aa70a41e9a816ce8e220a0b3"
+      }
+    }
+  ],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: portable paths in code and docs."
   },
   "relations": [],
   "revisions": [
     {
       "clauses": [],
-      "locator": null,
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/git.md",
+        "reference": "Public policy text before marker-only migration; identity bound by exact text hash.",
+        "revision": "37d06342e376dec1a257b037a48ec03337de5410"
+      },
       "sha256": "f3c2d73ff68689992078ec49df796f0762466a61aa70a41e9a816ce8e220a0b3",
       "text": "- Avoid machine-specific absolute paths (the home directory, the Dropbox root) in code comments and docs\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-28",
+      "exclusions": [
+        "No new archive-wide origin search.",
+        "Original session turns not re-read; use the pilot report as secondary evidence.",
+        "lore-45303d still owns preservation of vulnerable original sources."
+      ],
+      "id": "pilot-bound",
+      "recorder": "codex",
+      "scope": "Secondary import of the finite lore-6b0063 pilot: its nine coverage and 26 amendment rows; original Git locators checked for readability only.",
+      "unresolved": [
+        "Initial request/authorship gaps remain as reported by the pilot.",
+        "Original session interpretation and exact historical adoption were not independently reverified in this import."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "pilot-report",
+      "inspected_at": "2026-10-29T10:55:37.777495+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "910bf36b9278b1d02868658461f54f0e915ebe76c4d5b3dfe54b1896d7efc21a",
+      "source_time": "2026-10-28",
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E1-hq-b0e3454",
+      "inspected_at": "2026-10-29T10:52:14.734704+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E1; reported revision b0e3454; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "b0e3454bbff6d8f5531bd4b420e2ff6ce0a8d97e"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E7-hq-555ebec",
+      "inspected_at": "2026-10-29T10:52:14.792691+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E7; reported revision 555ebec; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "555ebec5581eb0da3aa13887dcee3bca8f38170f"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E7-hq-c28e2da",
+      "inspected_at": "2026-10-29T10:52:14.799710+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E7; reported revision c28e2da; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "c28e2da02fe1268175a09ab5139375484797b2f0"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Portable paths in code and docs"
 }

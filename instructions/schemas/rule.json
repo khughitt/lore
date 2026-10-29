@@ -649,7 +649,7 @@
                 },
                 "id": {
                   "type": "string",
-                  "pattern": "^rule:[0-9a-f]{32}$"
+                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
                 },
                 "sha256": {
                   "anyOf": [

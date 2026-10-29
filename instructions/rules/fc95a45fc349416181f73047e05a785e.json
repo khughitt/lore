@@ -1,6 +1,752 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "The pilot leaves original authorship unresolved for this scope.",
+          "role": "wording",
+          "statement": "Paraphrase of pilot: Attribution restrictions and account/profile routing have separate histories; no single author or adoption covers the container.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E1-hq-b0e3454"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-session-1"
+          },
+          {
+            "quality": "unknown",
+            "source": "E3-hq-2eeb311"
+          },
+          {
+            "quality": "unknown",
+            "source": "E3-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E1-hq-b0e3454",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1",
+        "E3-hq-2eeb311",
+        "E3-session-1"
+      ],
+      "id": "G2-origin",
+      "kind": "appearance",
+      "occurred_at": null,
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "b991e718ae3c2652f42d6083ac7a47d474acfffb7525653ee3ee90fcd17ccce1",
+        "id": "rule:fc95a45fc349416181f73047e05a785e",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "The pilot leaves original authorship unresolved for this scope.",
+          "role": "wording",
+          "statement": "Paraphrase of pilot: The initial attribution preference has unknown authorship. A later human correction restated the ban on harness-generated attribution forms.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E1-hq-b0e3454"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E1-hq-b0e3454",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.a-origin",
+      "kind": "amendment",
+      "occurred_at": "2026-08-14",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "94931cc0bf7cf5c5a01f58af7565b669aab961551b0ae441060c5630b27da162",
+        "id": "clause:2e25e395887741fba435336e4664bc60",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.a; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "human",
+          "covers_clauses": false,
+          "evidence": [
+            "pilot-report",
+            "E1-hq-b0e3454",
+            "E2-hq-32ba71d",
+            "E2-hq-108867f",
+            "E2-session-1"
+          ],
+          "status": "restated",
+          "target": {
+            "binding": "scope",
+            "reference": "lore-6b0063:G2.a",
+            "revision": null,
+            "scope": "Paraphrase: the historical contribution described in pilot row G2.a; no current exact-text hash is asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Adoption and authorship remain separate.",
+          "role": "wording",
+          "statement": "Paraphrase: the pilot reports human adoption of the named historical contribution; this does not identify its wording author.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E1-hq-b0e3454"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E1-hq-b0e3454",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.a-adoption",
+      "kind": "restatement",
+      "occurred_at": "2026-09-14T14:37:00Z",
+      "predecessors": [
+        "G2.a-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "94931cc0bf7cf5c5a01f58af7565b669aab961551b0ae441060c5630b27da162",
+        "id": "clause:2e25e395887741fba435336e4664bc60",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.a; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "inferred",
+          "original_author": null,
+          "reason": "Attribution is imported from the inspected pilot; original source interpretation is not independently reverified here.",
+          "role": "mechanism",
+          "statement": "Paraphrase of pilot: A human correction limited requested attribution to the applicable contributor-policy context. That historical detail is now delegated to profiles.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.b-origin",
+      "kind": "amendment",
+      "occurred_at": "2026-09-14",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "235ecb482df2a642e4515c1352cd1ab32adfd6a1704be7fcc9d8f003d3265a69",
+        "id": "clause:19fb6f2f03444787ad821c28aefb5a83",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.b; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "human",
+          "covers_clauses": false,
+          "evidence": [
+            "pilot-report",
+            "E2-hq-32ba71d",
+            "E2-hq-108867f",
+            "E2-session-1"
+          ],
+          "status": "accepted",
+          "target": {
+            "binding": "scope",
+            "reference": "lore-6b0063:G2.b",
+            "revision": null,
+            "scope": "Paraphrase: the historical contribution described in pilot row G2.b; no current exact-text hash is asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Adoption and authorship remain separate.",
+          "role": "mechanism",
+          "statement": "Paraphrase: the pilot reports human adoption of the named historical contribution; this does not identify its wording author.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.b-adoption",
+      "kind": "adoption",
+      "occurred_at": "2026-09-14T14:37:00Z",
+      "predecessors": [
+        "G2.b-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "235ecb482df2a642e4515c1352cd1ab32adfd6a1704be7fcc9d8f003d3265a69",
+        "id": "clause:19fb6f2f03444787ad821c28aefb5a83",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.b; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "inferred",
+          "original_author": null,
+          "reason": "Attribution is imported from the inspected pilot; original source interpretation is not independently reverified here.",
+          "role": "goal",
+          "statement": "Paraphrase of pilot: The human restated account-routing requirements; the checking procedure was an agent implementation, not proof that the preference began then.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.c-origin",
+      "kind": "amendment",
+      "occurred_at": "2026-09-14",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "e0e546229679db86f9d9b6b19014506fd4f82c66f2c6f69976d2ce3bc088417e",
+        "id": "clause:f5e867b9fa17418b81541335edc2d0fc",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.c; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "human",
+          "covers_clauses": false,
+          "evidence": [
+            "pilot-report",
+            "E2-hq-32ba71d",
+            "E2-hq-108867f",
+            "E2-session-1"
+          ],
+          "status": "restated",
+          "target": {
+            "binding": "scope",
+            "reference": "lore-6b0063:G2.c",
+            "revision": null,
+            "scope": "Paraphrase: the historical contribution described in pilot row G2.c; no current exact-text hash is asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Adoption and authorship remain separate.",
+          "role": "goal",
+          "statement": "Paraphrase: the pilot reports human adoption of the named historical contribution; this does not identify its wording author.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.c-adoption",
+      "kind": "restatement",
+      "occurred_at": "2026-09-14T14:24:00Z",
+      "predecessors": [
+        "G2.c-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "e0e546229679db86f9d9b6b19014506fd4f82c66f2c6f69976d2ce3bc088417e",
+        "id": "clause:f5e867b9fa17418b81541335edc2d0fc",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.c; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "inferred",
+          "original_author": null,
+          "reason": "Attribution is imported from the inspected pilot; original source interpretation is not independently reverified here.",
+          "role": "mechanism",
+          "statement": "Paraphrase of pilot: The profile sequence moved account and external contribution requirements into profiles; continuation authorized the sequence, not its exact sentence.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E3-hq-2eeb311"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E3-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E3-hq-2eeb311",
+        "E3-session-1"
+      ],
+      "id": "G2.d-origin",
+      "kind": "amendment",
+      "occurred_at": "2026-09-21",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "73ca06fea53cce5c7dab18c9043befd8d8bd97465ce00c0851927303635fa9ba",
+        "id": "clause:14b22e8d71864cae9539668417fa3ada",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.d; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "human",
+          "covers_clauses": false,
+          "evidence": [
+            "pilot-report",
+            "E3-hq-2eeb311",
+            "E3-session-1"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "lore-6b0063:G2.d",
+            "revision": null,
+            "scope": "Paraphrase: the historical contribution described in pilot row G2.d; no current exact-text hash is asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Adoption and authorship remain separate.",
+          "role": "mechanism",
+          "statement": "Paraphrase: the pilot reports human adoption of the named historical contribution; this does not identify its wording author.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "first-known-appearance",
+            "source": "E3-hq-2eeb311"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E3-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E3-hq-2eeb311",
+        "E3-session-1"
+      ],
+      "id": "G2.d-adoption",
+      "kind": "adoption",
+      "occurred_at": null,
+      "predecessors": [
+        "G2.d-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "73ca06fea53cce5c7dab18c9043befd8d8bd97465ce00c0851927303635fa9ba",
+        "id": "clause:14b22e8d71864cae9539668417fa3ada",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.d; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "inferred",
+          "original_author": null,
+          "reason": "Reported by the preserved pilot; original session interpretation not independently reverified.",
+          "role": "mechanism",
+          "statement": "Paraphrase of pilot: the agent operationalized account routing through pre-write authentication checks; this does not make the procedure human-authored.",
+          "supplier": null
+        },
+        "evidence_quality": [
+          {
+            "quality": "unknown",
+            "source": "pilot-report"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-32ba71d"
+          },
+          {
+            "quality": "unknown",
+            "source": "E2-hq-108867f"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "E2-session-1"
+          }
+        ]
+      },
+      "evidence": [
+        "pilot-report",
+        "E2-hq-32ba71d",
+        "E2-hq-108867f",
+        "E2-session-1"
+      ],
+      "id": "G2.c-mechanism",
+      "kind": "proposal",
+      "occurred_at": "2026-09-14",
+      "predecessors": [
+        "G2.c-origin"
+      ],
+      "recorded_at": "2026-10-29T10:55:37.777495+00:00",
+      "recorder": "codex",
+      "searches": [
+        "pilot-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "e0e546229679db86f9d9b6b19014506fd4f82c66f2c6f69976d2ce3bc088417e",
+        "id": "clause:f5e867b9fa17418b81541335edc2d0fc",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+          "reference": "lore-6b0063 attachment; coverage table row G2.c; exact row bytes including newline. This is a secondary report excerpt, not original transcript bytes.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "pilot-report"
+      },
+      "time_uncertainty": "Date precision or interval as reported by the pilot; null is not a claim that no event occurred."
+    }
+  ],
   "id": "rule:fc95a45fc349416181f73047e05a785e",
   "impact": {
     "categories": [
@@ -9,24 +755,218 @@
     "reason": "Controls public attribution and which account performs GitHub writes.",
     "tier": "high"
   },
-  "incidents": [],
+  "incidents": [
+    {
+      "evidence": [
+        "pilot-report"
+      ],
+      "id": "pilot-incident-scope",
+      "rationale": "Paraphrase: the pilot names historical incident or task reports relevant to this rule. This is reported history, not a reproduced failure or current effectiveness finding.",
+      "status": "recorded",
+      "subject": {
+        "binding": "revision",
+        "id": "rule:fc95a45fc349416181f73047e05a785e",
+        "sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427"
+      }
+    }
+  ],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: attribution and github identity."
   },
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
-      "locator": null,
+      "clauses": [
+        {
+          "id": "clause:2e25e395887741fba435336e4664bc60",
+          "offset": 2,
+          "overlaps": [],
+          "parent_sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427",
+          "sha256": "f1050ac296ccd0a9fdfd28929440081c9cc11d1d31c9b897b0b2f687eef57848",
+          "text": "No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, \"Generated with Claude Code\") stay out everywhere."
+        },
+        {
+          "id": "clause:f5e867b9fa17418b81541335edc2d0fc",
+          "offset": 341,
+          "overlaps": [],
+          "parent_sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427",
+          "sha256": "790d7450c3b370a187fce1dd1dfc53c97f5ed581644e334baeef1b121f707568",
+          "text": "`gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write."
+        },
+        {
+          "id": "clause:14b22e8d71864cae9539668417fa3ada",
+          "offset": 225,
+          "overlaps": [],
+          "parent_sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427",
+          "sha256": "f4b31f66e6ec51faec05e91261949d53a62085b98572db0ab7b3ac203379020f",
+          "text": "The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR;"
+        }
+      ],
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/git.md",
+        "reference": "Public policy text before marker-only migration; identity bound by exact text hash.",
+        "revision": "37d06342e376dec1a257b037a48ec03337de5410"
+      },
       "sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427",
       "text": "- No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, \"Generated with Claude Code\") stay out everywhere. The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR; `gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-28",
+      "exclusions": [
+        "No new archive-wide origin search.",
+        "Original session turns not re-read; use the pilot report as secondary evidence.",
+        "lore-45303d still owns preservation of vulnerable original sources."
+      ],
+      "id": "pilot-bound",
+      "recorder": "codex",
+      "scope": "Secondary import of the finite lore-6b0063 pilot: its nine coverage and 26 amendment rows; original Git locators checked for readability only.",
+      "unresolved": [
+        "Initial request/authorship gaps remain as reported by the pilot.",
+        "Original session interpretation and exact historical adoption were not independently reverified in this import."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "pilot-report",
+      "inspected_at": "2026-10-29T10:55:37.777495+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-6b0063/git-origin-pilot-report.md",
+        "reference": "lore-6b0063: git-origin-pilot-report.md; finite nine-row/26-subrow report",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "910bf36b9278b1d02868658461f54f0e915ebe76c4d5b3dfe54b1896d7efc21a",
+      "source_time": "2026-10-28",
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E1-hq-b0e3454",
+      "inspected_at": "2026-10-29T10:52:14.734704+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E1; reported revision b0e3454; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "b0e3454bbff6d8f5531bd4b420e2ff6ce0a8d97e"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E2-hq-32ba71d",
+      "inspected_at": "2026-10-29T10:52:14.743273+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E2; reported revision 32ba71d; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "32ba71d565fd3a450369acc7a03626b35f599f7d"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E2-hq-108867f",
+      "inspected_at": "2026-10-29T10:52:14.749428+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E2; reported revision 108867f; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "108867fd808205dd2c803b62b2249ace279af6be"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "not-checked",
+      "id": "E2-session-1",
+      "inspected_at": null,
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:4694c079-c655-4b16-b72b-b71bfdb27216; JSONL assistant 179; user 183, 310; reported by pilot E2, not independently reread.",
+        "revision": null
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "E3-hq-2eeb311",
+      "inspected_at": "2026-10-29T10:52:14.754422+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Pilot E3; reported revision 2eeb311; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "revision": "2eeb311502e9771956a25509ca6b166135d388b7"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "not-checked",
+      "id": "E3-session-1",
+      "inspected_at": null,
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:5e1c7878-739e-4237-9d2c-1ed9bed06701; JSONL assistant 72; user 81, 312; reported by pilot E3, not independently reread.",
+        "revision": null
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Attribution and GitHub identity"
 }

@@ -195,3 +195,10 @@ inventory is labelled explicitly and prints totals only. The complete report is
 available through `provenance`; warnings never change mandatory status or authorize
 deletion. Proposed impact classifications still require the milestone's human
 review, including Work/Low assignments.
+
+After reverting policy to a retained text, run `refresh` as for any ordinary edit.
+It moves that unchanged revision entry to the end of the array as the base for
+later authoring; no retained text, selector or judgment is rewritten. The array
+is refresh order, not historical event chronology. Assembly always selects the
+entry whose hash matches current source. When adding older full-text history by
+hand, place it before the last refreshed entry or refresh the current source.

@@ -1,0 +1,1277 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": {
+      "enum": [
+        1
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^rule:[0-9a-f]{32}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "active",
+        "retired"
+      ]
+    },
+    "purpose": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "enum": [
+            "observed",
+            "inferred",
+            "unknown"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "text",
+        "basis",
+        "sources"
+      ],
+      "additionalProperties": false
+    },
+    "impact": {
+      "type": "object",
+      "properties": {
+        "tier": {
+          "enum": [
+            "high",
+            "work",
+            "low",
+            "unknown"
+          ]
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "tier",
+        "categories",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "split_from",
+              "merged_from"
+            ]
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^rule:[0-9a-f]{32}$"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "targets"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "revisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "locator": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "git",
+                      "session",
+                      "attachment",
+                      "retained"
+                    ]
+                  },
+                  "owner": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "revision": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "reference": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "kind",
+                  "owner",
+                  "path",
+                  "revision",
+                  "reference"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "clauses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^clause:[0-9a-f]{32}$"
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "parent_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "overlaps": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^clause:[0-9a-f]{32}$"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "text",
+                "offset",
+                "sha256",
+                "parent_sha256",
+                "overlaps"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "sha256",
+          "text",
+          "locator",
+          "clauses"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "incidents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subject": {
+            "type": "object",
+            "properties": {
+              "binding": {
+                "enum": [
+                  "revision"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "binding",
+              "id",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "status": {
+            "enum": [
+              "recorded",
+              "none recorded",
+              "n/a"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "id",
+          "subject",
+          "status",
+          "rationale",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assessments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/assessment"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "searches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/search"
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "title",
+    "state",
+    "purpose",
+    "impact",
+    "relations",
+    "revisions",
+    "events",
+    "incidents",
+    "assessments",
+    "sources",
+    "searches"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "locator": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "git",
+            "session",
+            "attachment",
+            "retained"
+          ]
+        },
+        "owner": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "owner",
+        "path",
+        "revision",
+        "reference"
+      ],
+      "additionalProperties": false
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "binding": {
+          "enum": [
+            "revision"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "binding",
+        "id",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "git",
+                "session",
+                "attachment",
+                "retained"
+              ]
+            },
+            "owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reference": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "owner",
+            "path",
+            "revision",
+            "reference"
+          ],
+          "additionalProperties": false
+        },
+        "source_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inspected_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "access": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not-checked"
+          ]
+        },
+        "representation": {
+          "enum": [
+            "raw",
+            "excerpt",
+            "portable-derivative"
+          ]
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preservation": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "git",
+                    "session",
+                    "attachment",
+                    "retained"
+                  ]
+                },
+                "owner": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "revision": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "reference": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "owner",
+                "path",
+                "revision",
+                "reference"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transformation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "locator",
+        "source_time",
+        "inspected_at",
+        "access",
+        "representation",
+        "sha256",
+        "preservation",
+        "raw_sha256",
+        "transformation"
+      ],
+      "additionalProperties": false
+    },
+    "search": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cutoff": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recorder": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unresolved": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "scope",
+        "cutoff",
+        "exclusions",
+        "recorder",
+        "unresolved"
+      ],
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "binding": {
+                  "enum": [
+                    "revision"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "binding",
+                "id",
+                "sha256"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "binding": {
+                  "enum": [
+                    "historical-excerpt"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^rule:[0-9a-f]{32}$"
+                },
+                "sha256": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "excerpt_sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "preservation": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "git",
+                        "session",
+                        "attachment",
+                        "retained"
+                      ]
+                    },
+                    "owner": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "path": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "revision": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reference": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "owner",
+                    "path",
+                    "revision",
+                    "reference"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "binding",
+                "id",
+                "sha256",
+                "source",
+                "excerpt_sha256",
+                "preservation"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "appearance",
+            "proposal",
+            "correction",
+            "adoption",
+            "restatement",
+            "amendment",
+            "relocation",
+            "retirement"
+          ]
+        },
+        "occurred_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_uncertainty": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "recorded_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recorder": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predecessors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "claim": {
+          "type": "object",
+          "properties": {
+            "authorship": {
+              "type": "object",
+              "properties": {
+                "actor": {
+                  "enum": [
+                    "user",
+                    "agent",
+                    "unknown"
+                  ]
+                },
+                "role": {
+                  "enum": [
+                    "goal",
+                    "mechanism",
+                    "wording"
+                  ]
+                },
+                "statement": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "basis": {
+                  "enum": [
+                    "observed",
+                    "inferred",
+                    "unknown"
+                  ]
+                },
+                "reason": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "supplier": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "original_author": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "actor",
+                "role",
+                "statement",
+                "basis",
+                "reason",
+                "supplier",
+                "original_author"
+              ],
+              "additionalProperties": false
+            },
+            "adoption": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "accepted",
+                    "restated",
+                    "authorized-scope",
+                    "inferred-only",
+                    "none-recovered"
+                  ]
+                },
+                "actor": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "target": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "binding": {
+                              "enum": [
+                                "revision"
+                              ]
+                            },
+                            "id": {
+                              "type": "string",
+                              "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            }
+                          },
+                          "required": [
+                            "binding",
+                            "id",
+                            "sha256"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "binding": {
+                              "enum": [
+                                "scope"
+                              ]
+                            },
+                            "reference": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "revision": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "scope": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "binding",
+                            "reference",
+                            "revision",
+                            "scope"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "covers_clauses": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "status",
+                "actor",
+                "target",
+                "evidence",
+                "covers_clauses"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_quality": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "quality": {
+                    "enum": [
+                      "originating-request/proposal",
+                      "first-known-appearance",
+                      "later-restatement",
+                      "unknown"
+                    ]
+                  }
+                },
+                "required": [
+                  "source",
+                  "quality"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "authorship",
+            "adoption",
+            "evidence_quality"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "searches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "subject",
+        "kind",
+        "occurred_at",
+        "time_uncertainty",
+        "recorded_at",
+        "recorder",
+        "predecessors",
+        "claim",
+        "evidence",
+        "searches"
+      ],
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "harness": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "owner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "ref",
+              "owner",
+              "sha256",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "name",
+        "model",
+        "harness",
+        "instructions",
+        "environment"
+      ],
+      "additionalProperties": false
+    },
+    "assessment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "approval",
+            "applicability",
+            "effectiveness"
+          ]
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "binding": {
+              "enum": [
+                "revision"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "binding",
+            "id",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assessor": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "session": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "label",
+            "session"
+          ],
+          "additionalProperties": false
+        },
+        "recorded_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        },
+        "instruction_dependencies": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                },
+                "required": [
+                  "ref",
+                  "sha256"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "rationale": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "items",
+            "rationale"
+          ],
+          "additionalProperties": false
+        },
+        "result": {
+          "type": "object"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "subject",
+        "question",
+        "assessor",
+        "recorded_at",
+        "evidence",
+        "context",
+        "instruction_dependencies",
+        "result",
+        "limitations",
+        "supersedes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

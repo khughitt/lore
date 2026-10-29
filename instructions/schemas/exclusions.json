@@ -1,0 +1,41 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": {
+      "enum": [
+        1
+      ]
+    },
+    "fragment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "text",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "fragment",
+    "entries"
+  ],
+  "additionalProperties": false
+}

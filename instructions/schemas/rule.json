@@ -1127,151 +1127,663 @@
       "additionalProperties": false
     },
     "assessment": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "kind": {
-          "enum": [
-            "approval",
-            "applicability",
-            "effectiveness"
-          ]
-        },
-        "subject": {
+      "anyOf": [
+        {
           "type": "object",
           "properties": {
-            "binding": {
+            "schema": {
               "enum": [
-                "revision"
+                1
               ]
             },
             "id": {
               "type": "string",
-              "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+              "minLength": 1
             },
-            "sha256": {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            }
-          },
-          "required": [
-            "binding",
-            "id",
-            "sha256"
-          ],
-          "additionalProperties": false
-        },
-        "question": {
-          "type": "string",
-          "minLength": 1
-        },
-        "assessor": {
-          "type": "object",
-          "properties": {
-            "label": {
+            "kind": {
+              "enum": [
+                "approval"
+              ]
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "binding": {
+                  "enum": [
+                    "revision"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "binding",
+                "id",
+                "sha256"
+              ],
+              "additionalProperties": false
+            },
+            "question": {
               "type": "string",
               "minLength": 1
             },
-            "session": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "required": [
-            "label",
-            "session"
-          ],
-          "additionalProperties": false
-        },
-        "recorded_at": {
-          "type": "string",
-          "minLength": 1
-        },
-        "evidence": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "context": {
-          "$ref": "#/$defs/context"
-        },
-        "instruction_dependencies": {
-          "type": "object",
-          "properties": {
-            "items": {
+            "assessor": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "session": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "label",
+                "session"
+              ],
+              "additionalProperties": false
+            },
+            "recorded_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "ref": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "sha256": {
-                    "type": "string",
-                    "pattern": "^[0-9a-f]{64}$"
-                  }
-                },
-                "required": [
-                  "ref",
-                  "sha256"
-                ],
-                "additionalProperties": false
+                "type": "string",
+                "minLength": 1
               }
             },
-            "rationale": {
-              "type": [
-                "string",
-                "null"
-              ]
+            "context": {
+              "$ref": "#/$defs/context"
+            },
+            "instruction_dependencies": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    },
+                    "required": [
+                      "ref",
+                      "sha256"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "rationale": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "items",
+                "rationale"
+              ],
+              "additionalProperties": false
+            },
+            "result": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "enum": [
+                    "accepted",
+                    "rejected",
+                    "authorized-scope"
+                  ]
+                },
+                "authority": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "target": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "binding": {
+                          "enum": [
+                            "revision"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      },
+                      "required": [
+                        "binding",
+                        "id",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "binding": {
+                          "enum": [
+                            "scope"
+                          ]
+                        },
+                        "reference": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "revision": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "scope": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "binding",
+                        "reference",
+                        "revision",
+                        "scope"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "verdict",
+                "authority",
+                "target"
+              ],
+              "additionalProperties": false
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "supersedes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           },
           "required": [
-            "items",
-            "rationale"
+            "schema",
+            "id",
+            "kind",
+            "subject",
+            "question",
+            "assessor",
+            "recorded_at",
+            "evidence",
+            "context",
+            "instruction_dependencies",
+            "result",
+            "limitations",
+            "supersedes"
           ],
           "additionalProperties": false
         },
-        "result": {
-          "type": "object"
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "enum": [
+                1
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "enum": [
+                "applicability"
+              ]
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "binding": {
+                  "enum": [
+                    "revision"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "binding",
+                "id",
+                "sha256"
+              ],
+              "additionalProperties": false
+            },
+            "question": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assessor": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "session": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "label",
+                "session"
+              ],
+              "additionalProperties": false
+            },
+            "recorded_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "context": {
+              "$ref": "#/$defs/context"
+            },
+            "instruction_dependencies": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    },
+                    "required": [
+                      "ref",
+                      "sha256"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "rationale": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "items",
+                "rationale"
+              ],
+              "additionalProperties": false
+            },
+            "result": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "enum": [
+                    "applicable",
+                    "not-applicable",
+                    "uncertain"
+                  ]
+                },
+                "goal": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "conditions": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "verdict",
+                "goal",
+                "conditions",
+                "rationale"
+              ],
+              "additionalProperties": false
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "supersedes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "schema",
+            "id",
+            "kind",
+            "subject",
+            "question",
+            "assessor",
+            "recorded_at",
+            "evidence",
+            "context",
+            "instruction_dependencies",
+            "result",
+            "limitations",
+            "supersedes"
+          ],
+          "additionalProperties": false
         },
-        "limitations": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "supersedes": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
+        {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "enum": [
+                1
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "enum": [
+                "effectiveness"
+              ]
+            },
+            "subject": {
+              "type": "object",
+              "properties": {
+                "binding": {
+                  "enum": [
+                    "revision"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "binding",
+                "id",
+                "sha256"
+              ],
+              "additionalProperties": false
+            },
+            "question": {
+              "type": "string",
+              "minLength": 1
+            },
+            "assessor": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "session": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "label",
+                "session"
+              ],
+              "additionalProperties": false
+            },
+            "recorded_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "context": {
+              "$ref": "#/$defs/context"
+            },
+            "instruction_dependencies": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ref": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "sha256": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    },
+                    "required": [
+                      "ref",
+                      "sha256"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "rationale": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "items",
+                "rationale"
+              ],
+              "additionalProperties": false
+            },
+            "result": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "enum": [
+                    "observation",
+                    "experiment"
+                  ]
+                },
+                "procedure": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "cases": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      },
+                      "observations": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "count": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "unit": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "selected_at": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "executed_at": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "intervention": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "inputs",
+                      "observations",
+                      "count",
+                      "unit",
+                      "selected_at",
+                      "executed_at",
+                      "intervention"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "comparator": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "outcome": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "limitations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "mode",
+                "procedure",
+                "cases",
+                "comparator",
+                "outcome",
+                "limitations"
+              ],
+              "additionalProperties": false
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "supersedes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "schema",
+            "id",
+            "kind",
+            "subject",
+            "question",
+            "assessor",
+            "recorded_at",
+            "evidence",
+            "context",
+            "instruction_dependencies",
+            "result",
+            "limitations",
+            "supersedes"
+          ],
+          "additionalProperties": false
         }
-      },
-      "required": [
-        "id",
-        "kind",
-        "subject",
-        "question",
-        "assessor",
-        "recorded_at",
-        "evidence",
-        "context",
-        "instruction_dependencies",
-        "result",
-        "limitations",
-        "supersedes"
-      ],
-      "additionalProperties": false
+      ]
     }
   }
 }

@@ -1,0 +1,15 @@
+{
+  "environment": {},
+  "harness": {
+    "name": null,
+    "reason": "No context supplied.",
+    "version": null
+  },
+  "instructions": [],
+  "model": {
+    "reason": "No context supplied.",
+    "value": null
+  },
+  "name": "unspecified",
+  "schema": 1
+}

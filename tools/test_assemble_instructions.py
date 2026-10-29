@@ -1308,3 +1308,179 @@ def test_add_rule_refuses_record_directory_symlink(world):
     (world.root / 'instructions/rules').symlink_to(directory, target_is_directory=True)
     with pytest.raises(ValueError, match='symlink'): module.add_rule(world.root, add_args(module))
     assert not list(directory.iterdir())
+
+
+def judgment_world(module):
+    record = module.new_rule_record(RULE_A, 'Standing preference', b'- Use conventional commits.\n')
+    record['impact'] = dict(tier='high', categories=['permissions'], reason='Fixture permission consequence.')
+    scan = module.scan_rules(marked(RULE_A, record['revisions'][0]['text'].encode()))
+    context = dict(schema=1, name='claude', model=dict(value='model-a', reason=None),
+                   harness=dict(name='claude-code', version='1', reason=None),
+                   instructions=[dict(ref=RULE_A, owner='lore', sha256=record['revisions'][0]['sha256'], reason=None),
+                                 dict(ref='guide', owner='external', sha256='1' * 64, reason=None),
+                                 dict(ref='profile', owner='external', sha256='2' * 64, reason=None),
+                                 dict(ref=module.ARTIFACT, owner='lore', sha256='3' * 64, reason=None)],
+                   environment={'sandbox': dict(value='isolated', reason=None)})
+    return record, {'core': scan}, context
+
+
+def assessment(record, context, kind='applicability', ident='a1'):
+    context = json.loads(json.dumps(context)); context.pop('schema')
+    results = dict(applicability=dict(verdict='applicable', goal='Preserve intent.', conditions='This fixture context.', rationale='Observed fixture fit.'),
+                   approval=dict(verdict='accepted', authority='human', target=dict(binding='revision', id=record['id'], sha256=record['revisions'][0]['sha256'])),
+                   effectiveness=dict(mode='experiment', procedure='A fixed fixture comparison.', comparator='Without intervention.', outcome='No improvement.', limitations=['Synthetic case.'],
+                       cases=[dict(id='case-1', inputs={'artifact': '3' * 64}, observations='No improvement.', count=0, unit='successes',
+                                   selected_at='2026-10-01T00:00:00Z', executed_at='2026-10-02T00:00:00Z', intervention='Rule present.')]))
+    return dict(schema=1, id=ident, kind=kind, subject=dict(binding='revision', id=record['id'], sha256=record['revisions'][0]['sha256']),
+                question='Does this rule fit?', assessor=dict(label='human', session=None), recorded_at='2026-10-02T00:00:00Z', evidence=[], context=context,
+                instruction_dependencies=dict(items=[dict(ref='guide', sha256='1' * 64), dict(ref='profile', sha256='2' * 64)], rationale='These establish the relevant policy.'),
+                result=results[kind], limitations=['Fixture only.'], supersedes=[])
+
+
+def finding_kinds(report, context=None):
+    return {f['kind'] for f in report['findings'] if context is None or f['context'] == context}
+
+
+def test_warning_dimensions_and_reaffirmation(world):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    assert finding_kinds(report) == {'unknown-origin', 'uncertain-applicability', 'untested-effectiveness'}
+    reaffirmed = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'], r['events'] = reaffirmed['sources'], reaffirmed['events']
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    assert 'unknown-origin' not in finding_kinds(report)
+    assert report['history'][0]['subjects'][0]['origin'] == 'reaffirmed-current'
+    assert report['history'][0]['subjects'][0]['historic_authorship'] == 'unknown'
+    r['events'][0]['claim']['adoption']['target'] = dict(binding='scope', reference='task:example', revision=None, scope='Plan scope only.')
+    assert 'unknown-origin' in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+    r['assessments'] = [assessment(r, ctx), assessment(r, ctx, 'effectiveness', 'e1')]
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    assert finding_kinds(report) == {'unknown-origin'}  # Negative experiment is tested.
+    negative = assessment(r, ctx, ident='a2'); negative['result']['verdict'] = 'not-applicable'
+    r['assessments'].append(negative)
+    assert 'uncertain-applicability' in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+    negative['supersedes'] = ['a1']
+    negative['result']['verdict'] = 'applicable'
+    assert 'uncertain-applicability' not in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+    changed = b'- Use clear conventional commits.\n'
+    r = module.refresh_rule(r, changed, {})
+    scans = {'core': module.scan_rules(marked(r['id'], changed))}
+    ctx['instructions'][0]['sha256'] = module.digest(changed)
+    assert 'stale-assessment' in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+
+
+@pytest.mark.parametrize('change,expected', [('model', 'stale-assessment'), ('harness', 'stale-assessment'),
+    ('dependency', 'stale-assessment'), ('order', 'stale-assessment'), ('environment', 'stale-assessment'),
+    ('unknown', 'currency-unverifiable'), ('absent-declaration', 'currency-unverifiable'),
+    ('stale-snapshot', 'currency-unverifiable'), ('artifact', 'unassessed-context-drift')])
+def test_context_dependencies_and_multiple_targets(world, change, expected):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    r['assessments'] = [assessment(r, ctx)]
+    target = json.loads(json.dumps(ctx)); target['name'] = 'codex'
+    if change == 'model': target['model']['value'] = 'model-b'
+    elif change == 'harness': target['harness']['version'] = '2'
+    elif change == 'dependency': target['instructions'][1]['sha256'] = '9' * 64
+    elif change == 'order': target['instructions'][1:3] = reversed(target['instructions'][1:3])
+    elif change == 'environment': target['environment']['sandbox']['value'] = 'shared'
+    elif change == 'unknown': target['model'] = dict(value=None, reason='Not observable.')
+    elif change == 'absent-declaration': r['assessments'][0]['instruction_dependencies'] = dict(items=[], rationale=None)
+    elif change == 'stale-snapshot': target['instructions'][0]['sha256'] = '9' * 64
+    else: target['instructions'][-1]['sha256'] = '9' * 64
+    report = module.assess_rules({r['id']: r}, [ctx, target], scans)
+    assert {c['name'] for c in report['contexts']} == {'claude', 'codex'}
+    assert expected in finding_kinds(report, 'codex')
+    if change == 'artifact':
+        assert 'stale-assessment' not in finding_kinds(report, 'codex')
+        assert 'uncertain-applicability' not in finding_kinds(report, 'codex')
+    elif change != 'absent-declaration':
+        assert 'stale-assessment' not in finding_kinds(report, 'claude')
+    if expected == 'currency-unverifiable': assert 'uncertain-applicability' in finding_kinds(report, 'codex')
+    assert report == module.assess_rules({r['id']: r}, [target, ctx], scans)
+
+
+def test_warning_output_is_bounded(world):
+    module = load_assembler(world)
+    records, raw = {}, b'## Rules\n\n'
+    for n in range(100):
+        rid = f'rule:{n:032x}'
+        r = module.new_rule_record(rid, f'Rule {n}', f'- Rule {n}.\n'.encode())
+        r['impact'] = dict(tier='high' if n % 2 else 'work', categories=[], reason='Fixture classification.')
+        records[rid] = r; raw += marked(rid, r['revisions'][0]['text'].encode())
+    report = module.assess_rules(records, [], {'core': module.scan_rules(raw)})
+    assert len(report['contexts']) == 1
+    assert report['contexts'][0]['diagnostics']
+    assert report['coverage']['rules'] == 100
+    initial = module.warning_summary(report, None, set(records))
+    assert 'baseline unavailable' in initial and 'rule:' not in initial
+    quiet = module.warning_summary(report, report, set())
+    assert 'rule:' not in quiet and len(quiet.splitlines()) <= 3
+    changed = module.warning_summary(report, report, set(records))
+    details = [line for line in changed.splitlines() if 'rule:' in line]
+    assert len(details) == 5
+    assert all('untested-effectiveness' not in line for line in details)
+    assert 'omitted' in changed
+
+
+def test_warning_provenance_cli_filters_and_json(world):
+    path = authoring_world(world)
+    module = load_assembler(world)
+    module.add_rule(world.root, add_args(module, 5, title='Second'))
+    module.add_rule(world.root, add_args(module))
+    result = invoke(world, 'provenance', '--json')
+    assert result.returncode == 0, result.stderr
+    report = json.loads(result.stdout)
+    assert report['coverage']['rules'] == 2
+    result = invoke(world, 'provenance', '--json', '--tier', 'high')
+    assert json.loads(result.stdout)['findings'] == []
+    result = invoke(world, 'provenance', '--warning', 'unknown-origin')
+    assert result.returncode == 0 and b'unknown-origin' in result.stdout
+    assert b'untested-effectiveness' not in result.stdout
+
+
+def test_reaffirmation_batch_and_clause_scope(world):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    fixture = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'], r['events'] = fixture['sources'], fixture['events']
+    clause = clause_record(module)['revisions'][0]['clauses'][0]
+    r['revisions'][0]['clauses'] = [clause]
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    assert 'unknown-origin' not in finding_kinds(report)
+    r['events'][0]['claim']['adoption']['covers_clauses'] = False
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    origin = next(f for f in report['findings'] if f['kind'] == 'unknown-origin')
+    assert origin['subject'] == r['id'] and origin['clauses'][0]['subject'] == clause['id']
+    assert origin['sha256'] == r['revisions'][0]['sha256']
+    second = json.loads(json.dumps(r)); second['id'] = RULE_B
+    second['revisions'][0]['clauses'] = []
+    second['events'][0]['subject']['id'] = RULE_B
+    second['events'][0]['claim']['adoption']['target']['id'] = RULE_B
+    scans['other'] = module.scan_rules(marked(RULE_B, second['revisions'][0]['text'].encode()))
+    ctx['instructions'].append(dict(ref=RULE_B, owner='lore', sha256=second['revisions'][0]['sha256'], reason=None))
+    report = module.assess_rules({r['id']: r, RULE_B: second}, [ctx], scans)
+    assert not any(f['subject'] == RULE_B and f['kind'] == 'unknown-origin' for f in report['findings'])
+
+
+@pytest.mark.parametrize('case', ['extra-result', 'bad-case-hash', 'cross-kind-supersedes', 'cycle', 'self-container-dependency'])
+def test_warning_claim_validation(world, case):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    a = assessment(r, ctx)
+    r['assessments'] = [a]
+    if case == 'extra-result': a['result']['extra'] = True
+    elif case == 'bad-case-hash':
+        r['assessments'] = [assessment(r, ctx, 'effectiveness')]
+        r['assessments'][0]['result']['cases'][0]['inputs']['artifact'] = 123
+    elif case == 'cross-kind-supersedes':
+        b = assessment(r, ctx, 'effectiveness', 'b'); b['supersedes'] = ['a1']; r['assessments'].append(b)
+    elif case == 'cycle':
+        b = assessment(r, ctx, ident='b'); b['supersedes'] = ['a1']; a['supersedes'] = ['b']; r['assessments'].append(b)
+    else:
+        c = clause_record(module)['revisions'][0]['clauses'][0]; r['revisions'][0]['clauses'] = [c]
+        a['subject'] = dict(binding='revision', id=c['id'], sha256=c['sha256'])
+        a['instruction_dependencies']['items'].append(dict(ref=r['id'], sha256=r['revisions'][0]['sha256']))
+    with pytest.raises(ValueError): module.validate_rule(r)
+    if case == 'extra-result':
+        with pytest.raises(ValueError): module.validate_schema(r, module.rule_schemas()['rule'], 'rule')

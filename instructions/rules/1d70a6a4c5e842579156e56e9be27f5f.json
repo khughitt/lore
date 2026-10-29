@@ -1,6 +1,173 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "observed",
+          "original_author": "user",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "goal",
+          "statement": "Paraphrase: The user proposed personal/work/external examples, arbitrary custom profiles and compositional instruction/configuration layers as the longer-term correction.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl"
+      ],
+      "id": "B5-01a0ba30-L279",
+      "kind": "proposal",
+      "occurred_at": "2026-09-19T16:00:20.181Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T18:16:57.463177+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-5-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "308f4c2c88d42032d69f057016bc6d9cfeecd06f346e81c2153e23303496c1f9",
+        "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-019c79/session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl",
+          "reference": "Exact original JSONL line 279, packet line 3, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent inserted the full profile-loading and later-layer-precedence section.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+      ],
+      "id": "B5-5e1c7878-L124",
+      "kind": "proposal",
+      "occurred_at": "2026-09-21T11:39:41.874Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T18:16:57.463177+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-5-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "c5d0b438b2b0075257aecad0f5907f4b9578a461be50a3cb49d8335d3f449bab",
+        "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-019c79/session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl",
+          "reference": "Exact original JSONL line 124, packet line 8, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:hq-c4cbbc",
+            "revision": null,
+            "scope": "Paraphrase: Start the hook-registration and Profiles-section task after the prior implementation stage, before its final write. This records task execution scope, not later exact-current adoption."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+      ],
+      "id": "B5-5e1c7878-L81",
+      "kind": "adoption",
+      "occurred_at": "2026-09-21T11:37:58.530Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T18:16:57.463177+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-5-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "541e74d482040dca5a69911b6aa2b19616f226ea3b8e0d7256b2d2607861ccbb",
+        "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-019c79/session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl",
+          "reference": "Exact original JSONL line 81, packet line 1, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
   "impact": {
     "categories": [
@@ -11,9 +178,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Load the selected checkout profile and make instruction precedence explicit before repository work."
   },
   "relations": [],
   "revisions": [
@@ -21,12 +188,268 @@
       "clauses": [],
       "locator": null,
       "sha256": "2bd1095e5b99f68829cb291ae80b2432ad03fb8dc667673089d5087204f3ce76",
-      "text": "Every checkout has a profile \u2014 `personal`, `work`, `external`, or one the user\ndefined \u2014 that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `ops-profile session` and read\nits output before any other work \u2014 the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
+      "text": "Every checkout has a profile — `personal`, `work`, `external`, or one the user\ndefined — that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `ops-profile session` and read\nits output before any other work — the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T18:16:57.463177+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-5-bound",
+      "recorder": "codex",
+      "scope": "Read profile task chain/spec and three named candidates: 01a0ba30 original user goal 279, 059a3301 design proposals, and 5e1c7878 final profile-section write124 after task authorization81.",
+      "unresolved": [
+        "The user requested arbitrary composable project profiles, not the exact startup command and precedence wording. Agent final wording is observed; predraft task authorization does not establish exact-text activation approval."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-dadb99f-context.txt",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-dadb99f-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-dadb99f-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e53c446c01218de55b9fd27828bf27aa25a0896a6a6d2f43531a725b6be2e7a6",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-dadb99f.md",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Original blob a4e4b57e06b04ce8b646fe3743cd656589f1ecdb; commit metadata and path diff in matching -context.txt",
+        "revision": "dadb99fc04b61d3478ff974d24de3e5b14cc5f32"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-dadb99f.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "552a96db3fad26e34e23b7cfa4a29c06c6f30361b50ee20ca9c7b2573e1ba5cb",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-f9f367a-context.txt",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-f9f367a-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-f9f367a-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-f9f367a.md",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "hq",
+        "path": "AGENTS.md",
+        "reference": "Original blob a4e4b57e06b04ce8b646fe3743cd656589f1ecdb; commit metadata and path diff in matching -context.txt",
+        "revision": "f9f367a27f906e1875d31f04a033483be5308a45"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/git-f9f367a.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "552a96db3fad26e34e23b7cfa4a29c06c6f30361b50ee20ca9c7b2573e1ba5cb",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "lookup-dispositions.json",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/lookup-dispositions.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/lookup-dispositions.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "7db400682d70f41a26a20a0a517837f7139c31ba88a83b6f811b09a5816ab1c8",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "project-profiles-spec.md",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/project-profiles-spec.md",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/project-profiles-spec.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "36423b4818cb97098f4e04ec59d8ddbdfb60a90a089b9a9f4e5b7443f0688838",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "codex",
+        "path": null,
+        "reference": "01a0ba30-0fe6-77d3-926b-db90dde3f92b; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/session-01a0ba30-0fe6-77d3-926b-db90dde3f92b.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "7fc367b1f485f14bed9755eb214a6b13ec119b316299c7a873757223d7b3aa18",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "5e1c7878-739e-4237-9d2c-1ed9bed06701; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/session-5e1c7878-739e-4237-9d2c-1ed9bed06701.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "ae0715bb6437075347f10ba94ef339ff6895da457e8453c5bdd025bdb38c3dec",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-hq-45ac4c.json",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/task-hq-45ac4c.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/task-hq-45ac4c.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "eba1ee6bf491cecf1eafe204c01f3a43c1fa24d6be2becd64aab276b25f777db",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-hq-c4cbbc.json",
+      "inspected_at": "2026-10-29T18:16:57.463177+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/task-hq-c4cbbc.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-5-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-019c79/task-hq-c4cbbc.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "11e507a7404379ac5443e2da4bf3b554f4fc41d263dbc3967deac4fa6016e318",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Load the checkout profile"
 }

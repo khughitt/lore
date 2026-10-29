@@ -449,7 +449,20 @@
           "sha256": "904de6ff022b9e1d23966afe66d8115c49c53e587b5d852cb53e3fc3a9e279b1"
         },
         {
-          "clauses": [],
+          "clauses": [
+            {
+              "id": "clause:1bea3184967c457e8ccf44941064e555",
+              "length": 331,
+              "offset": 10657,
+              "sha256": "2332561557a0adef60514a323477e7ac1ba1e820a00157d4bb338995462c62b9"
+            },
+            {
+              "id": "clause:5611195760e84a2ca62cfbc6520d38fb",
+              "length": 166,
+              "offset": 10988,
+              "sha256": "f8ddd76857bb82af0dd58db196b1629f0d7cd03a11a2c7b5fdcff6f3bd9da33e"
+            }
+          ],
           "id": "rule:30ba737331374ada84282fe41f0faebb",
           "length": 497,
           "offset": 10657,
@@ -528,7 +541,20 @@
           "sha256": "40c6aa5b6fe804bb3f7c7c97e79e8259a94061e8322b2a6f310113c807824514"
         },
         {
-          "clauses": [],
+          "clauses": [
+            {
+              "id": "clause:6c567f224a4e4834bbe13e18769195a2",
+              "length": 414,
+              "offset": 12671,
+              "sha256": "2270f747511407717a7ed6142e210aaaa5d1d7c73e3bba575ecfb9be1b7b8c8d"
+            },
+            {
+              "id": "clause:84b2196069a448c08a86a42f79cdc08c",
+              "length": 435,
+              "offset": 13085,
+              "sha256": "40087068be8e97b4be1377a8ec2f8da7f4901094de3214024e06a1a80814b2f5"
+            }
+          ],
           "id": "rule:19c566200a204b339abf808f84984c7d",
           "length": 849,
           "offset": 12671,
@@ -1422,7 +1448,62 @@
           "sha256": "c25bb56ecb88cf1b207a3e53352e0b29e84c63dfae7452ca167fdf5c8a3b8951"
         },
         {
-          "clauses": [],
+          "clauses": [
+            {
+              "id": "clause:9379ea0e68104f34a097b0b064e0d87b",
+              "length": 247,
+              "offset": 41405,
+              "sha256": "6043ffb7f9e52ecd5e5fc4f377cd2339bf7fa03180a231f3c2904b5dab1967b0"
+            },
+            {
+              "id": "clause:4e20590799f94d18a2705ab08bd487dc",
+              "length": 445,
+              "offset": 41652,
+              "sha256": "bc3560a55e908d8f23bf447bb0a33f383a47e5c77136633582c4c9ea247fc048"
+            },
+            {
+              "id": "clause:e1f7905c547d410aa591c5f413cfcb66",
+              "length": 40,
+              "offset": 42097,
+              "sha256": "13e8fb490d845f762f5dcc91d236d5d47ab98d77bce4463cbb55e6d49a4ed42b"
+            },
+            {
+              "id": "clause:0b804c0312ae420bb804b9e2844041e2",
+              "length": 60,
+              "offset": 42137,
+              "sha256": "a070bd730468074aaba6f7fc3365800d7a0f416ecbba8f35e1c26f70fb0aac89"
+            },
+            {
+              "id": "clause:efa1337975f9497da1c5e3adad6762ad",
+              "length": 308,
+              "offset": 42197,
+              "sha256": "af5003ef02fef859cb99a253916f5af660f3fb98171f2776ced8e51f44247224"
+            },
+            {
+              "id": "clause:9d4f6f2acbef4361a42fd64b21df95af",
+              "length": 152,
+              "offset": 42505,
+              "sha256": "ad78ee16cddce9d1b6df08ddb99da00f305105442b3ccce1a0ecad5828f1dbb0"
+            },
+            {
+              "id": "clause:8114d1e7a1cb462a85cfbc2d47799be3",
+              "length": 160,
+              "offset": 42657,
+              "sha256": "672fd64cebbf25f389b05d35a053ced8778a35b154d538d471e4cc22cbc99692"
+            },
+            {
+              "id": "clause:eef56d33090e4ee6a73669af8a5e6bc2",
+              "length": 198,
+              "offset": 42817,
+              "sha256": "f6afc4e64e9eec568d53bcbf1f72c02dabb1ab08d9f96e3b865f43d544d06ed7"
+            },
+            {
+              "id": "clause:fbbc6de9edf049f9b74d53ead3757fbb",
+              "length": 356,
+              "offset": 43015,
+              "sha256": "444534610ea2457746cb443b3550415caa64aa9a5b6272d257f2de41b6dddfef"
+            }
+          ],
           "id": "rule:96745a06cd69497b8ffe0511c66bda2f",
           "length": 1966,
           "offset": 41405,

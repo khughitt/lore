@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:bd35453d8e704d1c8905187a28adc47f",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes search upstream before local work as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "7f2b2b1a0ad70dd0d474dacb61aef8240aea3e2a8486735fb20a4aeb45fd8e9c",
+      "text": "- A defect in code the user does not maintain (a vendored submodule, an installed tool, a\n  library) is checked upstream before anything else, scoping included: search the\n  project's open and closed issues and PRs, its default and development branches, and\n  its changelog for a report or fix, and note on the task what was searched and found.\n  Reproduce or patch only after that search.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Search upstream before local work"
+}

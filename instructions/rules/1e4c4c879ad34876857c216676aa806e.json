@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:1e4c4c879ad34876857c216676aa806e",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes prefer composition as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e23441acb0d8c45a620a77554018896196413a07acb739e0618786c6ef65b7da",
+      "text": "- Composition > Inheritance\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Prefer composition"
+}

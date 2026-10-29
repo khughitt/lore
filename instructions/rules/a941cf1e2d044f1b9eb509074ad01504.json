@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:a941cf1e2d044f1b9eb509074ad01504",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes reviewer report filenames as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "0d5173d0f79ac6b0d265e3369542a70ae7a4b80e0dd00456d8184bb407a4a114",
+      "text": "- A dispatch that asks a subagent to write its report to a file names that file\n  `<slug>-report.md` (`task-3-report.md`, `audit-report.md`), never a `.md` name\n  starting with `report`, `summary`, `findings` or `analysis` in any case\n  (`report.md`, `Summary-x.md`, `findings.md`). Claude Code refuses a subagent's write\n  to those names (\"Subagents should return findings as text\"), and the whole report\n  then lands in the subagent's final message instead of the file. hq's\n  `subagent-write-refused` capability fact records the rule and its probe.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Reviewer report filenames"
+}

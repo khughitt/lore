@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:b2d5d7b434c74989a11e2b7a88dcd829",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Reserves trial-arm overrides and resolution of failed arm selection to the user.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "8b278d29640abdeef040b6272c02b3c9935cf2eec9a12c8ad5691c6cdc5509f9",
+      "text": "After `tasks start`, run `~/.agents/bin/trial-arm <id>` and follow what it prints.\n`flow on` runs the task under the flow skill; `flow off` runs it without flow,\nwhatever else would choose it; `not enrolled` changes nothing. Every task in a unit\nhas the unit's arm, and the task's `process` is unchanged in both arms. Only the user\noverrides an arm: record it with `tasks note <id> \"arm: <trial> \u2014 override: <why>\"`.\nIf it exits non-zero, show the user its error and do not choose flow on or off until they answer.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Honor trial assignments"
+}

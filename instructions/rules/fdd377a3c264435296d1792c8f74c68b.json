@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:fdd377a3c264435296d1792c8f74c68b",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Defines when the agent may choose and execute without human confirmation.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d4350203954a4abe5f0f50a7a6ad495fef40aab7991d8ea88147fef2287d83dd",
+      "text": "- When you hold a recommendation for a bounded decision, state it with the alternative\n  you rejected and act on it. Do not end the turn to ask for confirmation: the user\n  overrides in free text if they disagree, and a wrong default costs one correction\n  while a question costs a stop. This applies to \"which approach\", \"where should this\n  land\", \"does this section look right\", \"which follow-ups to file\", and \"execute now\".\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Act on bounded recommendations"
+}

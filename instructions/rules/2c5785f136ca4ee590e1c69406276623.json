@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:2c5785f136ca4ee590e1c69406276623",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes question format as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2efe09947445d7fa7c2f79c4ada56387b9c5e9ad9bbf612f12358894ef7c4053",
+      "text": "- A question, when asked, carries your recommendation as the first option and is one\n  question, not a series. A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Question format"
+}

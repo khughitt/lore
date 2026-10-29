@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:ca536e7c8ef24f09a49bd0c598972ef5",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes explicit subprocess test environments as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0",
+      "text": "- A test that starts a subprocess passes it an environment built key by key: `PATH`,\n  `HOME` pointed at a temporary directory the test owns, and each other variable the\n  process reads (such as `USER`), with a fake value for any credential. It never passes\n  the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,\n  `{**os.environ, \u2026}`, a denylist filter), so a failing case's traceback, captured\n  output or log cannot print a credential held in the environment or under `HOME`.\n  Build that environment before the first run, the RED run included: an expected\n  failure is exactly where a credential gets printed.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Explicit subprocess test environments"
+}

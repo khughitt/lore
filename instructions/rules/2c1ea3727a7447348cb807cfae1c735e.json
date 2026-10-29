@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:2c1ea3727a7447348cb807cfae1c735e",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes canonical task ids as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "cdf7b5e29bd85b630ba6c32d2e5d7e0862430d3e1b5ea0a403d820b653cb6461",
+      "text": "- Write task ids in replies and reports bare in their canonical form\n  (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;\n  an id inside a command shown as code stays in that command.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Canonical task IDs"
+}

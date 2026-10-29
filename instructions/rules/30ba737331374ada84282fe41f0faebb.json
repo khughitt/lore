@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:30ba737331374ada84282fe41f0faebb",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes reference document lifecycle as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e35180ebff3d3e1b244bb53d970b06ad59b182d09d62389548bb2b5a38de101b",
+      "text": "- A code repository's `docs/` holds reference documents: each describes current behaviour, is named for its subject rather than dated, and is updated by the change that alters that behaviour. A design spec is a decision record, not a reference document; it becomes one only by being rewritten as one, never by being left in place. Which specs a repository rewrites is filed by that project as its own task when it next changes the subsystem they describe, never done as a side task of other work.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Reference document lifecycle"
+}

@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:45c689924ee64a9c93e94a71f332a1d3",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes persistent task scratch as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "74446c7d890f1da713881cf0d73ce321e224952c2499e773274cd38a6e434506",
+      "text": "- A task that spans sessions keeps its inputs where a reboot cannot take them. Its\n  scratch lives in a per-task directory on persistent host-local storage off the synced\n  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user\n  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only\n  per-run copies made from that persistent canonical copy. Note directory creation\n  immediately (host, path, purpose and current task owner; contents still mutable),\n  then checkpoint under the retained-item rule above at park and done. A resume\n  checks that its inputs exist and match the recorded hash before it claims an\n  idle-host window or the user's machine.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Persistent task scratch"
+}

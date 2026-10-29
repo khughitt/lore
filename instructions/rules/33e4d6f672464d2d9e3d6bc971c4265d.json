@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:33e4d6f672464d2d9e3d6bc971c4265d",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes interpret the user shorthand as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "96a7b45a2a51797593c9f5155ef58ddc894a9d38aa2091cdfcc73264b375763a",
+      "text": "The user writes prompts, thoughts and task text in a shorthand (catalogued in mindful's\n`#mindful-syntax` thought; vocabulary confirmed in mind6's capture-syntax brief). Read\nit this way:\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Interpret the user shorthand"
+}

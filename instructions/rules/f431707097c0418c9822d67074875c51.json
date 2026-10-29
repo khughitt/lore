@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:f431707097c0418c9822d67074875c51",
+  "impact": {
+    "categories": [
+      "destructive-actions",
+      "approvals"
+    ],
+    "reason": "Forbids rewriting or editing a frozen artifact while its review is open.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
+      "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading and stops on a mismatch. While that review is open, never amend or rebase\n  the commit, and leave an out-of-tree file unedited. A later draft reaches review only\n  as a new frozen revision, named in the next round's request, and each finding is\n  judged against the revision its request named.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Freeze review revisions"
+}

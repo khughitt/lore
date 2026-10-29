@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:5478cf24c27543bfb7d7f9186b9e6199",
+  "impact": {
+    "categories": [
+      "approvals",
+      "outward-facing-actions"
+    ],
+    "reason": "Requires user approval before publishing an upstream issue, patch, comment or reaction.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "c917a530d6ff62973996ac1246a7b1eb1d310b22c33f36bdcb793984a1fef41e",
+      "text": "- When none exists, confirm the root cause with a minimal reproduction, read the\n  project's contributor guidelines, agent instructions and issue or PR templates, and\n  prepare the issue or patch to follow them. Any upstream post, comment or reaction is\n  an action outside the repository: prepare it, and the user approves publishing it.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Prepare and approve upstream publication"
+}

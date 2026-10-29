@@ -2,9 +2,9 @@
 
 Type: data model; document types 1. Covers the assembly catalog
 (`instructions/assembly.toml`, version 1) and the provenance manifest
-(`instructions/AGENTS.manifest.json`, version 1). `bin/assemble-instructions`
-accepts only version 1 of each and rejects anything else; there is no compatibility
-path to another version. How to run the assembler and diagnose its checks is in
+(`instructions/AGENTS.manifest.json`, version 2). `bin/assemble-instructions`
+accepts catalog version 1 and writes manifest version 2; other delivery manifest
+versions fail check. Historical proofs execute their pinned assembler. How to run the assembler and diagnose its checks is in
 [instruction-assembly.md](instruction-assembly.md).
 
 ## Catalog
@@ -33,7 +33,7 @@ The source bytes must be UTF-8 and end in exactly one newline. The fragment with
 `projects` must begin with the `<!-- ops:projects start … -->` marker line and end
 with the `<!-- ops:projects end -->` line, each appearing once.
 
-A fragment that the committed manifest at `HEAD` records as `mandatory` must stay
+A fragment that the committed catalog at `HEAD` records as `mandatory` must stay
 in the catalog and stay `mandatory`; removing or downgrading one is rejected.
 
 ### Evidence
@@ -81,7 +81,7 @@ keys are exactly:
 
 | Key | Value |
 | --- | --- |
-| `version` | Integer `1`. |
+| `version` | Integer `2`. |
 | `mode` | `production` for the delivered manifest; `baseline` or `initial` only in a historical proof's temporary manifest. |
 | `separator` | `"\n"`. |
 | `fragments` | One record per catalog fragment, in order. |
@@ -95,18 +95,22 @@ A fragment record copies every catalog field and adds:
 | --- | --- |
 | `revision` | Git SHA-1 blob id of the source bytes (content, not a commit). |
 | `sha256` | SHA-256 of the source bytes. |
-| `offset` | Byte offset of the fragment in the artifact. |
-| `length` | Byte length of the fragment. |
+| `rendered_sha256` | SHA-256 after stripping local rule markers. |
+| `rules` | Current rule IDs, hashes, artifact offsets/lengths, record paths and clause IDs/hashes/offsets/lengths. External fragments have an empty array. |
+| `offset` | Byte offset of the rendered fragment in the artifact. |
+| `length` | Byte length of the rendered fragment. |
 
-The artifact is the fragments' bytes joined by the separator, so each `offset` is
+The artifact is the rendered fragments' bytes joined by the separator, so each `offset` is
 the previous offset plus the previous length plus one. Fragment `revision` is a
 content id and evidence `revision` is a commit id; the two are never interchangeable.
 Because the assembler records its own blob id and hash, editing the assembler
 stales the manifest even when the artifact is unchanged.
 
-A committed manifest is read only for its `mandatory` ids; it must have the keys
-above, `version` 1, `mode` `production`, the newline separator and a nonempty
-`fragments` array whose entries carry an `id` and a valid `classification`.
+The committed catalog supplies the mandatory minimum, independently of an old
+manifest version. The selected delivery manifest must exactly equal freshly
+assembled version 2 bytes. Rule records are addressed by stable path, without a
+record hash: new evidence or assessments alone do not stale delivery. Source
+hashes, current subjects, clause selectors and their locations still do.
 
 ## Rule authoring and assessment data
 
@@ -124,3 +128,28 @@ supersession must address the same kind and subject and cannot form a cycle.
 Use `human` or `user` as an adoption actor for human authority; an agent action is
 not human adoption. The JSON fixtures under `tools/fixtures/rule-provenance/` are
 synthetic examples, including separate Claude/Codex/unknown target snapshots.
+
+
+## Local boundaries and coverage
+
+Every local instruction obligation is bounded by standalone paired markers
+`<!-- rule:<32-lowercase-hex> begin -->` and the corresponding `end` line.
+Markers cannot nest, repeat an ID or appear inside a code fence. Only marker
+lines are stripped; raw and rendered sources each end in exactly one newline.
+The current rule hash covers the exact UTF-8 bytes between markers. Clause
+selectors bind exact UTF-8 byte offsets and hashes within a retained revision;
+overlap must be declared. Retired rules keep their records and have no marker.
+
+Blank lines and ATX headings outside fences need no record. Every other uncovered
+block needs an exact-text exclusion with a reason in
+`instructions/rules/exclusions/<fragment-id>.json`. A block is a maximal run
+between a marker, heading, blank line or file boundary; a fenced block keeps its
+internal blank lines. Each exclusion matches exactly one block; duplicate, missing
+and unused entries fail. No offsets or fragment hashes are stored in exclusions.
+Reviewers judge whether excluded prose is connective; the parser cannot infer it.
+
+All rule, exclusion and schema files select the full index in staged checks.
+Missing or renamed required files cannot fall back to disk. Records are validated
+from that same view. Included evidence copies with a hash use selected local bytes;
+external evidence locators are shape-checked without fetching transcripts or the
+network. Availability is recorded independently from the truth of a claim.

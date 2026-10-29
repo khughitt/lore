@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:e5201d5768794401bf9d88a39b1ee445",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes reopen unfinished review corrections as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "9ce030598b9fcf8b9d373c93eb72cf694b9fd601611f00c71e5d9f0e2b67fc9a",
+      "text": "- A review correction to a task already closed as `done`, before its branch is\n  integrated, reopens that record: the agent that makes the fix (the fix subagent, or\n  you inline) runs `tasks edit <id> --status todo`, then `tasks start <id>`, since a\n  bare `start` refuses a done record. A task still open, parked or not, needs only\n  `tasks start <id>`. The fix owner releases it with `tasks done` or `tasks park`\n  before reporting. Such a correction stays a review finding; a `concerns:` task is\n  filed only for work that fell short after its branch landed.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Reopen unfinished review corrections"
+}

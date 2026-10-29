@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:fd94c4f5761740cfaef4497c38d1a6ae",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes rollout check scope as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "cb683cf533b2d92d7fd55140eaa7e00e8b803c5608d4ba3c065d0e8b0961ed4d",
+      "text": "- A plan or runbook that verifies a rollout across hosts and profiles verifies one host\n  and one profile end to end, and treats the other hosts and profiles configured by the\n  same process (the same installer, links and settings source) as covered: an issue that\n  shows up on one of them later is debugged then. A different harness, or a host or\n  profile reached through a different configuration path, gets its own end-to-end check.\n  An obligation a tool measures per host, such as a `test-latency` verify, is not a\n  rollout check and stays per host.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Rollout check scope"
+}

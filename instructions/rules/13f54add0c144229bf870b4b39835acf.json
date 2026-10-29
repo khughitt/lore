@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:13f54add0c144229bf870b4b39835acf",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Blocks other work behind halt tasks unless an explicit force reason is recorded.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d3620ca020d6cf56816016a553359684272654a1b3402e718e56bf9a3f9ee1b6",
+      "text": "A project with an open task tagged `halt` takes that task first; `tasks prime` and\nthe session-start message name it. To start other blocked work, use `tasks start\n<id> --force --reason \"<why>\"` so the override is recorded.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Halt tasks take priority"
+}

@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:de5f1d0582294f77b597b1a5b42c9d76",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes outcome-first reports as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "5cfd94fe99172014421bc1894ba4cd900aaac2f981bdce5a4e24d2ae69721c58",
+      "text": "- Final work reports lead with a short paragraph: outcome first, the task's actual\n  state, and who acts next, including any action or approval trigger the user needs.\n  No fixed lead marker or word cap. The report stands alone without progress updates\n  or a harness recap; omit empty sections and use plain paragraphs when a brief reply\n  suffices. This shape does not shorten reviewers' full reports to controllers.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Outcome-first reports"
+}

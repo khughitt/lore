@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:016ceef1ef2547f8aa157cb7eb3157cc",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Requires human confirmation before switching project scope.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "f78e64c8e6794b5954ea54c987c298364cbbb1c9979788d7f84a92716541d770",
+      "text": "- If the user suddenly switches the conversation to a different project, confirm that it was intentional.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Confirm project switches"
+}

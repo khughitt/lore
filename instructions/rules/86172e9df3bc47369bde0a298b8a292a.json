@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:86172e9df3bc47369bde0a298b8a292a",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes record concerns at filing as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1372732082081c85558485b6ce6f5dbfd96caa9d2008e94a4e38601ec234ac0e",
+      "text": "- When you file a task because work closed as `done` fell short, changed, or grew,\n  note it on the new task at filing: `concerns: <task-id> <defect|change|extension> \u2014 <one line>`.\n  `defect`: the closed work did not do what its task asked or broke something that\n  worked; `change`: it did what was asked and something different is now wanted;\n  `extension`: new scope built on it. A finding before close is a review finding,\n  not a concern.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Record concerns at filing"
+}

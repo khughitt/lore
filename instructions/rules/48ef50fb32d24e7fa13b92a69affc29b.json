@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:48ef50fb32d24e7fa13b92a69affc29b",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes full-suite route as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "384babc63d84b5f477409aab447d61098160dfdb2d73c7949d12d474a6d79612",
+      "text": "- The full suite runs in CI where CI is configured for it, and otherwise in the pre-push\n  hook. Run it yourself (`just test`, or the guide's documented full-suite command where\n  there is no recipe) only when the hooks are not installed, when the fast check does\n  not cover the affected behavior, or when you are asked to. The baseline the Git rule\n  requires (at a new worktree's creation, or at execution's Setup for planned work) is\n  a scheduled exception and runs the full suite.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Full-suite route"
+}

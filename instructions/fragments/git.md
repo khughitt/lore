@@ -1,9 +1,18 @@
 ## Git
 
+<!-- rule:944802e796494ca6be806cdec7f6f19a begin -->
 - Use conventional commits.
+<!-- rule:944802e796494ca6be806cdec7f6f19a end -->
+<!-- rule:fc95a45fc349416181f73047e05a785e begin -->
 - No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, "Generated with Claude Code") stay out everywhere. The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR; `gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write.
+<!-- rule:fc95a45fc349416181f73047e05a785e end -->
+<!-- rule:3278f93fcc9342819ee39d1bc5ba318f begin -->
 - Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. The baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
+<!-- rule:3278f93fcc9342819ee39d1bc5ba318f end -->
+<!-- rule:269303f01843402aa6eb86399b53c47a begin -->
 - A live test of a worktree's code runs it by explicit path (`.worktrees/<name>/bin/<tool>`) or an environment override, never by repointing a shared launcher, symlink, service unit, or config include on the host at the worktree. When a host pointer must be repointed, record it in a task note at that moment (what, from, to, how to restore) and restore it before `tasks park` or `tasks done`; while it stands, the park note names it. Before removing a worktree, check that no host pointer resolves into it (`readlink -f` over `~/bin/*`, `~/.local/bin/*`, user systemd units, known config includes) and refuse while one does. A rollout that hands live state to another project's tool checks where that tool resolves on `PATH` first, rather than assuming the main checkout.
+<!-- rule:269303f01843402aa6eb86399b53c47a end -->
+<!-- rule:8959dd62afa54a67b0036e6cdee72e55 begin -->
 - A test, fixture or scratch script that runs git keeps it off the host's real config
   and repositories. Overriding `HOME` alone is not enough: with `XDG_CONFIG_HOME`
   still exported and no `~/.gitconfig` in the new `HOME`, `git config --global` writes
@@ -17,6 +26,8 @@
   fixture directory and that `git rev-parse --absolute-git-dir` lies inside it (with
   only `GIT_DIR` set, the top level reads as the current directory while writes still
   reach the real repository).
+<!-- rule:8959dd62afa54a67b0036e6cdee72e55 end -->
+<!-- rule:813cfae03116426f9b5da22b5af1cf83 begin -->
 - Plain `git worktree remove` deletes ignored files without `--force`. Before any
   removal, list them (`git -C <path> status --ignored --porcelain`) and give each entry
   a disposition rather than archiving the lot. Discard what is regenerable (caches,
@@ -33,6 +44,8 @@
   otherwise attach its ledger, or move and note it as above, on the task its plan
   served, so the ledger is found from that task's record alone. Remove the tree only
   after `tasks show` lists each attachment and each moved copy's sha256 matches.
+<!-- rule:813cfae03116426f9b5da22b5af1cf83 end -->
+<!-- rule:eadfc260a2134d269009cae210212fdf begin -->
 - `git worktree remove` refuses a worktree that holds a submodule, even a clean one.
   Force it (`git worktree unlock <path>`, then `git worktree remove --force <path>`)
   only when every check holds, and stop to resolve the first that fails: it is the
@@ -41,5 +54,10 @@
   nothing; `git -C <path> submodule status --recursive` shows no `+`, `-` or `U` prefix;
   the ignored-file check above holds; `tt-report` has run; no host pointer resolves
   into it. Never force by default.
+<!-- rule:eadfc260a2134d269009cae210212fdf end -->
+<!-- rule:7323cbf377fd432b8b26b0a315089865 begin -->
 - When working inside a worktree, write every path you show me relative to the main checkout, not the worktree root — prefix it with the worktree's own directory (e.g. `.worktrees/<name>/…`). I am standing in the main checkout, where a worktree-relative path does not resolve. Inside a worktree the real path is in the host's storage (git and `pwd -P` show it); still write `.worktrees/<name>/…`, by convention, not by reading the cwd.
+<!-- rule:7323cbf377fd432b8b26b0a315089865 end -->
+<!-- rule:9a1920fff2c24f07adf89379270a0098 begin -->
 - Avoid machine-specific absolute paths (the home directory, the Dropbox root) in code comments and docs
+<!-- rule:9a1920fff2c24f07adf89379270a0098 end -->

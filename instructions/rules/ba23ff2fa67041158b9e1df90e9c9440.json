@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:ba23ff2fa67041158b9e1df90e9c9440",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes design document destinations as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "904de6ff022b9e1d23966afe66d8115c49c53e587b5d852cb53e3fc3a9e279b1",
+      "text": "- Where design specs, plans, briefs and handoffs go, and whether they are committed, is the profile's call: the session line's `design docs:` clause names the value or the directory, and the profile's text says the rest. The repository's own instructions override it, and the hook that guards staging names both.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Design document destinations"
+}

@@ -1,5 +1,6 @@
 ## Tests
 
+<!-- rule:c6567204f9e443b68cb95a08c8264b3f begin -->
 - While changing code, run the test you are working on, then a fast check before
   committing, by the first route the project defines:
   - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;
@@ -11,14 +12,20 @@
   - Neither a recipe nor a documented command: say in your report that the project
     declares no test route. Do not guess a runner, skip the check silently, or add
     recipes to the project to fill the gap.
+<!-- rule:c6567204f9e443b68cb95a08c8264b3f end -->
+<!-- rule:48ef50fb32d24e7fa13b92a69affc29b begin -->
 - The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
   there is no recipe) only when the hooks are not installed, when the fast check does
   not cover the affected behavior, or when you are asked to. The baseline the Git rule
   requires (at a new worktree's creation, or at execution's Setup for planned work) is
   a scheduled exception and runs the full suite.
+<!-- rule:48ef50fb32d24e7fa13b92a69affc29b end -->
+<!-- rule:da431a1b3ac14c21800cb5488031d7e8 begin -->
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
+<!-- rule:da431a1b3ac14c21800cb5488031d7e8 end -->
+<!-- rule:ca536e7c8ef24f09a49bd0c598972ef5 begin -->
 - A test that starts a subprocess passes it an environment built key by key: `PATH`,
   `HOME` pointed at a temporary directory the test owns, and each other variable the
   process reads (such as `USER`), with a fake value for any credential. It never passes
@@ -27,12 +34,18 @@
   output or log cannot print a credential held in the environment or under `HOME`.
   Build that environment before the first run, the RED run included: an expected
   failure is exactly where a credential gets printed.
+<!-- rule:ca536e7c8ef24f09a49bd0c598972ef5 end -->
+<!-- rule:4402e5c1ec654514a43ca011c2800ba6 begin -->
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
+<!-- rule:4402e5c1ec654514a43ca011c2800ba6 end -->
 
+<!-- rule:13f54add0c144229bf870b4b39835acf begin -->
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
 the session-start message name it. To start other blocked work, use `tasks start
 <id> --force --reason "<why>"` so the override is recorded.
+<!-- rule:13f54add0c144229bf870b4b39835acf end -->
 
+<!-- rule:b6576b5590d4430da697c160e083b10c begin -->
 A latency incident tagged `test-latency` closes in three phases. In the remedy's
 worktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and
 records nothing. After the remedy branch merges, the cutoff is the merge commit's time
@@ -47,3 +60,4 @@ obligations its host meets and exits 1 while another host still owes one; close 
 after a run exits 0 with `verified: every obligation is met`, with a one-line `tasks
 done` message naming that verdict, the cutoff and the attachment names, never the
 output itself.
+<!-- rule:b6576b5590d4430da697c160e083b10c end -->

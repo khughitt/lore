@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:a5554bc873f348648268c912ee06b92a",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes tool-focused feedback without project details as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "632fc9610a54d1733619928268e9f91970581eb8e5723a1cc7d127697278eddd",
+      "text": "- Describe the tool, never the project: no repository names, paths, people, or project\n  content, whatever the checkout's profile. One report per distinct issue; never triage\n  your own.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Tool-focused feedback without project details"
+}

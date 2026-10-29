@@ -19,6 +19,16 @@ Use `just test-one tools/test_assemble_instructions.py -k staged` for staged cas
 affected-only selection. The pre-push hook carries the full suite; there is no CI.
 Historical proof commands are acceptance checks outside the recurring gates.
 
+For a new obligation, use `python3 bin/assemble-instructions add-rule <fragment-id>
+--start-line N --end-line M --title TEXT`. After editing existing rule prose, run
+`python3 bin/assemble-instructions refresh`, resolve exact selectors, then
+`just assemble`. Staged-source refusal means unstage named files keeping edits,
+refresh, inspect and restage. `python3 bin/assemble-instructions provenance`
+reports all claims and warnings; repeat `--context FILE` for target contexts.
+See `docs/instruction-assembly.md` for interrupted-operation recovery and coverage
+exclusions. Check validates selected rule/exclusion/schema files; unknown history
+is a warning, while broken bindings or uncovered obligations are fatal.
+
 ## Layout
 
 - `instructions/AGENTS.md`: generated global instructions served through hq

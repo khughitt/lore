@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:a25baf1210bc4f81b621a073ff68b8c6",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes disambiguate consequential readings as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e14e38192d82a8599cead3006c0023e167d60a3214f8e2e7973c86128d63428d",
+      "text": "- When a reading is ambiguous and matters for the work, state the reading you took.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Disambiguate consequential readings"
+}

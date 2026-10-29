@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:e12c22eedc4b43abbe27f56d4b260260",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes approximation notation as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "0a9e1e6ad422017def034013dcaa48449cf337a6ea7efd20a5e5e911a803717a",
+      "text": "- `~word` (no space): approximately, \"something like word\".\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Approximation notation"
+}

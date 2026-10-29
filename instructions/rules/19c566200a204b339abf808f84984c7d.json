@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:19c566200a204b339abf808f84984c7d",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes retain rulings and integration state as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2a95d0c9871c7963f3e41f692c12b30f5b71c395aabd17135c9909863b80382f",
+      "text": "- Keep required content in the final message, whole: text under approval, every\n  required ruling and any deferred minors the governing workflow requires. Give\n  each ruling its own entry with the decision, labelled `Why:` (reason) and `Cost:`\n  (if wrong), and revision references; an entry may wrap. Say when a reason or cost\n  was not recorded rather than inventing one. Close with a concise line of applicable\n  disclosures about pushes, this session's surviving processes, others' work,\n  worktree state, and each branch this session left unmerged: its location and\n  what integrates it (who approves, which command). Repeat this integration state\n  from the lead paragraph; \"nothing was pushed\" does not establish it. Retain\n  required process ids and stop instructions. These rules govern final reports,\n  not progress updates or task notes.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Retain rulings and integration state"
+}

@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:046dfb8c365f454a86390b6b4167e487",
+  "impact": {
+    "categories": [
+      "permissions"
+    ],
+    "reason": "Restricts reviewers to read-only work.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "b600f3a4b1fd006af0bf986767e4907de95e5eaa788ecc69992a2f920b517490",
+      "text": "- Reviewers stay read-only and return their full review in their final message;\n  dispatches must not ask them to write report files. When persistence is needed,\n  the controller saves the full returned text in the plan workspace as\n  `<slug>-report.md`, with the reviewer identity recorded alongside it. This applies\n  to initial task reviews, scoped re-reviews and final whole-branch reviews. Keep\n  the existing ledger, ruling and retention rules; saving a report does not replace\n  those records.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Read-only reviewers and saved reports"
+}

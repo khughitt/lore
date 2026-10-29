@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:09d96981ac844d2fbfcb375c3bd77994",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes file tooling feedback as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1ce3670322c87c3079d5cdcb9df7b6bf8f27bc28219384ec1152d1d0312d12e9",
+      "text": "- Friction, a gap, or a notable success in the shared tooling goes to the project that\n  owns it, at the moment, in one command; then carry on:\n  `tasks feedback --project <owner> \"<one line about the tool>\" --category <friction|gap|idea|positive>`.\n  \"Feedback owners\" under Projects below lists who owns what; the tasks skill has the\n  mechanics (`-b`, `--recur`, `--new`, following up).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "File tooling feedback"
+}

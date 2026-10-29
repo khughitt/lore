@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:fea3f0aa833045f6a40ab83e4932bb6f",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes verify documentation against code as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2f6648a26f5a299ecdefb348f379399e060a99708374a872f809000274e33368",
+      "text": "- Verify document status against the code before relying on it; update it and related docs when work lands.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Verify documentation against code"
+}

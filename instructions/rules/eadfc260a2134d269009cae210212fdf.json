@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:eadfc260a2134d269009cae210212fdf",
+  "impact": {
+    "categories": [
+      "destructive-actions"
+    ],
+    "reason": "Gates forced submodule worktree deletion on explicit safety conditions.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4cf0ae497cbfcddac72c3c8e245fb55dcb4efacab869bf68545d6d241d970933",
+      "text": "- `git worktree remove` refuses a worktree that holds a submodule, even a clean one.\n  Force it (`git worktree unlock <path>`, then `git worktree remove --force <path>`)\n  only when every check holds, and stop to resolve the first that fails: it is the\n  task's own worktree; its branch is merged or kept; `git -C <path> status --porcelain`\n  and `git -C <path> submodule foreach --recursive git status --porcelain` print\n  nothing; `git -C <path> submodule status --recursive` shows no `+`, `-` or `U` prefix;\n  the ignored-file check above holds; `tt-report` has run; no host pointer resolves\n  into it. Never force by default.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Submodule worktree removal"
+}

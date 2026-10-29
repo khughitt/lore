@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:7323cbf377fd432b8b26b0a315089865",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes worktree paths in reports as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "9181921d4a1e05c3a62083c6243b1fdc8ab65446b6eabc52d2f73aaea1fd9394",
+      "text": "- When working inside a worktree, write every path you show me relative to the main checkout, not the worktree root \u2014 prefix it with the worktree's own directory (e.g. `.worktrees/<name>/\u2026`). I am standing in the main checkout, where a worktree-relative path does not resolve. Inside a worktree the real path is in the host's storage (git and `pwd -P` show it); still write `.worktrees/<name>/\u2026`, by convention, not by reading the cwd.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Worktree paths in reports"
+}

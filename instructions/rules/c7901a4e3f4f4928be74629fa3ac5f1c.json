@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:c7901a4e3f4f4928be74629fa3ac5f1c",
+  "impact": {
+    "categories": [
+      "approvals",
+      "live-state"
+    ],
+    "reason": "Requires approval before creating a process that outlives the session.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1bacaca09a4daf948f29753f2bb7def2385eab4410ffbc112122b35782720c23",
+      "text": "- A process meant to outlive the session needs the user's approval at that moment (a\n  persistent service is a host change), then starts as a transient user service:\n  `systemd-run --user --unit=<name> --service-type=exec --working-directory=<dir>\n  [-E VAR=value] <cmd>`, once `systemctl --user` answers and, for a launch over ssh,\n  lingering is on (`loginctl show-user <user> -p Linger`; enabling it is the user's\n  decision). When a check fails, report which one and launch nothing; `setsid` and\n  `nohup` are no fallback. Its return means started, not ready, so a bounded readiness\n  check (its port, a health command) follows, and the report names the unit,\n  `journalctl --user -u <name>` and `systemctl --user stop <name>`. Neither `setsid`,\n  which leaves the process in the terminal's scope, nor `systemd-run --scope`, which\n  runs it as systemd-run's own child with the caller's environment and blocks until it\n  exits, is a service launch. A server that a later step of this session drives stays\n  under the cleanup bullet above.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Persistent service approval"
+}

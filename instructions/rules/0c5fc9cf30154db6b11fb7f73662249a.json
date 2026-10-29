@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:0c5fc9cf30154db6b11fb7f73662249a",
+  "impact": {
+    "categories": [
+      "approvals",
+      "live-state"
+    ],
+    "reason": "Requires approval for live desktop use, including retries.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "f09e481c0dd86607437fb063cb720b15091998e874258f741178b8eef8805388",
+      "text": "- Work that takes the live desktop (opens windows on it, moves focus, switches\n  workspaces, captures the screen) is a host-use action, and approving a plan does not\n  grant it. Prefer a nested or headless compositor where the project has one; otherwise\n  ask at that moment, naming what will appear and for how long, or `tasks park --reason\n  quiet` the work. A retry or a later capture asks again rather than reusing an earlier\n  yes.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Live desktop permission"
+}

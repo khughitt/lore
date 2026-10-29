@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:da431a1b3ac14c21800cb5488031d7e8",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes use the test front door as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "84c400f1f675a17cd529a87a5c5c80b051ef6b8e6f63f9eb61319ea26da289b6",
+      "text": "- In a project with the test front door (a justfile with `test-fast`), never call a test\n  runner directly: the recipe is how the run is recorded.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Use the test front door"
+}

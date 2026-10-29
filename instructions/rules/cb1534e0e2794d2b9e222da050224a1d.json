@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:cb1534e0e2794d2b9e222da050224a1d",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes fail early as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "9eaba7f0172ce75da8a1362f8fb4fef53fb584e0feac71b90228501a82407255",
+      "text": "- Fail early / avoid silent fallbacks\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Fail early"
+}

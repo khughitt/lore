@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:369c00284c7e47028337d6e8c06e41e7",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes wait only on tracked work as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "9ecb581d2511718b22024e0f22918c175793d3c5cfa0e5e5c6f4b51e9ef0ca92",
+      "text": "- Never end a turn waiting on work the harness does not track. Run a long check in the\n  foreground with a timeout that covers it, or through the harness's own background\n  mechanism; a job detached with `&` or `nohup` never wakes you, so no turn ends waiting\n  on a monitor of one. Claude Code's background Bash (`run_in_background`) is stopped at\n  its `timeout`, 30 min when unset and at most 2 h: set it to cover the run. A run\n  longer than 2 h is split into resumable slices (an incremental job run in bounded\n  passes, each under the limit, e.g. with `timeout --signal=INT`) or handed to a tracked\n  process the user agrees to. A controller with a running child ends its turn only where\n  the harness is known to start its next turn when the child finishes (Claude Code: yes;\n  Codex: no \u2014 probed 2026-09-24 and recorded in ops `hooks/claim-guard`'s\n  `CHILD_WAKES`), and otherwise waits with the harness's bounded wait, at its longest\n  (Codex: `wait_agent` with `timeout_ms: 3600000`, an empty `write_stdin` with\n  `yield_time_ms: 300000`; both return as soon as the child or command finishes), never\n  a loop of shorter waits. Before each such wait, post one line naming what you await,\n  how long it should take and the wait's limit; when it returns, post one status line.\n  This outranks a harness's own shorter guidance: Codex's base instructions' 60-second\n  cap on blocking waits and on gaps between updates, and the vendored superpowers\n  `codex-tools` reference's 5\u201310 minute stretches. A worker's turn end is its final\n  report: it reports and stops only when its assignment is complete or blocked on its\n  controller or a person, never with its own check still running. A child's \"waiting on\n  background work\" is unverified until you check that the process or its output exists;\n  after a wake-up, report what you observed, never a notification that did not arrive.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Wait only on tracked work"
+}

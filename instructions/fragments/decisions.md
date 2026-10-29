@@ -116,7 +116,9 @@
   admits confirmed proposals to corrective rounds as Important; rejected proposals
   stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes
   under subagent-driven execution; inline,
-  you make them yourself, each still proven RED→GREEN with a green suite. A fresh
+  you make them yourself, each still proven RED→GREEN with policy-appropriate checks
+  under Tests: a green suite when policy is enabled, focused evidence and mandatory
+  hygiene when it is off. A skipped suite is never green evidence. A fresh
   reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks
   executing-plans' "do not dispatch a re-review" and "no second fix pass" and
   subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".

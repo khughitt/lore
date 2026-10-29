@@ -992,3 +992,125 @@ def test_later_policy_bytes_are_rendered_without_changing_historical_fixtures(wo
     assert build(world).returncode == 0
     assert outputs(world)[0] == expected
     assert (world.root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes() == world.initial
+
+# Rule provenance: byte boundaries, honest unknowns and immutable subject bindings.
+RULE_A = 'rule:' + 'a' * 32
+RULE_B = 'rule:' + 'b' * 32
+CLAUSE_A = 'clause:' + 'c' * 32
+
+
+def marked(rule_id, content):
+    return f'<!-- {rule_id} begin -->\n'.encode() + content + f'<!-- {rule_id} end -->\n'.encode()
+
+
+@pytest.mark.parametrize('content', [b'- Keep intent.\n', 'A café.\n'.encode(), b'| A | B |\n|---|---|\n| x | y |\n'])
+def test_rule_scan_byte_identity_and_offsets(world, content):
+    module = load_assembler(world)
+    source = b'## Heading\n\n' + marked(RULE_A, content) + marked(RULE_B, b'Paragraph.\n')
+    scan = module.scan_rules(source)
+    assert scan['rendered'] == b'## Heading\n\n' + content + b'Paragraph.\n'
+    assert scan['rules'][0] == {'id': RULE_A, 'text': content.decode(), 'sha256': hashlib.sha256(content).hexdigest(),
+                                'offset': 12, 'length': len(content)}
+    reverse = module.scan_rules(marked(RULE_B, b'Paragraph.\n') + marked(RULE_A, content))
+    assert reverse['rules'][1]['sha256'] == scan['rules'][0]['sha256']
+    assert scan['uncovered'] == []
+
+
+@pytest.mark.parametrize('source', [
+    marked(RULE_A, b'x\n') + marked(RULE_A, b'y\n'),
+    marked(RULE_A, marked(RULE_B, b'x\n')),
+    marked(RULE_A, b'x\n').replace((RULE_A + ' end').encode(), (RULE_B + ' end').encode()),
+    b'<!-- rule:broken begin -->\nx\n',
+    b'```md\n' + marked(RULE_A, b'x\n') + b'```\n',
+    marked(RULE_A, b'x\n')[:-1], marked(RULE_A, b'x\n') + b'\n',
+    b'\xff\n', marked(RULE_A, b'x\n\n'),
+])
+def test_rule_marker_errors(world, source):
+    with pytest.raises((ValueError, UnicodeError)):
+        load_assembler(world).scan_rules(source)
+
+
+def test_exclusion_block_boundaries(world):
+    module = load_assembler(world)
+    scan = module.scan_rules(b'## Heading\n\nIntro.\n\n```md\n\n# code\n```\n' + marked(RULE_A, b'- Rule.\n'))
+    assert scan['uncovered'] == [dict(text='Intro.\n', start_line=3, end_line=3),
+                                  dict(text='```md\n\n# code\n```\n', start_line=5, end_line=8)]
+    record = module.new_rule_record(RULE_A, 'Rule', b'- Rule.\n')
+    with pytest.raises(ValueError, match='add-rule.*exclusion'):
+        module.validate_rule_set({RULE_A: record}, {'core': scan}, {})
+    exclusions = {'core': [dict(text=b['text'], reason='example/connective prose') for b in scan['uncovered']]}
+    module.validate_rule_set({RULE_A: record}, {'core': scan}, exclusions)
+    exclusions['core'].append(dict(text='unused\n', reason='invalid'))
+    with pytest.raises(ValueError, match='exclusion'):
+        module.validate_rule_set({RULE_A: record}, {'core': scan}, exclusions)
+
+
+def test_record_schema_and_bindings(world):
+    module = load_assembler(world)
+    record = module.new_rule_record(RULE_A, 'Keep intent', b'- Keep intent.\n')
+    module.validate_rule(record)
+    assert record['impact']['tier'] == 'unknown'
+    assert record['events'] == record['assessments'] == []
+    scan = module.scan_rules(marked(RULE_A, b'- Keep intent.\n'))
+    module.validate_rule_set({RULE_A: record}, {'core': scan}, {})
+    for change in ('extra', 'hash', 'missing', 'retired', 'dangling'):
+        bad = json.loads(json.dumps(record))
+        if change == 'extra': bad['extra'] = 1
+        if change == 'hash': bad['revisions'][0]['sha256'] = '0' * 64
+        if change == 'retired': bad['state'] = 'retired'
+        if change == 'dangling': bad['relations'] = [{'kind': 'split_from', 'targets': [RULE_B]}]
+        with pytest.raises(ValueError):
+            module.validate_rule_set({} if change == 'missing' else {RULE_A: bad}, {'core': scan}, {})
+
+
+def test_record_schema_clause_quote_and_retired_history(world):
+    module = load_assembler(world)
+    r = module.new_rule_record(RULE_A, 'Intent', b'- Keep intent.\n')
+    rev = r['revisions'][0]
+    clause = dict(id=CLAUSE_A, text='Keep intent.', offset=2, sha256=hashlib.sha256(b'Keep intent.').hexdigest(),
+                  parent_sha256=rev['sha256'], overlaps=[])
+    rev['clauses'].append(clause)
+    module.validate_rule(r)
+    clause['offset'] = 3
+    with pytest.raises(ValueError, match='clause'):
+        module.validate_rule(r)
+    clause['offset'] = 2
+    r['state'] = 'retired'
+    module.validate_rule_set({RULE_A: r}, {}, {})
+
+
+def test_record_schema_fixtures(world):
+    module = load_assembler(world)
+    fixtures = ROOT / 'tools/fixtures/rule-provenance'
+    for name in ('simple', 'compound', 'historical-excerpt', 'reaffirmed'):
+        module.validate_rule(json.loads((fixtures / (name + '.json')).read_text()))
+    bad = json.loads((fixtures / 'invalid.json').read_text())
+    with pytest.raises(ValueError): module.validate_rule(bad)
+    for name, schema in module.rule_schemas().items():
+        assert json.loads((ROOT / f'instructions/schemas/{name}.json').read_text()) == schema
+
+
+def test_rule_reader_uses_selected_index(world):
+    module = load_assembler(world)
+    r = module.new_rule_record(RULE_A, 'Intent', b'- Keep intent.\n')
+    path = world.root / 'instructions/rules' / (RULE_A[5:] + '.json')
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(r))
+    git(world.root, 'add', 'instructions/rules')
+    path.write_text('invalid')
+    assert module.read_rule_set(world.root, index=True)[RULE_A] == r
+    with pytest.raises(ValueError): module.read_rule_set(world.root)
+
+
+def test_record_schema_historical_and_duplicate_events(world):
+    module = load_assembler(world)
+    path = ROOT / 'tools/fixtures/rule-provenance/historical-excerpt.json'
+    record = json.loads(path.read_bytes())
+    module.validate_rule(record)
+    record['events'].append(record['events'][0])
+    with pytest.raises(ValueError, match='duplicate events'):
+        module.validate_rule(record)
+    record['events'].pop()
+    record['assessments'] = [{'id': 'a1', 'kind': 'applicability', 'subject': record['events'][0]['subject']}]
+    with pytest.raises(ValueError):
+        module.validate_rule(record)

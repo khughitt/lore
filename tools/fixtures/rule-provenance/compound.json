@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "title": "Conventional commits",
+  "state": "active",
+  "purpose": {
+    "text": "Purpose not yet recorded.",
+    "basis": "unknown",
+    "sources": []
+  },
+  "impact": {
+    "tier": "unknown",
+    "categories": [],
+    "reason": "Classification not yet reviewed."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0",
+      "text": "- Use conventional commits.\n",
+      "locator": null,
+      "clauses": [
+        {
+          "id": "clause:cccccccccccccccccccccccccccccccc",
+          "text": "conventional commits",
+          "offset": 6,
+          "sha256": "d87898497da1f0f2ab73ee74bbe9e9661db2b8704c3020e9631f188f94061b7a",
+          "parent_sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0",
+          "overlaps": []
+        }
+      ]
+    }
+  ],
+  "events": [],
+  "incidents": [],
+  "assessments": [],
+  "sources": [],
+  "searches": []
+}

@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "title": "Conventional commits",
+  "state": "active",
+  "purpose": {
+    "text": "Purpose not yet recorded.",
+    "basis": "unknown",
+    "sources": []
+  },
+  "impact": {
+    "tier": "unknown",
+    "categories": [],
+    "reason": "Classification not yet reviewed."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0",
+      "text": "- Use conventional commits.\n",
+      "locator": null,
+      "clauses": [
+        {
+          "id": "clause:cccccccccccccccccccccccccccccccc",
+          "text": "conventional commits",
+          "offset": 6,
+          "sha256": "d87898497da1f0f2ab73ee74bbe9e9661db2b8704c3020e9631f188f94061b7a",
+          "parent_sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0",
+          "overlaps": []
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "subject": {
+        "binding": "revision",
+        "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+      },
+      "kind": "adoption",
+      "occurred_at": null,
+      "time_uncertainty": "Date not recovered.",
+      "recorded_at": "2026-10-29T00:00:00Z",
+      "recorder": "test",
+      "predecessors": [],
+      "claim": {
+        "authorship": {
+          "actor": "unknown",
+          "role": "goal",
+          "statement": "Original request not recovered.",
+          "basis": "unknown",
+          "reason": null,
+          "supplier": null,
+          "original_author": null
+        },
+        "adoption": {
+          "status": "accepted",
+          "actor": "human",
+          "target": {
+            "binding": "revision",
+            "id": "rule:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+          },
+          "evidence": [
+            "source-1"
+          ],
+          "covers_clauses": true
+        },
+        "evidence_quality": [
+          {
+            "source": "source-1",
+            "quality": "first-known-appearance"
+          }
+        ]
+      },
+      "evidence": [
+        "source-1"
+      ],
+      "searches": []
+    }
+  ],
+  "incidents": [],
+  "assessments": [],
+  "sources": [
+    {
+      "id": "source-1",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/example/source.txt",
+        "revision": null,
+        "reference": "task attachment example"
+      },
+      "source_time": null,
+      "inspected_at": null,
+      "access": "not-checked",
+      "representation": "excerpt",
+      "sha256": null,
+      "preservation": null,
+      "raw_sha256": null,
+      "transformation": null
+    }
+  ],
+  "searches": []
+}

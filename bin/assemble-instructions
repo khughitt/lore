@@ -134,6 +134,332 @@ def blob(data):
     return hashlib.sha1(b'blob %d\0' % len(data) + data).hexdigest()
 
 
+# Rule identity and claims are data; validation never resolves external evidence.
+RULE_ID = r'rule:[0-9a-f]{32}'
+CLAUSE_ID = r'clause:[0-9a-f]{32}'
+HASH = r'[0-9a-f]{64}'
+RULE_DIR = 'instructions/rules'
+
+
+def object_schema(**properties):
+    return {'type': 'object', 'properties': properties, 'required': list(properties), 'additionalProperties': False}
+
+
+def array_schema(items):
+    return {'type': 'array', 'items': items}
+
+
+def rule_schemas():
+    string = {'type': 'string', 'minLength': 1}
+    nullable = {'type': ['string', 'null']}
+    digest_schema = {'type': 'string', 'pattern': '^' + HASH + '$'}
+    rid = {'type': 'string', 'pattern': '^' + RULE_ID + '$'}
+    cid = {'type': 'string', 'pattern': '^' + CLAUSE_ID + '$'}
+    enum = lambda *values: {'enum': list(values)}
+    ref = lambda name: {'$ref': '#/$defs/' + name}
+    refs = array_schema(string)
+    locator = object_schema(kind=enum('git', 'session', 'attachment', 'retained'), owner=nullable,
+                            path=nullable, revision=nullable, reference=string)
+    revision_subject = object_schema(binding=enum('revision'), id={'type': 'string', 'pattern': '^(' + RULE_ID + '|' + CLAUSE_ID + ')$'}, sha256=digest_schema)
+    historical = object_schema(binding=enum('historical-excerpt'), id=rid, sha256={'anyOf': [digest_schema, {'type': 'null'}]},
+                               source=string, excerpt_sha256=digest_schema, preservation=locator)
+    target = {'anyOf': [revision_subject, object_schema(binding=enum('scope'), reference=string, revision=nullable, scope=string)]}
+    unknown = object_schema(value=nullable, reason=nullable)
+    instruction = object_schema(ref=string, owner=string, sha256={'anyOf': [digest_schema, {'type': 'null'}]}, reason=nullable)
+    context = object_schema(name=string, model=unknown,
+                            harness=object_schema(name=nullable, version=nullable, reason=nullable),
+                            instructions=array_schema(instruction), environment={'type': 'object', 'additionalProperties': unknown})
+    clause = object_schema(id=cid, text=string, offset={'type': 'integer', 'minimum': 0}, sha256=digest_schema,
+                           parent_sha256=digest_schema, overlaps=array_schema(cid))
+    defs = {
+        'locator': locator, 'subject': revision_subject,
+        'source': object_schema(id=string, locator=locator, source_time=nullable, inspected_at=nullable,
+            access=enum('available', 'unavailable', 'not-checked'), representation=enum('raw', 'excerpt', 'portable-derivative'),
+            sha256={'anyOf': [digest_schema, {'type': 'null'}]}, preservation={'anyOf': [locator, {'type': 'null'}]},
+            raw_sha256={'anyOf': [digest_schema, {'type': 'null'}]}, transformation=nullable),
+        'search': object_schema(id=string, scope=string, cutoff=string, exclusions=refs, recorder=string, unresolved=refs),
+        'event': object_schema(id=string, subject={'anyOf': [revision_subject, historical]},
+            kind=enum('appearance', 'proposal', 'correction', 'adoption', 'restatement', 'amendment', 'relocation', 'retirement'),
+            occurred_at=nullable, time_uncertainty=nullable, recorded_at=string, recorder=string, predecessors=refs,
+            claim=object_schema(authorship=object_schema(actor=enum('user', 'agent', 'unknown'), role=enum('goal', 'mechanism', 'wording'),
+                statement=string, basis=enum('observed', 'inferred', 'unknown'), reason=nullable, supplier=nullable, original_author=nullable),
+                adoption=object_schema(status=enum('accepted', 'restated', 'authorized-scope', 'inferred-only', 'none-recovered'),
+                    actor=nullable, target={'anyOf': [target, {'type': 'null'}]}, evidence=refs, covers_clauses={'type': 'boolean'}),
+                evidence_quality=array_schema(object_schema(source=string, quality=enum('originating-request/proposal', 'first-known-appearance', 'later-restatement', 'unknown')))),
+            evidence=refs, searches=refs),
+        'context': context,
+    }
+    assessment = object_schema(id=string, kind=enum('approval', 'applicability', 'effectiveness'), subject=revision_subject,
+        question=string, assessor=object_schema(label=string, session=nullable), recorded_at=string, evidence=refs,
+        context=ref('context'), instruction_dependencies=object_schema(items=array_schema(object_schema(ref=string, sha256=digest_schema)), rationale=nullable),
+        result={'type': 'object'}, limitations=refs, supersedes=refs)
+    defs['assessment'] = assessment
+    rule = object_schema(schema=enum(1), id=rid, title=string, state=enum('active', 'retired'),
+        purpose=object_schema(text=string, basis=enum('observed', 'inferred', 'unknown'), sources=refs),
+        impact=object_schema(tier=enum('high', 'work', 'low', 'unknown'), categories=refs, reason=string),
+        relations=array_schema(object_schema(kind=enum('split_from', 'merged_from'), targets=array_schema(rid))),
+        revisions=array_schema(object_schema(sha256=digest_schema, text=string, locator={'anyOf': [locator, {'type': 'null'}]}, clauses=array_schema(clause))),
+        events=array_schema(ref('event')), incidents=array_schema(object_schema(id=string, subject=revision_subject,
+            status=enum('recorded', 'none recorded', 'n/a'), rationale=string, evidence=refs)),
+        assessments=array_schema(ref('assessment')), sources=array_schema(ref('source')), searches=array_schema(ref('search')))
+    rule['$defs'] = defs
+    exclusions = object_schema(schema=enum(1), fragment=string, entries=array_schema(object_schema(text=string, reason=string)))
+    context = dict(context, properties=dict(context['properties'], schema=enum(1)), required=context['required'] + ['schema'])
+    return {'rule': rule, 'exclusions': exclusions, 'context': context}
+
+
+def validate_schema(value, schema, label, definitions=None):
+    definitions = schema.get('$defs', definitions or {})
+    if '$ref' in schema:
+        return validate_schema(value, definitions[schema['$ref'].split('/')[-1]], label, definitions)
+    if 'anyOf' in schema:
+        for option in schema['anyOf']:
+            try:
+                validate_schema(value, option, label, definitions)
+                return
+            except ValueError:
+                pass
+        raise ValueError(f'{label}: invalid variant')
+    if 'enum' in schema and not any(type(value) is type(v) and value == v for v in schema['enum']):
+        raise ValueError(f'{label}: expected one of {schema["enum"]}')
+    types = {'object': dict, 'array': list, 'string': str, 'integer': int, 'boolean': bool, 'null': type(None)}
+    expected = schema.get('type', list(types))
+    if isinstance(expected, str): expected = [expected]
+    if not any(type(value) is types[t] for t in expected): raise ValueError(f'{label}: wrong type')
+    if isinstance(value, str):
+        if len(value) < schema.get('minLength', 0) or ('pattern' in schema and not re.fullmatch(schema['pattern'], value)):
+            raise ValueError(f'{label}: invalid text')
+    if type(value) is int and value < schema.get('minimum', value): raise ValueError(f'{label}: below minimum')
+    if isinstance(value, dict):
+        props = schema.get('properties', {})
+        if set(schema.get('required', [])) - value.keys(): raise ValueError(f'{label}: missing fields')
+        extra = schema.get('additionalProperties', True)
+        if extra is False and value.keys() - props.keys(): raise ValueError(f'{label}: unknown fields')
+        for key, item in value.items():
+            child = props.get(key, extra)
+            if isinstance(child, dict): validate_schema(item, child, f'{label}.{key}', definitions)
+    if isinstance(value, list):
+        for i, item in enumerate(value): validate_schema(item, schema['items'], f'{label}[{i}]', definitions)
+
+
+def scan_rules(data):
+    data.decode('utf-8')
+    if not data.endswith(b'\n') or data.endswith(b'\n\n'): raise ValueError('raw fragment requires one trailing newline')
+    output, rules, uncovered, pending = bytearray(), [], [], []
+    active, content, start, fence, seen = None, bytearray(), 0, None, set()
+    def flush():
+        if pending:
+            uncovered.append({'text': b''.join(x[1] for x in pending).decode(), 'start_line': pending[0][0], 'end_line': pending[-1][0]})
+            pending.clear()
+    for number, line in enumerate(data.splitlines(keepends=True), 1):
+        marker = re.fullmatch(rb'<!-- (rule:[0-9a-f]{32}) (begin|end) -->\n', line)
+        if b'<!-- rule:' in line:
+            if not marker or fence: raise ValueError(f'invalid rule marker at line {number}')
+            rid, action = (v.decode() for v in marker.groups())
+            flush()
+            if action == 'begin':
+                if active or rid in seen: raise ValueError(f'duplicate or nested rule {rid}')
+                active, content, start = rid, bytearray(), len(output)
+                seen.add(rid)
+            else:
+                if active != rid or not content: raise ValueError(f'unmatched or empty rule {rid}')
+                raw = bytes(content)
+                rules.append(dict(id=rid, text=raw.decode(), sha256=digest(raw), offset=start, length=len(raw)))
+                active = None
+            continue
+        is_open = re.match(rb' {0,3}(`{3,}|~{3,})(.*)\n$', line)
+        was_fenced = fence is not None
+        if fence:
+            if re.fullmatch(rb' {0,3}' + re.escape(fence[:1]) + rb'{' + str(len(fence)).encode() + rb',}[ \t]*\n', line): fence = None
+        elif is_open:
+            fence = is_open.group(1)
+        output.extend(line)
+        if active:
+            content.extend(line)
+        elif not (was_fenced or fence) and (not line.strip() or re.match(rb' {0,3}#{1,6}(?:[ \t]|\n)', line)):
+            flush()
+        else:
+            pending.append((number, line))
+    flush()
+    if active or fence: raise ValueError('unclosed rule or code fence')
+    rendered = bytes(output)
+    if not rendered.endswith(b'\n') or rendered.endswith(b'\n\n'): raise ValueError('rendered fragment requires one trailing newline')
+    return dict(rendered=rendered, rules=rules, uncovered=uncovered)
+
+
+def new_rule_record(rule_id, title, data):
+    return dict(schema=1, id=rule_id, title=title, state='active',
+        purpose=dict(text='Purpose not yet recorded.', basis='unknown', sources=[]),
+        impact=dict(tier='unknown', categories=[], reason='Classification not yet reviewed.'), relations=[],
+        revisions=[dict(sha256=digest(data), text=data.decode('utf-8'), locator=None, clauses=[])],
+        events=[], incidents=[], assessments=[], sources=[], searches=[])
+
+
+def subject_bytes(record, subject):
+    for revision in record['revisions']:
+        if subject['id'] == record['id'] and subject['sha256'] == revision['sha256']: return revision['text'].encode()
+        for clause in revision['clauses']:
+            if subject['id'] == clause['id'] and subject['sha256'] == clause['sha256']: return clause['text'].encode()
+    raise ValueError(f'{record["id"]}: subject revision not retained')
+
+
+def validate_locator(locator):
+    if locator is None: return
+    if locator['path'] is not None: relative_path(locator['path'])
+    if locator['kind'] == 'git' and (not locator['owner'] or not locator['path'] or not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', locator['revision'] or '')):
+        raise ValueError('git locator requires owner/path/full commit')
+
+
+def validate_rule(record):
+    validate_schema(record, rule_schemas()['rule'], 'rule')
+    label = record['id']
+    if not record['revisions']: raise ValueError(f'{label}: no revisions')
+    seen = set()
+    for rev in record['revisions']:
+        data = rev['text'].encode()
+        if digest(data) != rev['sha256'] or rev['sha256'] in seen: raise ValueError(f'{label}: duplicate or incorrect revision hash')
+        seen.add(rev['sha256'])
+        validate_locator(rev['locator'])
+        ids = {c['id'] for c in rev['clauses']}
+        if len(ids) != len(rev['clauses']): raise ValueError(f'{label}: duplicate clause')
+        for c in rev['clauses']:
+            quote = c['text'].encode()
+            if c['parent_sha256'] != rev['sha256'] or digest(quote) != c['sha256'] or data[c['offset']:c['offset'] + len(quote)] != quote:
+                raise ValueError(f'{label}: stale clause selector')
+            if set(c['overlaps']) - ids or c['id'] in c['overlaps']: raise ValueError('invalid clause overlaps')
+            for other in rev['clauses']:
+                if c['id'] != other['id'] and max(c['offset'], other['offset']) < min(c['offset'] + len(quote), other['offset'] + len(other['text'].encode())):
+                    if other['id'] not in c['overlaps']: raise ValueError('undeclared clause overlap')
+    groups = {k: {v['id']: v for v in record[k]} for k in ('events', 'sources', 'searches', 'assessments', 'incidents')}
+    for group, entries in groups.items():
+        if len(entries) != len(record[group]): raise ValueError(f'{label}: duplicate {group} id')
+    def references(values, group):
+        if any('#' not in v and v not in groups[group] for v in values): raise ValueError(f'{label}: dangling {group} reference')
+    references(record['purpose']['sources'], 'sources')
+    for source in record['sources']:
+        validate_locator(source['locator']); validate_locator(source['preservation'])
+        if source['representation'] == 'portable-derivative' and not source['transformation']: raise ValueError('derivative needs transformation')
+        if source['sha256'] and not source['preservation']: raise ValueError('held bytes need preservation locator')
+    for item in record['events'] + record['incidents'] + record['assessments']:
+        subject = item['subject']
+        if subject['binding'] == 'revision': subject_bytes(record, subject)
+        else:
+            references([subject['source']], 'sources'); validate_locator(subject['preservation'])
+        references(item['evidence'], 'sources')
+    for event in record['events']:
+        references(event['predecessors'], 'events'); references(event['searches'], 'searches')
+        if event['occurred_at'] is None and not event['time_uncertainty']: raise ValueError('unknown event time needs explanation')
+        authorship = event['claim']['authorship']
+        if authorship['basis'] == 'inferred' and not authorship['reason']: raise ValueError('inference needs reason')
+        adoption = event['claim']['adoption']
+        references(adoption['evidence'], 'sources')
+        references([q['source'] for q in event['claim']['evidence_quality']], 'sources')
+        if adoption['status'] in ('accepted', 'restated'):
+            if not adoption['actor'] or not adoption['target'] or not adoption['evidence']: raise ValueError('adoption needs actor, target and evidence')
+            if adoption['target']['binding'] == 'revision': subject_bytes(record, adoption['target'])
+    for a in record['assessments']:
+        references(a['supersedes'], 'assessments')
+        if a['id'] in a['supersedes']: raise ValueError('assessment cannot supersede itself')
+        validate_context(a['context'], external=False)
+        dependencies = a['instruction_dependencies']
+        if dependencies['items'] and not dependencies['rationale']: raise ValueError('dependencies need rationale')
+        if any(d['ref'] in (a['subject']['id'], ARTIFACT) for d in dependencies['items']): raise ValueError('subject cannot be its own surrounding dependency')
+        result = a['result']
+        if a['kind'] == 'approval':
+            fields(result, {'verdict', 'authority', 'target'}, 'approval result')
+            if result['verdict'] not in ('accepted', 'rejected', 'authorized-scope'): raise ValueError('invalid approval verdict')
+            text(result['authority'], 'approval authority')
+            validate_schema(result['target'], rule_schemas()['rule']['$defs']['event']['properties']['claim']['properties']['adoption']['properties']['target'], 'approval target')
+        elif a['kind'] == 'applicability':
+            fields(result, {'verdict', 'goal', 'conditions', 'rationale'}, 'applicability result')
+            if result['verdict'] not in ('applicable', 'not-applicable', 'uncertain'): raise ValueError('invalid applicability verdict')
+            for key in ('goal', 'conditions', 'rationale'): text(result[key], key)
+        else:
+            fields(result, {'mode', 'procedure', 'cases', 'comparator', 'outcome', 'limitations'}, 'effectiveness result')
+            if result['mode'] not in ('observation', 'experiment'): raise ValueError('invalid effectiveness mode')
+            for key in ('procedure', 'outcome'): text(result[key], key)
+            if not isinstance(result['cases'], list) or not result['cases']: raise ValueError('effectiveness needs cases')
+            for case in result['cases']:
+                fields(case, {'id', 'inputs', 'observations', 'count', 'unit', 'selected_at', 'executed_at', 'intervention'}, 'case')
+                for key in ('id', 'observations', 'selected_at', 'executed_at', 'intervention'): text(case[key], key)
+                if not isinstance(case['inputs'], dict) or any(not re.fullmatch(HASH, v) for v in case['inputs'].values()): raise ValueError('case input hashes invalid')
+                if case['count'] is not None and (type(case['count']) not in (int, float) or not case['unit']): raise ValueError('measured case needs count and unit')
+
+
+def validate_context(context, *, external=True):
+    schema = rule_schemas()['context'] if external else rule_schemas()['rule']['$defs']['context']
+    validate_schema(context, schema, 'context')
+    if context['model']['value'] is None and not context['model']['reason']: raise ValueError('unknown model needs reason')
+    if (context['harness']['name'] is None or context['harness']['version'] is None) and not context['harness']['reason']: raise ValueError('unknown harness needs reason')
+    refs = [i['ref'] for i in context['instructions']]
+    if len(refs) != len(set(refs)): raise ValueError('duplicate context instruction')
+    for item in context['instructions']:
+        if item['sha256'] is None and not item['reason']: raise ValueError('unknown instruction hash needs reason')
+    for item in context['environment'].values():
+        if item['value'] is None and not item['reason']: raise ValueError('unknown environment value needs reason')
+
+
+def validate_rule_set(records, scans, exclusions):
+    live = {}
+    for fragment, scan in scans.items():
+        for rule in scan['rules']:
+            if rule['id'] in live: raise ValueError('duplicate rule across fragments')
+            live[rule['id']] = rule
+        blocks = [b['text'] for b in scan['uncovered']]
+        entries = exclusions.get(fragment, [])
+        for entry in entries:
+            fields(entry, {'text', 'reason'}, 'exclusion'); text(entry['reason'], 'exclusion reason')
+        selected = [e['text'] for e in entries]
+        if len(selected) != len(set(selected)) or any(blocks.count(v) != 1 for v in selected) or set(blocks) != set(selected):
+            raise ValueError(f'{fragment}: uncovered block; use add-rule for obligations or an exclusion entry for connective prose')
+    if set(exclusions) - set(scans): raise ValueError('unused fragment exclusions')
+    for key, record in records.items():
+        validate_rule(record)
+        if key != record['id']: raise ValueError('record filename/id mismatch')
+        if (key in live) != (record['state'] == 'active'): raise ValueError('active/retired rule coverage mismatch')
+        if key in live and not any(r['sha256'] == live[key]['sha256'] and r['text'] == live[key]['text'] for r in record['revisions']): raise ValueError('stale rule record; unstage affected files, refresh, inspect and restage')
+        for relation in record['relations']:
+            if not relation['targets'] or any(t not in records or t == key for t in relation['targets']): raise ValueError('dangling rule relation')
+    if set(live) - set(records): raise ValueError('marked rule missing record')
+    # Qualified references remain explicit and are checked against the selected set.
+    for record in records.values():
+        def walk(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key in ('evidence', 'sources', 'searches', 'predecessors', 'supersedes') and isinstance(child, list):
+                        group = {'evidence': 'sources', 'predecessors': 'events', 'supersedes': 'assessments'}.get(key, key)
+                        for ref in child:
+                            if isinstance(ref, str) and '#' in ref:
+                                owner, local = ref.split('#', 1)
+                                if owner not in records or not any(v['id'] == local for v in records[owner][group]): raise ValueError('dangling cross-rule reference')
+                    walk(child)
+            elif isinstance(value, list):
+                for child in value: walk(child)
+        walk(record)
+
+
+def read_rule_set(root, *, index=False, revision=None):
+    if index and revision is not None: raise ValueError('choose one Git view')
+    if index:
+        paths = git_bytes(root, 'ls-files', '-z', '--', RULE_DIR).decode().split('\0')
+    elif revision:
+        paths = git_bytes(root, 'ls-tree', '-r', '--name-only', '-z', revision, '--', RULE_DIR).decode().split('\0')
+    else:
+        directory = contained(root, RULE_DIR)
+        paths = [p.relative_to(root).as_posix() for p in directory.glob('*.json')]
+    records = {}
+    for path in paths:
+        if not path or '/exclusions/' in path: continue
+        match = re.fullmatch(RULE_DIR + r'/([0-9a-f]{32})\.json', path)
+        if not match: raise ValueError('invalid rule record path')
+        record = json.loads(read_local(root, path, index=index, revision=revision))
+        rid = 'rule:' + match[1]
+        if record.get('id') != rid: raise ValueError('record filename/id mismatch')
+        validate_rule(record)
+        records[rid] = record
+    return records
+
+
 def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='production'):
     catalog = catalog_from(catalog_bytes)
     mandatory = {f['id'] for f in catalog['fragments'] if f['classification'] == 'mandatory'}

@@ -1,6 +1,113 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "observed",
+          "original_author": "user",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "goal",
+          "statement": "Paraphrase: The user asked for a much smaller trial before committing to an extended benchmark or experiment, especially when it disrupts the user or needs exclusive machine use.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+      ],
+      "id": "B2-29e2-L1066-pilot",
+      "kind": "proposal",
+      "occurred_at": "2026-09-25T09:52:49.209Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:18:11.025647+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-2-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "7eab7300a29fd1b8f3a37bcdf8af76be9c12f5c88608804bebb8b5724db6db2e",
+        "id": "clause:42955d8f19624c6fb3e3899c83c70bfb",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-887a4f/session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl",
+          "reference": "Exact original JSONL line 1066, packet line 41, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent drafted the full rule: smallest all-gates pilot, analyze completed cases after refusal/abort, and name the pilot result when asking for the machine.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+      ],
+      "id": "B2-29e2-L1092",
+      "kind": "proposal",
+      "occurred_at": "2026-09-25T09:53:18.466Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:18:11.025647+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-2-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "cc8881bb5c3eb2cba270d3207794f4070dba80f83cbacfca2aaa42934927015b",
+        "id": "rule:558c97f11b5d4a9ea13f1637c10bf95f",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-887a4f/session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl",
+          "reference": "Exact original JSONL line 1092, packet line 67, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:558c97f11b5d4a9ea13f1637c10bf95f",
   "impact": {
     "categories": [
@@ -12,22 +119,215 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Find deterministic failures before spending an extended run or the user’s quiet-host window."
   },
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:42955d8f19624c6fb3e3899c83c70bfb",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "6573b704adaa0f5aa250393c00115ecbbe3d5a477b6dc8eaf0c4a6b4d9003b23",
+          "sha256": "218b894e48562b67909de1602f1643a7bce6792f4a0ac5358b2053dd6445eb37",
+          "text": "- Before committing to an extended run (a benchmark, capture, experiment, or sweep that\n  takes more than a few minutes, and above all one that needs the user off the machine),\n  first run the smallest version that exercises every gate end to end through its\n  verdict, one case per check, and read the result. "
+        }
+      ],
       "locator": null,
       "sha256": "6573b704adaa0f5aa250393c00115ecbbe3d5a477b6dc8eaf0c4a6b4d9003b23",
       "text": "- Before committing to an extended run (a benchmark, capture, experiment, or sweep that\n  takes more than a few minutes, and above all one that needs the user off the machine),\n  first run the smallest version that exercises every gate end to end through its\n  verdict, one case per check, and read the result. When a long run is refused or\n  aborted partway, analyze the parts it completed before changing the environment and\n  retrying. When asking for the machine, name the pilot and what it showed.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:18:11.025647+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-2-bound",
+      "recorder": "codex",
+      "scope": "Read hq-f9aaa6 and its material-4241c3 context; named 29e26027 session contains the user pilot request at 1066, preceding failure analysis, exact agent insertion 1092 and report 1111. One candidate. Imported policy matches this write.",
+      "unresolved": [
+        "The user supplied the pilot-first goal, while the agent added the all-gates, analyze-refusals and report-pilot mechanism. No later approval of exact wording was recovered. Incident interpretation is historical, not a new efficacy assessment."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-0c32662-context.txt",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "bd58f223116b0f3af1b48544b2326cb374290b80c69856c607ab0ae2f74768a0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-0c32662.md",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/processes.md",
+        "reference": "Original blob 8068ec0aa3430c952cc0b7783c944ef1964b2261; commit metadata and path diff in matching -context.txt",
+        "revision": "0c326620c08870406a847d8397786c044775a236"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-0c32662.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "ae18587085dae671fe2f8286a7cc4e95712bb8d5c8a446e662a521930af5196f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-fa04196-context.txt",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8969573dd55792d9288154f42337488ab025293216af23ffb97d3fa6560eac5d",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-fa04196.md",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Original blob 1a7a59de6e7fbcfb3e8998c2ce9e16bbfbdadba3; commit metadata and path diff in matching -context.txt",
+        "revision": "fa041961b4d186818e45ed119c6e82aa754e84f1"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/git-fa04196.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "29e26027-f18b-4d4f-9742-5dc4a9c688ec; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/session-29e26027-f18b-4d4f-9742-5dc4a9c688ec.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "58fc23f55da5fe7810fc5df7c51249a376478c92b0b8cad68ecf3a2c08429949",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-hq-f9aaa6.json",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-hq-f9aaa6.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-hq-f9aaa6.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "908de1e89882f42c7e8fa878b65c70f25911547ad72ded4e580ae3c96504732e",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-material-4241c3.json",
+      "inspected_at": "2026-10-29T17:18:11.025647+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-material-4241c3.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-2-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-887a4f/task-material-4241c3.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "779bb42ca6ad79345173f6f6638b116c275a5cd37d691353b204e19c7848afc5",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Pilot extended runs"
 }

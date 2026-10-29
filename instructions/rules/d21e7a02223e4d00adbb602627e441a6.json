@@ -41,7 +41,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "ccbbf13806d3e3c9a63b2ccbee039d921ec95af840c2611c6686e4f479ad67a5",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:853cf3ff745d42b9865ee5791e5bf7b4",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -69,7 +69,7 @@
           "original_author": "agent",
           "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
           "role": "mechanism",
-          "statement": "Paraphrase: The agent proposed explicit inline and delegated correction rounds, fresh re-review and fallback behavior.",
+          "statement": "Paraphrase: The agent explicitly extended the corrective-round rule to inline as well as delegated execution. This event targets that execution-mode coverage, not later regrading or policy-aware test wording.",
           "supplier": "agent"
         },
         "evidence_quality": [
@@ -94,7 +94,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "f6ab3175c359465ef0f4c31f07333ea07b5625b947054bb460f1f84fd2da505e",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:3b0364d9e6d44e4f92835bf319d01627",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -113,14 +113,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-e02ceb9f-667b-4029-8e06-f7afbc5fa86a"
+            "session-e02ceb9f-667b-4029-8e06-f7afbc5fa86a",
+            "supp-prepared-a2058c6.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-32daba",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "a2058c6adfc48f9e329be36734cd6ba1e03d38f6",
+            "scope": "Paraphrase: Activate the prepared inline-review-rounds change at a2058c6: make inline and delegated final-review correction rounds explicit, preserving the five-round cap, severity threshold and external gates. Later regrading and policy-aware test amendments were not yet in this revision."
           }
         },
         "authorship": {
@@ -136,11 +137,16 @@
           {
             "quality": "later-restatement",
             "source": "session-e02ceb9f-667b-4029-8e06-f7afbc5fa86a"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-a2058c6.md"
           }
         ]
       },
       "evidence": [
-        "session-e02ceb9f-667b-4029-8e06-f7afbc5fa86a"
+        "session-e02ceb9f-667b-4029-8e06-f7afbc5fa86a",
+        "supp-prepared-a2058c6.md"
       ],
       "id": "B1-e02c-L366",
       "kind": "adoption",
@@ -154,7 +160,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "616ae90b3f491648f86782a70193f3dcf117f994d47a377641b9b41aedf37cfa",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:3b0364d9e6d44e4f92835bf319d01627",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -207,7 +213,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "b60e029ec52ae9ba519f2b3e197ea1eefc79b867e24a8e8ee71d842fc86f71d5",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:39ee97ce06f7465e9f5c6be6c942439f",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -226,14 +232,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-01a16dca-d62f-7120-8647-728fe64cc25f"
+            "session-01a16dca-d62f-7120-8647-728fe64cc25f",
+            "supp-prepared-c049f34.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-ff9094",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "c049f3453a8240369334fd0ba8587c83d7a6f931",
+            "scope": "Paraphrase: Merge the prepared minor-regrading amendment c049f34 on fix/lore-ff9094-minor-regrading: controller-confirmed proposals become Important; rejected proposals remain deferred. This approval predates policy-aware verification wording."
           }
         },
         "authorship": {
@@ -249,11 +256,16 @@
           {
             "quality": "later-restatement",
             "source": "session-01a16dca-d62f-7120-8647-728fe64cc25f"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-c049f34.md"
           }
         ]
       },
       "evidence": [
-        "session-01a16dca-d62f-7120-8647-728fe64cc25f"
+        "session-01a16dca-d62f-7120-8647-728fe64cc25f",
+        "supp-prepared-c049f34.md"
       ],
       "id": "B1-01a16dca-L233",
       "kind": "adoption",
@@ -267,7 +279,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "64cb9f4dceb3817e2922e3654ad6f1cd428a955c5324b1098d4b13d7b2f194ef",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:39ee97ce06f7465e9f5c6be6c942439f",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -286,14 +298,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-01a1874f-c2d8-7320-ae81-7114e37e343f"
+            "session-01a1874f-c2d8-7320-ae81-7114e37e343f",
+            "supp-policy-activation-9e094c6.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
-            "reference": "task:ops-8bfa85",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "reference": "ops:docs/notes/2026-10-29-test-policy-activation.md; task:ops-8bfa85",
+            "revision": "9e094c6a13dcd1c403b1e19d31609959c35b5106",
+            "scope": "Paraphrase: Authorize the prepared coordinated activation packet at ops 9e094c6: integrate reviewed reader/tool/instruction branches (lore e0e9d37), publish tt, and make at most two twenty-minute hosted pilot runs. Pushes require confirmed included allowance and enforced no-paid-overage control; policy-off requires accepted hosted coverage and billing limits. The answer supplied assent, not allowance numbers, proof of controls or proof those prerequisites were satisfied. Later relaxation of the exact-balance requirement is outside this event."
           }
         },
         "authorship": {
@@ -309,11 +322,16 @@
           {
             "quality": "later-restatement",
             "source": "session-01a1874f-c2d8-7320-ae81-7114e37e343f"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-policy-activation-9e094c6.md"
           }
         ]
       },
       "evidence": [
-        "session-01a1874f-c2d8-7320-ae81-7114e37e343f"
+        "session-01a1874f-c2d8-7320-ae81-7114e37e343f",
+        "supp-policy-activation-9e094c6.md"
       ],
       "id": "B1-01a1874f-L2227",
       "kind": "adoption",
@@ -327,7 +345,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "2ed6b83f81d47719b5b7763f17199e946e4c95e77f3eeb44bd6fa97b059cd1ff",
-        "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+        "id": "clause:014874825b0247e1b8cca9c21bc7cb0f",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -365,7 +383,40 @@
       "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike, fix (or rule on, as the skills allow) its Critical and Important\n  findings in corrective rounds, up to five; then surface what remains. A round is one\n  fix pass plus one scoped re-review of it, and another follows while that re-review\n  reports any Critical or Important finding, persisting or introduced by the fix. Minor\n  findings never enter a round; they go to the ledger as `minor (deferred)`, as both\n  skills say. In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes\n  under subagent-driven execution; inline,\n  you make them yourself, each still proven RED\u2192GREEN with a green suite. A fresh\n  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks\n  executing-plans' \"do not dispatch a re-review\" and \"no second fix pass\" and\n  subagent-driven-development's \"exactly one scoped re-review\" and \"no second fix wave\".\n  Without a subagent tool, the re-review is a self-review, recorded as such in the\n  ledger and the final message, as executing-plans' final-review fallback does. External\n  actions stay gated.\n"
     },
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:853cf3ff745d42b9865ee5791e5bf7b4",
+          "offset": 202,
+          "overlaps": [],
+          "parent_sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
+          "sha256": "de9eaa3419602b81055c234528214cda83e2060c7fda93deeb324723ab5cac96",
+          "text": "up to five; then surface what remains."
+        },
+        {
+          "id": "clause:3b0364d9e6d44e4f92835bf319d01627",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
+          "sha256": "d57e5a6c0c96f77d91ae7716e8e07e084396ce4d4cff0e37518e8422f027f8c7",
+          "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike,"
+        },
+        {
+          "id": "clause:39ee97ce06f7465e9f5c6be6c942439f",
+          "offset": 528,
+          "overlaps": [],
+          "parent_sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
+          "sha256": "49a6e74c53d028df60caae20ce452bd258792616e9b45c1ac6f931587db0110e",
+          "text": "In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` and reach the final message."
+        },
+        {
+          "id": "clause:014874825b0247e1b8cca9c21bc7cb0f",
+          "offset": 984,
+          "overlaps": [],
+          "parent_sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
+          "sha256": "1ade75c83aa310f73147710a2caa2b4e5c7596fa3d5976383769ea60cbad3565",
+          "text": "you make them yourself, each still proven RED\u2192GREEN with policy-appropriate checks\n  under Tests: a green suite when policy is enabled, focused evidence and mandatory\n  hygiene when it is off. A skipped suite is never green evidence."
+        }
+      ],
       "locator": null,
       "sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
       "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike, fix (or rule on, as the skills allow) its Critical and Important\n  findings in corrective rounds, up to five; then surface what remains. A round is one\n  fix pass plus one scoped re-review of it, and another follows while that re-review\n  reports any Critical or Important finding, persisting or introduced by the fix. Minor\n  findings never enter a round; they go to the ledger as `minor (deferred)`, as both\n  skills say. In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes\n  under subagent-driven execution; inline,\n  you make them yourself, each still proven RED\u2192GREEN with policy-appropriate checks\n  under Tests: a green suite when policy is enabled, focused evidence and mandatory\n  hygiene when it is off. A skipped suite is never green evidence. A fresh\n  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks\n  executing-plans' \"do not dispatch a re-review\" and \"no second fix pass\" and\n  subagent-driven-development's \"exactly one scoped re-review\" and \"no second fix wave\".\n  Without a subagent tool, the re-review is a self-review, recorded as such in the\n  ledger and the final message, as executing-plans' final-review fallback does. External\n  actions stay gated.\n"
@@ -385,7 +436,8 @@
       "scope": "Read hq-36f493/hq-170418, lore-32daba/lore-1e66e7, lore-ff9094 and lore-fdbe86. Inspected c9fdc19a original five-round response, e02ceb9f inline amendment/approval, 01a16dca minor-regrading proposal/approval, and 01a1874f prepared integration packet with structured user answer. Compared corresponding Git diffs. One or two named candidates per contribution; no broad scan.",
       "unresolved": [
         "Five-round goal is user-backed. Inline behavior and minor regrading were agent proposals. Later policy-aware verification has scope authorization only; no event extends an older approval over a subsequent amendment. Historical contributions do not establish whole-current authorship/adoption.",
-        "Applicability and effectiveness are not evaluated in this historical pass."
+        "Applicability and effectiveness are not evaluated in this historical pass.",
+        "Correction 1: separate clause subjects preserve unknown container/uncovered authorship. Clause-level historical evidence does not establish exact-current adoption; latest scope-only amendments retain unknown authorship."
       ]
     }
   ],
@@ -579,6 +631,78 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "191b17af2279a78e9dc1976254e625966c4f0e42793c38aa0fddac33e3f83e60",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-policy-activation-9e094c6.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "ops",
+        "path": "docs/notes/2026-10-29-test-policy-activation.md",
+        "reference": "Exact cited secondary context, not originating user authorship.",
+        "revision": "9e094c6a13dcd1c403b1e19d31609959c35b5106"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/policy-activation-9e094c6.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "63babc0904cde68d54714145a9b9e021fff3bd20e47d372bf550443a7ddd924b",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-a2058c6.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "a2058c6adfc48f9e329be36734cd6ba1e03d38f6"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-a2058c6.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "6def1d8cfc0bf830fb9cd8b9c46787d0963d76c4ad928d9f48310a22778e0856",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-c049f34.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "c049f3453a8240369334fd0ba8587c83d7a6f931"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-c049f34.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "c4e9c505c2f2e0b5502da0c364dc7b4e0679aff48c767de54e5566d0f8a71886",
       "source_time": null,
       "transformation": null
     }

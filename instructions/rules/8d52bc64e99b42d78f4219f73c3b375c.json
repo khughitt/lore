@@ -67,6 +67,54 @@
       "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
       "source_time": "2026-09-29",
       "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-friction-diagnosis.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "ops",
+        "path": "docs/reports/2026-09-11-friction-diagnosis.md",
+        "reference": "Exact cited secondary context, not originating user authorship.",
+        "revision": "cc2ab76ca9bf6918636c2b003cc80b0ed8314a4c"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/friction-diagnosis.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "26271ebb57abd5568b6b91ad251c47e7303d0d5e84135786e10ead98542b558f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-skill-stop-points-brief.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "records",
+        "path": "lore/docs/notes/2026-10-02-skill-stop-points-brief.md",
+        "reference": "Exact cited secondary context, not originating user authorship.",
+        "revision": "443589a95fa15faf0532542de527e1a6702eb56d"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/skill-stop-points-brief.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "15544e9195303b6608790746611e024873061d5ca653cfb58d2cca2a7ee63d1a",
+      "source_time": null,
+      "transformation": null
     }
   ],
   "state": "active",

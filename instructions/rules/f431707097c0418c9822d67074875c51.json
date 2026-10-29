@@ -16,7 +16,7 @@
           "original_author": "agent",
           "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
           "role": "mechanism",
-          "statement": "Paraphrase: The agent presented a frozen-revision review rule for activation, explicitly leaving three wording refinements for later.",
+          "statement": "Paraphrase: The agent proposed identifying the frozen repository/commit/path for a review. This event targets that portion only; later out-of-tree hash verification, mismatch stopping and wording amendments are not attributed by it.",
           "supplier": "agent"
         },
         "evidence_quality": [
@@ -41,7 +41,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "ccae1705406a36b3add5a7ca9eeab2df45222425ea1b84d14859303337b18a2a",
-        "id": "rule:f431707097c0418c9822d67074875c51",
+        "id": "clause:340c80c5c94447988769c4719bd75d1f",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -60,14 +60,16 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+            "session-3a562ee9-a665-4889-9792-1fe9d54e5beb",
+            "supp-prepared-a743683.md",
+            "supp-session-3a56-prepared-context.jsonl"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-d96302",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "a743683a474165557a4b4b8002a020e2ccebcf15",
+            "scope": "Paraphrase: Merge the prepared frozen-review rule on feat/frozen-review-revision, feature a743683 and task-close 1ce7306. The original rule names pinned review inputs; later wording, explicit hash checking and mismatch-stop changes are outside this prepared text. Original commit IDs are retained; rewrite correspondence is preserved separately."
           }
         },
         "authorship": {
@@ -83,11 +85,21 @@
           {
             "quality": "later-restatement",
             "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-a743683.md"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-session-3a56-prepared-context.jsonl"
           }
         ]
       },
       "evidence": [
-        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb",
+        "supp-prepared-a743683.md",
+        "supp-session-3a56-prepared-context.jsonl"
       ],
       "id": "B1-3a56-L313",
       "kind": "adoption",
@@ -101,7 +113,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "bedb40ba2944be120f493a265bb7ace9a80dc8ce4f792190b92b568afeef1f1d",
-        "id": "rule:f431707097c0418c9822d67074875c51",
+        "id": "clause:340c80c5c94447988769c4719bd75d1f",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -121,14 +133,16 @@
           "covers_clauses": false,
           "evidence": [
             "session-225d5108-9c65-41e5-be82-7a62d4cf1b94",
-            "session-225d-correction-context"
+            "session-225d-correction-context",
+            "supp-prepared-e24ea3a.md",
+            "supp-session-225d-prepared-context.jsonl"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-295c9b",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "e24ea3ad240b696e604521cf5ff9f2769df60234",
+            "scope": "Paraphrase: Merge the prepared five-change wording batch on rules/batch-2026-10-21, whose last feature was e24ea3a and task-close head 9a28f1f. For this rule it includes the clarified out-of-tree hash check. Approval preceded review and later correction 9de6829 adding the mismatch stop; it is not exact-text adoption of that correction."
           }
         },
         "authorship": {
@@ -148,12 +162,22 @@
           {
             "quality": "later-restatement",
             "source": "session-225d-correction-context"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-e24ea3a.md"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-session-225d-prepared-context.jsonl"
           }
         ]
       },
       "evidence": [
         "session-225d5108-9c65-41e5-be82-7a62d4cf1b94",
-        "session-225d-correction-context"
+        "session-225d-correction-context",
+        "supp-prepared-e24ea3a.md",
+        "supp-session-225d-prepared-context.jsonl"
       ],
       "id": "B1-225d-L574",
       "kind": "adoption",
@@ -167,7 +191,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "af93c3525f031ba215a2e098737146707f6e8651fadc68505413114327e4f978",
-        "id": "rule:f431707097c0418c9822d67074875c51",
+        "id": "clause:797be969084b47f8a07a3c2d8348994e",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -199,7 +223,32 @@
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:340c80c5c94447988769c4719bd75d1f",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
+          "sha256": "9dce14fd12130cdfd0f0a52a8017243f672e5b9a897233026acbdda01fb906ad",
+          "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. "
+        },
+        {
+          "id": "clause:797be969084b47f8a07a3c2d8348994e",
+          "offset": 200,
+          "overlaps": [],
+          "parent_sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
+          "sha256": "c795fbf64719b2525b1e05cad74d99ea8f9c79a2b9cdd157654b8d36111d15cf",
+          "text": "Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading"
+        },
+        {
+          "id": "clause:3a52659cfd474d7dbf664309348819d4",
+          "offset": 348,
+          "overlaps": [],
+          "parent_sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
+          "sha256": "7b1c434f27d84805041ac446b8f877ba7a6b2f6c4429871fbc8883c2af0e12f4",
+          "text": "and stops on a mismatch."
+        }
+      ],
       "locator": null,
       "sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
       "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading and stops on a mismatch. While that review is open, never amend or rebase\n  the commit, and leave an out-of-tree file unedited. A later draft reaches review only\n  as a new frozen revision, named in the next round's request, and each finding is\n  judged against the revision its request named.\n"
@@ -219,7 +268,8 @@
       "scope": "Read lore-d96302 and lore-295c9b; sessions 3a562ee9 (initial proposal/merge) and 225d5108 (batch approval, reviewer findings, later correction); inspect all three Git revisions.",
       "unresolved": [
         "The hash-mismatch stop and later wording corrections postdate the original approval; the batch merge approval also predates corrective commit 9de6829. No exact-current adoption.",
-        "Applicability and effectiveness are not evaluated in this historical pass."
+        "Applicability and effectiveness are not evaluated in this historical pass.",
+        "Correction 1: separate clause subjects preserve unknown container/uncovered authorship. Clause-level historical evidence does not establish exact-current adoption; latest scope-only amendments retain unknown authorship."
       ]
     }
   ],
@@ -365,6 +415,102 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "417b29b53129bbb75ed54771652578a7cab7d65ae3f6aa73127ead361453cdff",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-a743683.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Original initial freeze-review prepared commit, established by preserved pre-approval git-log result.",
+        "revision": "a743683a474165557a4b4b8002a020e2ccebcf15"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-a743683.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "1daa0ccdc8e75cd92673feecac192b3cd95298c06e4b273c74feaa670cd87710",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-e24ea3a.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Prepared batch revision established by original pre-approval git-log output.",
+        "revision": "e24ea3ad240b696e604521cf5ff9f2769df60234"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-e24ea3a.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "bc86ad6909c2ce424efcf8d0aa0f5773960e3c9a37957e474ef5844b7104e884",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-session-225d-prepared-context.jsonl",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "225d5108-9c65-41e5-be82-7a62d4cf1b94; original lines [550, 551]",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-225d-prepared-context.jsonl",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "5776237b75b9f287e25dddd1dc7959194bcc8346e4ab2b47688173b44bc97114",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-session-3a56-prepared-context.jsonl",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "3a562ee9-a665-4889-9792-1fe9d54e5beb; original lines [298, 299]",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-3a56-prepared-context.jsonl",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "80836b9e2f64be8c24e69995f0ebcbdee66d60c448b247407d3608fbdee50ead",
       "source_time": null,
       "transformation": null
     }

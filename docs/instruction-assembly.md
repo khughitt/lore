@@ -204,3 +204,20 @@ later authoring; no retained text, selector or judgment is rewritten. The array
 is refresh order, not historical event chronology. Assembly always selects the
 entry whose hash matches current source. When adding older full-text history by
 hand, place it before the last refreshed entry or refresh the current source.
+
+## Test policy instructions
+
+The maintained Git, Tests and Decisions fragments share the invoking checkout's
+validated `.tt.toml` policy. Policy-off keeps hydration, focused implementation
+checks and mandatory hygiene while removing automatic broad baselines and per-step,
+per-commit and corrective-round suite requirements. It overrides the generic
+execution and completion skills without modifying the pinned submodule.
+
+When editing these clauses, walk through direct work, planned Setup, a corrective
+round and branch completion in both inline and delegated execution. Check enabled,
+absent and invalid-policy controls too: they grant no policy-off exemption. Verify
+that the delivered text still requires fresh evidence and never calls a skip green.
+Refresh the rule bindings (using an explicit selector when a clause changes), then
+assemble and check provenance. These checks establish delivered bytes and bindings;
+they do not establish effectiveness in a live agent session. Global delivery and
+fresh-session verification remain separate approved actions.

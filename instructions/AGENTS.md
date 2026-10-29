@@ -13,7 +13,7 @@
 
 - Use conventional commits.
 - No AI attribution by default: no attribution trailer, co-author line, or footer on commits, PRs, or comments, and harness-injected forms (`Claude-Session:`, a session URL, "Generated with Claude Code") stay out everywhere. The profile says which `gh` account a checkout uses and what a repository you do not maintain requires before a PR; `gh` holds two accounts and the active one is global state, so check `gh auth status` before any `gh` write.
-- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. The baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
+- Before changing repository code — for any task, direct or planned, not only a brainstorming + planning session — work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. For a validated policy-off checkout under the Tests rule, direct worktree creation and planned execution Setup keep hydration but run the relevant focused baseline when code work begins; record its scope and the deliberate omission of the broad baseline. Documentation-only work invents no focused test obligation. Otherwise the baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason "on WORK_ROOT storage (host: $(uname -n))" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.
 - A live test of a worktree's code runs it by explicit path (`.worktrees/<name>/bin/<tool>`) or an environment override, never by repointing a shared launcher, symlink, service unit, or config include on the host at the worktree. When a host pointer must be repointed, record it in a task note at that moment (what, from, to, how to restore) and restore it before `tasks park` or `tasks done`; while it stands, the park note names it. Before removing a worktree, check that no host pointer resolves into it (`readlink -f` over `~/bin/*`, `~/.local/bin/*`, user systemd units, known config includes) and refuse while one does. A rollout that hands live state to another project's tool checks where that tool resolves on `PATH` first, rather than assuming the main checkout.
 - A test, fixture or scratch script that runs git keeps it off the host's real config
   and repositories. Overriding `HOME` alone is not enough: with `XDG_CONFIG_HOME`
@@ -238,7 +238,9 @@ it this way:
   admits confirmed proposals to corrective rounds as Important; rejected proposals
   stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes
   under subagent-driven execution; inline,
-  you make them yourself, each still proven RED→GREEN with a green suite. A fresh
+  you make them yourself, each still proven RED→GREEN with policy-appropriate checks
+  under Tests: a green suite when policy is enabled, focused evidence and mandatory
+  hygiene when it is off. A skipped suite is never green evidence. A fresh
   reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks
   executing-plans' "do not dispatch a re-review" and "no second fix pass" and
   subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".
@@ -358,7 +360,34 @@ it this way:
 
 ## Tests
 
-- While changing code, run the test you are working on, then a fast check before
+- Test execution policy comes from `.tt.toml` at the invoking code checkout's Git
+  top level, validated by that project's `tt` wrapper; detached records and sibling
+  checkouts never supply it. One Git root means one shared policy. A missing file
+  or `automatic_broad = true` retains the suite requirements below. Invalid or
+  unreadable policy is an error, never an exemption. Do not infer policy-off from
+  absent timing samples or a generic CI environment variable.
+- With a valid `automatic_broad = false`, run fresh focused tests for the changed
+  behavior and always-run hygiene. Preserve focused RED→GREEN during implementation
+  and every corrective review round. Do not rerun a broad suite solely for a commit,
+  plan step, end-of-task gate or branch completion. This explicitly overrides generic
+  whole-suite/green-suite requirements in executing-plans, subagent-driven-development,
+  using-git-worktrees, finishing-a-development-branch and verification-before-completion,
+  for inline and delegated work alike; carry it into worker and reviewer prompts.
+  A policy skip is not a pass, a test sample or proof of correctness. Report the actual
+  focused scope, mandatory checks, skipped broad work and any remote evidence separately.
+- The protected focused route is `just test-one <runner args>` when declared, otherwise
+  the project's documented focused route. If none exists, report the gap and use the
+  documented route; never invent a runner or disguise a full suite as focused work.
+  Adoption must settle this gap before switching off. Documentation-only work creates
+  no test obligation. Known correctness failures still need a fix or explicit disposition.
+- Deliberate broad verification uses `TT_FORCE=1 just test`, or `just test-full` when
+  the project declares that alias. Additional focused integration tests cover affected
+  behavior; policy-off does not force a broad rerun because hooks are absent or a fast
+  selector misses it. Routine broad verification runs remotely on the declared push
+  refs. Hosted jobs set `TT_FORCE=1` explicitly; a refused hosted skip is a configuration
+  failure to fix, not permission to remove the refusal.
+- With policy enabled or absent, while changing code run the test you are working on,
+  then a fast check before
   committing, by the first route the project defines:
   - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;
     where there is no `test-one` yet, the focused run its AGENTS.md names, or
@@ -369,7 +398,8 @@ it this way:
   - Neither a recipe nor a documented command: say in your report that the project
     declares no test route. Do not guess a runner, skip the check silently, or add
     recipes to the project to fill the gap.
-- The full suite runs in CI where CI is configured for it, and otherwise in the pre-push
+- With policy enabled or absent, the full suite runs in CI where CI is configured for
+  it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
   there is no recipe) only when the hooks are not installed, when the fast check does
   not cover the affected behavior, or when you are asked to. The baseline the Git rule
@@ -390,6 +420,18 @@ it this way:
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
 the session-start message name it. To start other blocked work, use `tasks start
 <id> --force --reason "<why>"` so the override is recorded.
+
+For adopted policy-off projects, disabled broad targets create no routine latency
+obligation; timing findings on remaining local paths are advisory. Forced runs are
+diagnostic and do not reactivate disabled obligations. Judge disposition against the
+registered main code checkout: a branch-local policy edit alone retires nothing.
+For each existing incident, inspect every host/target, note each retired obligation
+with its landed policy revision, and remove only the timing halt. Keep unrelated
+halts and remaining diagnosis. Disabled obligations are not applicable, never met;
+close or drop solely retired work as policy-retired, not performance-verified.
+A rollback records `policy: enabled at <RFC3339-UTC> revision <full-sha>` on the
+adoption task with source `tt-policy:<prefix>`; latency eligibility restarts there.
+Enabled obligations continue to use the verification procedure below.
 
 A latency incident tagged `test-latency` closes in three phases. In the remedy's
 worktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and

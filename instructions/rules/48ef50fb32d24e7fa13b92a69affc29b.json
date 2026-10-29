@@ -22,6 +22,12 @@
       "locator": null,
       "sha256": "384babc63d84b5f477409aab447d61098160dfdb2d73c7949d12d474a6d79612",
       "text": "- The full suite runs in CI where CI is configured for it, and otherwise in the pre-push\n  hook. Run it yourself (`just test`, or the guide's documented full-suite command where\n  there is no recipe) only when the hooks are not installed, when the fast check does\n  not cover the affected behavior, or when you are asked to. The baseline the Git rule\n  requires (at a new worktree's creation, or at execution's Setup for planned work) is\n  a scheduled exception and runs the full suite.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e5dc21120124df80d753095d1f9bcfda6976538b9f0b7e10f103b0fa7df9dc88",
+      "text": "- With policy enabled or absent, the full suite runs in CI where CI is configured for\n  it, and otherwise in the pre-push\n  hook. Run it yourself (`just test`, or the guide's documented full-suite command where\n  there is no recipe) only when the hooks are not installed, when the fast check does\n  not cover the affected behavior, or when you are asked to. The baseline the Git rule\n  requires (at a new worktree's creation, or at execution's Setup for planned work) is\n  a scheduled exception and runs the full suite.\n"
     }
   ],
   "schema": 1,

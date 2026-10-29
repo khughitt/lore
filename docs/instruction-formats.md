@@ -125,6 +125,8 @@ A schema-1 assessment has a kind-specific result (`approval`, `applicability` or
 `effectiveness`) and an exact retained subject hash. Context snapshots record
 observed inputs; dependency declarations select surrounding instructions. Explicit
 supersession must address the same kind and subject and cannot form a cycle.
+Local references and qualified `rule:<id>#<local-id>` references resolve to the
+same identity, including source fields and assessment supersession across records.
 Use `human` or `user` as an adoption actor for human authority; an agent action is
 not human adoption. The JSON fixtures under `tools/fixtures/rule-provenance/` are
 synthetic examples, including separate Claude/Codex/unknown target snapshots.

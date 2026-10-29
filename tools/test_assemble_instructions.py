@@ -1360,6 +1360,118 @@ def finding_kinds(report, context=None):
     return {f['kind'] for f in report['findings'] if context is None or f['context'] == context}
 
 
+@pytest.mark.parametrize('removed', ['rule', 'clause'])
+def test_review_retired_dependency_cannot_match_old_snapshot(world, removed):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    other = module.new_rule_record(RULE_B, 'Dependency', b'- Keep a dependency.\n')
+    ref, sha = RULE_B, other['revisions'][0]['sha256']
+    if removed == 'rule':
+        other['state'] = 'retired'
+    else:
+        rev = other['revisions'][0]
+        ref = 'clause:' + 'd' * 32
+        sha = module.digest(b'dependency')
+        rev['clauses'] = [dict(id=ref, text='dependency', offset=9, sha256=sha,
+                               parent_sha256=rev['sha256'], overlaps=[])]
+        other = module.refresh_rule(other, b'- Keep a replacement.\n', {ref: {'retire': True}})
+        scans['other'] = module.scan_rules(marked(RULE_B, b'- Keep a replacement.\n'))
+    ctx['instructions'].insert(1, dict(ref=ref, owner='lore', sha256=sha, reason=None))
+    r['assessments'] = [assessment(r, ctx), assessment(r, ctx, 'effectiveness', 'e1')]
+    for a in r['assessments']:
+        a['instruction_dependencies']['items'].insert(0, dict(ref=ref, sha256=sha))
+    records = {r['id']: r, RULE_B: other}
+    module.validate_rule_set(records, scans, {})
+    report = module.assess_rules(records, [ctx], scans)
+    kinds = {f['kind'] for f in report['findings'] if f['subject'] == r['id']}
+    assert {'currency-unverifiable', 'uncertain-applicability', 'untested-effectiveness'} <= kinds
+    assert any(ref in d for d in report['contexts'][0]['diagnostics'])
+
+
+@pytest.mark.parametrize('clause', [False, True])
+def test_review_subject_order_against_dependencies(world, clause):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    if clause:
+        r['revisions'][0]['clauses'] = clause_record(module)['revisions'][0]['clauses']
+    a = assessment(r, ctx)
+    if clause:
+        c = r['revisions'][0]['clauses'][0]
+        a['subject'] = dict(binding='revision', id=c['id'], sha256=c['sha256'])
+    r['assessments'] = [a]
+    target = json.loads(json.dumps(ctx))
+    target['instructions'].insert(2, target['instructions'].pop(0))
+    module.validate_rule_set({r['id']: r}, scans, {})
+    report = module.assess_rules({r['id']: r}, [target], scans)
+    assert 'stale-assessment' in finding_kinds(report)
+    assert any('order' in d for f in report['findings'] for d in f['differences'])
+
+
+@pytest.mark.parametrize('field', ['subject', 'quality'])
+@pytest.mark.parametrize('target', ['missing-owner', 'missing-source', 'valid'])
+def test_review_qualified_singular_sources(world, field, target):
+    module = load_assembler(world)
+    r = json.loads((ROOT / 'tools/fixtures/rule-provenance/historical-excerpt.json').read_bytes())
+    other = module.new_rule_record(RULE_B, 'Source owner', b'- Keep evidence.\n')
+    other['state'] = 'retired'
+    other['sources'] = json.loads(json.dumps(r['sources']))
+    ref = (RULE_B if target != 'missing-owner' else 'rule:' + 'f' * 32) + '#' + ('missing' if target == 'missing-source' else 'source-1')
+    event = r['events'][0]
+    if field == 'subject': event['subject']['source'] = ref
+    else: event['claim']['evidence_quality'][0]['source'] = ref
+    records = {r['id']: r, RULE_B: other}
+    scans = {'core': module.scan_rules(marked(r['id'], r['revisions'][0]['text'].encode()))}
+    if target == 'valid': module.validate_rule_set(records, scans, {})
+    else:
+        with pytest.raises(ValueError, match='reference'): module.validate_rule_set(records, scans, {})
+
+
+@pytest.mark.parametrize('case', ['self-cycle', 'cycle', 'cross-kind', 'cross-subject', 'valid'])
+def test_review_qualified_supersession(world, case):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    old = assessment(r, ctx)
+    old['result']['verdict'] = 'not-applicable'
+    new = assessment(r, ctx, 'effectiveness' if case == 'cross-kind' else 'applicability', 'a2')
+    new['supersedes'] = [r['id'] + '#' + ('a2' if case == 'self-cycle' else 'a1')]
+    if case == 'cycle': old['supersedes'] = [r['id'] + '#a2']
+    if case == 'cross-subject':
+        c = clause_record(module)['revisions'][0]['clauses'][0]
+        r['revisions'][0]['clauses'] = [c]
+        new['subject'] = dict(binding='revision', id=c['id'], sha256=c['sha256'])
+    r['assessments'] = [old, new]
+    if case != 'valid':
+        with pytest.raises(ValueError, match='supersess|superseding'): module.validate_rule_set({r['id']: r}, scans, {})
+    else:
+        module.validate_rule_set({r['id']: r}, scans, {})
+        assert 'uncertain-applicability' not in finding_kinds(module.assess_rules({r['id']: r}, [ctx], scans))
+
+
+@pytest.mark.parametrize('case', ['valid', 'cycle', 'cross-kind', 'cross-subject', 'missing'])
+def test_review_cross_record_supersession(world, case):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    c = clause_record(module)['revisions'][0]['clauses'][0]
+    r['revisions'][0]['clauses'] = [c]
+    other = json.loads(json.dumps(r)); other['id'] = RULE_B; other['state'] = 'retired'
+    old = assessment(other, ctx)
+    new = assessment(r, ctx, 'effectiveness' if case == 'cross-kind' else 'applicability')
+    old['subject'] = new['subject'] = dict(binding='revision', id=c['id'], sha256=c['sha256'])
+    old['result']['verdict'] = 'not-applicable'
+    new['supersedes'] = [RULE_B + '#' + ('missing' if case == 'missing' else 'a1')]
+    if case == 'cycle': old['supersedes'] = [RULE_A + '#a1']
+    if case == 'cross-subject': old['subject'] = dict(binding='revision', id=RULE_B, sha256=other['revisions'][0]['sha256'])
+    r['assessments'], other['assessments'] = [new], [old]
+    records = {RULE_A: r, RULE_B: other}
+    if case != 'valid':
+        with pytest.raises(ValueError, match='supersess|superseding|reference'): module.validate_rule_set(records, scans, {})
+    else:
+        module.validate_rule_set(records, scans, {})
+        report = module.assess_rules(records, [ctx], scans)
+        assert not any(d['subject'] == c['id'] and d['kind'] == 'uncertain-applicability'
+                       for f in report['findings'] for d in f['details'])
+
+
 def test_warning_dimensions_and_reaffirmation(world):
     module = load_assembler(world)
     r, scans, ctx = judgment_world(module)

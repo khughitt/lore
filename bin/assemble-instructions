@@ -319,6 +319,29 @@ def validate_locator(locator):
         raise ValueError('git locator requires owner/path/full commit')
 
 
+def reference_identity(owner, ref):
+    return tuple(ref.split('#', 1)) if '#' in ref else (owner, ref)
+
+
+def validate_supersession(records, *, allow_external=False):
+    assessments = {(owner, a['id']): a for owner, r in records.items() for a in r['assessments']}
+    completed = set()
+    def visit(identity, path):
+        if identity in path: raise ValueError('assessment supersession cycle')
+        if identity in completed: return
+        a = assessments[identity]
+        for ref in a['supersedes']:
+            target = reference_identity(identity[0], ref)
+            if allow_external and target[0] not in records: continue
+            if target not in assessments: raise ValueError('dangling assessment reference')
+            other = assessments[target]
+            if other['kind'] != a['kind'] or other['subject']['id'] != a['subject']['id']:
+                raise ValueError('superseding assessment must address the same kind and subject')
+            visit(target, path | {identity})
+        completed.add(identity)
+    for identity in assessments: visit(identity, set())
+
+
 def validate_rule(record):
     validate_schema(record, rule_schemas()['rule'], 'rule')
     label = record['id']
@@ -343,7 +366,9 @@ def validate_rule(record):
     for group, entries in groups.items():
         if len(entries) != len(record[group]): raise ValueError(f'{label}: duplicate {group} id')
     def references(values, group):
-        if any('#' not in v and v not in groups[group] for v in values): raise ValueError(f'{label}: dangling {group} reference')
+        for value in values:
+            owner, local = reference_identity(label, value)
+            if owner == label and local not in groups[group]: raise ValueError(f'{label}: dangling {group} reference')
     references(record['purpose']['sources'], 'sources')
     for source in record['sources']:
         validate_locator(source['locator']); validate_locator(source['preservation'])
@@ -370,16 +395,6 @@ def validate_rule(record):
             if adoption['target']['binding'] == 'revision': subject_bytes(record, adoption['target'])
     for a in record['assessments']:
         references(a['supersedes'], 'assessments')
-        for ref in a['supersedes']:
-            if '#' in ref: continue
-            other = groups['assessments'][ref]
-            if other['kind'] != a['kind'] or other['subject']['id'] != a['subject']['id']:
-                raise ValueError('superseding assessment must address the same kind and subject')
-        def visit(ident, path):
-            if ident in path: raise ValueError('assessment supersession cycle')
-            for ref in groups['assessments'][ident]['supersedes']:
-                if '#' not in ref: visit(ref, path | {ident})
-        visit(a['id'], set())
         validate_context(a['context'], external=False)
         dependencies = a['instruction_dependencies']
         if dependencies['items'] and not dependencies['rationale']: raise ValueError('dependencies need rationale')
@@ -408,6 +423,7 @@ def validate_rule(record):
                 for key in ('id', 'observations', 'selected_at', 'executed_at', 'intervention'): text(case[key], key)
                 if not isinstance(case['inputs'], dict) or any(not re.fullmatch(HASH, v) for v in case['inputs'].values()): raise ValueError('case input hashes invalid')
                 if case['count'] is not None and (type(case['count']) not in (int, float) or not case['unit']): raise ValueError('measured case needs count and unit')
+    validate_supersession({label: record}, allow_external=True)
 
 
 def validate_context(context, *, external=True):
@@ -452,6 +468,9 @@ def validate_rule_set(records, scans, exclusions):
         def walk(value):
             if isinstance(value, dict):
                 for key, child in value.items():
+                    if key == 'source' and isinstance(child, str) and '#' in child:
+                        owner, local = reference_identity(record['id'], child)
+                        if owner not in records or not any(v['id'] == local for v in records[owner]['sources']): raise ValueError('dangling cross-rule source reference')
                     if key in ('evidence', 'sources', 'searches', 'predecessors', 'supersedes') and isinstance(child, list):
                         group = {'evidence': 'sources', 'predecessors': 'events', 'supersedes': 'assessments'}.get(key, key)
                         for ref in child:
@@ -462,6 +481,7 @@ def validate_rule_set(records, scans, exclusions):
             elif isinstance(value, list):
                 for child in value: walk(child)
         walk(record)
+    validate_supersession(records)
 
 
 def read_rule_set(root, *, index=False, revision=None):
@@ -692,7 +712,17 @@ def current_subjects(records, scans):
     return subjects
 
 
-def compare_assessment(a, subject, target, available):
+def snapshot_issues(context, available, known_local):
+    issues = []
+    for item in context['instructions']:
+        ref = item['ref']
+        local = ref in known_local or (item['owner'] == 'lore' and ref.startswith(('rule:', 'clause:', 'fragment:')))
+        if local and ref not in available: issues.append('local instruction unavailable: ' + ref)
+        elif ref in available and item['sha256'] != available[ref]: issues.append('snapshot mismatch: ' + ref)
+    return issues
+
+
+def compare_assessment(a, subject, target, available, known_local):
     changed, unknown, drift = [], [], []
     def compare(name, old, new):
         if old is None or new is None: unknown.append(name)
@@ -704,8 +734,7 @@ def compare_assessment(a, subject, target, available):
     supplied = {i['ref']: i['sha256'] for i in target['instructions']}
     prior = {i['ref']: i['sha256'] for i in observed['instructions']}
     # A snapshot is evidence of supplied context, not permission to replace local bytes.
-    for ref, sha in supplied.items():
-        if ref in available and sha != available[ref]: unknown.append('snapshot mismatch: ' + ref)
+    unknown.extend(snapshot_issues(target, available, known_local))
     if subject['id'] not in supplied:
         # Clauses may be delivered only as part of their container.
         if subject['parent'] not in supplied: unknown.append('subject delivery snapshot')
@@ -720,6 +749,11 @@ def compare_assessment(a, subject, target, available):
     if [r for r in supplied if r in refs] != refs:
         if set(refs) <= supplied.keys(): changed.append('instruction dependency order')
         else: unknown.append('instruction dependency order')
+    def relevant_order(snapshot):
+        anchor = subject['id'] if subject['id'] in snapshot else subject['parent']
+        if anchor not in snapshot: return None
+        return [subject['id'] if ref == anchor else ref for ref in snapshot if ref == anchor or ref in refs]
+    compare('subject and dependency order', relevant_order(prior), relevant_order(supplied))
     for field, value in observed['environment'].items():
         compare('environment.' + field, value['value'], target['environment'].get(field, {}).get('value'))
     for ref in sorted(prior.keys() | supplied.keys()):
@@ -752,6 +786,11 @@ def assess_rules(records, contexts, scans):
     subjects = current_subjects(records, scans)
     available = {sid: subject['sha256'] for sid, subject in subjects.items()}
     available.update({'fragment:' + name: digest(scan['rendered']) for name, scan in scans.items()})
+    known_local = set(records) | {c['id'] for r in records.values() for rev in r['revisions'] for c in rev['clauses']}
+    judgments_by_subject = {}
+    for rid, record in records.items():
+        for a in record['assessments']:
+            judgments_by_subject.setdefault(a['subject']['id'], []).append((rid, a))
     report = dict(schema=1, coverage=dict(rules=sum(s['id'] == s['parent'] for s in subjects.values()),
         clauses=sum(s['id'] != s['parent'] for s in subjects.values()), retired=sum(r['state'] == 'retired' for r in records.values()),
         tiers={tier: sum(r['state'] == 'active' and r['impact']['tier'] == tier for r in records.values()) for tier in TIERS}), contexts=[], findings=[], history=[])
@@ -765,8 +804,7 @@ def assess_rules(records, contexts, scans):
         if context['model']['value'] is None: diagnostics.append('model unknown')
         if context['harness']['name'] is None or context['harness']['version'] is None: diagnostics.append('harness unknown')
         if not context['instructions']: diagnostics.append('instruction snapshot absent')
-        for item in context['instructions']:
-            if item['ref'] in available and item['sha256'] != available[item['ref']]: diagnostics.append('snapshot mismatch: ' + item['ref'])
+        diagnostics.extend(snapshot_issues(context, available, known_local))
         report['contexts'].append(dict(name=context['name'], snapshot=context, diagnostics=diagnostics))
         findings = []
         for sid, subject in sorted(subjects.items()):
@@ -782,12 +820,12 @@ def assess_rules(records, contexts, scans):
             origin = origins[sid]
             if not origin['current_adoption']:
                 add('unknown-origin', ('Historic authorship unresolved; ' if origin['historic_authorship'] == 'unknown' else '') + 'no evidenced exact-current human adoption.')
-            judgments = [a for a in record['assessments'] if a['subject']['id'] == sid]
-            superseded = {ref for a in judgments for ref in a['supersedes']}
+            judgments = judgments_by_subject.get(sid, [])
+            superseded = {reference_identity(owner, ref) for owner, a in judgments for ref in a['supersedes']}
             current = []
-            for a in judgments:
-                if a['id'] in superseded: continue
-                comparison = compare_assessment(a, subject, context, available)
+            for owner, a in judgments:
+                if (owner, a['id']) in superseded: continue
+                comparison = compare_assessment(a, subject, context, available, known_local)
                 if comparison['changed']: add('stale-assessment', 'Recorded judgment differs: ' + a['id'], comparison['changed'], a['evidence'])
                 if comparison['unknown']: add('currency-unverifiable', 'Cannot establish judgment currency: ' + a['id'], comparison['unknown'], a['evidence'])
                 if comparison['drift']: add('unassessed-context-drift', 'Other observed instructions drifted: ' + a['id'], comparison['drift'], a['evidence'])

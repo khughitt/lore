@@ -165,8 +165,10 @@ Structural errors fail; warnings alone exit successfully.
 
 An assessment's ordered `instruction_dependencies.items` select the comparisons;
 its rationale explains the selection (including an empty list). Compare those
-items, the subject hash, model, harness and every environment field it names.
-Missing values or a snapshot inconsistent with local source are unverifiable.
+items, their order relative to the subject, the subject hash, model, harness and
+every environment field it names. A clause uses its container's position when the
+snapshot supplies only that container. Missing values, retired local dependencies
+and snapshots inconsistent with local source are unverifiable.
 Other instruction/artifact drift is informational. Matching inputs mean only
 that no mismatch is recorded. Approval, applicability and measured effectiveness
 remain independent; a negative experiment still counts as tested.

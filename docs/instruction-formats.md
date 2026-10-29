@@ -161,5 +161,10 @@ identities, including two historical-only clauses. Its excerpt bindings hash
 exact rows of the preserved secondary pilot report, not reconstructed original
 transcripts. Original Git locators were checked for readability; original session
 interpretations remain reported-only. Historical adoption targets name that scope,
-not today's text hash. lore-45303d owns preservation of the vulnerable originals.
+not today's text hash. Source preservation points to the portable evidence packet
+attached on lore-45303d; lore-f95780 owns the retained raw copies. Each captured
+session source identifies one transcript line: `sha256` hashes its portable bytes
+without the newline, and `raw_sha256` matches that line in the packet's row map.
+Splitting grouped session locators preserves their existing evidence references
+and quality labels; it adds no new historical interpretation or adoption claim.
 No current applicability or effectiveness assessment is inferred from this backfill.

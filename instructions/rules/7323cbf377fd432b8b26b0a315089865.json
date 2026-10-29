@@ -46,7 +46,31 @@
           },
           {
             "quality": "unknown",
+            "source": "E6-session-1-L339"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-1-L979"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-1-L525"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-1-L579"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-1-L603"
+          },
+          {
+            "quality": "unknown",
             "source": "E6-session-2"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-2-L107"
           }
         ]
       },
@@ -57,7 +81,13 @@
         "E6-hq-f501323",
         "E6-hq-7a1ee42",
         "E6-session-1",
-        "E6-session-2"
+        "E6-session-1-L339",
+        "E6-session-1-L979",
+        "E6-session-1-L525",
+        "E6-session-1-L579",
+        "E6-session-1-L603",
+        "E6-session-2",
+        "E6-session-2-L107"
       ],
       "id": "G8-origin",
       "kind": "appearance",
@@ -183,8 +213,32 @@
             "source": "E6-session-1"
           },
           {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L339"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L979"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L525"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L579"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L603"
+          },
+          {
             "quality": "unknown",
             "source": "E6-session-2"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-2-L107"
           }
         ]
       },
@@ -193,7 +247,13 @@
         "E6-hq-f501323",
         "E6-hq-7a1ee42",
         "E6-session-1",
-        "E6-session-2"
+        "E6-session-1-L339",
+        "E6-session-1-L979",
+        "E6-session-1-L525",
+        "E6-session-1-L579",
+        "E6-session-1-L603",
+        "E6-session-2",
+        "E6-session-2-L107"
       ],
       "id": "G8.b-origin",
       "kind": "amendment",
@@ -230,7 +290,13 @@
             "E6-hq-f501323",
             "E6-hq-7a1ee42",
             "E6-session-1",
-            "E6-session-2"
+            "E6-session-1-L339",
+            "E6-session-1-L979",
+            "E6-session-1-L525",
+            "E6-session-1-L579",
+            "E6-session-1-L603",
+            "E6-session-2",
+            "E6-session-2-L107"
           ],
           "status": "authorized-scope",
           "target": {
@@ -267,8 +333,32 @@
             "source": "E6-session-1"
           },
           {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L339"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L979"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L525"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L579"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E6-session-1-L603"
+          },
+          {
             "quality": "unknown",
             "source": "E6-session-2"
+          },
+          {
+            "quality": "unknown",
+            "source": "E6-session-2-L107"
           }
         ]
       },
@@ -277,7 +367,13 @@
         "E6-hq-f501323",
         "E6-hq-7a1ee42",
         "E6-session-1",
-        "E6-session-2"
+        "E6-session-1-L339",
+        "E6-session-1-L979",
+        "E6-session-1-L525",
+        "E6-session-1-L579",
+        "E6-session-1-L603",
+        "E6-session-2",
+        "E6-session-2-L107"
       ],
       "id": "G8.b-adoption",
       "kind": "adoption",
@@ -418,10 +514,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E4; reported revision f9c9202; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E4; reported revision f9c9202; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "f9c9202b92cbff2799ff862fbf812ee0519ff968"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object f9c9202b92cbff2799ff862fbf812ee0519ff968 and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -436,10 +538,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E4; reported revision 9bdafc4; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E4; reported revision 9bdafc4; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "9bdafc4e3e9d7485e7ac1352a9cc5387f6d73c59"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object 9bdafc4e3e9d7485e7ac1352a9cc5387f6d73c59 and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -454,10 +562,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E6; reported revision f501323; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E6; reported revision f501323; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "f501323c85f8e69b57b7f884c25d568dfa660754"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object f501323c85f8e69b57b7f884c25d568dfa660754 and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -472,10 +586,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E6; reported revision 7a1ee42; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E6; reported revision 7a1ee42; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "7a1ee42ff1798b747803d20879a7468b68b415ba"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object 7a1ee42ff1798b747803d20879a7468b68b415ba and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -483,40 +603,196 @@
       "transformation": null
     },
     {
-      "access": "not-checked",
+      "access": "available",
       "id": "E6-session-1",
-      "inspected_at": null,
+      "inspected_at": "2026-10-29",
       "locator": {
         "kind": "session",
         "owner": null,
         "path": null,
-        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6, not independently reread.",
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 9; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
         "revision": null
       },
-      "preservation": null,
-      "raw_sha256": null,
-      "representation": "raw",
-      "sha256": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 15 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 15. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "71ab446ae30bb7056947e84591d694aaeb8d3a9ed49ddc20e040603d6c5569df",
+      "representation": "portable-derivative",
+      "sha256": "b777dab75084420cb23797e8f05b8d9d4b930f3a54cfdb5c8a81242df7ba281e",
       "source_time": null,
-      "transformation": null
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
     },
     {
-      "access": "not-checked",
-      "id": "E6-session-2",
-      "inspected_at": null,
+      "access": "available",
+      "id": "E6-session-1-L339",
+      "inspected_at": "2026-10-29",
       "locator": {
         "kind": "session",
         "owner": null,
         "path": null,
-        "reference": "codex:01a09fb1-9046-7ee2-91f5-8b7d0a806e01; JSONL user-role relays 79, 107; reported by pilot E6, not independently reread.",
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 339; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
         "revision": null
       },
-      "preservation": null,
-      "raw_sha256": null,
-      "representation": "raw",
-      "sha256": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 17 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 17. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "360abec1d42734091ecc7c67c60e29461a2210e3729235a0300b99cc55941d51",
+      "representation": "portable-derivative",
+      "sha256": "4485de1f27ab27e1ecc1c99fe8528d0e10b133ea5e7ffea45c2bd9e2f57970a6",
       "source_time": null,
-      "transformation": null
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-1-L979",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 979; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 25 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 25. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "5557f61c000ef5bf70bd41a3b85c52829ffc70225524cc9530a901f22ed75091",
+      "representation": "portable-derivative",
+      "sha256": "c5bbaa190570b67ffa34efd9f85a984748d7c44c9f292dcac7f35b84686d563e",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-1-L525",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 525; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 19 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 19. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "171da07f44722c197838bebdb45a65dcc2b07c40df894309fe874e75f649593d",
+      "representation": "portable-derivative",
+      "sha256": "3c0b2b38ecbaeadf1f3fd7f50c90cc4e85e81715f1b98fc5f2972045fb902fa2",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-1-L579",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 579; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 21 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 21. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "7cf949a258638f835d0029adef648915e72efd16f29bd6005b678cc5811e1932",
+      "representation": "portable-derivative",
+      "sha256": "9657d05d5e18e8d48fd440dab825cd01f16f3449f7981ba9b6da0232ed933429",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-1-L603",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:a5e72c12-f489-4eae-9194-e25ee8e820c4; JSONL user 9, 339, 979; relay 525, 579, 603; reported by pilot E6. This source binds only JSONL line 603; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 23 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 23. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "65abcf9ffd6028cf0fe9e203056fbe827bc9040be59b8d30e1635bc80e63b5c5",
+      "representation": "portable-derivative",
+      "sha256": "f58e3c51fa88c6d4a5efdebbf9695e9460d9c1d787b5cb3656d378683737ab86",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-2",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "codex:01a09fb1-9046-7ee2-91f5-8b7d0a806e01; JSONL user-role relays 79, 107; reported by pilot E6. This source binds only JSONL line 79; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 60 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 60. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "4e3451dc578535b946913213675e38ddf90b195f6b5df400f9098804d988cf0a",
+      "representation": "portable-derivative",
+      "sha256": "4e3451dc578535b946913213675e38ddf90b195f6b5df400f9098804d988cf0a",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E6-session-2-L107",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "codex:01a09fb1-9046-7ee2-91f5-8b7d0a806e01; JSONL user-role relays 79, 107; reported by pilot E6. This source binds only JSONL line 107; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 62 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 62. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "7f49be7cdc82cff628d9dbaf269638dde3a544325475fc2cf073ff79a003e49e",
+      "representation": "portable-derivative",
+      "sha256": "7f49be7cdc82cff628d9dbaf269638dde3a544325475fc2cf073ff79a003e49e",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
     }
   ],
   "state": "active",

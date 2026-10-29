@@ -164,10 +164,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E1; reported revision b0e3454; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E1; reported revision b0e3454; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "b0e3454bbff6d8f5531bd4b420e2ff6ce0a8d97e"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object b0e3454bbff6d8f5531bd4b420e2ff6ce0a8d97e and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -182,10 +188,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E7; reported revision 555ebec; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E7; reported revision 555ebec; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "555ebec5581eb0da3aa13887dcee3bca8f38170f"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object 555ebec5581eb0da3aa13887dcee3bca8f38170f and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,

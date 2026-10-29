@@ -31,13 +31,28 @@
           {
             "quality": "originating-request/proposal",
             "source": "E12-session-1"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L584"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L663"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L664"
           }
         ]
       },
       "evidence": [
         "pilot-report",
         "E12-hq-555ebec",
-        "E12-session-1"
+        "E12-session-1",
+        "E12-session-1-L584",
+        "E12-session-1-L663",
+        "E12-session-1-L664"
       ],
       "id": "G4-origin",
       "kind": "appearance",
@@ -72,7 +87,10 @@
           "evidence": [
             "pilot-report",
             "E12-hq-555ebec",
-            "E12-session-1"
+            "E12-session-1",
+            "E12-session-1-L584",
+            "E12-session-1-L663",
+            "E12-session-1-L664"
           ],
           "status": "authorized-scope",
           "target": {
@@ -103,13 +121,28 @@
           {
             "quality": "originating-request/proposal",
             "source": "E12-session-1"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L584"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L663"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "E12-session-1-L664"
           }
         ]
       },
       "evidence": [
         "pilot-report",
         "E12-hq-555ebec",
-        "E12-session-1"
+        "E12-session-1",
+        "E12-session-1-L584",
+        "E12-session-1-L663",
+        "E12-session-1-L664"
       ],
       "id": "G4-adoption",
       "kind": "adoption",
@@ -233,10 +266,16 @@
         "kind": "git",
         "owner": "hq",
         "path": "AGENTS.md",
-        "reference": "Pilot E12; reported revision 555ebec; blob readability checked, historical interpretation imported from pilot. Original preservation remains lore-45303d scope.",
+        "reference": "Pilot E12; reported revision 555ebec; blob readability checked, historical interpretation imported from pilot. Preserved source packet attached on lore-45303d.",
         "revision": "555ebec5581eb0da3aa13887dcee3bca8f38170f"
       },
-      "preservation": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-hq-objects.portable.batch",
+        "reference": "lore-45303d: pilot-hq-objects.portable.batch; commit object 555ebec5581eb0da3aa13887dcee3bca8f38170f and its root tree and AGENTS.md blob. Portable derivative: restore with the placeholder mapping note on lore-45303d before checking object IDs. Raw copy $WORK_ROOT/lore/lore-45303d/raw/hq-objects.batch retained by lore-f95780.",
+        "revision": null
+      },
       "raw_sha256": null,
       "representation": "raw",
       "sha256": null,
@@ -244,22 +283,100 @@
       "transformation": null
     },
     {
-      "access": "not-checked",
+      "access": "available",
       "id": "E12-session-1",
-      "inspected_at": null,
+      "inspected_at": "2026-10-29",
       "locator": {
         "kind": "session",
         "owner": null,
         "path": null,
-        "reference": "claude-code:95c6e29f-0d94-4e60-9943-1aeedd49379f; JSONL assistant 576; user 584; tool 663, 664; reported by pilot E12, not independently reread.",
+        "reference": "claude-code:95c6e29f-0d94-4e60-9943-1aeedd49379f; JSONL assistant 576; user 584; tool 663, 664; reported by pilot E12. This source binds only JSONL line 576; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
         "revision": null
       },
-      "preservation": null,
-      "raw_sha256": null,
-      "representation": "raw",
-      "sha256": null,
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 40 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 40. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "fc6c8a59db218f17708b8fcf69ba336e6783ad925e95946280685372a4fa4cb9",
+      "representation": "portable-derivative",
+      "sha256": "5090a4998c8f4d261275a51c3183756439fc909949711f8ac06fe28b7aa7b68c",
       "source_time": null,
-      "transformation": null
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E12-session-1-L584",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:95c6e29f-0d94-4e60-9943-1aeedd49379f; JSONL assistant 576; user 584; tool 663, 664; reported by pilot E12. This source binds only JSONL line 584; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 41 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 41. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "788a0324a44ed9c1eb7f6869f36b174350fc39b0e383f06172a41a998a92a2fa",
+      "representation": "portable-derivative",
+      "sha256": "56207265c9ba0d8b1563b5a793e029ec193c504eeba3cefea72081c8ff6a8e36",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E12-session-1-L663",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:95c6e29f-0d94-4e60-9943-1aeedd49379f; JSONL assistant 576; user 584; tool 663, 664; reported by pilot E12. This source binds only JSONL line 663; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 42 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 42. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "f373dabee9e813686a961908a84b5a26f311a70d746c2d6dd3c5d08a75bc06ef",
+      "representation": "portable-derivative",
+      "sha256": "3f745ffcc65b03b52d46de83ed02252cfcae4d07af63ba12c939f64e39741768",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
+    },
+    {
+      "access": "available",
+      "id": "E12-session-1-L664",
+      "inspected_at": "2026-10-29",
+      "locator": {
+        "kind": "session",
+        "owner": null,
+        "path": null,
+        "reference": "claude-code:95c6e29f-0d94-4e60-9943-1aeedd49379f; JSONL assistant 576; user 584; tool 663, 664; reported by pilot E12. This source binds only JSONL line 664; the other explicitly cited lines have separate source entries. Availability describes the preserved bytes of this line only; historical interpretation remains imported from the pilot.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-45303d/pilot-session-excerpts.portable.jsonl",
+        "reference": "lore-45303d: pilot-session-excerpts.portable.jsonl record 43 (1-based; line bytes without newline); raw line SHA-256 in pilot-session-excerpts.map.tsv row 43. Raw copy $WORK_ROOT/lore/lore-45303d/raw/session-excerpts.jsonl retained by lore-f95780.",
+        "revision": null
+      },
+      "raw_sha256": "dee0708ec640c91650762898f7858b6b4115862dbfb3e486d1b34ab5f9ec56d6",
+      "representation": "portable-derivative",
+      "sha256": "bf9656701ccc597b599faba99b5fe677b6869869b6f54c22a19111f87b94e129",
+      "source_time": null,
+      "transformation": "Whole-word host-layout substitutions (@@HOME@@, @@SYNC_ROOT@@, @@HOST@@) only; restore with the placeholder mapping note on lore-45303d. sha256 hashes this portable record without its newline; raw_sha256 is the raw line hash from the row map."
     }
   ],
   "state": "active",

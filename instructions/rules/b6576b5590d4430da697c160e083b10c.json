@@ -1,6 +1,251 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent wrote disabled-obligation retirement, per-host/target incident accounting, retained unrelated halts, and the rollback eligibility floor.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl"
+      ],
+      "id": "B3-01a187-L1259-retirement",
+      "kind": "proposal",
+      "occurred_at": "2026-10-29T13:15:07.768Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:41:00.972248+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "3dd7e43f9e23216cc3e3f131e1b74d071488f8513d1fbaf715267545368bff3e",
+        "id": "clause:87806f6d11bf442fbafd84b680bd55ce",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+          "reference": "Exact original JSONL line 1259, packet line 3, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent presented the three-phase closeout: worktree dry-run, successful uncontended unwidened starts after merge on all breach hosts, then registered-checkout recording with output separate from exit status and closure only on the all-obligations verdict.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl"
+      ],
+      "id": "B3-74f3347-L167-closeout",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T22:13:54.746Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:41:00.972248+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "7c704d87964374e01e919c3a3702c18fab3f14c2977625c3f4cbb297685bf743",
+        "id": "clause:97900973dff74106b6351b14f94ac243",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+          "reference": "Exact original JSONL line 167, packet line 44, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+            "git-82bc129.md"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-dcfa2d",
+            "revision": "82bc1299ae8c73dc50b514d04f7e648e98c8a851",
+            "scope": "Paraphrase: Merge prepared 82bc129 implementing the latency dry-run, merge-cutoff and per-host recording phases, with output attached separately from exit status and closure only when every obligation is met. Policy-off retirement was added later and is outside this scope."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-82bc129.md"
+          }
+        ]
+      },
+      "evidence": [
+        "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+        "git-82bc129.md"
+      ],
+      "id": "B3-74f3347-L178-closeout",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T22:23:53.996Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:41:00.972248+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "ade2f90fee69840af5041ab58fe39a1df2770599b171f5c7ba84cd70a9e37705",
+        "id": "clause:97900973dff74106b6351b14f94ac243",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+          "reference": "Exact original JSONL line 178, packet line 45, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+            "policy-activation-9e094c6.md",
+            "git-e0e9d37.md"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:ops-8bfa85",
+            "revision": "e0e9d37aee65a896780971a29e84b733eb8e3084",
+            "scope": "Paraphrase: Execute the prepared activation packet at ops 9e094c6, whose instruction branch is e0e9d37: integrate reviewed ops/obs/lore branches and publish tt, with at most two ops pilot pushes and no other project policy activation. The structured reply supplies only Yes; the question is agent-authored. Billing minutes and enforced budget confirmation were requested but not supplied by that answer; fulfillment is not asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "policy-activation-9e094c6.md"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-e0e9d37.md"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+        "policy-activation-9e094c6.md",
+        "git-e0e9d37.md"
+      ],
+      "id": "B3-01a187-L2227-retirement",
+      "kind": "adoption",
+      "occurred_at": "2026-10-29T14:41:32.394Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:41:00.972248+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "2ed6b83f81d47719b5b7763f17199e946e4c95e77f3eeb44bd6fa97b059cd1ff",
+        "id": "clause:87806f6d11bf442fbafd84b680bd55ce",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+          "reference": "Exact original JSONL line 2227, packet line 44, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:b6576b5590d4430da697c160e083b10c",
   "impact": {
     "categories": [
@@ -11,9 +256,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Separate retired policy-off latency obligations from evidence-based closeout of enabled obligations."
   },
   "relations": [],
   "revisions": [
@@ -24,15 +269,408 @@
       "text": "A latency incident tagged `test-latency` closes in three phases. In the remedy's\nworktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and\nrecords nothing. After the remedy branch merges, the cutoff is the merge commit's time\nin UTC (`2026-09-26T18:35:55Z`): only successful, uncontended, unwidened runs that start\nstrictly after it count, so let them accumulate on every host named in the breach notes.\nThen, on each of those hosts, record from the registered checkout with the task's claim\nmoved there (`tasks start <id>` in it), keeping the output and the exit status apart:\n`out=$(mktemp); tt-latency verify <id> --after <cutoff> >\"$out\" 2>&1; rc=$?`, then\n`tasks attach <id> \"$out\" --name verify-<host>.txt --caption \"<verdict line>\"`, then\nread `rc`. A successful attach is not a successful verify. Each run notes the\nobligations its host meets and exits 1 while another host still owes one; close only\nafter a run exits 0 with `verified: every obligation is met`, with a one-line `tasks\ndone` message naming that verdict, the cutoff and the attachment names, never the\noutput itself.\n"
     },
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:87806f6d11bf442fbafd84b680bd55ce",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30",
+          "sha256": "7c8b2f25551d30847a55da0fc5add3b461b87e4a8a85acb4b6cbd489a5b2b287",
+          "text": "For adopted policy-off projects, disabled broad targets create no routine latency\nobligation; timing findings on remaining local paths are advisory. Forced runs are\ndiagnostic and do not reactivate disabled obligations. Judge disposition against the\nregistered main code checkout: a branch-local policy edit alone retires nothing.\nFor each existing incident, inspect every host/target, note each retired obligation\nwith its landed policy revision, and remove only the timing halt. Keep unrelated\nhalts and remaining diagnosis. Disabled obligations are not applicable, never met;\nclose or drop solely retired work as policy-retired, not performance-verified.\nA rollback records `policy: enabled at <RFC3339-UTC> revision <full-sha>` on the\nadoption task with source `tt-policy:<prefix>`; latency eligibility restarts there.\nEnabled obligations continue to use the verification procedure below.\n\n"
+        },
+        {
+          "id": "clause:97900973dff74106b6351b14f94ac243",
+          "offset": 894,
+          "overlaps": [],
+          "parent_sha256": "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30",
+          "sha256": "3d8f0050d314108fbe5bd630076cac978d14bd4caa105dd84898650c5af3521e",
+          "text": "A latency incident tagged `test-latency` closes in three phases. In the remedy's\nworktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and\nrecords nothing. After the remedy branch merges, the cutoff is the merge commit's time\nin UTC (`2026-09-26T18:35:55Z`): only successful, uncontended, unwidened runs that start\nstrictly after it count, so let them accumulate on every host named in the breach notes.\nThen, on each of those hosts, record from the registered checkout with the task's claim\nmoved there (`tasks start <id>` in it), keeping the output and the exit status apart:\n`out=$(mktemp); tt-latency verify <id> --after <cutoff> >\"$out\" 2>&1; rc=$?`, then\n`tasks attach <id> \"$out\" --name verify-<host>.txt --caption \"<verdict line>\"`, then\nread `rc`. A successful attach is not a successful verify. Each run notes the\nobligations its host meets and exits 1 while another host still owes one; close only\nafter a run exits 0 with `verified: every obligation is met`, with a one-line `tasks\ndone` message naming that verdict, the cutoff and the attachment names, never the\noutput itself.\n"
+        }
+      ],
       "locator": null,
       "sha256": "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30",
       "text": "For adopted policy-off projects, disabled broad targets create no routine latency\nobligation; timing findings on remaining local paths are advisory. Forced runs are\ndiagnostic and do not reactivate disabled obligations. Judge disposition against the\nregistered main code checkout: a branch-local policy edit alone retires nothing.\nFor each existing incident, inspect every host/target, note each retired obligation\nwith its landed policy revision, and remove only the timing halt. Keep unrelated\nhalts and remaining diagnosis. Disabled obligations are not applicable, never met;\nclose or drop solely retired work as policy-retired, not performance-verified.\nA rollback records `policy: enabled at <RFC3339-UTC> revision <full-sha>` on the\nadoption task with source `tt-policy:<prefix>`; latency eligibility restarts there.\nEnabled obligations continue to use the verification procedure below.\n\nA latency incident tagged `test-latency` closes in three phases. In the remedy's\nworktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and\nrecords nothing. After the remedy branch merges, the cutoff is the merge commit's time\nin UTC (`2026-09-26T18:35:55Z`): only successful, uncontended, unwidened runs that start\nstrictly after it count, so let them accumulate on every host named in the breach notes.\nThen, on each of those hosts, record from the registered checkout with the task's claim\nmoved there (`tasks start <id>` in it), keeping the output and the exit status apart:\n`out=$(mktemp); tt-latency verify <id> --after <cutoff> >\"$out\" 2>&1; rc=$?`, then\n`tasks attach <id> \"$out\" --name verify-<host>.txt --caption \"<verdict line>\"`, then\nread `rc`. A successful attach is not a successful verify. Each run notes the\nobligations its host meets and exits 1 while another host still owes one; close only\nafter a run exits 0 with `verified: every obligation is met`, with a one-line `tasks\ndone` message naming that verdict, the cutoff and the attachment names, never the\noutput itself.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:41:00.972248+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-3-bound",
+      "recorder": "codex",
+      "scope": "Read latency closeout tasks and 74f3347c prepared summary 167, prepared revision and merge approval 178. Read policy-off task and 01a1874f exact write 1259, prepared activation packet and reply 2227. Compare original latency guidance and each amendment. One named candidate per amendment.",
+      "unresolved": [
+        "The three-phase closeout and policy-off retirement have separate proposals and approvals. No live incident verification is inferred from historical tests or attachment success. Policy activation billing controls remain unconfirmed; no current text adoption or obligation disposition is asserted."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-7d05887-context.txt",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-7d05887-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-7d05887-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "3246527aa4e11c0790f7e72b4dab1f401337337530b68690cba6ca618673e7be",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-7d05887.md",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 7f60d5db828285c1cc54d0cf30d60f6857f77ab4; commit metadata and path diff in matching -context.txt",
+        "revision": "7d05887ba813dd7796806de5956617fb38ca08cd"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-7d05887.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "10cde4e96f66687d57fa3941de27eaa0548aeef57f793dff09347148c9adcb97",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-82bc129-context.txt",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-82bc129-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-82bc129-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "0513a49d357b41959234857563b69a1b90b6ea6cb59dcd2bf89a65248a9d9a06",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-82bc129.md",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 7f60d5db828285c1cc54d0cf30d60f6857f77ab4; commit metadata and path diff in matching -context.txt",
+        "revision": "82bc1299ae8c73dc50b514d04f7e648e98c8a851"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-82bc129.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "10cde4e96f66687d57fa3941de27eaa0548aeef57f793dff09347148c9adcb97",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-97fdadb-context.txt",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "96361ab0da0d0faf5d0572ffa33c1bfcaa9a1afd9370b8f8c4b852457501f568",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-97fdadb.md",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Original blob 102ea381377e891853a4c60228c820add6659c0e; commit metadata and path diff in matching -context.txt",
+        "revision": "97fdadbf0d9080e38adedd526167821b1ea30dbc"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8c193be95544493587138eb5a7ff9ea59243f7ba5f18229902ad1a103983d6ed",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-e0e9d37-context.txt",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e0e9d37-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e0e9d37-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "2144a0aeba86ad2c7974d5f3ab67e074919147160a5845d5a8fef3c0334ce02f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-e0e9d37.md",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 1c4bc5f1bff5ddaf5a2a339b2d15432b2cbbdfab; commit metadata and path diff in matching -context.txt",
+        "revision": "e0e9d37aee65a896780971a29e84b733eb8e3084"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e0e9d37.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "6db1ffd70c176e3a116838a1522c0d5ad566d88b6b34c7274dafc9c2d7d0e56f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "policy-activation-9e094c6.md",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/policy-activation-9e094c6.md",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/policy-activation-9e094c6.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "63babc0904cde68d54714145a9b9e021fff3bd20e47d372bf550443a7ddd924b",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "codex",
+        "path": null,
+        "reference": "01a1874f-c2d8-7320-ae81-7114e37e343f; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/session-01a1874f-c2d8-7320-ae81-7114e37e343f.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "54d75cf38a7b3c8dfe406bca208f26dff999ed61bba6a9908aaebd10fcc49c54",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "74f3347c-3fc5-4490-9021-e512feec9a00; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/session-74f3347c-3fc5-4490-9021-e512feec9a00.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "35486a6f0bbdb9ef8f6250f3bd86045d822d059e11e66cfbb41debafab7ea2a8",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-dcfa2d.json",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-dcfa2d.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-dcfa2d.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "367c8e6883cb0d442f97dae69a3a93e43567a6b5d268690639808f1cf7fa6745",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-e24159.json",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-e24159.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-e24159.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "89c449e3304b7abd515740e1f650e95b0b734128fd00dc17b99a47b097aced0c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-fdbe86.json",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-fdbe86.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-fdbe86.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "ed3d3ef82221237f304121fd4fc5f360d20ae875e6116b1abe20771d8889749e",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-ops-8bfa85.json",
+      "inspected_at": "2026-10-29T17:41:00.972248+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-ops-8bfa85.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-ops-8bfa85.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "b532c7d349cf8261410ac893c68c19ad8d0405132e38094ac98a97db14b74a75",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Latency incident verification"
 }

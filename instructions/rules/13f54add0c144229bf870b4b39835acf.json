@@ -1,6 +1,60 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent added the halt-first instruction and explicit forced-start reason requirement; later timer authorization is outside this rule.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl"
+      ],
+      "id": "B3-01a0f-L2854",
+      "kind": "proposal",
+      "occurred_at": "2026-09-30T15:30:28.225Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:59.013708+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "1b4d044e94b7705173e5e7a9767164e2e26f2c0684f90d53b753a7e6ffff860c",
+        "id": "rule:13f54add0c144229bf870b4b39835acf",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl",
+          "reference": "Exact original JSONL line 2854, packet line 16, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:13f54add0c144229bf870b4b39835acf",
   "impact": {
     "categories": [
@@ -12,9 +66,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Make open halt tasks take priority and require a reasoned override."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +80,192 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:40:59.013708+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-3-bound",
+      "recorder": "codex",
+      "scope": "Read hq-17165c and source ops-5beefd, named 01a0f1f2 exact patch 2854 and neighboring results. Preserved later question/approval 2956–2968 to establish that it concerns an hourly timer rather than this global instruction. One origin candidate.",
+      "unresolved": [
+        "The observed agent patch supplies this wording. Later human Approve refers to the timer and is excluded from rule adoption. No original human wording or separate prepared-rule approval recovered."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-0c32662-context.txt",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0c32662-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0c32662-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8785fe7d52e351c19d2d618a423fe7e0d2cc013245e4311b00ea2545182caa1c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-0c32662.md",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob d9047df28327c59f94198f124f2c07b43749e9ed; commit metadata and path diff in matching -context.txt",
+        "revision": "0c326620c08870406a847d8397786c044775a236"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0c32662.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "0435b08b97bb988bbb141cdcf466aa2b69f1913ab77e4f981b609a5cb0ebf4ba",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-97fdadb-context.txt",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "96361ab0da0d0faf5d0572ffa33c1bfcaa9a1afd9370b8f8c4b852457501f568",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-97fdadb.md",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Original blob 102ea381377e891853a4c60228c820add6659c0e; commit metadata and path diff in matching -context.txt",
+        "revision": "97fdadbf0d9080e38adedd526167821b1ea30dbc"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-97fdadb.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8c193be95544493587138eb5a7ff9ea59243f7ba5f18229902ad1a103983d6ed",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "codex",
+        "path": null,
+        "reference": "01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/session-01a0f1f2-8c7e-71c3-9d0e-3ec49cdcdfef.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "9c15067de92c4e5b5a5a07ceb35742df9e9da8ec0f8b6cebec63d9f97aca505c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-hq-17165c.json",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-hq-17165c.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-hq-17165c.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "b61ec4ac9cc735415a146d4b62ff83f6dc480e5cc1781a248a684c370dcf8ee6",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-ops-5beefd.json",
+      "inspected_at": "2026-10-29T17:40:59.013708+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-ops-5beefd.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-ops-5beefd.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "45c8fb0be13938046fabc9f7b3bfd5fb7f847f035244b91066a794eea615f260",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Halt tasks take priority"
 }

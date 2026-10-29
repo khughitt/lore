@@ -2037,6 +2037,142 @@
       },
       "sha256": "cdf9390129c4e3de4eef83e23c69ca53260e56587dde3c94e45e59312775c6cd",
       "text": "- Before changing repository code \u2014 for any task, direct or planned, not only a brainstorming + planning session \u2014 work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. The baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason \"on WORK_ROOT storage (host: $(uname -n))\" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:39d94446bdc0450985100de6f97dbfdb",
+          "offset": 2,
+          "overlaps": [
+            "clause:0183696dc69141778d74491405dacbd0"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "0eb8ec4201cb9e0e72c453f4493100c2c02426d1fba10ba16025cb443267d013",
+          "text": "Before changing repository code \u2014 for any task, direct or planned, not only a brainstorming + planning session \u2014 work in a worktree under `.worktrees/`, unless explicitly instructed to work in place."
+        },
+        {
+          "id": "clause:cccb5c5ca65c4f51a94ef4bb7dfd3a49",
+          "offset": 256,
+          "overlaps": [],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "211ab1901a04c60d9add5396171ab4056ccb113e0ab601ad7435f62ff2b1798b",
+          "text": "otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them."
+        },
+        {
+          "id": "clause:ea022a70ee3c46728e5d2632d5aeee5b",
+          "offset": 527,
+          "overlaps": [
+            "clause:2ce2b70a3df94135b76fb0f2937baad7",
+            "clause:5c8d139ce4b7483f990dbfd7d2f5e8d7",
+            "clause:b08babadfa4942fd9a6c9889931f3d3c"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "3ce3a3bb64f103bc020a9db8544701f23543b687da6f12b7f5766873ef8a4175",
+          "text": "Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug."
+        },
+        {
+          "id": "clause:0183696dc69141778d74491405dacbd0",
+          "offset": 2,
+          "overlaps": [
+            "clause:39d94446bdc0450985100de6f97dbfdb"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "1ef5b5e97ff1cf380ec8ea0245f8a8792961237f9df6714f54d371486c592d23",
+          "text": "Before changing repository code \u2014 for any task, direct or planned, not only a brainstorming + planning session \u2014 work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming;"
+        },
+        {
+          "id": "clause:7c3a9a0d1a824729830e5b09ba8ef6c1",
+          "offset": 3956,
+          "overlaps": [
+            "clause:9b86205674ed4869b716a93dcb836ebc",
+            "clause:85962282893c44c4889242abb6be8347"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "ce63c4ffbed2f51e604c511b991fb2b0985750ef4cddb2e84d4099f26e932849",
+          "text": "On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason \"on WORK_ROOT storage (host: $(uname -n))\" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`."
+        },
+        {
+          "id": "clause:9b86205674ed4869b716a93dcb836ebc",
+          "offset": 4370,
+          "overlaps": [
+            "clause:7c3a9a0d1a824729830e5b09ba8ef6c1"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "2d073987005c8d9d69030e219210c879d32189638baf251d93a1e55c2871980d",
+          "text": "a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing)"
+        },
+        {
+          "id": "clause:85962282893c44c4889242abb6be8347",
+          "offset": 4243,
+          "overlaps": [
+            "clause:7c3a9a0d1a824729830e5b09ba8ef6c1"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "d09035d169f203a3f3c672896af68fb2bcad31d13fdbb6b598ff72de1f76b30d",
+          "text": "a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once)"
+        },
+        {
+          "id": "clause:9171ecba075e47f9840fa9725841eca0",
+          "offset": 2783,
+          "overlaps": [],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "70de22ebd8fdaa65bb16d1f30f25b004bc1edc1ca55aa719f1ae7272e8cef551",
+          "text": "Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation."
+        },
+        {
+          "id": "clause:2ce2b70a3df94135b76fb0f2937baad7",
+          "offset": 628,
+          "overlaps": [
+            "clause:ea022a70ee3c46728e5d2632d5aeee5b"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "6dcbbfba11fb98071b63092ddd2c6bce262669fcdb0df842c1665b1e9a6d7a99",
+          "text": "`just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`)."
+        },
+        {
+          "id": "clause:7024bd5528e74750885c7254adbb4c54",
+          "offset": 3054,
+          "overlaps": [
+            "clause:270555c8bf0f48be9ad285ce267787a7"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "74191fe7bf9dac092ea4df4f1c41167ced0a0a5996eb05a030376e2f927c52a5",
+          "text": "For a validated policy-off checkout under the Tests rule, direct worktree creation and planned execution Setup keep hydration but run the relevant focused baseline when code work begins; record its scope and the deliberate omission of the broad baseline. Documentation-only work invents no focused test obligation. Otherwise the baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. "
+        },
+        {
+          "id": "clause:270555c8bf0f48be9ad285ce267787a7",
+          "offset": 3526,
+          "overlaps": [
+            "clause:7024bd5528e74750885c7254adbb4c54"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "4512cc7d0cd039a0b79bd4560be5d061b18bf07e0a08a77f93010401f8b906e0",
+          "text": "where a single documented test command or the package test script it points to counts)"
+        },
+        {
+          "id": "clause:5c8d139ce4b7483f990dbfd7d2f5e8d7",
+          "offset": 1018,
+          "overlaps": [
+            "clause:ea022a70ee3c46728e5d2632d5aeee5b"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "b1d07e23e940b79ce463d94d8130e624fb2bf3062d0aef1a0acca3666a8055a3",
+          "text": "A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues."
+        },
+        {
+          "id": "clause:b08babadfa4942fd9a6c9889931f3d3c",
+          "offset": 2447,
+          "overlaps": [
+            "clause:ea022a70ee3c46728e5d2632d5aeee5b"
+          ],
+          "parent_sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+          "sha256": "5f5b7f1bcefc239537c7cc98c1ac78b47e018ab5d4fa0432fe467734b7f57202",
+          "text": "a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first."
+        }
+      ],
+      "locator": null,
+      "sha256": "7fdc281752050d75dfde137052881eae9c2fbb6cd0c5581cd599e28a952756db",
+      "text": "- Before changing repository code \u2014 for any task, direct or planned, not only a brainstorming + planning session \u2014 work in a worktree under `.worktrees/`, unless explicitly instructed to work in place. Reuse the task's existing worktree when resuming; otherwise create one with `git worktree add`, not a native worktree tool. `EnterWorktree` and its equivalents place worktrees under `.claude/worktrees/`, which only one harness reads; `.worktrees/` works for all of them. Planned work creates it before drafting the spec. Right after `git worktree add`, hydrate the new worktree from the first source the project declares: `just setup` when its justfile defines it (it installs dependencies and hydrates gitignored inputs); else the setup command its root guide names, or one its README or CONTRIBUTING names that writes only inside the worktree; else the frozen install of a lockfile that names its package manager and installs inside the worktree (`package-lock.json`: `npm ci`; `uv.lock`: `uv sync --frozen`). A command the root guide, README or CONTRIBUTING names may have its default build or install destinations pointed inside the worktree by its own documented settings or flags (`cargo install --locked --path .` with `--root` and `CARGO_TARGET_DIR` under the worktree), and must have them when it would otherwise replace a tool on the host's `PATH`; a shared download cache is not an environment and may stay where it is. That confinement is not guessing an installer and needs no approval, as long as the confined run neither swaps the package manager nor writes a shared environment. A confined README or CONTRIBUTING command writes only inside the worktree; a README or CONTRIBUTING command that no documented setting confines, or any named command that would still replace a tool on the host's `PATH`, is reported as a missing setup route before the first commit. A bare manifest (`pyproject.toml`, `package.json` or `requirements.txt` without a lockfile), or a lockfile whose install can leave the worktree (Poetry's default cache environment), declares no usable installer: never guess one, as the worktree skill's Step 2 would, and report the missing setup route before the first commit; the report informs, asks no approval, and the work continues. Hydrate before that commit: an unhydrated tree's hooks can stop at an `npx` install prompt or run unpinned tools. A checkout that declares no dependencies needs no setup, and a worktree checked out only to be read (for example a historical snapshot under review, in which nothing is committed, tested or run) needs neither hydration nor the baseline below until something is to run or be committed in it, when both come first. A suite that fails in a new worktree before setup is an unhydrated tree, not a bug. Planned work, whose worktree precedes its spec, defers the worktree skill's baseline tests (its Step 3) there: no code changes before the plan runs, and execution's Setup re-enters that skill and runs them before the first code change. Direct work runs them at creation. For a validated policy-off checkout under the Tests rule, direct worktree creation and planned execution Setup keep hydration but run the relevant focused baseline when code work begins; record its scope and the deliberate omission of the broad baseline. Documentation-only work invents no focused test obligation. Otherwise the baseline runs the project's full-suite route (`just test` where the justfile defines it, otherwise the full-suite command its guide documents, where a single documented test command or the package test script it points to counts); its fast recipe serves only where the project states that the recipe runs that same suite with no change selection. Note the command and the number of tests it ran on the task: a run that selects no tests is not a passing baseline. A project that declares no full-suite route is reported as the Tests rule says, never given a guessed runner. On every host running dotfiles, a checkout under `~/d` keeps `.worktrees/` as a relative symlink into that host's storage, created by `just setup` or `work-link --ensure .worktrees`, which also keeps git's worktree admin directory out of Dropbox; run it before every `git worktree add` (a `File exists` error on `.worktrees`, `.venv` or `target` means a link arrived before its storage did: run `work-link` once) (a checkout elsewhere, such as a clone under a temp dir, keeps `.worktrees/` in-tree: `--ensure` reports `outside` and does nothing); lock the new worktree right after creating it (`git worktree lock --reason \"on WORK_ROOT storage (host: $(uname -n))\" .worktrees/<name>`), and remove one with `git worktree unlock <path>` then `git worktree remove <path>`. Read-only investigation and task-record maintenance alone need no worktree.\n"
     }
   ],
   "schema": 1,

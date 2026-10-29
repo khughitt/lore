@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:8d52bc64e99b42d78f4219f73c3b375c",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Reserves judgment, spending and outside-repository actions for the user.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "85670d9fa1f84e7c92da47b07f945728a2de8999d602634d01c9e714e0deed1f",
+      "text": "- Stop and ask only when the answer needs the user: an artifact they must inspect and\n  judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority\n  that no recommendation can settle, money to spend, or an action outside the repository.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Human-only decision gates"
+}

@@ -5,8 +5,8 @@
   },
   "assembler": {
     "path": "bin/assemble-instructions",
-    "revision": "57026967939c008e9cc68d2d73cdad403e48a0c1",
-    "sha256": "548b67387373d168d0c06ce6b7c666ce4d02cca3d6c87afdf81fb110a67bafd9"
+    "revision": "05f1595be155a5d145f369186e594bee4aa5b8c6",
+    "sha256": "b7b6d47bb70a857369c5b44c3353ca86c5dde55cb51e9bc15c445a6cefdfbbda"
   },
   "catalog": {
     "path": "instructions/assembly.toml",
@@ -30,8 +30,35 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep explicit development preferences.",
-      "revision": "cf56d62fc5b24064eadbc4b7e4cc5d463b294e0a",
-      "sha256": "c639112982cfc288ebdda988f41c1739fc2dff215d1f09fbe23cc60ece63d410",
+      "rendered_sha256": "c639112982cfc288ebdda988f41c1739fc2dff215d1f09fbe23cc60ece63d410",
+      "revision": "7bdd680d38e8661750a296c5baa780ad34ac5541",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:1e4c4c879ad34876857c216676aa806e",
+          "length": 28,
+          "offset": 27,
+          "record": "instructions/rules/1e4c4c879ad34876857c216676aa806e.json",
+          "sha256": "e23441acb0d8c45a620a77554018896196413a07acb739e0618786c6ef65b7da"
+        },
+        {
+          "clauses": [],
+          "id": "rule:13b994f01abc4679a2ad72822806d9c0",
+          "length": 23,
+          "offset": 55,
+          "record": "instructions/rules/13b994f01abc4679a2ad72822806d9c0.json",
+          "sha256": "328c4f7b2fb56981f9e2fa89b8bc4d2b09b19c9a5b1c34b4c2f74bfbe19b51d9"
+        },
+        {
+          "clauses": [],
+          "id": "rule:cb1534e0e2794d2b9e222da050224a1d",
+          "length": 38,
+          "offset": 78,
+          "record": "instructions/rules/cb1534e0e2794d2b9e222da050224a1d.json",
+          "sha256": "9eaba7f0172ce75da8a1362f8fb4fef53fb584e0feac71b90228501a82407255"
+        }
+      ],
+      "sha256": "cf5070a19cdbd6452c74b23059f3de5b2577c01f75d4767873f473c1e56fc3d2",
       "source": "instructions/fragments/core.md"
     },
     {
@@ -51,8 +78,27 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve compatibility and naming constraints.",
-      "revision": "2d76e2e70b659c8649959a86f0c5ac9923fac0b4",
-      "sha256": "2d40c17612a2896328efab148e00ebf2ecaa1f2d4fca0098c52b64cd9139f6c6",
+      "rendered_sha256": "2d40c17612a2896328efab148e00ebf2ecaa1f2d4fca0098c52b64cd9139f6c6",
+      "revision": "8f0dc679a6216d564f4355249ca64986ed328832",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:6cf96d0d28e8459baa6a297bfe294990",
+          "length": 76,
+          "offset": 133,
+          "record": "instructions/rules/6cf96d0d28e8459baa6a297bfe294990.json",
+          "sha256": "c27d95dfc40db9a96cc45dc02c2f8dfbaf7f317e81fac595b5bb9d782fa40510"
+        },
+        {
+          "clauses": [],
+          "id": "rule:9532c327351340179c39daeb61a49106",
+          "length": 51,
+          "offset": 209,
+          "record": "instructions/rules/9532c327351340179c39daeb61a49106.json",
+          "sha256": "1935267075383a83d22094ca6fb1040c3b53c62fae91c8eae9179cf3fc88550c"
+        }
+      ],
+      "sha256": "3e14dde71f26992ce7c4cee5fb6e09b00d33663d269b4db06841079a987306fe",
       "source": "instructions/fragments/refactoring.md"
     },
     {
@@ -100,8 +146,83 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Protect repository and host-state operations.",
-      "revision": "18596c47786ffc8399f8928893e3693938cda651",
-      "sha256": "b60e9492e64c66b414ecfa705326fb1936a00f2c87f6d417d2ad08a6c24cd826",
+      "rendered_sha256": "b60e9492e64c66b414ecfa705326fb1936a00f2c87f6d417d2ad08a6c24cd826",
+      "revision": "1d6fb871de537a5636b3629165c203ed3be7ea05",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:944802e796494ca6be806cdec7f6f19a",
+          "length": 28,
+          "offset": 269,
+          "record": "instructions/rules/944802e796494ca6be806cdec7f6f19a.json",
+          "sha256": "4bcefd727238eafa08defa1e4bfd77a52a27724f7b4207c71e36dd6f3d0438e0"
+        },
+        {
+          "clauses": [],
+          "id": "rule:fc95a45fc349416181f73047e05a785e",
+          "length": 450,
+          "offset": 297,
+          "record": "instructions/rules/fc95a45fc349416181f73047e05a785e.json",
+          "sha256": "a5fdb845b7be002090899bf1a6a97dc17972c865cd517982cbf38bbc670f3427"
+        },
+        {
+          "clauses": [],
+          "id": "rule:3278f93fcc9342819ee39d1bc5ba318f",
+          "length": 4477,
+          "offset": 747,
+          "record": "instructions/rules/3278f93fcc9342819ee39d1bc5ba318f.json",
+          "sha256": "cdf9390129c4e3de4eef83e23c69ca53260e56587dde3c94e45e59312775c6cd"
+        },
+        {
+          "clauses": [],
+          "id": "rule:269303f01843402aa6eb86399b53c47a",
+          "length": 773,
+          "offset": 5224,
+          "record": "instructions/rules/269303f01843402aa6eb86399b53c47a.json",
+          "sha256": "89ec64928578307b8f90467a05632d71774a4ddf3ad03e7954abb984fd7043be"
+        },
+        {
+          "clauses": [],
+          "id": "rule:8959dd62afa54a67b0036e6cdee72e55",
+          "length": 1031,
+          "offset": 5997,
+          "record": "instructions/rules/8959dd62afa54a67b0036e6cdee72e55.json",
+          "sha256": "009a0f487e00fa3fb6962781eaaa109e842c20535fbb209a519bcca6b7f6f0e9"
+        },
+        {
+          "clauses": [],
+          "id": "rule:813cfae03116426f9b5da22b5af1cf83",
+          "length": 1252,
+          "offset": 7028,
+          "record": "instructions/rules/813cfae03116426f9b5da22b5af1cf83.json",
+          "sha256": "f4b26e182b60c6d0e7b550f09f22973d68dc41950773d27ebcc25982cf97111b"
+        },
+        {
+          "clauses": [],
+          "id": "rule:eadfc260a2134d269009cae210212fdf",
+          "length": 630,
+          "offset": 8280,
+          "record": "instructions/rules/eadfc260a2134d269009cae210212fdf.json",
+          "sha256": "4cf0ae497cbfcddac72c3c8e245fb55dcb4efacab869bf68545d6d241d970933"
+        },
+        {
+          "clauses": [],
+          "id": "rule:7323cbf377fd432b8b26b0a315089865",
+          "length": 442,
+          "offset": 8910,
+          "record": "instructions/rules/7323cbf377fd432b8b26b0a315089865.json",
+          "sha256": "9181921d4a1e05c3a62083c6243b1fdc8ab65446b6eabc52d2f73aaea1fd9394"
+        },
+        {
+          "clauses": [],
+          "id": "rule:9a1920fff2c24f07adf89379270a0098",
+          "length": 105,
+          "offset": 9352,
+          "record": "instructions/rules/9a1920fff2c24f07adf89379270a0098.json",
+          "sha256": "f3c2d73ff68689992078ec49df796f0762466a61aa70a41e9a816ce8e220a0b3"
+        }
+      ],
+      "sha256": "f89831a5376d4e7f3785deec1ac2df74335d486ef258b83856bfa8b5b59f2b19",
       "source": "instructions/fragments/git.md"
     },
     {
@@ -121,8 +242,19 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve profile and layer precedence.",
-      "revision": "aabffadbc014e1879eb3bd6dd83347e3ec15b723",
-      "sha256": "68d93b1a394889415ce2219c6a90394360ed3a3b03d64f948922f2170cfaa499",
+      "rendered_sha256": "68d93b1a394889415ce2219c6a90394360ed3a3b03d64f948922f2170cfaa499",
+      "revision": "8f9d42faa7e8aa60215c016f90616c81e0af0625",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
+          "length": 524,
+          "offset": 9471,
+          "record": "instructions/rules/1d70a6a4c5e842579156e56e9be27f5f.json",
+          "sha256": "2bd1095e5b99f68829cb291ae80b2432ad03fb8dc667673089d5087204f3ce76"
+        }
+      ],
+      "sha256": "8b87a38ff17c591657d1e28aa987e56e5ad9b32eb8da739d0473da6bc4919f92",
       "source": "instructions/fragments/profiles.md"
     },
     {
@@ -156,8 +288,35 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep document authority and review conventions.",
-      "revision": "6f8296992f48b6fa15ac297ec5e449dd889cda93",
-      "sha256": "fd3d7220a8b8d88b1f8a5b14e1fe0b3baeb6ed39a0f41ff7aa99bdef2015bd6f",
+      "rendered_sha256": "fd3d7220a8b8d88b1f8a5b14e1fe0b3baeb6ed39a0f41ff7aa99bdef2015bd6f",
+      "revision": "3cd5176d23b6fe868ae31f4ee2dd4cf631b1dfb5",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:ba23ff2fa67041158b9e1df90e9c9440",
+          "length": 313,
+          "offset": 10019,
+          "record": "instructions/rules/ba23ff2fa67041158b9e1df90e9c9440.json",
+          "sha256": "904de6ff022b9e1d23966afe66d8115c49c53e587b5d852cb53e3fc3a9e279b1"
+        },
+        {
+          "clauses": [],
+          "id": "rule:30ba737331374ada84282fe41f0faebb",
+          "length": 497,
+          "offset": 10332,
+          "record": "instructions/rules/30ba737331374ada84282fe41f0faebb.json",
+          "sha256": "e35180ebff3d3e1b244bb53d970b06ad59b182d09d62389548bb2b5a38de101b"
+        },
+        {
+          "clauses": [],
+          "id": "rule:fea3f0aa833045f6a40ab83e4932bb6f",
+          "length": 108,
+          "offset": 10829,
+          "record": "instructions/rules/fea3f0aa833045f6a40ab83e4932bb6f.json",
+          "sha256": "2f6648a26f5a299ecdefb348f379399e060a99708374a872f809000274e33368"
+        }
+      ],
+      "sha256": "378c3d1cf92d6ee52665030f5cae798d271019481dcf79e020fff5a0ead5c7c3",
       "source": "instructions/fragments/design-docs.md"
     },
     {
@@ -184,8 +343,75 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
-      "revision": "11732c0c893b4704a6fedbfb189edc96928ad73c",
-      "sha256": "50b6975ed860b6c9a5c9b80fc65fd9b2290ec082da5711cbfbd41b3a16cb8dab",
+      "rendered_sha256": "50b6975ed860b6c9a5c9b80fc65fd9b2290ec082da5711cbfbd41b3a16cb8dab",
+      "revision": "00ac37862933a11f7092bfa337cd729404002510",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:016ceef1ef2547f8aa157cb7eb3157cc",
+          "length": 106,
+          "offset": 10956,
+          "record": "instructions/rules/016ceef1ef2547f8aa157cb7eb3157cc.json",
+          "sha256": "f78e64c8e6794b5954ea54c987c298364cbbb1c9979788d7f84a92716541d770"
+        },
+        {
+          "clauses": [],
+          "id": "rule:de5f1d0582294f77b597b1a5b42c9d76",
+          "length": 419,
+          "offset": 11062,
+          "record": "instructions/rules/de5f1d0582294f77b597b1a5b42c9d76.json",
+          "sha256": "5cfd94fe99172014421bc1894ba4cd900aaac2f981bdce5a4e24d2ae69721c58"
+        },
+        {
+          "clauses": [],
+          "id": "rule:2c1ea3727a7447348cb807cfae1c735e",
+          "length": 214,
+          "offset": 11481,
+          "record": "instructions/rules/2c1ea3727a7447348cb807cfae1c735e.json",
+          "sha256": "cdf7b5e29bd85b630ba6c32d2e5d7e0862430d3e1b5ea0a403d820b653cb6461"
+        },
+        {
+          "clauses": [],
+          "id": "rule:fb8d914a2eb44a64acc7e086970328a0",
+          "length": 651,
+          "offset": 11695,
+          "record": "instructions/rules/fb8d914a2eb44a64acc7e086970328a0.json",
+          "sha256": "40c6aa5b6fe804bb3f7c7c97e79e8259a94061e8322b2a6f310113c807824514"
+        },
+        {
+          "clauses": [],
+          "id": "rule:19c566200a204b339abf808f84984c7d",
+          "length": 849,
+          "offset": 12346,
+          "record": "instructions/rules/19c566200a204b339abf808f84984c7d.json",
+          "sha256": "2a95d0c9871c7963f3e41f692c12b30f5b71c395aabd17135c9909863b80382f"
+        },
+        {
+          "clauses": [],
+          "id": "rule:f002b1ef713f42709b9de6b6b3701dc3",
+          "length": 260,
+          "offset": 13195,
+          "record": "instructions/rules/f002b1ef713f42709b9de6b6b3701dc3.json",
+          "sha256": "35f8e2130b57c0c8264ce0a2ea30441eb17f12b7fc7e7262a269803531c03485"
+        },
+        {
+          "clauses": [],
+          "id": "rule:718e79f5b3fa40249cb178139c26b28f",
+          "length": 392,
+          "offset": 13455,
+          "record": "instructions/rules/718e79f5b3fa40249cb178139c26b28f.json",
+          "sha256": "2dd74124cd72aa8bf869d60bf8d25bacc9f89cc7932ca0e32c8850894b7812ae"
+        },
+        {
+          "clauses": [],
+          "id": "rule:65fcb49d5d7344d9a052800af708b9ee",
+          "length": 666,
+          "offset": 13847,
+          "record": "instructions/rules/65fcb49d5d7344d9a052800af708b9ee.json",
+          "sha256": "6febfe6df38f60c74cca50235a65c11bd5c55b4db8712ca0920d768525dd8759"
+        }
+      ],
+      "sha256": "4e7f18b7af5d0d16818dea36cf1eba3e92dd440d0ffb571b70848b1aad0a353b",
       "source": "instructions/fragments/communication.md"
     },
     {
@@ -212,8 +438,99 @@
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
-      "revision": "8043e0f9349eab65c0995845ea5ed11ba51d35ad",
-      "sha256": "7c05d6cc4953e583aa2cee3fd1d43221cb38136d33a363aaf23bc219fa753ea3",
+      "rendered_sha256": "7c05d6cc4953e583aa2cee3fd1d43221cb38136d33a363aaf23bc219fa753ea3",
+      "revision": "2120d75bd57dd4f14f9f85c033de2c73a4cc40d0",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:33e4d6f672464d2d9e3d6bc971c4265d",
+          "length": 188,
+          "offset": 14527,
+          "record": "instructions/rules/33e4d6f672464d2d9e3d6bc971c4265d.json",
+          "sha256": "96a7b45a2a51797593c9f5155ef58ddc894a9d38aa2091cdfcc73264b375763a"
+        },
+        {
+          "clauses": [],
+          "id": "rule:e12c22eedc4b43abbe27f56d4b260260",
+          "length": 60,
+          "offset": 14716,
+          "record": "instructions/rules/e12c22eedc4b43abbe27f56d4b260260.json",
+          "sha256": "0a9e1e6ad422017def034013dcaa48449cf337a6ea7efd20a5e5e911a803717a"
+        },
+        {
+          "clauses": [],
+          "id": "rule:2eaccf07c06b4bf2845e4cebe5416bd0",
+          "length": 223,
+          "offset": 14776,
+          "record": "instructions/rules/2eaccf07c06b4bf2845e4cebe5416bd0.json",
+          "sha256": "8c606245771e4d39e0581cb9761ca113c3aa5f38684b3b1e685d185b379736f3"
+        },
+        {
+          "clauses": [],
+          "id": "rule:49c8e7d67a964e5a8cc83a035b764cf4",
+          "length": 238,
+          "offset": 14999,
+          "record": "instructions/rules/49c8e7d67a964e5a8cc83a035b764cf4.json",
+          "sha256": "1c8b59ae1b3a8fdb13e467f9428db743532b218475b305a326e4dcf620d20ab3"
+        },
+        {
+          "clauses": [],
+          "id": "rule:59880fab97854d5a81284bcb4e755951",
+          "length": 65,
+          "offset": 15237,
+          "record": "instructions/rules/59880fab97854d5a81284bcb4e755951.json",
+          "sha256": "cc49fc9453f6f9b5e63c0592fc371d3628d3d68b0accee5bdf8e3ba668938dab"
+        },
+        {
+          "clauses": [],
+          "id": "rule:9a8826ecfa854e6b9d44c3217dba5c36",
+          "length": 39,
+          "offset": 15302,
+          "record": "instructions/rules/9a8826ecfa854e6b9d44c3217dba5c36.json",
+          "sha256": "6f2eccd8073b374f5b6d9fccd487ed36a433a72a46dbb4c08512512a2ca7fada"
+        },
+        {
+          "clauses": [],
+          "id": "rule:a0a2d0134f884220ab2a11332e521a2d",
+          "length": 96,
+          "offset": 15341,
+          "record": "instructions/rules/a0a2d0134f884220ab2a11332e521a2d.json",
+          "sha256": "2fd6fd1834d45c8d3d5fcbc9dbcd728e23bd5256b951f34c8e56eceb2e142a02"
+        },
+        {
+          "clauses": [],
+          "id": "rule:848c2777bfdb42418a2682636b04c12a",
+          "length": 87,
+          "offset": 15437,
+          "record": "instructions/rules/848c2777bfdb42418a2682636b04c12a.json",
+          "sha256": "17bc66f9eeb4080bc8d9b7d202837c0cd23ffd805e82990a0b7a75b00f48f586"
+        },
+        {
+          "clauses": [],
+          "id": "rule:c4e3b9ac7e954a53b1cddbe603a27c4f",
+          "length": 80,
+          "offset": 15524,
+          "record": "instructions/rules/c4e3b9ac7e954a53b1cddbe603a27c4f.json",
+          "sha256": "a9e55a0bdde471435ef777f34121407671293b84c0bccd97a3be107bb4bfeb56"
+        },
+        {
+          "clauses": [],
+          "id": "rule:3feb258dfeda4699b0966a649a7e28f4",
+          "length": 202,
+          "offset": 15604,
+          "record": "instructions/rules/3feb258dfeda4699b0966a649a7e28f4.json",
+          "sha256": "78970ad50da5c2fbaccd4a72e32d4412292e8adc3b4ee4267665ca2b935362f8"
+        },
+        {
+          "clauses": [],
+          "id": "rule:a25baf1210bc4f81b621a073ff68b8c6",
+          "length": 84,
+          "offset": 15806,
+          "record": "instructions/rules/a25baf1210bc4f81b621a073ff68b8c6.json",
+          "sha256": "e14e38192d82a8599cead3006c0023e167d60a3214f8e2e7973c86128d63428d"
+        }
+      ],
+      "sha256": "e2b0c64c7b6abac0780bd006a2ec6bc69eec4f7367ade40632635c1d7f2a2428",
       "source": "instructions/fragments/notation.md"
     },
     {
@@ -261,8 +578,115 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
-      "revision": "4ced4a84967f76ceff0d35742988555ba41e3277",
-      "sha256": "f47923541659a52feabc3443bfa0617a7160b900ae74fa1f977e2c1eaf07704c",
+      "rendered_sha256": "f47923541659a52feabc3443bfa0617a7160b900ae74fa1f977e2c1eaf07704c",
+      "revision": "fd01acc414051b7e0e13e15f8b09e829b5044b3e",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:fdd377a3c264435296d1792c8f74c68b",
+          "length": 429,
+          "offset": 15905,
+          "record": "instructions/rules/fdd377a3c264435296d1792c8f74c68b.json",
+          "sha256": "d4350203954a4abe5f0f50a7a6ad495fef40aab7991d8ea88147fef2287d83dd"
+        },
+        {
+          "clauses": [],
+          "id": "rule:8d52bc64e99b42d78f4219f73c3b375c",
+          "length": 264,
+          "offset": 16334,
+          "record": "instructions/rules/8d52bc64e99b42d78f4219f73c3b375c.json",
+          "sha256": "85670d9fa1f84e7c92da47b07f945728a2de8999d602634d01c9e714e0deed1f"
+        },
+        {
+          "clauses": [],
+          "id": "rule:db275842f3af447dbe84d8b1dfc68051",
+          "length": 190,
+          "offset": 16598,
+          "record": "instructions/rules/db275842f3af447dbe84d8b1dfc68051.json",
+          "sha256": "eb20e802f950e04697d391ba7b7ee18d6347256c4abbe33a14e547c0721be3dc"
+        },
+        {
+          "clauses": [],
+          "id": "rule:f431707097c0418c9822d67074875c51",
+          "length": 642,
+          "offset": 16788,
+          "record": "instructions/rules/f431707097c0418c9822d67074875c51.json",
+          "sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd"
+        },
+        {
+          "clauses": [],
+          "id": "rule:2c5785f136ca4ee590e1c69406276623",
+          "length": 435,
+          "offset": 17430,
+          "record": "instructions/rules/2c5785f136ca4ee590e1c69406276623.json",
+          "sha256": "2efe09947445d7fa7c2f79c4ada56387b9c5e9ad9bbf612f12358894ef7c4053"
+        },
+        {
+          "clauses": [],
+          "id": "rule:c165eee5aa0a4b819061b34386c78c23",
+          "length": 1353,
+          "offset": 17865,
+          "record": "instructions/rules/c165eee5aa0a4b819061b34386c78c23.json",
+          "sha256": "992315a1198e4b52c1c66d5082ea74bc6e731bfa2f37d65a48c9847644fbddd9"
+        },
+        {
+          "clauses": [],
+          "id": "rule:96e7765f238045f4af07742ea0783816",
+          "length": 604,
+          "offset": 19218,
+          "record": "instructions/rules/96e7765f238045f4af07742ea0783816.json",
+          "sha256": "273d9411827d975b7639050538d610fc8337b25fc63548578938c14c3fdcfcbb"
+        },
+        {
+          "clauses": [],
+          "id": "rule:4fd096e0dfb040c7b5f77277569bbabd",
+          "length": 913,
+          "offset": 19822,
+          "record": "instructions/rules/4fd096e0dfb040c7b5f77277569bbabd.json",
+          "sha256": "7a48d8bf099fa2409eed665087c71217a9ed6a2cbb74ddd5653d40a50ca92c41"
+        },
+        {
+          "clauses": [],
+          "id": "rule:717a50b29e794e72b327bf60820479bf",
+          "length": 231,
+          "offset": 20735,
+          "record": "instructions/rules/717a50b29e794e72b327bf60820479bf.json",
+          "sha256": "0ce9b420aadff6b41da5bc2d65905a7ad87647251cda59231cdb7e93f67cb7b2"
+        },
+        {
+          "clauses": [],
+          "id": "rule:5a5808d0572f49e49afe103d7569231e",
+          "length": 790,
+          "offset": 20966,
+          "record": "instructions/rules/5a5808d0572f49e49afe103d7569231e.json",
+          "sha256": "0e821251ff57ff5be46fb35b95d85e7d431b5c01f9da936534f27427bfaff7d0"
+        },
+        {
+          "clauses": [],
+          "id": "rule:046dfb8c365f454a86390b6b4167e487",
+          "length": 501,
+          "offset": 21756,
+          "record": "instructions/rules/046dfb8c365f454a86390b6b4167e487.json",
+          "sha256": "b600f3a4b1fd006af0bf986767e4907de95e5eaa788ecc69992a2f920b517490"
+        },
+        {
+          "clauses": [],
+          "id": "rule:d21e7a02223e4d00adbb602627e441a6",
+          "length": 1516,
+          "offset": 22257,
+          "record": "instructions/rules/d21e7a02223e4d00adbb602627e441a6.json",
+          "sha256": "1cf088750f1c8b4a9cf7a286243882a49136dd6f1a1105cf2e621697ab4551d0"
+        },
+        {
+          "clauses": [],
+          "id": "rule:e5201d5768794401bf9d88a39b1ee445",
+          "length": 562,
+          "offset": 23773,
+          "record": "instructions/rules/e5201d5768794401bf9d88a39b1ee445.json",
+          "sha256": "9ce030598b9fcf8b9d373c93eb72cf694b9fd601611f00c71e5d9f0e2b67fc9a"
+        }
+      ],
+      "sha256": "b53d3e8fe3a8e5f1828a25985407f96f666b74ca6d9d678d65af7114493b1249",
       "source": "instructions/fragments/decisions.md"
     },
     {
@@ -310,8 +734,91 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
-      "revision": "b3eaa026bc7a34b4a33a2f4eaf5f4c9ad26ae42a",
-      "sha256": "03665c73111e55ce3c5b08fa1b40715b903977cab0e167a2a3bfa96618cecfe4",
+      "rendered_sha256": "03665c73111e55ce3c5b08fa1b40715b903977cab0e167a2a3bfa96618cecfe4",
+      "revision": "f37c7bc9c3df9941e75aed34f9e7ad378158fa37",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:12e31cf7fafe40db95ec74909738b868",
+          "length": 874,
+          "offset": 24350,
+          "record": "instructions/rules/12e31cf7fafe40db95ec74909738b868.json",
+          "sha256": "ea3daca3e0b5114b37c120c7b14a6e20c15d09a95f8023f16c6acc29911cba02"
+        },
+        {
+          "clauses": [],
+          "id": "rule:ba000efb53984b8f900cba2bef168728",
+          "length": 338,
+          "offset": 25224,
+          "record": "instructions/rules/ba000efb53984b8f900cba2bef168728.json",
+          "sha256": "2414256015586fa85b15e2c0cbf2257c6db0e1a3406ce808fa1d5104f9cf17de"
+        },
+        {
+          "clauses": [],
+          "id": "rule:c7901a4e3f4f4928be74629fa3ac5f1c",
+          "length": 1042,
+          "offset": 25562,
+          "record": "instructions/rules/c7901a4e3f4f4928be74629fa3ac5f1c.json",
+          "sha256": "1bacaca09a4daf948f29753f2bb7def2385eab4410ffbc112122b35782720c23"
+        },
+        {
+          "clauses": [],
+          "id": "rule:369c00284c7e47028337d6e8c06e41e7",
+          "length": 1890,
+          "offset": 26604,
+          "record": "instructions/rules/369c00284c7e47028337d6e8c06e41e7.json",
+          "sha256": "9ecb581d2511718b22024e0f22918c175793d3c5cfa0e5e5c6f4b51e9ef0ca92"
+        },
+        {
+          "clauses": [],
+          "id": "rule:558c97f11b5d4a9ea13f1637c10bf95f",
+          "length": 503,
+          "offset": 28494,
+          "record": "instructions/rules/558c97f11b5d4a9ea13f1637c10bf95f.json",
+          "sha256": "6573b704adaa0f5aa250393c00115ecbbe3d5a477b6dc8eaf0c4a6b4d9003b23"
+        },
+        {
+          "clauses": [],
+          "id": "rule:fd94c4f5761740cfaef4497c38d1a6ae",
+          "length": 558,
+          "offset": 28997,
+          "record": "instructions/rules/fd94c4f5761740cfaef4497c38d1a6ae.json",
+          "sha256": "cb683cf533b2d92d7fd55140eaa7e00e8b803c5608d4ba3c065d0e8b0961ed4d"
+        },
+        {
+          "clauses": [],
+          "id": "rule:3b44ce6a0e9b4816853b1c3b2beedb77",
+          "length": 1167,
+          "offset": 29555,
+          "record": "instructions/rules/3b44ce6a0e9b4816853b1c3b2beedb77.json",
+          "sha256": "f0bfe7d83221fdf454c56ebc7cdf0977b911e317cd1b403eb404bd7b5132ab50"
+        },
+        {
+          "clauses": [],
+          "id": "rule:45c689924ee64a9c93e94a71f332a1d3",
+          "length": 711,
+          "offset": 30722,
+          "record": "instructions/rules/45c689924ee64a9c93e94a71f332a1d3.json",
+          "sha256": "74446c7d890f1da713881cf0d73ce321e224952c2499e773274cd38a6e434506"
+        },
+        {
+          "clauses": [],
+          "id": "rule:0c5fc9cf30154db6b11fb7f73662249a",
+          "length": 437,
+          "offset": 31433,
+          "record": "instructions/rules/0c5fc9cf30154db6b11fb7f73662249a.json",
+          "sha256": "f09e481c0dd86607437fb063cb720b15091998e874258f741178b8eef8805388"
+        },
+        {
+          "clauses": [],
+          "id": "rule:a941cf1e2d044f1b9eb509074ad01504",
+          "length": 552,
+          "offset": 31870,
+          "record": "instructions/rules/a941cf1e2d044f1b9eb509074ad01504.json",
+          "sha256": "0d5173d0f79ac6b0d265e3369542a70ae7a4b80e0dd00456d8184bb407a4a114"
+        }
+      ],
+      "sha256": "e946e25f227aa0ab8ed5209fae8a1df5eebb921728c5fa8440e4613f25e81af3",
       "source": "instructions/fragments/processes.md"
     },
     {
@@ -338,8 +845,67 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
-      "revision": "7f60d5db828285c1cc54d0cf30d60f6857f77ab4",
-      "sha256": "10cde4e96f66687d57fa3941de27eaa0548aeef57f793dff09347148c9adcb97",
+      "rendered_sha256": "10cde4e96f66687d57fa3941de27eaa0548aeef57f793dff09347148c9adcb97",
+      "revision": "ddb46e0f31c0ef6e26dcf0e6c604d44fa4dc3f8a",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:c6567204f9e443b68cb95a08c8264b3f",
+          "length": 828,
+          "offset": 32433,
+          "record": "instructions/rules/c6567204f9e443b68cb95a08c8264b3f.json",
+          "sha256": "c7cfc6ccd73aaec39ebf987f95e01283e4a2efab21c2156e3be1fedd7e50d6d9"
+        },
+        {
+          "clauses": [],
+          "id": "rule:48ef50fb32d24e7fa13b92a69affc29b",
+          "length": 487,
+          "offset": 33261,
+          "record": "instructions/rules/48ef50fb32d24e7fa13b92a69affc29b.json",
+          "sha256": "384babc63d84b5f477409aab447d61098160dfdb2d73c7949d12d474a6d79612"
+        },
+        {
+          "clauses": [],
+          "id": "rule:da431a1b3ac14c21800cb5488031d7e8",
+          "length": 147,
+          "offset": 33748,
+          "record": "instructions/rules/da431a1b3ac14c21800cb5488031d7e8.json",
+          "sha256": "84c400f1f675a17cd529a87a5c5c80b051ef6b8e6f63f9eb61319ea26da289b6"
+        },
+        {
+          "clauses": [],
+          "id": "rule:ca536e7c8ef24f09a49bd0c598972ef5",
+          "length": 648,
+          "offset": 33895,
+          "record": "instructions/rules/ca536e7c8ef24f09a49bd0c598972ef5.json",
+          "sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0"
+        },
+        {
+          "clauses": [],
+          "id": "rule:4402e5c1ec654514a43ca011c2800ba6",
+          "length": 81,
+          "offset": 34543,
+          "record": "instructions/rules/4402e5c1ec654514a43ca011c2800ba6.json",
+          "sha256": "5b5fe45de2ef010f24d13133cbed05523533e3940139db3f9a00bd885b81c74f"
+        },
+        {
+          "clauses": [],
+          "id": "rule:13f54add0c144229bf870b4b39835acf",
+          "length": 224,
+          "offset": 34625,
+          "record": "instructions/rules/13f54add0c144229bf870b4b39835acf.json",
+          "sha256": "d3620ca020d6cf56816016a553359684272654a1b3402e718e56bf9a3f9ee1b6"
+        },
+        {
+          "clauses": [],
+          "id": "rule:b6576b5590d4430da697c160e083b10c",
+          "length": 1117,
+          "offset": 34850,
+          "record": "instructions/rules/b6576b5590d4430da697c160e083b10c.json",
+          "sha256": "3d8f0050d314108fbe5bd630076cac978d14bd4caa105dd84898650c5af3521e"
+        }
+      ],
+      "sha256": "878a4f1a11a216335fe02adbe11c38ff3e00db5b83672aa4601252669e57c058",
       "source": "instructions/fragments/tests.md"
     },
     {
@@ -359,8 +925,43 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
-      "revision": "e2aefb4835751be105f2aef423a08b268c1ed183",
-      "sha256": "cfc9a7c37533ecdaa2e55bc89423ac3f1eee37f80adc054d82c72957851e6f0c",
+      "rendered_sha256": "cfc9a7c37533ecdaa2e55bc89423ac3f1eee37f80adc054d82c72957851e6f0c",
+      "revision": "b89385a70926cababd195b5c12c56744a25d4cd9",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:5b1c2e9a734c498fb8285b1eb1cba9cf",
+          "length": 312,
+          "offset": 35978,
+          "record": "instructions/rules/5b1c2e9a734c498fb8285b1eb1cba9cf.json",
+          "sha256": "d920966d471bc5e38df5578a41ef495d895dda669d94b082aa786607ce075d7c"
+        },
+        {
+          "clauses": [],
+          "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
+          "length": 491,
+          "offset": 36290,
+          "record": "instructions/rules/14ca161849ea4f398d3ce84106c6cfa2.json",
+          "sha256": "ac621b02502ef5e4fb0e35511a2650afa5edf6317319ea6ea229ad7470dde102"
+        },
+        {
+          "clauses": [],
+          "id": "rule:b94c3ae8c7ca4e1db9a4c1502357ebe0",
+          "length": 172,
+          "offset": 36781,
+          "record": "instructions/rules/b94c3ae8c7ca4e1db9a4c1502357ebe0.json",
+          "sha256": "6545ca27c6494d45739add569c468873e7818862b58dc0db3e805250dd511810"
+        },
+        {
+          "clauses": [],
+          "id": "rule:0472de81465f41dcb870eec7f86bfa47",
+          "length": 682,
+          "offset": 36953,
+          "record": "instructions/rules/0472de81465f41dcb870eec7f86bfa47.json",
+          "sha256": "338361491033fa50eebd496e47b5d675c812b64ae704f7348ae9d84f8e5e2c4b"
+        }
+      ],
+      "sha256": "c003eb0775f34022d05df7c52d8ab1b6eb90a7e6ee9d59d43468406e84a80a6e",
       "source": "instructions/fragments/shell.md"
     },
     {
@@ -380,8 +981,35 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
-      "revision": "64c4ce68dda07fa7cb8c29cc3d4f50150e0a840f",
-      "sha256": "1e28d6d7ef57307919a607ec7982eec1dfbe10c35db81608ac1d7744bbd3c5a0",
+      "rendered_sha256": "1e28d6d7ef57307919a607ec7982eec1dfbe10c35db81608ac1d7744bbd3c5a0",
+      "revision": "d5e52b3312d32778ab7b1943af61da64a0f544f1",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:986dd690d14b42a1a7ca315e475ff7c2",
+          "length": 114,
+          "offset": 37672,
+          "record": "instructions/rules/986dd690d14b42a1a7ca315e475ff7c2.json",
+          "sha256": "c25bb56ecb88cf1b207a3e53352e0b29e84c63dfae7452ca167fdf5c8a3b8951"
+        },
+        {
+          "clauses": [],
+          "id": "rule:96745a06cd69497b8ffe0511c66bda2f",
+          "length": 1966,
+          "offset": 37787,
+          "record": "instructions/rules/96745a06cd69497b8ffe0511c66bda2f.json",
+          "sha256": "292cb863f7259d3033b9bbd8e7bec8504b864fecbb89b8cd54beea3a34056447"
+        },
+        {
+          "clauses": [],
+          "id": "rule:86172e9df3bc47369bde0a298b8a292a",
+          "length": 447,
+          "offset": 39753,
+          "record": "instructions/rules/86172e9df3bc47369bde0a298b8a292a.json",
+          "sha256": "1372732082081c85558485b6ce6f5dbfd96caa9d2008e94a4e38601ec234ac0e"
+        }
+      ],
+      "sha256": "20dad9370e8949ebadc21589c6492066c6e4bc59e33ec9e998d2d7d306bc7bb6",
       "source": "instructions/fragments/outcome-notes.md"
     },
     {
@@ -408,8 +1036,19 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
-      "revision": "0d63ddd5e35fcb2795b3d8f431d18ee9169cfb95",
-      "sha256": "a2e6f43a4e07ce8f68aea0c651b0a895a3291bf32202aa51bbc2d345c004911c",
+      "rendered_sha256": "a2e6f43a4e07ce8f68aea0c651b0a895a3291bf32202aa51bbc2d345c004911c",
+      "revision": "a10bebc9b7bc47170c1e1d18d71ea9d43edb1d87",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:b2d5d7b434c74989a11e2b7a88dcd829",
+          "length": 517,
+          "offset": 40212,
+          "record": "instructions/rules/b2d5d7b434c74989a11e2b7a88dcd829.json",
+          "sha256": "8b278d29640abdeef040b6272c02b3c9935cf2eec9a12c8ad5691c6cdc5509f9"
+        }
+      ],
+      "sha256": "baca3fb2921dbef53505349e5766dae5d727d6d1b148278165e01ee0350224bd",
       "source": "instructions/fragments/trials.md"
     },
     {
@@ -457,8 +1096,83 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
-      "revision": "6d71b909d6bdf42ef42e7a32c86e2961ef4fa874",
-      "sha256": "e588cdb258b9b6dc48bfa36bfea78d29ec5d14051ff56966a2872cf3e597211d",
+      "rendered_sha256": "e588cdb258b9b6dc48bfa36bfea78d29ec5d14051ff56966a2872cf3e597211d",
+      "revision": "1942e44a9221be93cb8edcb186249947a1a6006f",
+      "rules": [
+        {
+          "clauses": [],
+          "id": "rule:09d96981ac844d2fbfcb375c3bd77994",
+          "length": 390,
+          "offset": 40743,
+          "record": "instructions/rules/09d96981ac844d2fbfcb375c3bd77994.json",
+          "sha256": "1ce3670322c87c3079d5cdcb9df7b6bf8f27bc28219384ec1152d1d0312d12e9"
+        },
+        {
+          "clauses": [],
+          "id": "rule:7bea58c0548e40e38d39247aa236a76d",
+          "length": 642,
+          "offset": 41133,
+          "record": "instructions/rules/7bea58c0548e40e38d39247aa236a76d.json",
+          "sha256": "7a5b7de86855b1fbb40a540d1d82b0acbcfd61c1523d23a8434244c9d0b3924a"
+        },
+        {
+          "clauses": [],
+          "id": "rule:3626fd73a87c4d438ac6a0b6c3ffbf27",
+          "length": 548,
+          "offset": 41775,
+          "record": "instructions/rules/3626fd73a87c4d438ac6a0b6c3ffbf27.json",
+          "sha256": "205c2488d87522c9438bc3f39a4237d49e6da542ab2973afe763339da05fbd0a"
+        },
+        {
+          "clauses": [],
+          "id": "rule:406df98201e14fe9b3a736887d7010b2",
+          "length": 422,
+          "offset": 42323,
+          "record": "instructions/rules/406df98201e14fe9b3a736887d7010b2.json",
+          "sha256": "fc86ef066af165d26278556711e2a8bb5e4d3d476dc16c76662993920e7e79ee"
+        },
+        {
+          "clauses": [],
+          "id": "rule:a5554bc873f348648268c912ee06b92a",
+          "length": 187,
+          "offset": 42745,
+          "record": "instructions/rules/a5554bc873f348648268c912ee06b92a.json",
+          "sha256": "632fc9610a54d1733619928268e9f91970581eb8e5723a1cc7d127697278eddd"
+        },
+        {
+          "clauses": [],
+          "id": "rule:92d0731cd46d4f88913d0e99ac92ec52",
+          "length": 491,
+          "offset": 42932,
+          "record": "instructions/rules/92d0731cd46d4f88913d0e99ac92ec52.json",
+          "sha256": "24f3efd414a6551425289cc72923f8463c3c15d3cd6f31c7a829fc0040be0d5f"
+        },
+        {
+          "clauses": [],
+          "id": "rule:bd35453d8e704d1c8905187a28adc47f",
+          "length": 390,
+          "offset": 43423,
+          "record": "instructions/rules/bd35453d8e704d1c8905187a28adc47f.json",
+          "sha256": "7f2b2b1a0ad70dd0d474dacb61aef8240aea3e2a8486735fb20a4aeb45fd8e9c"
+        },
+        {
+          "clauses": [],
+          "id": "rule:10ed8d349aee4d89b942d408f1e43176",
+          "length": 336,
+          "offset": 43813,
+          "record": "instructions/rules/10ed8d349aee4d89b942d408f1e43176.json",
+          "sha256": "d4520122fc9a0296dd18f6a9eda5eafe71a96ba318dd9f72e64d84b946b1eccb"
+        },
+        {
+          "clauses": [],
+          "id": "rule:5478cf24c27543bfb7d7f9186b9e6199",
+          "length": 339,
+          "offset": 44149,
+          "record": "instructions/rules/5478cf24c27543bfb7d7f9186b9e6199.json",
+          "sha256": "c917a530d6ff62973996ac1246a7b1eb1d310b22c33f36bdcb793984a1fef41e"
+        }
+      ],
+      "sha256": "01ccec96892a8ec3c92365dc5329ef471067c43c59fe18dd513f3aac9a7524a1",
       "source": "instructions/fragments/feedback.md"
     },
     {
@@ -478,12 +1192,14 @@
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",
+      "rendered_sha256": "fca4decd4f31a34fa20a3bbaf1375f6cf4863d449a08b1ddef438d5c510fc17c",
       "revision": "2175bdd0662ae37fede62bf38dc08b0296776067",
+      "rules": [],
       "sha256": "fca4decd4f31a34fa20a3bbaf1375f6cf4863d449a08b1ddef438d5c510fc17c",
       "source": "instructions/fragments/projects.md"
     }
   ],
   "mode": "production",
   "separator": "\n",
-  "version": 1
+  "version": 2
 }

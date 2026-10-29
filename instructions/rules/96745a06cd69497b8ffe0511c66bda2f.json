@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:96745a06cd69497b8ffe0511c66bda2f",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes record review rounds as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "292cb863f7259d3033b9bbd8e7bec8504b864fecbb89b8cd54beea3a34056447",
+      "text": "- When a review of your spec, plan, or implementation arrives, before acting on\n  it, note it on the task: `review: <spec|plan|impl> round <n> \u2014 verdict: <revise|accept>; findings: <label> <count>, \u2026 | none; reviewer: <harness/model | human>`\n  (`review: plan round 2 \u2014 verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).\n  Use the actual reviewer's exact model identity when supplied by the reviewer or\n  verified dispatch/runtime metadata. Do not substitute the controller's model,\n  a generic model family, or a configuration default. When the reviewer's model\n  cannot be verified, record the harness alone without guessing; keep human\n  reviews labelled `human`. A Codex session that performed a review reads its own\n  identity (never on another session's behalf), in the turn that performed it with a\n  fresh command (never a terminal left from an earlier turn):\n  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when\n  verified and `codex` otherwise. Copy the printed value; when the command exits\n  non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the\n  stderr reason or the exit status in the review, or in the final message for a\n  self-review, never in the note. A reviewer writes no note: it states that value in\n  its review for the note writer to record.\n  Only a session noting its own self-review records it directly.\n  `n` counts from 1 per task and artifact; a re-review after a revision is the next\n  round; a short acceptance is still a round. The flow `verified` gate stays a\n  disposition record, not a round.\n  One agent writes each round's note, once, before handing the findings on: the\n  controller when there is one, otherwise the agent the review arrives to. A worker\n  handed review findings (resumed or freshly dispatched) checks that the round's note\n  exists and writes none; if it is missing, the worker says so in its report for the\n  controller to add.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Record review rounds"
+}

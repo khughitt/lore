@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:49c8e7d67a964e5a8cc83a035b764cf4",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes sequence and causal notation as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1c8b59ae1b3a8fdb13e467f9428db743532b218475b305a326e4dcf620d20ab3",
+      "text": "- `a -> b` is either a sequence (a, then b) or causation (a causes b); when the\n  difference matters, say which you read. A `?` after a relation (`a -> b?`) makes the\n  relation uncertain. Older text writes that as `a ~> b`, now retired.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Sequence and causal notation"
+}

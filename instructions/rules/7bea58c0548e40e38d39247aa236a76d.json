@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:7bea58c0548e40e38d39247aa236a76d",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes standalone feedback bodies as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "7a5b7de86855b1fbb40a540d1d82b0acbcfd61c1523d23a8434244c9d0b3924a",
+      "text": "- A report that relays the user's request, or carries more than one ask about one\n  issue, is still one command (distinct issues still get one report each), with a body\n  (`-b`, one line on a recurrence) of a few concrete sentences covering what applies:\n  each distinct outcome asked for, in tool terms; the action that hit the friction; what\n  happened against what was expected; and any constraint that matters. Mark what the\n  user asked apart from your reading of it, and write the body to stand without the\n  transcript. Like the title, it describes the tool, never the project, even when it\n  relays the user's words (the rule below).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Standalone feedback bodies"
+}

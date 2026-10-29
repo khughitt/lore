@@ -1,14 +1,21 @@
 ## Communication
 
+<!-- rule:016ceef1ef2547f8aa157cb7eb3157cc begin -->
 - If the user suddenly switches the conversation to a different project, confirm that it was intentional.
+<!-- rule:016ceef1ef2547f8aa157cb7eb3157cc end -->
+<!-- rule:de5f1d0582294f77b597b1a5b42c9d76 begin -->
 - Final work reports lead with a short paragraph: outcome first, the task's actual
   state, and who acts next, including any action or approval trigger the user needs.
   No fixed lead marker or word cap. The report stands alone without progress updates
   or a harness recap; omit empty sections and use plain paragraphs when a brief reply
   suffices. This shape does not shorten reviewers' full reports to controllers.
+<!-- rule:de5f1d0582294f77b597b1a5b42c9d76 end -->
+<!-- rule:2c1ea3727a7447348cb807cfae1c735e begin -->
 - Write task ids in replies and reports bare in their canonical form
   (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;
   an id inside a command shown as code stays in that command.
+<!-- rule:2c1ea3727a7447348cb807cfae1c735e end -->
+<!-- rule:fb8d914a2eb44a64acc7e086970328a0 begin -->
 - Follow with the salient findings or landed changes, one claim per bullet when a
   list helps. Keep each claim's conditions, reasons, scope and uncertainty with it;
   do not pack independent changes into one sentence. Include verification and its
@@ -17,6 +24,8 @@
   to a link only after checking that the destination holds it and opens from the main
   checkout. Before shortening, check that no condition, reason or limit is lost and
   no claim becomes stronger; covering the same topics is not enough.
+<!-- rule:fb8d914a2eb44a64acc7e086970328a0 end -->
+<!-- rule:19c566200a204b339abf808f84984c7d begin -->
 - Keep required content in the final message, whole: text under approval, every
   required ruling and any deferred minors the governing workflow requires. Give
   each ruling its own entry with the decision, labelled `Why:` (reason) and `Cost:`
@@ -28,15 +37,21 @@
   from the lead paragraph; "nothing was pushed" does not establish it. Retain
   required process ids and stop instructions. These rules govern final reports,
   not progress updates or task notes.
+<!-- rule:19c566200a204b339abf808f84984c7d end -->
+<!-- rule:f002b1ef713f42709b9de6b6b3701dc3 begin -->
 - Use no emoji in what you write: replies, reports, and task text (titles, bodies,
   notes). Their fixed colours cannot follow a project's identity colour. Content a
   project itself asks for, and other Unicode such as arrows or box drawing, is not
   covered.
+<!-- rule:f002b1ef713f42709b9de6b6b3701dc3 end -->
+<!-- rule:718e79f5b3fa40249cb178139c26b28f begin -->
 - A path you show the user is one they can open from where they stand, the main
   checkout: relative to it when the file lives there, absolute otherwise. Never write
   it relative to a directory only you know, such as the scratchpad (`scratchpad/x.md`
   resolves nowhere for the user). The Git rule against machine-specific absolute paths
   covers committed text, not what you tell the user.
+<!-- rule:718e79f5b3fa40249cb178139c26b28f end -->
+<!-- rule:65fcb49d5d7344d9a052800af708b9ee begin -->
 - A sheet of images you hand the user to judge (an image grid, a contact sheet, a
   before/after pair, a parameter sweep) explains itself without its generator: a title
   stating the question; rows and columns labelled in plain language, with units where
@@ -45,3 +60,4 @@
   invent axes, units or a control the comparison lacks: unrelated candidates are a
   numbered set, not a grid. Before handing a sheet over, view the rendered image at the
   scale the user will see it and confirm the labels are legible.
+<!-- rule:65fcb49d5d7344d9a052800af708b9ee end -->

@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:10ed8d349aee4d89b942d408f1e43176",
+  "impact": {
+    "categories": [
+      "outward-facing-actions"
+    ],
+    "reason": "Constrains outward-facing upstream comments/reactions to useful new evidence.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d4520122fc9a0296dd18f6a9eda5eafe71a96ba318dd9f72e64d84b946b1eccb",
+      "text": "- When a report or fix exists, link it on the task and decide among waiting for the\n  release, pinning the fixing commit, and carrying a local workaround that names the\n  upstream link and the release that retires it. Comment or react upstream only to add\n  what the maintainers lack (a new reproduction, environment, or confirmation).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Choose response to upstream fixes"
+}

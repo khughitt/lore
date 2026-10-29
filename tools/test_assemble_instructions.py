@@ -46,6 +46,8 @@ def git(root, *args):
 
 def commit_all(repo):
     git(repo, 'init', '-q', '-b', 'main')
+    assert Path(git(repo, 'rev-parse', '--show-toplevel').decode().strip()).resolve() == repo.resolve()
+    assert Path(git(repo, 'rev-parse', '--absolute-git-dir').decode().strip()).resolve().is_relative_to(repo.resolve())
     git(repo, 'config', 'user.name', 'Assembly fixture')
     git(repo, 'config', 'user.email', 'assembly-fixture@example.invalid')
     git(repo, 'config', 'core.hooksPath', 'fixture-no-hooks')
@@ -68,6 +70,7 @@ def world(tmp_path, home):
     root, ops, store = tmp_path / 'lore', tmp_path / 'ops', tmp_path / 'records'
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
+    shutil.rmtree(root / 'instructions/rules', ignore_errors=True)
     # Reference worlds use immutable initial policy, not today's editable prose.
     baseline = (ROOT / 'tools/fixtures/instruction-assembly/baseline.md').read_bytes()
     boundary = baseline.index(b'<!-- ops:projects start')
@@ -89,6 +92,15 @@ def world(tmp_path, home):
     driver = ROOT / 'tools/instruction-assembly-proof-driver.py'
     if driver.exists():
         shutil.copy(driver, root / 'tools/instruction-assembly-proof-driver.py')
+    module = load_assembler(SimpleNamespace(root=root))
+    directory = root / 'instructions/rules'; directory.mkdir()
+    for fragment in catalog['fragments']:
+        if fragment['owner'] != 'lore': continue
+        source = root / fragment['source']; original = source.read_bytes()
+        rid = 'rule:' + hashlib.md5(fragment['id'].encode()).hexdigest()
+        source.write_bytes(marked(rid, original))
+        record = module.new_rule_record(rid, fragment['id'], original)
+        (directory / (rid[5:] + '.json')).write_bytes(module.manifest_bytes(record))
     initial = (root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes()
     projects = initial[initial.index(b'<!-- ops:projects start'):]
     (ops / 'instructions/fragments').mkdir(parents=True)
@@ -351,7 +363,9 @@ def test_write_reproducible_manifest_spans_and_no_rewrite(world):
     assert len(before[0]) == sum(f['length'] for f in manifest['fragments']) + 13
     for f in manifest['fragments']:
         owner = world.root if f['owner'] == 'lore' else world.ops
-        assert before[0][f['offset']:f['offset'] + f['length']] == (owner / f['source']).read_bytes()
+        data = (owner / f['source']).read_bytes()
+        if f['owner'] == 'lore': data = load_assembler(world).scan_rules(data)['rendered']
+        assert before[0][f['offset']:f['offset'] + f['length']] == data
     stamps = [(world.root / p).stat().st_mtime_ns for p in
               ('instructions/AGENTS.md', 'instructions/AGENTS.manifest.json')]
     git(world.root, 'add', '.')
@@ -468,12 +482,13 @@ def test_explicit_evidence_sentinels_are_preserved(world):
 
 
 @pytest.mark.parametrize('bad', [{'version': 1, 'fragments': []}, {'version': True, 'fragments': []}])
-def test_malformed_committed_manifest_is_not_an_empty_minimum(world, bad):
+def test_malformed_committed_manifest_does_not_override_catalog_minimum(world, bad):
     (world.root / 'instructions/AGENTS.manifest.json').write_text(json.dumps(bad))
     git(world.root, 'add', '.')
     git(world.root, 'commit', '-q', '-m', 'test: corrupt committed manifest')
     result = build(world, 'render')
-    assert result.returncode == 1 and b'committed manifest' in result.stderr
+    assert result.returncode == 0
+    assert build(world, 'check').returncode == 1
 
 
 def load_assembler(world):
@@ -489,12 +504,13 @@ def test_interrupted_pair_is_detected_and_repaired(world, monkeypatch):
     module = load_assembler(world)
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Additional approved policy.\n')
+    add_last_fixture_rule(world, core)
     catalog_bytes = (world.root / 'instructions/assembly.toml').read_bytes()
     catalog = tomllib.loads(catalog_bytes.decode())
     sources = {f['id']: ((world.root if f['owner'] == 'lore' else world.ops) / f['source']).read_bytes()
                for f in catalog['fragments']}
     artifact, manifest = module.assemble(catalog_bytes, sources,
-                                        (world.root / 'bin/assemble-instructions').read_bytes(), set())
+                                        (world.root / 'bin/assemble-instructions').read_bytes(), set(), rule_records=module.read_rule_set(world.root), exclusions={})
     replace = module.os.replace
     count = 0
     def stop_after_artifact(src, dst):
@@ -665,6 +681,7 @@ def test_consistent_index_ignores_unstaged_policy_but_working_tree_check_rejects
     commit_pair(world)
     source = world.root / 'instructions/fragments/core.md'
     source.write_bytes(source.read_bytes() + b'- Approved policy update.\n')
+    add_last_fixture_rule(world, source)
     assert build(world).returncode == 0
     git(world.root, 'add', '.')
     source.write_bytes(source.read_bytes() + b'- Unstaged policy.\n')
@@ -844,6 +861,7 @@ def test_local_or_mixed_artifact_drift_keeps_the_fragment_hint(world, drift):
     commit_pair(world)
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Unassembled policy.\n')
+    add_last_fixture_rule(world, core)
     if drift == 'mixed': refresh_ops(world, added_projects(world))
     err = check_without_writes(world)
     assert 'artifact stale; edit instructions/fragments/' in err
@@ -866,6 +884,7 @@ def test_projects_only_classification_reads_the_staged_artifact(world):
     commit_pair(world)
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Approved policy update.\n')
+    add_last_fixture_rule(world, core)
     assert build(world).returncode == 0
     git(world.root, 'add', '.')
     refresh_ops(world, added_projects(world))
@@ -887,8 +906,7 @@ def test_unrelated_staging_classifies_the_working_tree_artifact(world):
 
 
 def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(world):
-    commit_pair(world)
-    lore_rev = git(world.root, 'rev-parse', 'HEAD').decode().strip()
+    lore_rev = historical_pair(world)
     ops_rev = git(world.ops, 'rev-parse', 'HEAD').decode().strip()
     args = ('--revision', lore_rev, '--owner-root', f'ops={world.ops}')
     baseline = invoke(world, 'verify-baseline', *args)
@@ -897,6 +915,7 @@ def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(w
     assert initial.returncode == 0, initial.stderr
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Later approved policy.\n')
+    add_last_fixture_rule(world, core)
     assert build(world).returncode == 0
     assert build(world, 'check').returncode == 0
     script = world.root / 'bin/assemble-instructions'
@@ -913,12 +932,10 @@ def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(w
 
 
 def test_pinned_proof_rejects_changed_snapshot_and_missing_revision(world):
-    commit_pair(world)
+    historical_pair(world)
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Incorrect initial snapshot.\n')
-    git(world.root, 'add', '.')
-    git(world.root, 'commit', '-q', '-m', 'test: changed snapshot')
-    changed = git(world.root, 'rev-parse', 'HEAD').decode().strip()
+    changed = historical_pair(world)
     result = invoke(world, 'verify-baseline', '--revision', changed, '--owner-root', f'ops={world.ops}')
     assert result.returncode == 1 and b'baseline' in result.stderr
     result = invoke(world, 'verify-baseline', '--revision', 'missing-revision', '--owner-root', f'ops={world.ops}')
@@ -986,7 +1003,9 @@ def test_later_policy_bytes_are_rendered_without_changing_historical_fixtures(wo
     original = source.read_bytes()
     updated = original + b'- Later reviewed policy.\n'
     source.write_bytes(updated)
-    expected = world.initial.replace(original + b'\n', updated + b'\n', 1)
+    module = load_assembler(world)
+    expected = world.initial.replace(module.scan_rules(original)['rendered'] + b'\n', module.scan_rules(updated)['rendered'] + b'\n', 1)
+    add_last_fixture_rule(world, source)
     result = build(world, 'render')
     assert result.returncode == 0 and result.stdout == expected
     assert build(world).returncode == 0
@@ -1094,7 +1113,7 @@ def test_rule_reader_uses_selected_index(world):
     module = load_assembler(world)
     r = module.new_rule_record(RULE_A, 'Intent', b'- Keep intent.\n')
     path = world.root / 'instructions/rules' / (RULE_A[5:] + '.json')
-    path.parent.mkdir(parents=True)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(r))
     git(world.root, 'add', 'instructions/rules')
     path.write_text('invalid')
@@ -1484,3 +1503,121 @@ def test_warning_claim_validation(world, case):
     with pytest.raises(ValueError): module.validate_rule(r)
     if case == 'extra-result':
         with pytest.raises(ValueError): module.validate_schema(r, module.rule_schemas()['rule'], 'rule')
+
+
+def test_rule_manifest_delivery_and_evidence_independence(world):
+    assert build(world).returncode == 0
+    artifact, raw = outputs(world)
+    assert artifact == world.initial
+    manifest = json.loads(raw)
+    assert manifest['version'] == 2
+    module = load_assembler(world)
+    for fragment in manifest['fragments']:
+        owner = world.root if fragment['owner'] == 'lore' else world.ops
+        source = (owner / fragment['source']).read_bytes()
+        assert fragment['sha256'] == module.digest(source)
+        assert fragment['rendered_sha256'] == module.digest(artifact[fragment['offset']:fragment['offset'] + fragment['length']])
+        for rule in fragment['rules']:
+            data = artifact[rule['offset']:rule['offset'] + rule['length']]
+            assert module.digest(data) == rule['sha256']
+            record = json.loads((world.root / rule['record']).read_bytes())
+            assert record['id'] == rule['id']
+            record['purpose'] = dict(text='Paraphrase: fixture evidence grew.', basis='inferred', sources=[])
+            (world.root / rule['record']).write_bytes(module.manifest_bytes(record))
+    assert build(world, 'check').returncode == 0
+    assert build(world).returncode == 0
+    assert outputs(world) == (artifact, raw)
+
+
+@pytest.mark.parametrize('kind', ['record', 'schema', 'exclusion'])
+def test_rule_manifest_staged_views(world, kind):
+    module = load_assembler(world)
+    if kind == 'record':
+        path = next((world.root / 'instructions/rules').glob('*.json'))
+    elif kind == 'schema': path = world.root / 'instructions/schemas/rule.json'
+    else:
+        path = world.root / 'instructions/rules/exclusions/core.json'; path.parent.mkdir(exist_ok=True)
+        path.write_bytes(module.manifest_bytes(dict(schema=1, fragment='core', entries=[])))
+    commit_pair(world)
+    valid = path.read_bytes()
+    path.write_bytes(b'{}\n')
+    git(world.root, 'add', str(path))
+    path.write_bytes(valid)
+    result = build(world, 'check')
+    assert result.returncode == 1, result.stdout
+    git(world.root, 'reset', '--', str(path))
+    if kind == 'record':
+        data = json.loads(valid); data['title'] += ' revised'; valid = module.manifest_bytes(data)
+    elif kind == 'schema': valid += b'\n'
+    else: valid += b'\n'
+    path.write_bytes(valid)
+    git(world.root, 'add', str(path))
+    path.write_bytes(b'invalid disk')
+    assert build(world, 'check').returncode == 0
+    assert build(world, 'check', '--working-tree').returncode == 1
+
+
+@pytest.mark.parametrize('kind', ['record', 'schema', 'exclusion'])
+@pytest.mark.parametrize('operation', ['delete', 'rename'])
+def test_rule_manifest_staged_deletion(world, kind, operation):
+    module = load_assembler(world)
+    if kind == 'record': path = next((world.root / 'instructions/rules').glob('*.json'))
+    elif kind == 'schema': path = world.root / 'instructions/schemas/rule.json'
+    else:
+        source = world.root / 'instructions/fragments/core.md'
+        source.write_bytes(source.read_bytes() + b'Connective prose.\n')
+        path = world.root / 'instructions/rules/exclusions/core.json'; path.parent.mkdir(exist_ok=True)
+        path.write_bytes(module.manifest_bytes(dict(schema=1, fragment='core', entries=[dict(text='Connective prose.\n', reason='Fixture connection only.')])))
+    commit_pair(world)
+    before = path.read_bytes()
+    if operation == 'delete': git(world.root, 'rm', str(path))
+    else: git(world.root, 'mv', str(path), str(path) + '.renamed')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(before)
+    result = build(world, 'check')
+    assert result.returncode == 1, result.stdout
+
+
+def test_rule_manifest_diagnoses_unmarked_and_stale(world):
+    commit_pair(world)
+    source = world.root / 'instructions/fragments/core.md'
+    before = source.read_bytes()
+    source.write_bytes(before + b'- New obligation.\n')
+    result = build(world, 'check')
+    assert result.returncode == 1 and b'add-rule' in result.stderr and b'exclusion' in result.stderr and b'line' in result.stderr
+    source.write_bytes(before.replace(b'Composition', b'Compose'))
+    git(world.root, 'add', str(source))
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert all(word in result.stderr for word in [b'core.md', b'unstage', b'keeping', b'refresh', b'inspect', b'restage'])
+
+
+def test_rule_manifest_version_and_head_catalog_authority(world):
+    commit_pair(world)
+    path = world.root / 'instructions/AGENTS.manifest.json'
+    data = json.loads(path.read_bytes()); data['version'] = 1; path.write_text(json.dumps(data))
+    assert build(world, 'check', '--working-tree').returncode == 1
+    git(world.root, 'add', str(path)); git(world.root, 'commit', '-qm', 'test: obsolete committed manifest')
+    assert build(world, 'render').returncode == 0
+    assert build(world).returncode == 0
+    catalog = world.root / 'instructions/assembly.toml'; catalog.write_text(catalog.read_text().replace('classification = "mandatory"', 'classification = "adaptable"', 1))
+    assert b'mandatory' in build(world).stderr
+
+
+def add_last_fixture_rule(world, source):
+    line = len(source.read_bytes().splitlines())
+    result = invoke(world, 'add-rule', 'core', '--start-line', str(line), '--end-line', str(line), '--title', 'Fixture addition')
+    assert result.returncode == 0, result.stderr
+
+
+def historical_pair(world):
+    module = load_assembler(world)
+    paths = [world.root / 'bin/assemble-instructions'] + list((world.root / 'instructions/fragments').glob('*.md'))
+    saved = {p: p.read_bytes() for p in paths}
+    for path in paths[1:]:
+        if b'<!-- rule:' in saved[path]: path.write_bytes(module.scan_rules(saved[path])['rendered'])
+    paths[0].write_bytes(git(ROOT, 'show', 'f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4:bin/assemble-instructions'))
+    commit_pair(world)
+    revision = git(world.root, 'rev-parse', 'HEAD').decode().strip()
+    for path, data in saved.items(): path.write_bytes(data)
+    return revision

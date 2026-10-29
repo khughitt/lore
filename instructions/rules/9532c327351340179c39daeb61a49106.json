@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:9532c327351340179c39daeb61a49106",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes avoid unified names as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1935267075383a83d22094ca6fb1040c3b53c62fae91c8eae9179cf3fc88550c",
+      "text": "- DO NOT add a \"Unified\" prefix to component names\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Avoid Unified names"
+}

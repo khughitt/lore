@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:848c2777bfdb42418a2682636b04c12a",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes tentative claims as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "17bc66f9eeb4080bc8d9b7d202837c0cd23ffd805e82990a0b7a75b00f48f586",
+      "text": "- `(?)` after a claim, plan or label: tentative, maybe. Never treat it as established.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Tentative claims"
+}

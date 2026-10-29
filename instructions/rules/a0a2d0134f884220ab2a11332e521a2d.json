@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:a0a2d0134f884220ab2a11332e521a2d",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes tentative questions as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2fd6fd1834d45c8d3d5fcbc9dbcd728e23bd5256b951f34c8e56eceb2e142a02",
+      "text": "- A trailing `?` marks a question or an idea; `#tag?` is a possible tag, not a\n  confirmed one.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Tentative questions"
+}

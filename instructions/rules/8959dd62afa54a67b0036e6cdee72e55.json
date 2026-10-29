@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:8959dd62afa54a67b0036e6cdee72e55",
+  "impact": {
+    "categories": [
+      "destructive-actions"
+    ],
+    "reason": "Prevents fixture Git writes from reaching host repositories and global configuration.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "009a0f487e00fa3fb6962781eaaa109e842c20535fbb209a519bcca6b7f6f0e9",
+      "text": "- A test, fixture or scratch script that runs git keeps it off the host's real config\n  and repositories. Overriding `HOME` alone is not enough: with `XDG_CONFIG_HOME`\n  still exported and no `~/.gitconfig` in the new `HOME`, `git config --global` writes\n  to an existing `$XDG_CONFIG_HOME/git/config`, the user's real one. Set\n  `GIT_CONFIG_GLOBAL` to a temporary file (or `/dev/null`, with `GIT_AUTHOR_*` and\n  `GIT_COMMITTER_*` set) plus `GIT_CONFIG_NOSYSTEM=1`, or override `XDG_CONFIG_HOME`\n  along with `HOME`, and prefer `git -c key=value` to `git config --global`. A git\n  hook can export `GIT_DIR`, `GIT_INDEX_FILE` and `GIT_WORK_TREE`, which win over\n  `git -C <dir>`: unset every inherited `GIT_*` variable before building a fixture,\n  and before its first write assert both that `git rev-parse --show-toplevel` is the\n  fixture directory and that `git rev-parse --absolute-git-dir` lies inside it (with\n  only `GIT_DIR` set, the top level reads as the current directory while writes still\n  reach the real repository).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Isolated fixture Git configuration"
+}

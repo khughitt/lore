@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:f002b1ef713f42709b9de6b6b3701dc3",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes no emoji as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "35f8e2130b57c0c8264ce0a2ea30441eb17f12b7fc7e7262a269803531c03485",
+      "text": "- Use no emoji in what you write: replies, reports, and task text (titles, bodies,\n  notes). Their fixed colours cannot follow a project's identity colour. Content a\n  project itself asks for, and other Unicode such as arrows or box drawing, is not\n  covered.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "No emoji"
+}

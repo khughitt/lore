@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:986dd690d14b42a1a7ca315e475ff7c2",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes record machine-readable outcomes as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "c25bb56ecb88cf1b207a3e53352e0b29e84c63dfae7452ca167fdf5c8a3b8951",
+      "text": "Two note shapes are read by obs's outcome measures; write them as plain\n`tasks note` lines, exactly in this form.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Record machine-readable outcomes"
+}

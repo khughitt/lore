@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:5b1c2e9a734c498fb8285b1eb1cba9cf",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes shell syntax boundaries as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d920966d471bc5e38df5578a41ef495d895dda669d94b082aa786607ce075d7c",
+      "text": "- Claude Code's Bash tool runs bash (`CLAUDE_CODE_SHELL` in its settings); Codex's\n  shell tool runs the login shell, zsh. Under zsh an unquoted word starting with `=`\n  (`echo ===`) or a glob that matches nothing (`--include=*.py`) fails the whole\n  command line: quote them (`echo '==='`, `--include='*.py'`).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Shell syntax boundaries"
+}

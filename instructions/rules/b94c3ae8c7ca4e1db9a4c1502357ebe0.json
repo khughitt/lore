@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:b94c3ae8c7ca4e1db9a4c1502357ebe0",
+  "impact": {
+    "categories": [
+      "destructive-actions"
+    ],
+    "reason": "Constrains destructive process matching to avoid killing the invoking shell.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "6545ca27c6494d45739add569c468873e7818862b58dc0db3e805250dd511810",
+      "text": "- `pkill -f <pattern>` also matches the shell running it, whose command line contains\n  the pattern, and kills it: use `pkill -f '[p]attern'` or kill the pid you recorded.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Safe process matching"
+}

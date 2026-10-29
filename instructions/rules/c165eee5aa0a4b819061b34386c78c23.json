@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:c165eee5aa0a4b819061b34386c78c23",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Reserves unresolved taste, scope and priority decisions for the intent holder.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "992315a1198e4b52c1c66d5082ea74bc6e731bfa2f37d65a48c9847644fbddd9",
+      "text": "- Before a question asks the user what work should achieve or why (brainstorming's\n  opening questions, its playback, its builder check's \"theirs\" pile), find out who\n  holds that intent. Work the user describes in this session starts with the\n  question; naming a task to take up is not describing it. Other work (filed by\n  another session or agent, captured earlier, grown by scope passes, or derived as a\n  follow-up, feedback report or decomposition child) starts by reading what already\n  exists: the task's body, notes and references, its `source` and parent chain, and\n  the session that filed it, whose human turns around the filing the session-logs\n  skill recovers. Reading needs no offer or permission. Play back\n  what you found and where each part came from, keeping the user's recorded words\n  apart from what agents added. Then ask only what the evidence leaves to the user (a\n  choice of taste, scope or priority, or a premise the evidence contradicts), each\n  question naming what you found; when nothing remains, write the design and mark each\n  call as yours. Never ask the user to recall what a record or transcript holds; when\n  a source cannot be found, say so and offer your reading for them to correct. The\n  written design's review stays the user's gate. This outranks brainstorming's first\n  message and its offer to go look.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Recover recorded intent before questions"
+}

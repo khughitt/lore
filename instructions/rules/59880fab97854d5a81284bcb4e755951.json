@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:59880fab97854d5a81284bcb4e755951",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes interaction notation as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "cc49fc9453f6f9b5e63c0592fc371d3628d3d68b0accee5bdf8e3ba668938dab",
+      "text": "- `a x b`: a combination of, or an interaction between, a and b.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Interaction notation"
+}

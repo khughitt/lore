@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:c6567204f9e443b68cb95a08c8264b3f",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes focused and fast checks as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "c7cfc6ccd73aaec39ebf987f95e01283e4a2efab21c2156e3be1fedd7e50d6d9",
+      "text": "- While changing code, run the test you are working on, then a fast check before\n  committing, by the first route the project defines:\n  - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;\n    where there is no `test-one` yet, the focused run its AGENTS.md names, or\n    `just test-fast` if it names none. Then `just test-fast` before committing.\n  - No `test-fast` recipe: `just test-one` when the justfile has it, otherwise the test\n    command the project's guide documents (or the package test script or README command\n    it points to); before committing, that documented command.\n  - Neither a recipe nor a documented command: say in your report that the project\n    declares no test route. Do not guess a runner, skip the check silently, or add\n    recipes to the project to fill the gap.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Focused and fast checks"
+}

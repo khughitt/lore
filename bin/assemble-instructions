@@ -426,20 +426,22 @@ def validate_rule_set(records, scans, exclusions):
     for fragment, scan in scans.items():
         for rule in scan['rules']:
             if rule['id'] in live: raise ValueError('duplicate rule across fragments')
-            live[rule['id']] = rule
+            live[rule['id']] = dict(rule, source=scan.get('source', fragment))
         blocks = [b['text'] for b in scan['uncovered']]
         entries = exclusions.get(fragment, [])
         for entry in entries:
             fields(entry, {'text', 'reason'}, 'exclusion'); text(entry['reason'], 'exclusion reason')
         selected = [e['text'] for e in entries]
         if len(selected) != len(set(selected)) or any(blocks.count(v) != 1 for v in selected) or set(blocks) != set(selected):
-            raise ValueError(f'{fragment}: uncovered block; use add-rule for obligations or an exclusion entry for connective prose')
+            missing = [b for b in scan['uncovered'] if b['text'] not in selected]
+            location = ', '.join(f'lines {b["start_line"]}-{b["end_line"]}' for b in missing) or 'duplicate/unused exclusion'
+            raise ValueError(f'{fragment}: uncovered block ({location}); use add-rule for obligations or an exclusion entry for connective prose')
     if set(exclusions) - set(scans): raise ValueError('unused fragment exclusions')
     for key, record in records.items():
         validate_rule(record)
         if key != record['id']: raise ValueError('record filename/id mismatch')
         if (key in live) != (record['state'] == 'active'): raise ValueError('active/retired rule coverage mismatch')
-        if key in live and not any(r['sha256'] == live[key]['sha256'] and r['text'] == live[key]['text'] for r in record['revisions']): raise ValueError('stale rule record; unstage affected files, refresh, inspect and restage')
+        if key in live and not any(r['sha256'] == live[key]['sha256'] and r['text'] == live[key]['text'] for r in record['revisions']): raise ValueError(f'stale rule record: {live[key]["source"]}, {record_path(key)}; unstage these files keeping working edits, refresh, inspect and restage, then rerun check')
         for relation in record['relations']:
             if not relation['targets'] or any(t not in records or t == key for t in relation['targets']): raise ValueError('dangling rule relation')
     if set(live) - set(records): raise ValueError('marked rule missing record')
@@ -490,7 +492,7 @@ def record_path(rid):
 def local_scans(root, *, index=False, revision=None):
     catalog = catalog_from(read_local(root, CATALOG, index=index, revision=revision))
     paths = {f['id']: f['source'] for f in catalog['fragments'] if f['owner'] == 'lore'}
-    return paths, {key: scan_rules(read_local(root, path, index=index, revision=revision)) for key, path in paths.items()}
+    return paths, {key: dict(scan_rules(read_local(root, path, index=index, revision=revision)), source=path) for key, path in paths.items()}
 
 
 def refuse_staged(root, paths):
@@ -850,8 +852,8 @@ def provenance(root, args):
     index = index_selected(root, args.working_tree)
     if index and read_local(root, ASSEMBLER, index=True) != Path(__file__).read_bytes(): raise ValueError('executing assembler differs from index')
     _, scans = local_scans(root, index=index)
-    records = read_rule_set(root, index=index)
-    check_authoring_set(records, scans)
+    records, exclusions = read_provenance_inputs(root, index=index)
+    validate_rule_set(records, scans, exclusions)
     contexts = [json.loads(Path(path).read_bytes()) for path in args.context]
     report = assess_rules(records, contexts, scans)
     report['findings'] = [f for f in report['findings'] if (not args.tier or f['tier'] in args.tier) and (not args.warning or f['kind'] in args.warning)]
@@ -859,27 +861,86 @@ def provenance(root, args):
     else: print(provenance_text(report))
 
 
-def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='production'):
+def read_exclusions(root, *, index=False, revision=None):
+    directory = RULE_DIR + '/exclusions'
+    if index: paths = git_bytes(root, 'ls-files', '-z', '--', directory).decode().split('\0')
+    elif revision: paths = git_bytes(root, 'ls-tree', '-r', '--name-only', '-z', revision, '--', directory).decode().split('\0')
+    else: paths = [p.relative_to(root).as_posix() for p in contained(root, directory).glob('*')]
+    exclusions = {}
+    for path in paths:
+        if not path: continue
+        match = re.fullmatch(directory + r'/([a-z][a-z0-9-]*)\.json', path)
+        if not match: raise ValueError('invalid exclusion path: ' + path)
+        value = json.loads(read_local(root, path, index=index, revision=revision))
+        validate_schema(value, rule_schemas()['exclusions'], path)
+        if value['fragment'] != match[1]: raise ValueError('exclusion filename/fragment mismatch')
+        exclusions[value['fragment']] = value['entries']
+    return exclusions
+
+
+def read_provenance_inputs(root, *, index=False, revision=None):
+    for name, schema in rule_schemas().items():
+        path = f'instructions/schemas/{name}.json'
+        if json.loads(read_local(root, path, index=index, revision=revision)) != schema:
+            raise ValueError('schema differs from executing contract: ' + path)
+    records = read_rule_set(root, index=index, revision=revision)
+    for record in records.values():
+        for source in record['sources']:
+            locator = source['preservation']
+            if locator and locator['owner'] == 'lore' and locator['path'] and source['sha256']:
+                # Included copies share the selected view; external locators are never fetched.
+                path = locator['path']
+                if locator['revision'] is not None: continue
+                if index or revision or contained(root, path).exists():
+                    if digest(read_local(root, path, index=index, revision=revision)) != source['sha256']:
+                        raise ValueError('included evidence hash mismatch: ' + path)
+    return records, read_exclusions(root, index=index, revision=revision)
+
+
+def check_warning_report(root, records, scans):
+    report = assess_rules(records, [], scans)
+    baseline, previous = None, {}
+    try:
+        previous = read_rule_set(root, revision='HEAD')
+        if previous:
+            _, before = local_scans(root, revision='HEAD')
+            validate_rule_set(previous, before, read_exclusions(root, revision='HEAD'))
+            baseline = assess_rules(previous, [], before)
+    except (ValueError, OSError, UnicodeError) as error:
+        sys.stderr.write('provenance: HEAD baseline unavailable: ' + str(error) + '\n')
+    changed = {rid for rid in records if records[rid] != previous.get(rid)}
+    print(warning_summary(report, baseline, changed))
+
+
+def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='production', rule_records, exclusions):
     catalog = catalog_from(catalog_bytes)
     mandatory = {f['id'] for f in catalog['fragments'] if f['classification'] == 'mandatory'}
     if required_ids - mandatory:
         raise ValueError('missing or downgraded committed mandatory fragments: ' + ', '.join(sorted(required_ids - mandatory)))
+    scans = {f['id']: dict(scan_rules(sources[f['id']]), source=f['source']) for f in catalog['fragments'] if f['owner'] == 'lore'}
+    validate_rule_set(rule_records, scans, exclusions)
     parts, records, offset = [], [], 0
     for fragment in catalog['fragments']:
-        data = sources[fragment['id']]
-        decoded = data.decode('utf-8')
-        if not data.endswith(b'\n') or data.endswith(b'\n\n'):
+        raw = sources[fragment['id']]
+        decoded = raw.decode('utf-8')
+        if not raw.endswith(b'\n') or raw.endswith(b'\n\n'):
             raise ValueError(f'{fragment["id"]}: fragment must end in a single newline')
         if fragment['id'] == 'projects':
             if not decoded.startswith(START + '\n') or not decoded.endswith(END + '\n') or decoded.count(START) != 1 or decoded.count(END) != 1:
                 raise ValueError('Projects fragment requires exactly the current marked block')
+        scan = scans.get(fragment['id'])
+        data = scan['rendered'] if scan else raw
         record = dict(fragment)
-        record.update(revision=blob(data), sha256=digest(data), offset=offset, length=len(data))
-        records.append(record)
-        parts.append(data)
+        rules = []
+        for rule in scan['rules'] if scan else []:
+            revision = next(r for r in rule_records[rule['id']]['revisions'] if r['sha256'] == rule['sha256'])
+            rules.append(dict(id=rule['id'], sha256=rule['sha256'], offset=offset + rule['offset'], length=rule['length'],
+                record=record_path(rule['id']), clauses=[dict(id=c['id'], sha256=c['sha256'], offset=offset + rule['offset'] + c['offset'], length=len(c['text'].encode())) for c in revision['clauses']]))
+        record.update(revision=blob(raw), sha256=digest(raw), rendered_sha256=digest(data), offset=offset, length=len(data), rules=rules)
+        records.append(record); parts.append(data)
         offset += len(data) + 1
     artifact = b'\n'.join(parts)
-    manifest = {'version': 1, 'mode': mode, 'separator': '\n', 'fragments': records,
+    manifest = {'version': 2, 'mode': mode, 'separator': '\n', 'fragments': records,
                 'artifact': {'path': ARTIFACT, 'sha256': digest(artifact)},
                 'catalog': {'path': CATALOG, 'sha256': digest(catalog_bytes)},
                 'assembler': {'path': ASSEMBLER, 'revision': blob(assembler_bytes), 'sha256': digest(assembler_bytes)}}
@@ -888,18 +949,9 @@ def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='pro
 
 def committed_minimum(root, revision='HEAD'):
     git_bytes(root, 'rev-parse', '--verify', f'{revision}^{{commit}}')
-    if not git_bytes(root, 'ls-tree', '-z', revision, '--', MANIFEST):
-        return set()
-    manifest = json.loads(read_local(root, MANIFEST, revision=revision))
-    fields(manifest, {'version', 'mode', 'separator', 'fragments', 'artifact', 'catalog', 'assembler'}, 'committed manifest')
-    if type(manifest['version']) is not int or manifest['version'] != 1 or manifest['mode'] != 'production' or manifest['separator'] != '\n' or not isinstance(manifest['fragments'], list) or not manifest['fragments']:
-        raise ValueError('invalid committed manifest')
-    ids = set()
-    for f in manifest['fragments']:
-        if not isinstance(f, dict) or f.get('classification') not in ('mandatory', 'adaptable') or not isinstance(f.get('id'), str):
-            raise ValueError('invalid committed manifest fragment')
-        if f['classification'] == 'mandatory': ids.add(f['id'])
-    return ids
+    if not git_bytes(root, 'ls-tree', '-z', revision, '--', CATALOG): return set()
+    catalog = catalog_from(read_local(root, CATALOG, revision=revision))
+    return {f['id'] for f in catalog['fragments'] if f['classification'] == 'mandatory'}
 
 
 def registry():
@@ -1175,7 +1227,7 @@ def index_selected(root, working_tree):
         return False
     changed = {p.decode() for p in git_bytes(root, 'diff', '--cached', '--name-only', '--no-renames', '-z').split(b'\0') if p}
     fixed = {CATALOG, ARTIFACT, MANIFEST, ASSEMBLER}
-    if changed & fixed or any(p.startswith('instructions/fragments/') for p in changed):
+    if changed & fixed or any(p.startswith(('instructions/fragments/', 'instructions/rules/', 'instructions/schemas/')) for p in changed):
         return True
     if changed:
         catalog = catalog_from(read_local(root, CATALOG, index=True))
@@ -1207,7 +1259,8 @@ def main(argv=None):
         if args.command == 'check' and args.owner_root:
             for option in args.owner_root: sys.stderr.write(f'assemble-instructions: owner-root override {option}\n')
         sources = {f['id']: read_local(owners[f['owner']], f['source'], index=index and f['owner'] == 'lore') for f in catalog['fragments']}
-        artifact, manifest = assemble(catalog_bytes, sources, assembler_bytes, committed_minimum(root))
+        records, exclusions = read_provenance_inputs(root, index=index)
+        artifact, manifest = assemble(catalog_bytes, sources, assembler_bytes, committed_minimum(root), rule_records=records, exclusions=exclusions)
         if args.command == 'render': sys.stdout.buffer.write(manifest_bytes(manifest) if args.manifest else artifact)
         elif args.command == 'write': write_pair(root, artifact, manifest)
         else:
@@ -1220,7 +1273,9 @@ def main(argv=None):
             selected = read_local(root, ARTIFACT, index=index)
             if selected != artifact: raise ValueError(artifact_drift(selected, artifact))
             if read_local(root, MANIFEST, index=index) != manifest_bytes(manifest):
-                raise ValueError('manifest stale; run just assemble in lore')
+                raise ValueError('manifest stale or unsupported version; run just assemble in lore')
+            scans = {f['id']: scan_rules(sources[f['id']]) for f in catalog['fragments'] if f['owner'] == 'lore'}
+            check_warning_report(root, records, scans)
         return 0
     except (ValueError, OSError, UnicodeError) as error:
         sys.stderr.write(f'assemble-instructions: {error}\n')

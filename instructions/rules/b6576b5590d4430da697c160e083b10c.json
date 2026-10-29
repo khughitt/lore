@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:b6576b5590d4430da697c160e083b10c",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes latency incident verification as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "3d8f0050d314108fbe5bd630076cac978d14bd4caa105dd84898650c5af3521e",
+      "text": "A latency incident tagged `test-latency` closes in three phases. In the remedy's\nworktree, `tt-latency verify <id> --after <timestamp> --dry-run` shows progress and\nrecords nothing. After the remedy branch merges, the cutoff is the merge commit's time\nin UTC (`2026-09-26T18:35:55Z`): only successful, uncontended, unwidened runs that start\nstrictly after it count, so let them accumulate on every host named in the breach notes.\nThen, on each of those hosts, record from the registered checkout with the task's claim\nmoved there (`tasks start <id>` in it), keeping the output and the exit status apart:\n`out=$(mktemp); tt-latency verify <id> --after <cutoff> >\"$out\" 2>&1; rc=$?`, then\n`tasks attach <id> \"$out\" --name verify-<host>.txt --caption \"<verdict line>\"`, then\nread `rc`. A successful attach is not a successful verify. Each run notes the\nobligations its host meets and exits 1 while another host still owes one; close only\nafter a run exits 0 with `verified: every obligation is met`, with a one-line `tasks\ndone` message naming that verdict, the cutoff and the attachment names, never the\noutput itself.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Latency incident verification"
+}

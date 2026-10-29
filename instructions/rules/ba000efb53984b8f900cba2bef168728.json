@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:ba000efb53984b8f900cba2bef168728",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes redirect background streams as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2414256015586fa85b15e2c0cbf2257c6db0e1a3406ce808fa1d5104f9cf17de",
+      "text": "- A launcher that leaves a process running behind a tracked channel (the harness's\n  shell tool, `ssh host cmd`, a hook) redirects all three of that process's standard\n  streams (`</dev/null >log 2>&1`): a child that inherits stdout or stderr holds the\n  call open after the launcher returns, and `&`, `nohup` and `setsid` close nothing.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Redirect background streams"
+}

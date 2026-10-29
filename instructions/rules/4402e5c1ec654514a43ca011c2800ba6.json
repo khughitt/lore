@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:4402e5c1ec654514a43ca011c2800ba6",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes harvest timings before removal as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "5b5fe45de2ef010f24d13133cbed05523533e3940139db3f9a00bd885b81c74f",
+      "text": "- Before removing a worktree, run `tt-report` so its test timings are harvested.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Harvest timings before removal"
+}

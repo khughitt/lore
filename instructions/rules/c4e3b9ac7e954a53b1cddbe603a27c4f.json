@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:c4e3b9ac7e954a53b1cddbe603a27c4f",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes action and question checkboxes as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "a9e55a0bdde471435ef777f34121407671293b84c0bccd97a3be107bb4bfeb56",
+      "text": "- `- [ ]` is an open action and `- [x]` a done one; `? []` is an open question.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Action and question checkboxes"
+}

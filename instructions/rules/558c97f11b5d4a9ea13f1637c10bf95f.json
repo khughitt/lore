@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:558c97f11b5d4a9ea13f1637c10bf95f",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Requires an end-to-end pilot before reserving the user machine for an extended run.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "6573b704adaa0f5aa250393c00115ecbbe3d5a477b6dc8eaf0c4a6b4d9003b23",
+      "text": "- Before committing to an extended run (a benchmark, capture, experiment, or sweep that\n  takes more than a few minutes, and above all one that needs the user off the machine),\n  first run the smallest version that exercises every gate end to end through its\n  verdict, one case per check, and read the result. When a long run is refused or\n  aborted partway, analyze the parts it completed before changing the environment and\n  retrying. When asking for the machine, name the pilot and what it showed.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Pilot extended runs"
+}

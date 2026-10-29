@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:92d0731cd46d4f88913d0e99ac92ec52",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes file from the actual source checkout as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "24f3efd414a6551425289cc72923f8463c3c15d3cd6f31c7a829fc0040be0d5f",
+      "text": "- File from where you stand. A project checkout (one `tasks where` names a project\n  for, whatever its `kind`: records in the tree, under the records root, or linked)\n  reports under its project's prefix; outside every project the report\n  is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would\n  misstate the source. If filing fails (a broken config, `tasks` missing), name the\n  tool, its owner, and the error in your end-of-turn report, and the user decides.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "File from the actual source checkout"
+}

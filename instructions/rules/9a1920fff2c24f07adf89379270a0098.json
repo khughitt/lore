@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:9a1920fff2c24f07adf89379270a0098",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes portable paths in code and docs as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "f3c2d73ff68689992078ec49df796f0762466a61aa70a41e9a816ce8e220a0b3",
+      "text": "- Avoid machine-specific absolute paths (the home directory, the Dropbox root) in code comments and docs\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Portable paths in code and docs"
+}

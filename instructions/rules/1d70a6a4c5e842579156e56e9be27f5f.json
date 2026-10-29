@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes load the checkout profile as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2bd1095e5b99f68829cb291ae80b2432ad03fb8dc667673089d5087204f3ce76",
+      "text": "Every checkout has a profile \u2014 `personal`, `work`, `external`, or one the user\ndefined \u2014 that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `ops-profile session` and read\nits output before any other work \u2014 the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Load the checkout profile"
+}

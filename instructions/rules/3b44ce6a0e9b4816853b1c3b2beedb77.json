@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:3b44ce6a0e9b4816853b1c3b2beedb77",
+  "impact": {
+    "categories": [
+      "destructive-actions"
+    ],
+    "reason": "States that retention cleanup triggers do not authorize deletion of needed work.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "f0bfe7d83221fdf454c56ebc7cdf0977b911e317cd1b403eb404bd7b5132ab50",
+      "text": "- At park and before `tasks done`, account on the task for each retained worktree,\n  task scratch directory and off-tree evidence copy: path, purpose, next owner and\n  cleanup trigger, plus SHA-256 for evidence files or a scratch/evidence directory\n  manifest and its hash.\n  Read `~/.agents/skills/references/retained-item-records.md` when creating,\n  refreshing or releasing these records; keep uncertainty explicit. An open task\n  owns items across activation review; only a closing session disposing of them\n  in the same turn may temporarily own integration, and anything kept longer\n  needs an open follow-up or agreed user handoff. A cleanup trigger, merge or done\n  grants no deletion permission; preserve unfinished work and the only needed raw\n  copy. Refresh carried resource and wait descriptions from observations. For a\n  layout-refused attachment, preserve hashed raw bytes as a retained item and\n  attach a placeholder-substituted derivative through normal checks, following\n  the reference. Keep that fallback until the executing checker admits a shipped\n  exemption, without treating design completion as shipment or discarding the\n  only raw copy.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Retained-item accounting and preservation"
+}

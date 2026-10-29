@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:717a50b29e794e72b327bf60820479bf",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Defines which scripted stops the agent may resolve without asking.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "0ce9b420aadff6b41da5bc2d65905a7ad87647251cda59231cdb7e93f67cb7b2",
+      "text": "- A skill's scripted question or stop (an integration menu, a \"surface residual\n  findings\" step) is a bounded decision under this rule unless it falls in the stop\n  list above; this rule outranks the skill's \"exactly as written\".\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Scripted stops versus human gates"
+}

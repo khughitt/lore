@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:6cf96d0d28e8459baa6a297bfe294990",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes avoid unrequested compatibility layers as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "c27d95dfc40db9a96cc45dc02c2f8dfbaf7f317e81fac595b5bb9d782fa40510",
+      "text": "- DO NOT create \"legacy\" / \"compatibility\" layers unless specifically asked\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Avoid unrequested compatibility layers"
+}

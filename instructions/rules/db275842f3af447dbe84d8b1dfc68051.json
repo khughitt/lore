@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:db275842f3af447dbe84d8b1dfc68051",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Requires review of the complete design and plan before changing phase.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "eb20e802f950e04697d391ba7b7ee18d6347256c4abbe33a14e547c0721be3dc",
+      "text": "- Two written artifacts keep their gate: a design spec and an implementation plan are\n  reviewed before the next phase starts. Within writing them, sections are not\n  individually approved.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Spec and plan review gates"
+}

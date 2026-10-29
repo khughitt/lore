@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:406df98201e14fe9b3a736887d7010b2",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes file guidance lessons as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "fc86ef066af165d26278556711e2a8bb5e4d3d476dc16c76662993920e7e79ee",
+      "text": "- The user's feedback on how agents behave or what they produce, and any request to\n  make a lesson a pattern, is filed the same way, to the project that owns the guidance\n  or tool it would change (`lore` for the global instructions and skills). A memory may\n  keep a local copy; it never replaces the report. A request about the current task\n  alone (fix this file, relabel this sheet) is ordinary work, not a new rule.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "File guidance lessons"
+}

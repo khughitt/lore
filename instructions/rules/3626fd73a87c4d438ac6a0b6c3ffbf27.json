@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:3626fd73a87c4d438ac6a0b6c3ffbf27",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes report tool and instruction friction as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "205c2488d87522c9438bc3f39a4237d49e6da542ab2973afe763339da05fbd0a",
+      "text": "- Report when a hook or gate blocked you wrongly, or its message did not say what to do\n  (`friction`, to the owner it names); when an instruction or skill told you to do\n  something a tool refused, or two instructions contradicted each other (`friction`, to\n  the instruction's owner); when you needed something the tooling does not do and worked\n  around it (`gap`); when something saved you real work (`positive`); and when a flow\n  retro's lesson is about the tooling rather than the task (file it too, and put the\n  returned id in the retro).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Report tool and instruction friction"
+}

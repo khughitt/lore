@@ -114,7 +114,7 @@ refresh.
 ## Creating and refreshing rule records
 
 The authoring commands operate on working files and never stage files or imply
-approval. The production coverage/manifest integration is tracked separately.
+approval. Assembly requires complete local coverage and writes manifest version 2.
 
 ```
 python3 bin/assemble-instructions add-rule git --start-line 3 --end-line 5 --title 'Commit style'
@@ -177,3 +177,21 @@ was unknown before. Scope authorization does not count. One review of a set's
 exact texts may supply one adoption per hash; container adoption covers clauses
 only when `covers_clauses` is true. A new hash needs new affirmation. Unknowns
 never authorize removing an obligation.
+
+
+## Coverage failures and routine warnings
+
+An uncovered block diagnostic names its fragment and source lines. Use `add-rule`
+for a new obligation, or an exact-text exclusion with a reason for connective
+prose. A stale record names its source and sidecar: unstage those files keeping
+edits, refresh, inspect, restage and rerun check. Assembly never refreshes records
+implicitly. Evidence-only edits validate without changing generated output.
+
+`check` prints warning totals by tier/kind and at most five detail entries for
+new or worsened findings on High or changed subjects, compared with HEAD. It
+prints no IDs for unchanged backlog and no per-rule effectiveness entries.
+Unknown runtime context is aggregated. Initial migration or an unavailable HEAD
+inventory is labelled explicitly and prints totals only. The complete report is
+available through `provenance`; warnings never change mandatory status or authorize
+deletion. Proposed impact classifications still require the milestone's human
+review, including Work/Low assignments.

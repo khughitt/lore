@@ -1,0 +1,33 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:96e7765f238045f4af07742ea0783816",
+  "impact": {
+    "categories": [
+      "permissions",
+      "approvals"
+    ],
+    "reason": "Requires a human decision for changes to intended scope.",
+    "tier": "high"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "273d9411827d975b7639050538d610fc8337b25fc63548578938c14c3fdcfcbb",
+      "text": "- In assessments and reviews, distinguish tree-verified current capability from\n  recorded intended direction. Before characterising intended scope, read the relevant\n  goals, authority and task/source records. Code establishes current behaviour, not\n  eventual scope: preserve the recorded goal and any limit's provisional meaning\n  beside what works today. When intent is missing or records conflict, state what is\n  unknown and which evidence is missing or conflicting; neither invent intent nor\n  replace it with implemented behaviour. A proposed change to intended scope remains\n  a human decision.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Separate current capability from intended scope"
+}

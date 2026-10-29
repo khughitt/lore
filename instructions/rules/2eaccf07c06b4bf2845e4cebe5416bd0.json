@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:2eaccf07c06b4bf2845e4cebe5416bd0",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes association and model notation as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "8c606245771e4d39e0581cb9761ca113c3aa5f38684b3b1e685d185b379736f3",
+      "text": "- `a ~ b` has two readings: `y ~ x` as in a model formula (y is a function of,\n  distributed as, or proportional to x), or association (a is similar to, associated\n  with b). Read it only where the context makes one clear.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Association and model notation"
+}

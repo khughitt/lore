@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:3feb258dfeda4699b0966a649a7e28f4",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes line labels as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "78970ad50da5c2fbaccd4a72e32d4412292e8adc3b4ee4267665ca2b935362f8",
+      "text": "- A line label says what the line is: `context:`, `insp:` (inspiration),\n  `motivation:`, `question:`, `intuition:`, `basic idea:`, `basic approach:`,\n  `challenge:`, `limitation:`, `side:` (an aside).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Line labels"
+}

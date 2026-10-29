@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:9a8826ecfa854e6b9d44c3217dba5c36",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes alternative notation as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "6f2eccd8073b374f5b6d9fccd487ed36a433a72a46dbb4c08512512a2ca7fada",
+      "text": "- `a|b` and `(a|b|\u2026)`: alternatives.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Alternative notation"
+}

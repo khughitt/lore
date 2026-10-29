@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:718e79f5b3fa40249cb178139c26b28f",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes resolvable user-facing paths as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "2dd74124cd72aa8bf869d60bf8d25bacc9f89cc7932ca0e32c8850894b7812ae",
+      "text": "- A path you show the user is one they can open from where they stand, the main\n  checkout: relative to it when the file lives there, absolute otherwise. Never write\n  it relative to a directory only you know, such as the scratchpad (`scratchpad/x.md`\n  resolves nowhere for the user). The Git rule against machine-specific absolute paths\n  covers committed text, not what you tell the user.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Resolvable user-facing paths"
+}

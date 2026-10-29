@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
+  "impact": {
+    "categories": [
+      "workflow"
+    ],
+    "reason": "Prescribes task roots and project discovery as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
+    "tier": "work"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "ac621b02502ef5e4fb0e35511a2650afa5edf6317319ea6ea229ad7470dde102",
+      "text": "- `tasks root <task-id>` takes a full task id and prints the registered root of its\n  project (`--pretty` for the bare path); it refuses a bare prefix. To find a project\n  by prefix, read `tasks projects --paths --pretty`, or the `root` field of its default\n  JSON rows. Never invent an id to feed `root` or hardcode a host path. Both name the\n  registered root, the main checkout: a command run without a scope inside a worktree\n  still reads that worktree, and neither lookup replaces it.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Task roots and project discovery"
+}

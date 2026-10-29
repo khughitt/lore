@@ -1,8 +1,11 @@
 ## Task notes for outcome measures
 
+<!-- rule:986dd690d14b42a1a7ca315e475ff7c2 begin -->
 Two note shapes are read by obs's outcome measures; write them as plain
 `tasks note` lines, exactly in this form.
+<!-- rule:986dd690d14b42a1a7ca315e475ff7c2 end -->
 
+<!-- rule:96745a06cd69497b8ffe0511c66bda2f begin -->
 - When a review of your spec, plan, or implementation arrives, before acting on
   it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | human>`
   (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
@@ -28,9 +31,12 @@ Two note shapes are read by obs's outcome measures; write them as plain
   handed review findings (resumed or freshly dispatched) checks that the round's note
   exists and writes none; if it is missing, the worker says so in its report for the
   controller to add.
+<!-- rule:96745a06cd69497b8ffe0511c66bda2f end -->
+<!-- rule:86172e9df3bc47369bde0a298b8a292a begin -->
 - When you file a task because work closed as `done` fell short, changed, or grew,
   note it on the new task at filing: `concerns: <task-id> <defect|change|extension> — <one line>`.
   `defect`: the closed work did not do what its task asked or broke something that
   worked; `change`: it did what was asked and something different is now wanted;
   `extension`: new scope built on it. A finding before close is a review finding,
   not a concern.
+<!-- rule:86172e9df3bc47369bde0a298b8a292a end -->

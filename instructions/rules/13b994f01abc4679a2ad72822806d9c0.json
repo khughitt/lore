@@ -1,0 +1,32 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:13b994f01abc4679a2ad72822806d9c0",
+  "impact": {
+    "categories": [
+      "guidance"
+    ],
+    "reason": "Prescribes prefer explicit behavior as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
+    "tier": "low"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "328c4f7b2fb56981f9e2fa89b8bc4d2b09b19c9a5b1c34b4c2f74bfbe19b51d9",
+      "text": "- Explicit > Defensive\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Prefer explicit behavior"
+}

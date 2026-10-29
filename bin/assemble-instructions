@@ -15,6 +15,7 @@ import subprocess
 import sys
 import tempfile
 import tomllib
+import uuid
 
 CATALOG = 'instructions/assembly.toml'
 ARTIFACT = 'instructions/AGENTS.md'
@@ -460,6 +461,185 @@ def read_rule_set(root, *, index=False, revision=None):
     return records
 
 
+def record_path(rid):
+    if not re.fullmatch(RULE_ID, rid): raise ValueError('invalid rule ID')
+    return f'{RULE_DIR}/{rid[5:]}.json'
+
+
+def local_scans(root, *, index=False, revision=None):
+    catalog = catalog_from(read_local(root, CATALOG, index=index, revision=revision))
+    paths = {f['id']: f['source'] for f in catalog['fragments'] if f['owner'] == 'lore'}
+    return paths, {key: scan_rules(read_local(root, path, index=index, revision=revision)) for key, path in paths.items()}
+
+
+def refuse_staged(root, paths):
+    staged = git_bytes(root, 'diff', '--cached', '--name-only', '--no-renames', '-z', '--', *sorted(paths)).decode().split('\0')
+    staged = [p for p in staged if p]
+    if staged:
+        raise ValueError('staged inputs: ' + ', '.join(staged) + '; unstage these files keeping working edits, refresh, inspect, restage and rerun check')
+
+
+def write_files(root, values):
+    # Preflight every destination before replacing any file; interrupted sets are resumable.
+    outputs = [(output_path(root, name), data) for name, data in values]
+    written, pending = [], [name for name, _ in values]
+    try:
+        for path, data in outputs:
+            name = path.relative_to(root).as_posix()
+            if not path.exists() or path.read_bytes() != data:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                temporary = None
+                try:
+                    with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '-', delete=False) as stream:
+                        temporary = Path(stream.name)
+                        stream.write(data)
+                        os.fchmod(stream.fileno(), stat.S_IMODE(path.stat().st_mode) if path.exists() else 0o644)
+                    output_path(root, name)
+                    os.replace(temporary, path)
+                finally:
+                    if temporary: temporary.unlink(missing_ok=True)
+            written.append(name); pending.remove(name)
+    except OSError as error:
+        raise ValueError(f'{error}; written: {written}; unwritten: {pending}; retry the same operation/ID') from error
+    return written
+
+
+def committed_record(root, rid):
+    return bool(git_bytes(root, 'log', '--all', '-1', '--format=%H', '--', record_path(rid)).strip())
+
+
+def check_authoring_set(records, scans):
+    # Creating one range must work while other prose is still awaiting annotation.
+    # The assembly/check gate separately requires complete exclusion coverage.
+    validate_rule_set(records, {f: dict(s, uncovered=[]) for f, s in scans.items()}, {})
+
+
+def add_rule(root, args):
+    paths, scans = local_scans(root)
+    if args.fragment not in paths: raise ValueError('add-rule requires a local catalog fragment')
+    source = paths[args.fragment]
+    output_path(root, source)
+    if args.start_line < 1 or args.end_line < args.start_line: raise ValueError('invalid inclusive source range')
+    records = read_rule_set(root)
+    targets = [args.split_from] if args.split_from else args.merged_from or []
+    if len(targets) != len(set(targets)) or any(t not in records for t in targets): raise ValueError('unknown or duplicate predecessor rule')
+    relations = [{'kind': 'split_from' if args.split_from else 'merged_from', 'targets': targets}] if targets else []
+    rid = args.resume or 'rule:' + uuid.uuid4().hex
+    destination = record_path(rid)
+    pending_path = f'{RULE_DIR}/pending/{rid[5:]}.json'
+    for path in (destination, pending_path): output_path(root, path)
+    refuse_staged(root, [source, destination, pending_path])
+    if rid not in records and committed_record(root, rid): raise ValueError('missing committed record is corruption; restore retained history')
+    print(rid, flush=True)
+    request = dict(fragment=args.fragment, start_line=args.start_line, end_line=args.end_line, title=args.title, relations=relations)
+    data = read_local(root, source)
+    journal = contained(root, pending_path)
+    if journal.exists():
+        saved = json.loads(journal.read_bytes())
+        fields(saved, {'request', 'before', 'after', 'record'}, 'pending creation')
+        if not args.resume or saved['request'] != request: raise ValueError('resume request differs from pending creation')
+        proposed = saved['after'].encode()
+        proposed_scan = scan_rules(proposed)
+        rule = next((r for r in proposed_scan['rules'] if r['id'] == rid), None)
+        if rule is None: raise ValueError('pending creation has no matching identity')
+        expected = new_rule_record(rid, args.title, rule['text'].encode()); expected['relations'] = relations
+        if saved['record'] != expected: raise ValueError('pending record differs from attempted creation')
+        if data != proposed and digest(data) != saved['before']: raise ValueError('source differs from interrupted creation; inspect before resuming')
+        record = saved['record']
+    else:
+        lines = data.splitlines(keepends=True)
+        begin, end = args.start_line - 1, args.end_line
+        existing = next((r for r in scans[args.fragment]['rules'] if r['id'] == rid), None)
+        if existing:
+            # An already complete retry must match its retained creation exactly.
+            marker = f'<!-- {rid} begin -->\n'.encode()
+            if not args.resume or begin >= len(lines) or lines[begin] != marker: raise ValueError('resume range does not match existing rule')
+            selected = b''.join(lines[begin + 1:end + 1])
+            if selected.decode() != existing['text']: raise ValueError('resume range differs')
+            proposed = data
+        else:
+            if end > len(lines): raise ValueError('source range exceeds fragment')
+            selected = b''.join(lines[begin:end])
+            proposed = b''.join(lines[:begin]) + f'<!-- {rid} begin -->\n'.encode() + selected + f'<!-- {rid} end -->\n'.encode() + b''.join(lines[end:])
+        record = new_rule_record(rid, args.title, selected); record['relations'] = relations
+        proposed_scan = scan_rules(proposed)  # Reject nesting, fences and invalid newline boundaries.
+        saved = dict(request=request, before=digest(data), after=proposed.decode(), record=record)
+    if rid in records and records[rid] != record: raise ValueError('existing record differs; never overwrite retained history')
+    proposed_records = dict(records, **{rid: record})
+    check_authoring_set(proposed_records, dict(scans, **{args.fragment: proposed_scan}))
+    # Recovery metadata is local authoring state, never part of delivery or evidence.
+    written = write_files(root, [(pending_path, manifest_bytes(saved)), (source, proposed), (destination, manifest_bytes(record))])
+    journal.unlink()
+    print('written: ' + ', '.join(written) + '; command execution does not imply adoption')
+    return rid
+
+
+def refresh_rule(record, data, replacements):
+    validate_rule(record)
+    sha = digest(data)
+    retained = next((r for r in record['revisions'] if r['sha256'] == sha), None)
+    if retained:
+        current = {c['id']: c for c in retained['clauses']}
+        historic = {c['id'] for r in record['revisions'] for c in r['clauses']}
+        for cid, change in replacements.items():
+            if change == {'retire': True} and cid in historic and cid not in current: continue
+            if cid not in current or change != {k: current[cid][k] for k in ('text', 'offset')}:
+                raise ValueError('cannot replace selectors on a retained revision')
+        return json.loads(json.dumps(record))
+    old = record['revisions'][-1]
+    if set(replacements) - {c['id'] for c in old['clauses']}: raise ValueError('selector does not name a current clause')
+    clauses = []
+    for old_clause in old['clauses']:
+        clause = dict(old_clause)
+        change = replacements.get(clause['id'])
+        if change is not None:
+            if change == {'retire': True}: continue
+            fields(change, {'text', 'offset'}, 'selector')
+            if type(change['offset']) is not int or change['offset'] < 0: raise ValueError('invalid selector offset')
+            text(change['text'], 'selector quote')
+            clause.update(change)
+        else:
+            quote = clause['text'].encode()
+            matches = [m.start() for m in re.finditer(b'(?=' + re.escape(quote) + b')', data)]
+            if len(matches) != 1: raise ValueError(f'{clause["id"]}: {len(matches)} matches; supply explicit selector or retirement and rerun refresh')
+            clause['offset'] = matches[0]
+        clause.update(sha256=digest(clause['text'].encode()), parent_sha256=sha)
+        clauses.append(clause)
+    retained_ids = {c['id'] for c in clauses}
+    for clause in clauses: clause['overlaps'] = [i for i in clause['overlaps'] if i in retained_ids]
+    updated = json.loads(json.dumps(record))
+    updated['revisions'].append(dict(sha256=sha, text=data.decode('utf-8'), locator=None, clauses=clauses))
+    validate_rule(updated)
+    return updated
+
+
+def refresh(root, args):
+    paths, scans = local_scans(root)
+    records = read_rule_set(root)
+    live = {r['id']: (f, r) for f, scan in scans.items() for r in scan['rules']}
+    for rid in live.keys() - records.keys():
+        if committed_record(root, rid): raise ValueError('missing committed record is corruption; restore retained history: ' + record_path(rid))
+        raise ValueError('marked rule missing record; resume its add-rule operation: ' + rid)
+    selected = set(args.rules) if args.rules else {rid for rid, (_, r) in live.items() if not any(v['sha256'] == r['sha256'] for v in records[rid]['revisions'])}
+    if selected - live.keys(): raise ValueError('refresh requires live rule IDs')
+    replacements = json.loads(Path(args.selectors).read_bytes()) if args.selectors else {}
+    if not isinstance(replacements, dict): raise ValueError('selectors must be an object')
+    if not args.rules:
+        selected |= {rid for rid in live if any(c['id'] in replacements for r in records[rid]['revisions'] for c in r['clauses'])}
+    known = {c['id'] for rid in selected for r in records[rid]['revisions'] for c in r['clauses']}
+    if replacements.keys() - known: raise ValueError('selector not in selected rules')
+    affected = {p for rid in selected for p in (paths[live[rid][0]], record_path(rid))}
+    refuse_staged(root, affected)
+    for path in affected: output_path(root, path)
+    proposed = dict(records)
+    for rid in sorted(selected):
+        ids = {c['id'] for r in records[rid]['revisions'] for c in r['clauses']}
+        proposed[rid] = refresh_rule(records[rid], live[rid][1]['text'].encode(), {c: v for c, v in replacements.items() if c in ids})
+    check_authoring_set(proposed, scans)
+    written = write_files(root, [(record_path(rid), manifest_bytes(proposed[rid])) for rid in sorted(selected) if proposed[rid] != records[rid]])
+    print('refreshed: ' + (', '.join(sorted(selected)) or 'none') + '; written: ' + ', '.join(written))
+
+
 def assemble(catalog_bytes, sources, assembler_bytes, required_ids, *, mode='production'):
     catalog = catalog_from(catalog_bytes)
     mandatory = {f['id'] for f in catalog['fragments'] if f['classification'] == 'mandatory'}
@@ -544,7 +724,8 @@ def owner_roots(catalog, overrides, root, *, validate=False):
 
 def output_path(root, name):
     path = root / relative_path(name)
-    if path.is_symlink(): raise ValueError(f'output must not be a symlink: {name}')
+    if any(p.is_symlink() for p in (path, *path.parents) if p != root and p.is_relative_to(root)):
+        raise ValueError(f'output must not be a symlink: {name}')
     contained(root, name)
     if path.exists() and not path.is_file(): raise ValueError(f'output must be an ordinary file: {name}')
     return path
@@ -586,6 +767,18 @@ def build_parser():
         if name == 'check':
             command.add_argument('--working-tree', action='store_true')
             command.add_argument('--skip-projects-render', action='store_true')
+    add = sub.add_parser('add-rule', help='Create identity and unknown record for an unmarked source range')
+    add.add_argument('fragment')
+    add.add_argument('--start-line', type=int, required=True)
+    add.add_argument('--end-line', type=int, required=True)
+    add.add_argument('--title', required=True)
+    relations = add.add_mutually_exclusive_group()
+    relations.add_argument('--split-from')
+    relations.add_argument('--merged-from', nargs='+')
+    add.add_argument('--resume', help='Retry an interrupted creation using its printed rule ID')
+    refresh_parser = sub.add_parser('refresh', help='Refresh changed rule text without carrying claims forward')
+    refresh_parser.add_argument('rules', nargs='*')
+    refresh_parser.add_argument('--selectors', help='JSON clause-ID map: {text, offset} or {retire: true}')
     return parser
 
 
@@ -771,6 +964,9 @@ def main(argv=None):
     try:
         if args.command.startswith('verify-'):
             verify_proof(root, args)
+            return 0
+        if args.command in ('add-rule', 'refresh'):
+            (add_rule if args.command == 'add-rule' else refresh)(root, args)
             return 0
         index = args.command == 'check' and index_selected(root, args.working_tree)
         assembler_bytes = read_local(root, ASSEMBLER, index=index)

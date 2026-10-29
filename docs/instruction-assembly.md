@@ -110,3 +110,39 @@ ops repository.
 
 The SessionStart notice from ops also reports a forgotten assembly after an ops
 refresh.
+
+## Creating and refreshing rule records
+
+The authoring commands operate on working files and never stage files or imply
+approval. The production coverage/manifest integration is tracked separately.
+
+```
+python3 bin/assemble-instructions add-rule git --start-line 3 --end-line 5 --title 'Commit style'
+python3 bin/assemble-instructions refresh
+python3 bin/assemble-instructions refresh rule:<32-hex-id> --selectors selectors.json
+```
+
+`add-rule` takes an inclusive unmarked source range in a local catalog fragment.
+It mints an ID, inserts markers and creates a complete unknown record. Optional
+`--split-from ID` or `--merged-from ID ...` records predecessor identities without
+copying claims; retire replaced rules separately. For multiple ranges, work from
+bottom to top so earlier line numbers remain stable.
+
+Creation prints its ID before writes. Until both source and record are complete,
+`instructions/rules/pending/<id>.json` retains the exact attempt. Retry with the
+same arguments plus `--resume rule:<id>` after an interruption. A conflicting
+request refuses; a missing previously committed record is corruption and must be
+restored. Do not commit pending authoring files.
+
+`refresh` selects changed marked rules by default. It appends revisions and moves
+a clause only when its old exact quote occurs once. A selector JSON file maps a
+clause ID to `{"text": "new exact quote", "offset": 10}` (UTF-8 byte offset) or
+`{"retire": true}`. Missing or ambiguous quotes refuse before any record writes.
+Retained revisions and claims stay intact; a rerun completes interrupted record
+writes without duplicating revisions, including when selectors were supplied.
+
+Both commands refuse staged changes to affected files, symlink outputs and invalid
+records. Unstage the named files **keeping working edits**, refresh, inspect,
+restage and rerun check. After authoring, record available proposal and approval
+sources separately; exact-text adoption must bind the hash actually accepted.
+Evidence-only changes need no refresh. Command execution is never adoption.

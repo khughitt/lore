@@ -4,10 +4,10 @@
   "id": "rule:ca536e7c8ef24f09a49bd0c598972ef5",
   "impact": {
     "categories": [
-      "workflow"
+      "outward-facing-actions"
     ],
-    "reason": "Prescribes explicit subprocess test environments as a workflow or scope requirement; it does not itself grant permission for destructive or outward-facing action.",
-    "tier": "work"
+    "reason": "Keeps real credentials out of subprocess tracebacks, captured output and logs that may be shared as evidence or attachments.",
+    "tier": "high"
   },
   "incidents": [],
   "purpose": {

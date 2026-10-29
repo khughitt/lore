@@ -4,10 +4,10 @@
   "id": "rule:a5554bc873f348648268c912ee06b92a",
   "impact": {
     "categories": [
-      "guidance"
+      "outward-facing-actions"
     ],
-    "reason": "Prescribes tool-focused feedback without project details as style, interpretation or presentation guidance without a permission, approval or destructive-action gate.",
-    "tier": "low"
+    "reason": "Restricts project-identifying content sent to other projects' feedback trackers; this governs outward disclosure, not only presentation.",
+    "tier": "high"
   },
   "incidents": [],
   "purpose": {

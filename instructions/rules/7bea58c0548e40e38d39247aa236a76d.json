@@ -14,45 +14,51 @@
           "actor": "user",
           "basis": "observed",
           "original_author": "user",
-          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "reason": "The native original user record establishes this narrow context-durability goal. The later Codex message supplies a mixed conversation relay, not independent original authorship of its assistant text.",
           "role": "goal",
           "statement": "Paraphrase: The user asked to retain enough surrounding context and user input for later scoping, noting that session logs might not persist. This is the durability goal, not authorship of the precise feedback-body recipe.",
           "supplier": "user"
         },
         "evidence_quality": [
           {
-            "quality": "originating-request/proposal",
-            "source": "session-01a158ff-0fbd-7203-aca5-281026150307.jsonl"
+            "source": "session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl",
+            "quality": "originating-request/proposal"
+          },
+          {
+            "source": "session-01a158ff-0fbd-7203-aca5-281026150307.jsonl",
+            "quality": "later-restatement"
           }
         ]
       },
       "evidence": [
+        "session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl",
         "session-01a158ff-0fbd-7203-aca5-281026150307.jsonl"
       ],
       "id": "B4-01a158-L13-durability",
       "kind": "proposal",
-      "occurred_at": "2026-10-20T11:11:00.429Z",
+      "occurred_at": "2026-10-20T11:03:45.711Z",
       "predecessors": [],
-      "recorded_at": "2026-10-29T17:55:20.967248+00:00",
+      "recorded_at": "2026-10-29T19:10:41.953458+00:00",
       "recorder": "codex",
       "searches": [
-        "batch-4-bound"
+        "batch-4-bound",
+        "final-review-origin-correction"
       ],
       "subject": {
         "binding": "historical-excerpt",
-        "excerpt_sha256": "8b8275e52a7dc9f1563a77c667099518af29767213c888f78ee705e04f660141",
+        "excerpt_sha256": "7764616c69455305f2c3e47c4da312d898fd80a3c27b801fbcbeb6b7208aa13d",
         "id": "clause:6b4b8fc1589d479bb71fa26829e0a09d",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
-          "path": "tasks/files/lore-182c42/session-01a158ff-0fbd-7203-aca5-281026150307.jsonl",
-          "reference": "Exact original JSONL line 13, packet line 2, including newline. Contribution limited by the statement and subject.",
+          "path": "tasks/files/lore-182c42/session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl",
+          "reference": "Native original user record line200, packet line1, including newline; UUID da77c863-0fac-4fd0-9ce8-8db825c22d38. Stable event ID retains its first import label; source now corrects the later relay binding.",
           "revision": null
         },
         "sha256": null,
-        "source": "session-01a158ff-0fbd-7203-aca5-281026150307.jsonl"
+        "source": "session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl"
       },
-      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+      "time_uncertainty": "Original request timestamp; the distinct user-supplied relay occurred at2026-10-20T11:11:00.429Z and is retained as later-restatement evidence."
     },
     {
       "claim": {
@@ -223,9 +229,23 @@
       ],
       "id": "batch-4-bound",
       "recorder": "codex",
-      "scope": "Read lore-c01bc8 body and stamped suggestion notes, original user context request in 01a158ff:13, and implementation session 0678d889 proposal 123, review correction 169, prepared feature/task-note heads and approval 221. Two candidates; distinguish user goal from the agent suggested body shape and relayed review.",
+      "scope": "Read lore-c01bc8 body and stamped suggestion notes, later mixed conversation relay in 01a158ff:13 (original request recovered separately in the final-review correction), and implementation session 0678d889 proposal 123, review correction 169, prepared feature/task-note heads and approval 221. Two candidates; distinguish user goal from the agent suggested body shape and relayed review.",
       "unresolved": [
         "User intent concerns preserved context and log loss; the tool-only body format, distinct-issue boundary and optional applicability list are agent proposals. Approval follows the corrective 6cc8227, with a1af8f2 task-note head, not the earlier uncorrected c94ec14. No exact-current adoption asserted."
+      ]
+    },
+    {
+      "id": "final-review-origin-correction",
+      "cutoff": "2026-10-29T19:10:41.953458+00:00",
+      "recorder": "codex",
+      "scope": "Third named transcript candidate for this contribution: followed the737a5757 session explicitly named by the01a158 relay; read native original request200 and preserved contiguous response/filing context through313. Corrects the original-source classification and event time from frozen7640707 while retaining that revision and the later relay.",
+      "exclusions": [
+        "No archive-wide or other-host scan.",
+        "API request blob198 is an unstamped duplicate, not the originating-event locator.",
+        "No new adoption, rule wording, applicability or effectiveness claim."
+      ],
+      "unresolved": [
+        "The exact tool-only body mechanism remains the agent contribution; the human goal is scoped to the existing durability clause."
       ]
     }
   ],
@@ -492,6 +512,30 @@
       "representation": "raw",
       "sha256": "6b776d000dc6d5b423bbd8dd4f5e7da2caa72c44e4bdac6bb4f425e975e711af",
       "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl",
+      "inspected_at": "2026-10-29T19:10:41.953458+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "737a5757-83af-4e31-9fdd-4ce70dd9e6f1; native lines200-313, mappings in origin-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/session-737a5757-83af-4e31-9fdd-4ce70dd9e6f1-origin.jsonl",
+        "reference": "Exact contiguous native JSONL records200-313 with newline; request at200 and corresponding assistant reply313. See origin-record-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "b7205fb8e29d07af7724f6e4ef48d10a7489356236a4a024c52b5b9938db4317",
+      "source_time": "2026-10-20T11:03:45.711Z",
       "transformation": null
     }
   ],

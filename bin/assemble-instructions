@@ -830,7 +830,7 @@ def assess_rules(records, contexts, scans):
             for owner, a in judgments:
                 if (owner, a['id']) in superseded: continue
                 comparison = compare_assessment(a, subject, context, available, known_local)
-                ident = projected_reference(owner, a['id'])
+                ident = owner + '#' + a['id']
                 evidence = projected_evidence(owner, a)
                 if comparison['changed']: add('stale-assessment', 'Recorded judgment differs: ' + ident, comparison['changed'], evidence)
                 if comparison['unknown']: add('currency-unverifiable', 'Cannot establish judgment currency: ' + ident, comparison['unknown'], evidence)

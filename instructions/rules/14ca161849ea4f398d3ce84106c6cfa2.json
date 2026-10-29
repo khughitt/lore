@@ -1,6 +1,132 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent wrote the full task-ID lookup/project discovery distinction, no invented ID or host path, and unchanged worktree-local scope.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl"
+      ],
+      "id": "B4-665d-L96",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T13:13:52.906Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:55:55.841403+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-4-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "832a38b758fbb946d8f5356327e3091595584f46870bac9ed3e2db19a062a8bc",
+        "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-182c42/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+          "reference": "Exact original JSONL line 96, packet line 4, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+            "git-6105f82.md",
+            "git-1a4489c.md"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-d4cc28",
+            "revision": "6105f826adc10e0d528376184cd1726247713cfe",
+            "scope": "Paraphrase: Merge the prepared root-lookup guidance at feature 6105f82 with task-close head 1a4489c, as presented at 124, activating the global Shell rule and cleaning its worktree. No CLI change or historical-plan repair is included."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-6105f82.md"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-1a4489c.md"
+          }
+        ]
+      },
+      "evidence": [
+        "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+        "git-6105f82.md",
+        "git-1a4489c.md"
+      ],
+      "id": "B4-665d-L132",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T13:23:27.078Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:55:55.841403+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-4-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "9a09b066c97145f09b8b9f19a892239b457b3e5fa36a5ee5a404b70009c3965c",
+        "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-182c42/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+          "reference": "Exact original JSONL line 132, packet line 15, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
   "impact": {
     "categories": [
@@ -11,9 +137,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Distinguish task-root lookup from project discovery without replacing worktree-local scope."
   },
   "relations": [],
   "revisions": [
@@ -25,8 +151,216 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:55:55.841403+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-4-bound",
+      "recorder": "codex",
+      "scope": "Read task and named 665de903 exact insertion 96, prepared feature/task-close heads at 119/124, and merge response 132. One candidate; compare prepared and rewritten policy blobs.",
+      "unresolved": [
+        "The failed-plan report supplies motivation but its original plan was not recovered or repaired. Agent proposal and concrete merge-scope approval are observed; no exact-current adoption or new CLI behavior is asserted."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-1a4489c-context.txt",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-1a4489c-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-4-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-1a4489c-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-1a4489c.md",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/shell.md",
+        "reference": "Original blob e2aefb4835751be105f2aef423a08b268c1ed183; commit metadata and path diff in matching -context.txt",
+        "revision": "1a4489cdc6b3efb36f99825d60c456f86cb9f6f1"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-1a4489c.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "cfc9a7c37533ecdaa2e55bc89423ac3f1eee37f80adc054d82c72957851e6f0c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-30040bd-context.txt",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-30040bd-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-4-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-30040bd-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "a7290ea09bd0ede013a441ae39023631f0f1aa8d9611809284bbcad0097ef7f9",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-30040bd.md",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/shell.md",
+        "reference": "Original blob e2aefb4835751be105f2aef423a08b268c1ed183; commit metadata and path diff in matching -context.txt",
+        "revision": "30040bd3ef0c1f1cfabf04eafe976668f8ba247e"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-30040bd.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "cfc9a7c37533ecdaa2e55bc89423ac3f1eee37f80adc054d82c72957851e6f0c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-6105f82-context.txt",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-6105f82-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-4-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-6105f82-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "ca248a2b64c480d8bbf2fe755596685b5a41e96a1cba6700ad5dfa8a1813fbdc",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-6105f82.md",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/shell.md",
+        "reference": "Original blob e2aefb4835751be105f2aef423a08b268c1ed183; commit metadata and path diff in matching -context.txt",
+        "revision": "6105f826adc10e0d528376184cd1726247713cfe"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/git-6105f82.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "cfc9a7c37533ecdaa2e55bc89423ac3f1eee37f80adc054d82c72957851e6f0c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "665de903-c007-4dd4-a3f4-f7014916b08c; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "262609618dd87b595badb80d10e63eb51907636e236d806a8b13d382ea53d4c4",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-d4cc28.json",
+      "inspected_at": "2026-10-29T17:55:55.841403+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/task-lore-d4cc28.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-4-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-182c42/task-lore-d4cc28.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "dd18f81bfeb145ca4e8f9b6d4f358786c1cc77fd5a123730536d884fc8b4187b",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Task roots and project discovery"
 }

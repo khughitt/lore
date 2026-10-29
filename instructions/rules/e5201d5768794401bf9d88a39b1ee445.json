@@ -60,14 +60,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-079e524a-68d0-4004-9e67-97d740229997"
+            "session-079e524a-68d0-4004-9e67-97d740229997",
+            "supp-prepared-1de3a79.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-e9fb39",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "1de3a79befe481cc23b92b2193fb8284699a5702",
+            "scope": "Paraphrase: Merge the prepared reopening route on docs/reopen-route at 1de3a79: reopen done tasks for pre-integration review corrections, require the fix owner to release the claim, and reserve concerns for shortcomings after landing."
           }
         },
         "authorship": {
@@ -83,11 +84,16 @@
           {
             "quality": "later-restatement",
             "source": "session-079e524a-68d0-4004-9e67-97d740229997"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-1de3a79.md"
           }
         ]
       },
       "evidence": [
-        "session-079e524a-68d0-4004-9e67-97d740229997"
+        "session-079e524a-68d0-4004-9e67-97d740229997",
+        "supp-prepared-1de3a79.md"
       ],
       "id": "B1-079e-L157",
       "kind": "adoption",
@@ -202,6 +208,30 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "243271529d233d4aa76256f75bcca8f567268855c4f36d315b53ca56ae483b29",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-1de3a79.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "1de3a79befe481cc23b92b2193fb8284699a5702"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-1de3a79.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "c1b5a3b2becf3a5eeaab7e68e30bd5176da3b311242675cfb09bccab3edf3a73",
       "source_time": null,
       "transformation": null
     }

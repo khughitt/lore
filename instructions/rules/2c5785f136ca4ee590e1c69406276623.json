@@ -41,7 +41,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "4a2acfb25479c32d69794c0f4a3795435edb130b182b640c8ac3f32979e48396",
-        "id": "rule:2c5785f136ca4ee590e1c69406276623",
+        "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -60,14 +60,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-0bf9fcb5-39fd-48a3-8c22-b689a52e7a3b"
+            "session-0bf9fcb5-39fd-48a3-8c22-b689a52e7a3b",
+            "supp-prepared-415ab20.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-cf7783",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "415ab2092b9a4a63414334dccb13e76d737b6f1b",
+            "scope": "Paraphrase: Merge the prepared superpowers-v7 upgrade and question-format exception, including wording commit 415ab20, after the paired tasks skill change; authorize the described global delivery, not unrelated changes to the older recommendation-first sentence."
           }
         },
         "authorship": {
@@ -83,11 +84,16 @@
           {
             "quality": "later-restatement",
             "source": "session-0bf9fcb5-39fd-48a3-8c22-b689a52e7a3b"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-415ab20.md"
           }
         ]
       },
       "evidence": [
-        "session-0bf9fcb5-39fd-48a3-8c22-b689a52e7a3b"
+        "session-0bf9fcb5-39fd-48a3-8c22-b689a52e7a3b",
+        "supp-prepared-415ab20.md"
       ],
       "id": "B1-0bf9-L344",
       "kind": "adoption",
@@ -101,7 +107,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "d3d3e3f9318aaa136a06407a5a0a2b8e93dd5297355d7dbb1358aa43773c1c28",
-        "id": "rule:2c5785f136ca4ee590e1c69406276623",
+        "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -132,7 +138,16 @@
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 111,
+          "overlaps": [],
+          "parent_sha256": "2efe09947445d7fa7c2f79c4ada56387b9c5e9ad9bbf612f12358894ef7c4053",
+          "sha256": "d91b5df338eb607f1b2bf1ca791c045cd5c50b48b333c55a8c44505a948927fb",
+          "text": "A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
+        }
+      ],
       "locator": null,
       "sha256": "2efe09947445d7fa7c2f79c4ada56387b9c5e9ad9bbf612f12358894ef7c4053",
       "text": "- A question, when asked, carries your recommendation as the first option and is one\n  question, not a series. A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
@@ -152,7 +167,8 @@
       "scope": "The initial recommendation-first sentence is in the import snapshot. Read lore-cf7783 and its explicit upgrade source; inspected session 0bf9fcb5 proposal and paired merge approval and 5c11dab diff.",
       "unresolved": [
         "Original author/adoption of recommendation-first sentence unresolved; observed agent proposal and scope approval concern only the later brainstorming exception.",
-        "Applicability and effectiveness are not evaluated in this historical pass."
+        "Applicability and effectiveness are not evaluated in this historical pass.",
+        "Correction 1: separate clause subjects preserve unknown container/uncovered authorship. Clause-level historical evidence does not establish exact-current adoption; latest scope-only amendments retain unknown authorship."
       ]
     }
   ],
@@ -226,6 +242,30 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "7a39bbc7e9aba194a9648cc187273bd1521322df319e9beda1fbf544133b39e0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-415ab20.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "415ab2092b9a4a63414334dccb13e76d737b6f1b"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-415ab20.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e5d201f968744ea3ceaae7444f5db74618cd8a618a9bd072437b792cd6a05c20",
       "source_time": null,
       "transformation": null
     }

@@ -16,7 +16,7 @@
           "original_author": "agent",
           "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
           "role": "mechanism",
-          "statement": "Paraphrase: The agent presented a change making controllers save full reviewer reports and identity while reviewers remain read-only.",
+          "statement": "Paraphrase: The agent presented controller persistence of full reviewer reports and identity. This event does not attribute the inherited read-only-reviewer constraint.",
           "supplier": "agent"
         },
         "evidence_quality": [
@@ -41,7 +41,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "297832bbd96e8cac4fbd65b4945c64a5aa0c8e4c930828684a526c44ea4a5c65",
-        "id": "rule:046dfb8c365f454a86390b6b4167e487",
+        "id": "clause:e7d20ae52fc34b46bded00efad5aea60",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -60,14 +60,15 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+            "session-01a134a5-18d1-7371-9a0d-93856ef831d4",
+            "supp-prepared-4f6346f.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-41e948",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "4f6346f3d74ed5053039d3380f736d38d915f059",
+            "scope": "Paraphrase: Merge fix/lore-41e948-review-reports at prepared feature 4f6346f, activating controller persistence of full reviewer reports and identity; this does not establish the original authorship of the inherited read-only-reviewer preference."
           }
         },
         "authorship": {
@@ -83,11 +84,16 @@
           {
             "quality": "later-restatement",
             "source": "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-4f6346f.md"
           }
         ]
       },
       "evidence": [
-        "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+        "session-01a134a5-18d1-7371-9a0d-93856ef831d4",
+        "supp-prepared-4f6346f.md"
       ],
       "id": "B1-01a134a5-L274",
       "kind": "adoption",
@@ -101,7 +107,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "6d4f477ce8a5da68f43462441a53b77d74846b848db25f2d5a8dcd97d9524b22",
-        "id": "rule:046dfb8c365f454a86390b6b4167e487",
+        "id": "clause:e7d20ae52fc34b46bded00efad5aea60",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -132,7 +138,16 @@
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:e7d20ae52fc34b46bded00efad5aea60",
+          "offset": 134,
+          "overlaps": [],
+          "parent_sha256": "b600f3a4b1fd006af0bf986767e4907de95e5eaa788ecc69992a2f920b517490",
+          "sha256": "eb00251f59c622dfc64c3d2e58de4cbf1f17f43405e9bcd8b6ba21344dea8a10",
+          "text": "When persistence is needed,\n  the controller saves the full returned text in the plan workspace as\n  `<slug>-report.md`, with the reviewer identity recorded alongside it. This applies\n  to initial task reviews, scoped re-reviews and final whole-branch reviews. Keep\n  the existing ledger, ruling and retention rules; saving a report does not replace\n  those records.\n"
+        }
+      ],
       "locator": null,
       "sha256": "b600f3a4b1fd006af0bf986767e4907de95e5eaa788ecc69992a2f920b517490",
       "text": "- Reviewers stay read-only and return their full review in their final message;\n  dispatches must not ask them to write report files. When persistence is needed,\n  the controller saves the full returned text in the plan workspace as\n  `<slug>-report.md`, with the reviewer identity recorded alongside it. This applies\n  to initial task reviews, scoped re-reviews and final whole-branch reviews. Keep\n  the existing ledger, ruling and retention rules; saving a report does not replace\n  those records.\n"
@@ -152,7 +167,8 @@
       "scope": "Read lore-41e948 body/notes and source context; inspected Codex session 01a134a5 prepared controller-report change and merge approval, plus f02f822 diff.",
       "unresolved": [
         "Observed agent presentation of the controller-persistence mechanism is not proof of the earliest report-read-only preference. Scope approval recovered; exact-current adoption remains unasserted.",
-        "Applicability and effectiveness are not evaluated in this historical pass."
+        "Applicability and effectiveness are not evaluated in this historical pass.",
+        "Correction 1: separate clause subjects preserve unknown container/uncovered authorship. Clause-level historical evidence does not establish exact-current adoption; latest scope-only amendments retain unknown authorship."
       ]
     }
   ],
@@ -202,6 +218,30 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "9d47e322428523d37ee5ad96ecb56601193c8545bbdc9ca9112fa4c3f8e71cd2",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-4f6346f.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "4f6346f3d74ed5053039d3380f736d38d915f059"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-4f6346f.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "1a245fce4f94c782d2b3dd11160ef94b9c1a9b42defbe4cb05cb70370cadcbd0",
       "source_time": null,
       "transformation": null
     }

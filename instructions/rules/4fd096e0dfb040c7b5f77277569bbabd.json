@@ -36,7 +36,7 @@
       ],
       "id": "batch-1-bound",
       "recorder": "codex",
-      "scope": "Current text matches fa04196 import. Read hq-c62995, hq-756baa and hq-21ea5d source/parent context; inspected named turn-boundary session d0b98713. Its user turns relay spec/plan reviews and are not original policy authorship.",
+      "scope": "Current text matches fa04196 import. Read hq-c62995, hq-756baa and hq-21ea5d source/parent context. In named session d0b98713, original lines 195/265/289/493/542/598 relay spec/plan reviews; the earlier agreement to work and later installation report do not establish this policy wording origin. Selected turns and preceding proposals are now preserved.",
       "unresolved": [
         "Original wording author, first request and exact-current adoption remain unresolved; a later operational plan is not proof of the policy origin.",
         "Applicability and effectiveness are not evaluated in this historical pass."
@@ -65,6 +65,54 @@
       "raw_sha256": null,
       "representation": "raw",
       "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-session-d0b98713-context.jsonl",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "d0b98713-18aa-4adc-b06e-bbf99d4b11c2; bounded user review turns and immediately preceding assistant text.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-d0b98713-context.jsonl",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "d77ecc16dbf6fbb6d793f94d23495bc99c3299d8a9a2a5dc46358bb110269dfd",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-task-context-supplement.json",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "retained",
+        "owner": "lore-0a67ca",
+        "path": null,
+        "reference": "Exact task response contents from the initial bounded inspection; no policy authorship inferred.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/task-context-supplement.json",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "7c657bcedc849d7e37e81a903e44a708cab12b5e9143c4a959a9852274e37f35",
       "source_time": null,
       "transformation": null
     }

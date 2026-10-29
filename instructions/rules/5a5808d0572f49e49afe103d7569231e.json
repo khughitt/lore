@@ -16,7 +16,7 @@
           "original_author": "user",
           "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
           "role": "goal",
-          "statement": "Paraphrase: The user accepted local auto-merge for owned projects while excluding work or other external projects they do not own; this is the October 2 constraint, not authorship of the later profile exception.",
+          "statement": "Paraphrase: The user required ownership for automatic local merges, while expressly excluding work or other external projects they do not own in the original response. This event targets the ownership condition only, not the later explicit-authorization exception.",
           "supplier": "user"
         },
         "evidence_quality": [
@@ -41,7 +41,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "ccbbf13806d3e3c9a63b2ccbee039d921ec95af840c2611c6686e4f479ad67a5",
-        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "id": "clause:36f7f9bbc4ba47979ff0c3289bf21d32",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -69,7 +69,7 @@
           "original_author": "agent",
           "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
           "role": "mechanism",
-          "statement": "Paraphrase: The agent proposed letting explicit repository/session authorization override the non-personal profile default in a user-owned checkout, while preserving external-action gates.",
+          "statement": "Paraphrase: The agent proposed the explicit repository/session authorization exception in user-owned non-personal checkouts and forbade inferring that authorization. This event does not attribute the retained external-action gate.",
           "supplier": "agent"
         },
         "evidence_quality": [
@@ -94,7 +94,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "b3aa6134650062c7fb630ba603d2e65376e861cab6a647ba85e76bf34a84531b",
-        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "id": "clause:8fb2ebd679614f34b979fb3d5c968694",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -113,14 +113,16 @@
           "actor": "user",
           "covers_clauses": false,
           "evidence": [
-            "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+            "session-665de903-c007-4dd4-a3f4-f7014916b08c",
+            "supp-prepared-7f5369e.md",
+            "supp-prepared-b964e0e.md"
           ],
           "status": "authorized-scope",
           "target": {
             "binding": "scope",
             "reference": "task:lore-5d5c0b",
-            "revision": null,
-            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+            "revision": "7f5369eec52a17c27da987b3eb01d3c0950ceafa",
+            "scope": "Paraphrase: Merge docs/merge-auth containing feature 7f5369e and task-close b964e0e: use profile defaults plus explicit repository/session authorization for reviewed local merges in user-owned checkouts; retain approval for pushes, PRs and live global changes. The feature revision is retained; the task-close commit was later pruned."
           }
         },
         "authorship": {
@@ -136,11 +138,21 @@
           {
             "quality": "later-restatement",
             "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-7f5369e.md"
+          },
+          {
+            "quality": "unknown",
+            "source": "supp-prepared-b964e0e.md"
           }
         ]
       },
       "evidence": [
-        "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+        "session-665de903-c007-4dd4-a3f4-f7014916b08c",
+        "supp-prepared-7f5369e.md",
+        "supp-prepared-b964e0e.md"
       ],
       "id": "B1-665d-L228",
       "kind": "adoption",
@@ -154,7 +166,7 @@
       "subject": {
         "binding": "historical-excerpt",
         "excerpt_sha256": "05ceb417fd2bb00c4dea292dfa319700e937013e1d15c2e99a4c570a0ac99542",
-        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "id": "clause:8fb2ebd679614f34b979fb3d5c968694",
         "preservation": {
           "kind": "attachment",
           "owner": "lore:records",
@@ -187,7 +199,24 @@
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:36f7f9bbc4ba47979ff0c3289bf21d32",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "0e821251ff57ff5be46fb35b95d85e7d431b5c01f9da936534f27427bfaff7d0",
+          "sha256": "ab5b2c3c89c79f3a0aa7a2a5ad5c4b0c27c59fab48a4490694c47bad82b0903e",
+          "text": "- Integrating a finished, reviewed branch by local merge is a bounded decision only in\n  a repository the user owns."
+        },
+        {
+          "id": "clause:8fb2ebd679614f34b979fb3d5c968694",
+          "offset": 277,
+          "overlaps": [],
+          "parent_sha256": "0e821251ff57ff5be46fb35b95d85e7d431b5c01f9da936534f27427bfaff7d0",
+          "sha256": "61c8f3cbc534cd22cb5250b6bab4c265130c9b0a387126ed652c0511d4fd747c",
+          "text": "A user-owned checkout under another profile allows it only when\n  its repository instructions or the user in the session say so explicitly (for\n  example, \"Reviewed branches may be merged locally into main without asking.\"). Never\n  infer that permission from the account, the path, the profile's name or assumed\n  ownership."
+        }
+      ],
       "locator": null,
       "sha256": "0e821251ff57ff5be46fb35b95d85e7d431b5c01f9da936534f27427bfaff7d0",
       "text": "- Integrating a finished, reviewed branch by local merge is a bounded decision only in\n  a repository the user owns. The profile sets the default: a `personal` checkout\n  allows it; in a `work` or `external` checkout, never merge on your own: present the\n  integration choice. A user-owned checkout under another profile allows it only when\n  its repository instructions or the user in the session say so explicitly (for\n  example, \"Reviewed branches may be merged locally into main without asking.\"). Never\n  infer that permission from the account, the path, the profile's name or assumed\n  ownership. A push, a PR, or a merge that changes a live global surface (these global\n  instructions, hooks, services) stays an action outside the repository under every\n  profile and authorization.\n"
@@ -207,7 +236,8 @@
       "scope": "Read hq-36f493/hq-170418 brief and local-merge amendment lore-5d5c0b. Inspected c9fdc19a user response to local-merge proposal and 665de903 agent amendment proposal/merge response; compare 3be2880.",
       "unresolved": [
         "The user approved local merges with a work/external ownership constraint in October 2 context. The later explicit repository/session authorization exception is an agent proposal; scope approval does not rewrite the earlier user statement or prove exact-current adoption.",
-        "Applicability and effectiveness are not evaluated in this historical pass."
+        "Applicability and effectiveness are not evaluated in this historical pass.",
+        "Correction 1: separate clause subjects preserve unknown container/uncovered authorship. Clause-level historical evidence does not establish exact-current adoption; latest scope-only amendments retain unknown authorship."
       ]
     }
   ],
@@ -305,6 +335,54 @@
       "raw_sha256": null,
       "representation": "excerpt",
       "sha256": "45787c652c4f598396ec287d8d0a431b49717f965cb908e10015efb3410fa80e",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-7f5369e.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "7f5369eec52a17c27da987b3eb01d3c0950ceafa"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-7f5369e.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "60b8527b409d2f50ae7239875e50b409388454eeb87607c2bacdbefe1475b734",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "supp-prepared-b964e0e.md",
+      "inspected_at": "2026-10-29T16:39:53.428702+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Actual prepared revision named by transcript; kept separately from later corrections.",
+        "revision": "b964e0ec1d8687d738dd22c5beb8e1af5171b40b"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/prepared-b964e0e.md",
+        "reference": "Correction-1 source supplement; exact bytes and qualified original locator in supplement-context-index.json.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "60b8527b409d2f50ae7239875e50b409388454eeb87607c2bacdbefe1475b734",
       "source_time": null,
       "transformation": null
     }

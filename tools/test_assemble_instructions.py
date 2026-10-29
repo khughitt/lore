@@ -1474,7 +1474,8 @@ def test_review_cross_record_supersession(world, case):
 
 @pytest.mark.parametrize('stale', [False, True])
 @pytest.mark.parametrize('qualified', [False, True])
-def test_cross_record_finding_preserves_evidence_owner(world, stale, qualified):
+@pytest.mark.parametrize('ident', ['a1', RULE_A + '#a1'])
+def test_cross_record_finding_preserves_evidence_owner(world, stale, qualified, ident):
     module = load_assembler(world)
     r, scans, ctx = judgment_world(module)
     c = clause_record(module)['revisions'][0]['clauses'][0]
@@ -1482,10 +1483,11 @@ def test_cross_record_finding_preserves_evidence_owner(world, stale, qualified):
     r['sources'] = json.loads((ROOT / 'tools/fixtures/rule-provenance/historical-excerpt.json').read_bytes())['sources']
     other = json.loads(json.dumps(r)); other['id'] = RULE_B; other['state'] = 'retired'
     other['sources'][0]['locator']['reference'] = 'Different evidence from the retired owner.'
-    a = assessment(other, ctx)
+    a = assessment(other, ctx, ident=ident)
     a['subject'] = dict(binding='revision', id=c['id'], sha256=c['sha256'])
     a['result']['verdict'] = 'not-applicable'
     a['evidence'] = [RULE_A + '#source-1' if qualified else 'source-1']
+    r['assessments'] = [assessment(r, ctx)]
     other['assessments'] = [a]
     records = {RULE_A: r, RULE_B: other}
     module.validate_rule_set(records, scans, {})
@@ -1494,7 +1496,19 @@ def test_cross_record_finding_preserves_evidence_owner(world, stale, qualified):
     kind = 'stale-assessment' if stale else 'uncertain-applicability'
     detail = next(d for f in report['findings'] for d in f['details'] if d['subject'] == c['id'] and d['kind'] == kind)
     assert detail['evidence'] == [(RULE_A if qualified else RULE_B) + '#source-1']
-    if stale: assert RULE_B + '#a1' in detail['reason']
+    if stale: assert RULE_B + '#' + ident in detail['reason']
+
+
+def test_local_assessment_id_with_separator_keeps_explicit_owner(world):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    ident = RULE_B + '#a1'
+    r['assessments'] = [assessment(r, ctx, ident=ident)]
+    module.validate_rule_set({RULE_A: r}, scans, {})
+    ctx['model']['value'] = 'different-model'
+    report = module.assess_rules({RULE_A: r}, [ctx], scans)
+    finding = next(f for f in report['findings'] if f['kind'] == 'stale-assessment')
+    assert finding['reason'] == 'Recorded judgment differs: ' + RULE_A + '#' + ident
 
 
 def test_warning_dimensions_and_reaffirmation(world):

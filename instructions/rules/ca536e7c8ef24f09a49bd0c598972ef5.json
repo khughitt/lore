@@ -1,6 +1,310 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent presented the exact prepared environment construction and inherited/copy/edited-environment prohibition.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl"
+      ],
+      "id": "B3-3a562-L167-construction",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T11:18:06.779Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:55.303378+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "98d06f2d0b78ffcbca48c25799f97b95d71c35f7a086f59d37e1cac2d4cddd74",
+        "id": "clause:bb475a33f606492d91dd0fa384fbcffc",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+          "reference": "Exact original JSONL line 167, packet line 26, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent narrowed the leakage guarantee to credentials held in the environment or under HOME.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+      ],
+      "id": "B3-225d-L543-leakage",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T21:26:10.532Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:55.303378+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "932673acd2a28bc37f9c63ba65d9ed8f72883920dbdba2c5de13cfb6bcfd1aab",
+        "id": "clause:280f0c53d42540fcb95df05454e3afd8",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+          "reference": "Exact original JSONL line 543, packet line 29, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "The preserved dialogue or write records this specific contribution; other contributions are not inherited.",
+          "role": "wording",
+          "statement": "Paraphrase: The agent replaced the ambiguous pronoun in the RED-run explanation with a credential. The earlier draft already required constructing the environment before RED.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+          }
+        ]
+      },
+      "evidence": [
+        "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+      ],
+      "id": "B3-225d-L543-red",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T21:26:10.532Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:55.303378+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "932673acd2a28bc37f9c63ba65d9ed8f72883920dbdba2c5de13cfb6bcfd1aab",
+        "id": "clause:ded4242a11b64c0c80014784d9f3522e",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+          "reference": "Exact original JSONL line 543, packet line 29, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+            "git-ebf0082.md",
+            "git-3f5c3b3.md"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-b15568",
+            "revision": "ebf00826f561ea4328e1c8a2bcecd93b4d670d52",
+            "scope": "Paraphrase: Merge the prepared subprocess-environment rule at feature ebf0082, followed by task-close head 3f5c3b3, as presented at 167. It still has the broader leakage claim and ambiguous pronoun; later precision edits are not covered."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-ebf0082.md"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-3f5c3b3.md"
+          }
+        ]
+      },
+      "evidence": [
+        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+        "git-ebf0082.md",
+        "git-3f5c3b3.md"
+      ],
+      "id": "B3-3a562-L179-construction",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T11:30:12.076Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:55.303378+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "1d501bea34ec88bea01530a34098460ed3bf36724d64908d2df803ef3a398cdf",
+        "id": "clause:bb475a33f606492d91dd0fa384fbcffc",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+          "reference": "Exact original JSONL line 179, packet line 27, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+            "git-e24ea3a.md",
+            "git-9a28f1f.md"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-295c9b",
+            "revision": "e24ea3ad240b696e604521cf5ff9f2769df60234",
+            "scope": "Paraphrase: Merge the prepared five-rule batch at feature e24ea3a/task-close head 9a28f1f, including the explicit environment-or-HOME credential boundary and RED explanation naming a credential. It does not reaffirm unrelated earlier policy."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Execution or activation scope does not establish wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized only the described execution or activation scope. No exact-current rule-text adoption or wording authorship is asserted.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-e24ea3a.md"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "git-9a28f1f.md"
+          }
+        ]
+      },
+      "evidence": [
+        "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+        "git-e24ea3a.md",
+        "git-9a28f1f.md"
+      ],
+      "id": "B3-225d-L574-leakage",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T21:30:47.097Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T17:40:55.303378+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-3-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "af93c3525f031ba215a2e098737146707f6e8651fadc68505413114327e4f978",
+        "id": "clause:280f0c53d42540fcb95df05454e3afd8",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-459a87/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+          "reference": "Exact original JSONL line 574, packet line 40, including newline. Contribution limited by the statement and subject.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl"
+      },
+      "time_uncertainty": "Observed record time; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:ca536e7c8ef24f09a49bd0c598972ef5",
   "impact": {
     "categories": [
@@ -11,22 +315,447 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Prevent subprocess test failures from exposing inherited credentials."
   },
   "relations": [],
   "revisions": [
     {
-      "clauses": [],
+      "clauses": [
+        {
+          "id": "clause:bb475a33f606492d91dd0fa384fbcffc",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0",
+          "sha256": "908eb00d17ab1eb41e47d43a0cc85664435f919b708ee29d577764a89a40a4f8",
+          "text": "- A test that starts a subprocess passes it an environment built key by key: `PATH`,\n  `HOME` pointed at a temporary directory the test owns, and each other variable the\n  process reads (such as `USER`), with a fake value for any credential. It never passes\n  the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,\n  `{**os.environ, …}`, a denylist filter)"
+        },
+        {
+          "id": "clause:280f0c53d42540fcb95df05454e3afd8",
+          "offset": 388,
+          "overlaps": [],
+          "parent_sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0",
+          "sha256": "404d33d7adf89b89b1edddde283b20e82a5ab0bb98f7bf92cc1a3e4044b16d52",
+          "text": ", so a failing case's traceback, captured\n  output or log cannot print a credential held in the environment or under `HOME`.\n"
+        },
+        {
+          "id": "clause:ded4242a11b64c0c80014784d9f3522e",
+          "offset": 513,
+          "overlaps": [],
+          "parent_sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0",
+          "sha256": "b865911c057cb532bc5aebac5c348281be03b0eda842ec25fd907a5091280e58",
+          "text": "  Build that environment before the first run, the RED run included: an expected\n  failure is exactly where a credential gets printed.\n"
+        }
+      ],
       "locator": null,
       "sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0",
-      "text": "- A test that starts a subprocess passes it an environment built key by key: `PATH`,\n  `HOME` pointed at a temporary directory the test owns, and each other variable the\n  process reads (such as `USER`), with a fake value for any credential. It never passes\n  the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,\n  `{**os.environ, \u2026}`, a denylist filter), so a failing case's traceback, captured\n  output or log cannot print a credential held in the environment or under `HOME`.\n  Build that environment before the first run, the RED run included: an expected\n  failure is exactly where a credential gets printed.\n"
+      "text": "- A test that starts a subprocess passes it an environment built key by key: `PATH`,\n  `HOME` pointed at a temporary directory the test owns, and each other variable the\n  process reads (such as `USER`), with a fake value for any credential. It never passes\n  the inherited environment, a copy of it, or one edited from it (`os.environ.copy()`,\n  `{**os.environ, …}`, a denylist filter), so a failing case's traceback, captured\n  output or log cannot print a credential held in the environment or under `HOME`.\n  Build that environment before the first run, the RED run included: an expected\n  failure is exactly where a credential gets printed.\n"
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T17:40:55.303378+00:00",
+      "exclusions": [
+        "At most three named transcript candidates per unresolved contribution; no archive-wide scan or other-host hunt.",
+        "Commit author, task origin fields, injected context and user-relayed reviewer prose do not establish policy authorship.",
+        "No new compliance, applicability or causal effectiveness evaluation."
+      ],
+      "id": "batch-3-bound",
+      "recorder": "codex",
+      "scope": "Read original incident/task, 3a562ee9 prepared exact bullet 167, feature and task-close revisions, and approval 179. Read precision amendment 225d5108:543 and merge approval 574. Two candidates for distinct contributions; both source packets include surrounding proposal and results.",
+      "unresolved": [
+        "Initial approval predates the leakage-boundary and RED-pronoun precision amendment. Each approval is scoped to its concrete prepared branch; neither becomes exact-current adoption. Reported credential incident is not reproduced or promoted to efficacy evidence."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-0f7c121-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0f7c121-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0f7c121-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "ee44ffc0cd5bf90ad398e2ea65a878a4ad4306db2a5a7fe018b7686f9c201e54",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-0f7c121.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 35593a42dcaa07c6e648455b1915e12940c5edcd; commit metadata and path diff in matching -context.txt",
+        "revision": "0f7c121eccc64c40f5cf9d43007828299c5025a2"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-0f7c121.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "774150fa0755fe4b9c575c8cf56bd5d65d19833d037f84227c732b4feeca839a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-3f5c3b3-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-3f5c3b3-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-3f5c3b3-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-3f5c3b3.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 35593a42dcaa07c6e648455b1915e12940c5edcd; commit metadata and path diff in matching -context.txt",
+        "revision": "3f5c3b32f63e2d8abf43d63d1ae539746934f3ab"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-3f5c3b3.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "774150fa0755fe4b9c575c8cf56bd5d65d19833d037f84227c732b4feeca839a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-5c18d8c-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-5c18d8c-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-5c18d8c-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "b61f26c783676a8ce7456783115b06c41a1bae51811729cda2540c7cc6d157b4",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-5c18d8c.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob f02ee3157bbed282ae941ca34472cbb977a76fc6; commit metadata and path diff in matching -context.txt",
+        "revision": "5c18d8c3453f852f99dda3bd0262ffc0aa4b4df7"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-5c18d8c.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "7ea175914a1e479320f4196fb831072588189a0cc7f38d1d1f3f4c412424f4c0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-9a28f1f-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-9a28f1f-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-9a28f1f-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-9a28f1f.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob f02ee3157bbed282ae941ca34472cbb977a76fc6; commit metadata and path diff in matching -context.txt",
+        "revision": "9a28f1f7a61cf52c133b148dda6fcb0ca8a8bc12"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-9a28f1f.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "7ea175914a1e479320f4196fb831072588189a0cc7f38d1d1f3f4c412424f4c0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-e24ea3a-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e24ea3a-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e24ea3a-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "0d15a06017c42857feebc7e96f2147bbf81bc79f5e0c30c498363d5a28d9f66a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-e24ea3a.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob f02ee3157bbed282ae941ca34472cbb977a76fc6; commit metadata and path diff in matching -context.txt",
+        "revision": "e24ea3ad240b696e604521cf5ff9f2769df60234"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-e24ea3a.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "7ea175914a1e479320f4196fb831072588189a0cc7f38d1d1f3f4c412424f4c0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-ebf0082-context.txt",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-ebf0082-context.txt",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-ebf0082-context.txt",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "3f2b72eb079f3de824d3428c953318b6c4a60d415bf9386da5cd5b0463180c6a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-ebf0082.md",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/tests.md",
+        "reference": "Original blob 35593a42dcaa07c6e648455b1915e12940c5edcd; commit metadata and path diff in matching -context.txt",
+        "revision": "ebf00826f561ea4328e1c8a2bcecd93b4d670d52"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/git-ebf0082.md",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "774150fa0755fe4b9c575c8cf56bd5d65d19833d037f84227c732b4feeca839a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "225d5108-9c65-41e5-be82-7a62d4cf1b94; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "047813594168b7c64a8fde894cebfea6f0098ac35dca91f3eba1c050ee129f38",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "3a562ee9-a665-4889-9792-1fe9d54e5beb; original lines and record hashes in session-record-index.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "1ae120a82064e1f8d840a134db37076eed0c3afbea2a5f357547cac2f6d25f6f",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-295c9b.json",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-295c9b.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-295c9b.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "e7563591ce28f4362c0da3bd4aa7ecb925bc3635835513b00b4bf0fdc9a6a705",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "task-lore-b15568.json",
+      "inspected_at": "2026-10-29T17:40:55.303378+00:00",
+      "locator": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-b15568.json",
+        "reference": "Preserved inspected context; provenance and original record mappings in batch-3-sources.json.",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-459a87/task-lore-b15568.json",
+        "reference": "Exact raw bytes; no portable substitution. Session packets contain complete selected JSONL records.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "1f91a8cb6a7d902f472107cac298277232bd3ccd9e7dac5cd1711dbf4bd92e56",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Explicit subprocess test environments"
 }

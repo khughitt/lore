@@ -4,6 +4,8 @@ layout_allowed = [
   # The storage rule intentionally distinguishes the dotfiles checkout layout.
   "instructions/fragments/git.md",
   "instructions/AGENTS.md", # Generated copy of that rule.
+  # Provenance record quoting that rule's clauses verbatim; each text is bound by its sha256.
+  "instructions/rules/3278f93fcc9342819ee39d1bc5ba318f.json",
 
   # Immutable assembly references, checked against historical Git blobs and hashes.
   "tools/fixtures/instruction-assembly/baseline.md",

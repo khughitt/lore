@@ -1,6 +1,120 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent presented a change making controllers save full reviewer reports and identity while reviewers remain read-only.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+      ],
+      "id": "B1-01a134a5-L267",
+      "kind": "proposal",
+      "occurred_at": "2026-10-13T10:08:24.504Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "297832bbd96e8cac4fbd65b4945c64a5aa0c8e4c930828684a526c44ea4a5c65",
+        "id": "rule:046dfb8c365f454a86390b6b4167e487",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-01a134a5-18d1-7371-9a0d-93856ef831d4.jsonl",
+          "reference": "Exact JSONL record including newline: original line 267, packet line 21; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-41e948",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+          }
+        ]
+      },
+      "evidence": [
+        "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+      ],
+      "id": "B1-01a134a5-L274",
+      "kind": "adoption",
+      "occurred_at": "2026-10-13T10:12:15.456Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "6d4f477ce8a5da68f43462441a53b77d74846b848db25f2d5a8dcd97d9524b22",
+        "id": "rule:046dfb8c365f454a86390b6b4167e487",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-01a134a5-18d1-7371-9a0d-93856ef831d4.jsonl",
+          "reference": "Exact JSONL record including newline: original line 274, packet line 22; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-01a134a5-18d1-7371-9a0d-93856ef831d4"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:046dfb8c365f454a86390b6b4167e487",
   "impact": {
     "categories": [
@@ -11,9 +125,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: read-only reviewers and saved reports."
   },
   "relations": [],
   "revisions": [
@@ -25,8 +139,73 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read lore-41e948 body/notes and source context; inspected Codex session 01a134a5 prepared controller-report change and merge approval, plus f02f822 diff.",
+      "unresolved": [
+        "Observed agent presentation of the controller-persistence mechanism is not proof of the earliest report-read-only preference. Scope approval recovered; exact-current adoption remains unasserted.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-f02f822",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob 0d628ff8b9f638cbf9346845a842ace8fdb8bdb3; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "f02f82248df2b6ef3170735b87233074fe0feea2"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-f02f822.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "1a245fce4f94c782d2b3dd11160ef94b9c1a9b42defbe4cb05cb70370cadcbd0",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-01a134a5-18d1-7371-9a0d-93856ef831d4",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "codex",
+        "path": null,
+        "reference": "01a134a5-18d1-7371-9a0d-93856ef831d4; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-01a134a5-18d1-7371-9a0d-93856ef831d4.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "9d47e322428523d37ee5ad96ecb56601193c8545bbdc9ca9112fa4c3f8e71cd2",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Read-only reviewers and saved reports"
 }

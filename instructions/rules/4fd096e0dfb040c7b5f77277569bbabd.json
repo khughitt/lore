@@ -12,9 +12,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: report stopped work and next ownership."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +26,49 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Current text matches fa04196 import. Read hq-c62995, hq-756baa and hq-21ea5d source/parent context; inspected named turn-boundary session d0b98713. Its user turns relay spec/plan reviews and are not original policy authorship.",
+      "unresolved": [
+        "Original wording author, first request and exact-current adoption remain unresolved; a later operational plan is not proof of the policy origin.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-fa04196",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Exact historical blob 1a7a59de6e7fbcfb3e8998c2ce9e16bbfbdadba3; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "fa041961b4d186818e45ed119c6e82aa754e84f1"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-fa04196.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Report stopped work and next ownership"
 }

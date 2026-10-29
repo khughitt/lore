@@ -12,9 +12,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: Retain written spec and plan review gates while allowing drafting to proceed without section-by-section approvals."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +26,49 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:04:55.388122+00:00",
+      "exclusions": [
+        "No archive-wide scan or other-host search.",
+        "Commit author and task origin metadata do not establish who composed policy.",
+        "The September report is secondary analysis, not an originating user turn."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Inspected current Decisions text and lore path history through fa04196 import; hq path history reaches c28e2da import/removal. Read hq-062b74, its source ops-2cb205 and friction-diagnosis report recommendation 2, hq-c62995, hq-91e028, and the pinned skill-stop-points brief. Targeted Claude tool-call search for tack-062b74 in local tack/lore stores found c9fdc19a-5da9-4ff6-8a59-ffface631d1d, a later October 2 brief writer, not an originating September request.",
+      "unresolved": [
+        "Original wording author and originating user request were not recovered.",
+        "No exact-current adoption or causal effectiveness evidence recovered."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-fa04196",
+      "inspected_at": "2026-10-29T16:04:55.388122+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Historical import snapshot; commit identity is not original authorship.",
+        "revision": "fa041961b4d186818e45ed119c6e82aa754e84f1"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-fa04196.md",
+        "reference": "Exact git blob; sha256 in source index. Earlier history was archived before this import.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "dd0f583fe44602264cce28604b84a7aae00b8b45dc299bb86dda6eae029cd64b",
+      "source_time": "2026-09-29",
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Spec and plan review gates"
 }

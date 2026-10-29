@@ -1,6 +1,186 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent presented a frozen-revision review rule for activation, explicitly leaving three wording refinements for later.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+          }
+        ]
+      },
+      "evidence": [
+        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+      ],
+      "id": "B1-3a56-L303",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T11:42:14.504Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "ccae1705406a36b3add5a7ca9eeab2df45222425ea1b84d14859303337b18a2a",
+        "id": "rule:f431707097c0418c9822d67074875c51",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+          "reference": "Exact JSONL record including newline: original line 303, packet line 21; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-d96302",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+          }
+        ]
+      },
+      "evidence": [
+        "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+      ],
+      "id": "B1-3a56-L313",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T11:57:02.920Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "bedb40ba2944be120f493a265bb7ace9a80dc8ce4f792190b92b568afeef1f1d",
+        "id": "rule:f431707097c0418c9822d67074875c51",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+          "reference": "Exact JSONL record including newline: original line 313, packet line 22; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-225d5108-9c65-41e5-be82-7a62d4cf1b94",
+            "session-225d-correction-context"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-295c9b",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "session-225d-correction-context"
+          }
+        ]
+      },
+      "evidence": [
+        "session-225d5108-9c65-41e5-be82-7a62d4cf1b94",
+        "session-225d-correction-context"
+      ],
+      "id": "B1-225d-L574",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T21:30:47.097Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "af93c3525f031ba215a2e098737146707f6e8651fadc68505413114327e4f978",
+        "id": "rule:f431707097c0418c9822d67074875c51",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+          "reference": "Exact JSONL record including newline: original line 574, packet line 19; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:f431707097c0418c9822d67074875c51",
   "impact": {
     "categories": [
@@ -12,9 +192,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: freeze review revisions."
   },
   "relations": [],
   "revisions": [
@@ -26,8 +206,169 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read lore-d96302 and lore-295c9b; sessions 3a562ee9 (initial proposal/merge) and 225d5108 (batch approval, reviewer findings, later correction); inspect all three Git revisions.",
+      "unresolved": [
+        "The hash-mismatch stop and later wording corrections postdate the original approval; the batch merge approval also predates corrective commit 9de6829. No exact-current adoption.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-191a42b",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob 9f31856a1280f63c1f3e43e010b02f88e6200dfc; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "191a42bfc81ef7a222adcdeb7298ab95ac0b52bb"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-191a42b.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "1daa0ccdc8e75cd92673feecac192b3cd95298c06e4b273c74feaa670cd87710",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-5c18d8c",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob 98e98a9c5139b1e257a4d8f6eff1bae1139d905d; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "5c18d8c3453f852f99dda3bd0262ffc0aa4b4df7"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-5c18d8c.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "bc86ad6909c2ce424efcf8d0aa0f5773960e3c9a37957e474ef5844b7104e884",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-9de6829",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob 6bd22fd7170c4847b8ab8e244c88852d892c3d89; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "9de68292d1721eddf5a0835209031a62baf5ec17"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-9de6829.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "6b0745bacd010d2926c8e81945d6555a829d5e4ceaa482f5174cc130bb1aea0c",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-225d-correction-context",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "225d5108-9c65-41e5-be82-7a62d4cf1b94; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-225d-correction-context.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "0a8961956f637041077480078fb8c9204729d96d07a1a3261fde985c32ba7381",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-225d5108-9c65-41e5-be82-7a62d4cf1b94",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "225d5108-9c65-41e5-be82-7a62d4cf1b94; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-225d5108-9c65-41e5-be82-7a62d4cf1b94.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "3b5bd3d7f842afa61676888a1cfb10a6b5201562c039aa57ed5a2d7dc502738a",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-3a562ee9-a665-4889-9792-1fe9d54e5beb",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "3a562ee9-a665-4889-9792-1fe9d54e5beb; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-3a562ee9-a665-4889-9792-1fe9d54e5beb.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "417b29b53129bbb75ed54771652578a7cab7d65ae3f6aa73127ead361453cdff",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Freeze review revisions"
 }

@@ -1,6 +1,173 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "user",
+          "basis": "observed",
+          "original_author": "user",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "goal",
+          "statement": "Paraphrase: The user accepted local auto-merge for owned projects while excluding work or other external projects they do not own; this is the October 2 constraint, not authorship of the later profile exception.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+          }
+        ]
+      },
+      "evidence": [
+        "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+      ],
+      "id": "B1-c9fd-L320",
+      "kind": "proposal",
+      "occurred_at": "2026-10-02T15:15:02.007Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "ccbbf13806d3e3c9a63b2ccbee039d921ec95af840c2611c6686e4f479ad67a5",
+        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d.jsonl",
+          "reference": "Exact JSONL record including newline: original line 320, packet line 5; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": null,
+          "covers_clauses": false,
+          "evidence": [],
+          "status": "none-recovered",
+          "target": null
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "This role is observed for the cited contribution in the preserved dialogue; it does not assign authorship of later amendments or the whole current container.",
+          "role": "mechanism",
+          "statement": "Paraphrase: The agent proposed letting explicit repository/session authorization override the non-personal profile default in a user-owned checkout, while preserving external-action gates.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+          }
+        ]
+      },
+      "evidence": [
+        "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+      ],
+      "id": "B1-665d-L223",
+      "kind": "proposal",
+      "occurred_at": "2026-10-21T13:47:51.186Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "b3aa6134650062c7fb630ba603d2e65376e861cab6a647ba85e76bf34a84531b",
+        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+          "reference": "Exact JSONL record including newline: original line 223, packet line 11; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-5d5c0b",
+            "revision": null,
+            "scope": "Paraphrase: authorize the named task or prepared change described in the surrounding proposal; no exact-current text/hash reaffirmation asserted."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Approval does not establish original wording authorship.",
+          "role": "wording",
+          "statement": "Paraphrase: The user authorized the described change by scope. This does not establish authorship or adoption of a later corrected or reflowed current revision.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "later-restatement",
+            "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+          }
+        ]
+      },
+      "evidence": [
+        "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+      ],
+      "id": "B1-665d-L228",
+      "kind": "adoption",
+      "occurred_at": "2026-10-21T13:50:09.651Z",
+      "predecessors": [],
+      "recorded_at": "2026-10-29T16:14:15.186099+00:00",
+      "recorder": "codex",
+      "searches": [
+        "batch-1-bound"
+      ],
+      "subject": {
+        "binding": "historical-excerpt",
+        "excerpt_sha256": "05ceb417fd2bb00c4dea292dfa319700e937013e1d15c2e99a4c570a0ac99542",
+        "id": "rule:5a5808d0572f49e49afe103d7569231e",
+        "preservation": {
+          "kind": "attachment",
+          "owner": "lore:records",
+          "path": "tasks/files/lore-0a67ca/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+          "reference": "Exact JSONL record including newline: original line 228, packet line 12; scope is only the contribution paraphrased in this event.",
+          "revision": null
+        },
+        "sha256": null,
+        "source": "session-665de903-c007-4dd4-a3f4-f7014916b08c"
+      },
+      "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    }
+  ],
   "id": "rule:5a5808d0572f49e49afe103d7569231e",
   "impact": {
     "categories": [
@@ -13,9 +180,9 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "unknown",
+    "basis": "inferred",
     "sources": [],
-    "text": "Purpose not yet recorded."
+    "text": "Paraphrase inferred from current policy: local integration and external actions."
   },
   "relations": [],
   "revisions": [
@@ -27,8 +194,121 @@
     }
   ],
   "schema": 1,
-  "searches": [],
-  "sources": [],
+  "searches": [
+    {
+      "cutoff": "2026-10-29T16:14:15.186099+00:00",
+      "exclusions": [
+        "No archive-wide transcript scan or other-host hunt.",
+        "At most three targeted transcript candidates per unresolved contribution.",
+        "Commit authors, injected instructions, review notifications and user-supplied agent text are not treated as original user authorship."
+      ],
+      "id": "batch-1-bound",
+      "recorder": "codex",
+      "scope": "Read hq-36f493/hq-170418 brief and local-merge amendment lore-5d5c0b. Inspected c9fdc19a user response to local-merge proposal and 665de903 agent amendment proposal/merge response; compare 3be2880.",
+      "unresolved": [
+        "The user approved local merges with a work/external ownership constraint in October 2 context. The later explicit repository/session authorization exception is an agent proposal; scope approval does not rewrite the earlier user statement or prove exact-current adoption.",
+        "Applicability and effectiveness are not evaluated in this historical pass."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "access": "available",
+      "id": "git-3be2880",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/fragments/decisions.md",
+        "reference": "Exact historical blob e361a0d1d2dd5874f537b18d0877007e6219cfe9; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "3be28806614a6095caee32d874366be471854700"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-3be2880.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "60b8527b409d2f50ae7239875e50b409388454eeb87607c2bacdbefe1475b734",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "git-5a17b81",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore",
+        "path": "instructions/AGENTS.md",
+        "reference": "Exact historical blob 9eda70a4e1e45fbf0c5dab8733b0cb1396e73ae1; accompanying -context.txt retains commit metadata and path diff.",
+        "revision": "5a17b81c5807bd6b9a80c69c4888299fa55e8eea"
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/git-5a17b81.md",
+        "reference": "Exact historical Git blob; commit metadata and diff in matching -context.txt.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "956b9a4611daaacb0645561205246cbe6a6db4d7f67d03a0e445228b6ba3d850",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-665de903-c007-4dd4-a3f4-f7014916b08c",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "665de903-c007-4dd4-a3f4-f7014916b08c; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-665de903-c007-4dd4-a3f4-f7014916b08c.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "a13379e571b87aff2563c2d09827114109b4bfae57de25834663a81ab9fa6166",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d",
+      "inspected_at": "2026-10-29T16:14:15.186099+00:00",
+      "locator": {
+        "kind": "session",
+        "owner": "claude-code",
+        "path": null,
+        "reference": "c9fdc19a-5da9-4ff6-8a59-ffface631d1d; original line/message IDs in session-record-index-v2.json",
+        "revision": null
+      },
+      "preservation": {
+        "kind": "attachment",
+        "owner": "lore:records",
+        "path": "tasks/files/lore-0a67ca/session-c9fdc19a-5da9-4ff6-8a59-ffface631d1d.jsonl",
+        "reference": "Exact complete selected JSONL records; decode as JSONL, without normalizing bytes. See session-record-index-v2.json for original lines and individual hashes.",
+        "revision": null
+      },
+      "raw_sha256": null,
+      "representation": "excerpt",
+      "sha256": "45787c652c4f598396ec287d8d0a431b49717f965cb908e10015efb3410fa80e",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Local integration and external actions"
 }

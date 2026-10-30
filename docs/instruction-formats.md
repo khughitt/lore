@@ -168,3 +168,28 @@ without the newline, and `raw_sha256` matches that line in the packet's row map.
 Splitting grouped session locators preserves their existing evidence references
 and quality labels; it adds no new historical interpretation or adoption claim.
 No current applicability or effectiveness assessment is inferred from this backfill.
+
+## Correction event contract
+
+A schema-1 event of kind `correction` requires a closed `correction` object:
+`target` (ordinary event reference), `dimension` (`authorship` or `adoption`),
+`action` (`withdraw` or `restore`), nonblank `reason`, and `supersedes` (correction
+references in the same target/dimension stream). Other event kinds forbid this
+payload. Local and explicitly qualified same-record references are equivalent;
+foreign correction targets/supersession, dangling references, duplicate canonical
+references, cross-stream supersession and cycles fail. Forward references are
+valid within the complete selected record.
+
+The correction copies its target's exact subject binding, including historical
+excerpt fields, and names that target among its unique predecessors. Predecessors
+alone have no withdrawal effect. Correction event evidence is nonempty; authorship
+is unknown with an explanatory statement, and adoption is `none-recovered` with
+null actor/target, empty adoption evidence and false clause coverage. Supporting
+source IDs must resolve; unavailable evidence files are not fetched. Original
+claims, sources, searches and revisions are retained. Correcting both dimensions
+requires two correction events. Restoring eligibility cannot upgrade the original
+claim's actor, evidence, scope or revision.
+
+Schema-variant failures identify the event index as `invalid variant`, using the
+existing assessment-variant diagnostic convention. Semantic correction/reference
+failures name their reason. No event-specific schema diagnostic parser is added.

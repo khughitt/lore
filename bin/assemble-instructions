@@ -190,6 +190,13 @@ def rule_schemas():
             evidence=refs, searches=refs),
         'context': context,
     }
+    event = defs['event']
+    ordinary = dict(event, properties=dict(event['properties'], kind=enum('appearance', 'proposal', 'adoption', 'restatement', 'amendment', 'relocation', 'retirement')))
+    correction = dict(event, properties=dict(event['properties'], kind=enum('correction'),
+        correction=object_schema(target=string, dimension=enum('authorship', 'adoption'), action=enum('withdraw', 'restore'), reason=string, supersedes=refs)),
+        required=event['required'] + ['correction'])
+    defs['event'] = {'anyOf': [ordinary, correction]}
+    defs['adoption-target'] = target
     assessment = object_schema(schema=enum(1), id=string, kind=enum('approval', 'applicability', 'effectiveness'), subject=revision_subject,
         question=string, assessor=object_schema(label=string, session=nullable), recorded_at=string, evidence=refs,
         context=ref('context'), instruction_dependencies=object_schema(items=array_schema(object_schema(ref=string, sha256=digest_schema)), rationale=nullable),
@@ -342,6 +349,47 @@ def validate_supersession(records, *, allow_external=False):
     for identity in assessments: visit(identity, set())
 
 
+def validate_corrections(record):
+    owner = record['id']
+    events = {e['id']: e for e in record['events']}
+    corrections = {key: e for key, e in events.items() if e['kind'] == 'correction'}
+    def local(ref):
+        rule, ident = reference_identity(owner, ref)
+        if rule != owner: raise ValueError('foreign correction reference')
+        return ident
+    def stream(event):
+        claim = event['correction']
+        return local(claim['target']), claim['dimension']
+    edges = {}
+    for ident, event in corrections.items():
+        claim = event['correction']
+        target, _ = stream(event)
+        if target not in events or events[target]['kind'] == 'correction': raise ValueError('correction target must be an ordinary event')
+        if event['subject'] != events[target]['subject']: raise ValueError('correction subject differs from target')
+        predecessors = [reference_identity(owner, ref) for ref in event['predecessors']]
+        if len(predecessors) != len(set(predecessors)) or (owner, target) not in predecessors:
+            raise ValueError('correction needs unique predecessors including target')
+        author = event['claim']['authorship']
+        if author['actor'] != 'unknown' or author['basis'] != 'unknown' or not author['statement'].strip():
+            raise ValueError('correction cannot assert authorship')
+        if event['claim']['adoption'] != dict(status='none-recovered', actor=None, target=None, evidence=[], covers_clauses=False):
+            raise ValueError('correction cannot assert adoption')
+        if not event['evidence'] or not claim['reason'].strip(): raise ValueError('correction needs evidence and reason')
+        supersedes = [local(ref) for ref in claim['supersedes']]
+        if len(supersedes) != len(set(supersedes)): raise ValueError('duplicate correction supersession')
+        for ref in supersedes:
+            if ref not in corrections: raise ValueError('dangling correction supersession')
+            if stream(corrections[ref]) != stream(event): raise ValueError('correction supersession crosses streams')
+        edges[ident] = supersedes
+    completed = set()
+    def visit(ident, path):
+        if ident in path: raise ValueError('correction supersession cycle')
+        if ident in completed: return
+        for ref in edges[ident]: visit(ref, path | {ident})
+        completed.add(ident)
+    for ident in edges: visit(ident, set())
+
+
 def validate_rule(record):
     validate_schema(record, rule_schemas()['rule'], 'rule')
     label = record['id']
@@ -393,6 +441,7 @@ def validate_rule(record):
         if adoption['status'] in ('accepted', 'restated'):
             if not adoption['actor'] or not adoption['target'] or not adoption['evidence']: raise ValueError('adoption needs actor, target and evidence')
             if adoption['target']['binding'] == 'revision': subject_bytes(record, adoption['target'])
+    validate_corrections(record)
     for a in record['assessments']:
         references(a['supersedes'], 'assessments')
         validate_context(a['context'], external=False)
@@ -408,7 +457,7 @@ def validate_rule(record):
             fields(result, {'verdict', 'authority', 'target'}, 'approval result')
             if result['verdict'] not in ('accepted', 'rejected', 'authorized-scope'): raise ValueError('invalid approval verdict')
             text(result['authority'], 'approval authority')
-            validate_schema(result['target'], rule_schemas()['rule']['$defs']['event']['properties']['claim']['properties']['adoption']['properties']['target'], 'approval target')
+            validate_schema(result['target'], rule_schemas()['rule']['$defs']['adoption-target'], 'approval target')
         elif a['kind'] == 'applicability':
             fields(result, {'verdict', 'goal', 'conditions', 'rationale'}, 'applicability result')
             if result['verdict'] not in ('applicable', 'not-applicable', 'uncertain'): raise ValueError('invalid applicability verdict')
@@ -468,6 +517,7 @@ def validate_rule_set(records, scans, exclusions):
         def walk(value):
             if isinstance(value, dict):
                 for key, child in value.items():
+                    if key == 'correction': continue  # Its closed, same-record references were validated above.
                     if key == 'source' and isinstance(child, str) and '#' in child:
                         owner, local = reference_identity(record['id'], child)
                         if owner not in records or not any(v['id'] == local for v in records[owner]['sources']): raise ValueError('dangling cross-rule source reference')

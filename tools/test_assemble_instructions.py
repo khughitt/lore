@@ -1,4 +1,5 @@
 """Exercise the assembler's observable bytes, ownership and Git-view boundaries."""
+from copy import deepcopy
 import importlib.machinery
 import importlib.util
 import json
@@ -1912,3 +1913,150 @@ def test_refresh_reverted_revision_preserves_its_clauses(world):
     current = next(r for r in actual['revisions'] if r['sha256'] == module.digest(original.replace(b'Use ', b'Always use ')))
     assert [c['id'] for c in current['clauses']] == [cid]
     assert all(old in actual['revisions'] for old in record['revisions'])
+
+
+def correction_event(record, ident, target, dimension='authorship', action='withdraw', supersedes=()):
+    owner, local = (target.split('#', 1) if '#' in target else (record['id'], target))
+    assert owner == record['id']
+    event = deepcopy(next(e for e in record['events'] if e['id'] == local))
+    event.update(id=ident, kind='correction', predecessors=[target],
+                 correction=dict(target=target, dimension=dimension, action=action,
+                                 reason='Synthetic evidence corrects this component.', supersedes=list(supersedes)))
+    event['claim']['authorship'].update(actor='unknown', basis='unknown', statement='Correction only; no new authorship claim.')
+    event['claim']['adoption'] = dict(status='none-recovered', actor=None, target=None, evidence=[], covers_clauses=False)
+    return event
+
+
+@pytest.mark.parametrize('case', ['valid', 'restore', 'adoption', 'missing-payload', 'ordinary-payload',
+    'extra-key', 'bad-dimension', 'bad-action', 'empty-reason', 'blank-reason', 'empty-evidence',
+    'positive-author', 'author-basis', 'positive-adoption', 'adoption-actor', 'adoption-target',
+    'adoption-evidence', 'adoption-coverage'])
+def test_correction_payload_contract(world, case):
+    module = load_assembler(world)
+    r = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    c = correction_event(r, 'c1', 'event-1'); r['events'].append(c)
+    if case == 'restore': c['correction']['action'] = 'restore'
+    elif case == 'adoption': c['correction']['dimension'] = 'adoption'
+    elif case == 'missing-payload': del c['correction']
+    elif case == 'ordinary-payload': c['kind'] = 'appearance'
+    elif case == 'extra-key': c['correction']['extra'] = True
+    elif case == 'bad-dimension': c['correction']['dimension'] = 'purpose'
+    elif case == 'bad-action': c['correction']['action'] = 'replace'
+    elif case == 'empty-reason': c['correction']['reason'] = ''
+    elif case == 'blank-reason': c['correction']['reason'] = '   '
+    elif case == 'empty-evidence': c['evidence'] = []
+    elif case == 'positive-author': c['claim']['authorship']['actor'] = 'agent'
+    elif case == 'author-basis': c['claim']['authorship']['basis'] = 'observed'
+    elif case == 'positive-adoption': c['claim']['adoption']['status'] = 'inferred-only'
+    elif case == 'adoption-actor': c['claim']['adoption']['actor'] = 'human'
+    elif case == 'adoption-target': c['claim']['adoption']['target'] = deepcopy(c['subject'])
+    elif case == 'adoption-evidence': c['claim']['adoption']['evidence'] = ['source-1']
+    elif case == 'adoption-coverage': c['claim']['adoption']['covers_clauses'] = True
+    if case in ('valid', 'restore', 'adoption'): module.validate_rule(r)
+    else:
+        with pytest.raises(ValueError): module.validate_rule(r)
+
+
+@pytest.mark.parametrize('case', ['local', 'qualified', 'separator', 'unavailable', 'missing-target',
+    'foreign-target', 'correction-target', 'subject', 'historical-subject', 'predecessor',
+    'duplicate-predecessor', 'duplicate-supersedes', 'missing-supersedes', 'foreign-supersedes',
+    'self', 'cycle', 'cross-dimension', 'cross-target', 'missing-source'])
+def test_correction_reference_validation(world, case):
+    module = load_assembler(world)
+    name = 'historical-excerpt' if case == 'historical-subject' else 'reaffirmed'
+    r = json.loads((ROOT / f'tools/fixtures/rule-provenance/{name}.json').read_bytes())
+    target = 'event-1'
+    if case == 'separator':
+        r['events'][0]['id'] = RULE_B + '#origin'
+        target = RULE_A + '#' + r['events'][0]['id']
+    c1 = correction_event(r, 'c1', target); r['events'].append(c1)
+    c2 = correction_event(r, 'c2', target, action='restore', supersedes=['c1']); r['events'].append(c2)
+    if case == 'qualified':
+        c2['correction']['target'] = RULE_A + '#' + target
+        c2['predecessors'] = [RULE_A + '#' + target]
+        c2['correction']['supersedes'] = [RULE_A + '#c1']
+    elif case == 'unavailable': r['sources'][0]['access'] = 'unavailable'
+    elif case == 'missing-target': c2['correction']['target'] = 'missing'
+    elif case == 'foreign-target': c2['correction']['target'] = RULE_B + '#event-1'
+    elif case == 'correction-target': c2['correction']['target'] = 'c1'; c2['predecessors'] = ['c1']
+    elif case == 'subject': c2['subject'] = dict(binding='revision', id=r['revisions'][0]['clauses'][0]['id'], sha256=r['revisions'][0]['clauses'][0]['sha256'])
+    elif case == 'historical-subject': c2['subject']['excerpt_sha256'] = '9' * 64
+    elif case == 'predecessor': c2['predecessors'] = []
+    elif case == 'duplicate-predecessor': c2['predecessors'] = [target, RULE_A + '#' + target]
+    elif case == 'duplicate-supersedes': c2['correction']['supersedes'] = ['c1', RULE_A + '#c1']
+    elif case == 'missing-supersedes': c2['correction']['supersedes'] = ['missing']
+    elif case == 'foreign-supersedes': c2['correction']['supersedes'] = [RULE_B + '#c1']
+    elif case == 'self': c2['correction']['supersedes'] = ['c2']
+    elif case == 'cycle': c1['correction']['supersedes'] = ['c2']
+    elif case == 'cross-dimension': c2['correction']['dimension'] = 'adoption'
+    elif case == 'cross-target':
+        other = deepcopy(r['events'][0]); other['id'] = 'other'; r['events'].append(other)
+        c2['correction']['target'] = 'other'; c2['predecessors'] = ['other']
+    elif case == 'missing-source': c2['evidence'] = ['missing']
+    r['events'].reverse()  # Forward references must not depend on event-array order.
+    if case in ('local', 'qualified', 'separator', 'unavailable'): module.validate_rule(r)
+    else:
+        with pytest.raises(ValueError): module.validate_rule(r)
+
+
+@pytest.mark.parametrize('verdict', ['accepted', 'rejected', 'authorized-scope'])
+def test_correction_selected_set_and_approval(world, verdict):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    fixture = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'], r['events'] = fixture['sources'], fixture['events']
+    r['events'].append(correction_event(r, 'c1', 'event-1'))
+    r['events'].append(correction_event(r, 'c2', 'event-1', supersedes=[RULE_A + '#c1']))
+    first = assessment(r, ctx); second = assessment(r, ctx, ident='a2'); second['supersedes'] = [RULE_A + '#a1']
+    approval = assessment(r, ctx, 'approval', 'approval'); approval['result']['verdict'] = verdict
+    if verdict == 'authorized-scope': approval['result']['target'] = dict(binding='scope', reference='task:fixture', revision=None, scope='Named task only.')
+    r['assessments'] = [first, second, approval]
+    module.validate_rule_set({r['id']: r}, scans, {})
+
+
+def installed_correction_record(world):
+    module = load_assembler(world)
+    catalog = (world.root / 'instructions/assembly.toml').read_text()
+    source = authoring_world(world)
+    projects = next(b for b in catalog.split('\n[[fragments]]\n')[1:] if tomllib.loads('[[fragments]]\n' + b)['fragments'][0]['id'] == 'projects')
+    catalog_path = world.root / 'instructions/assembly.toml'
+    catalog_path.write_text(catalog_path.read_text() + '\n[[fragments]]\n' + projects)
+    r = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    source.write_bytes(b'## Rules\n\n' + marked(r['id'], r['revisions'][0]['text'].encode()))
+    path = world.root / module.record_path(r['id']); path.parent.mkdir()
+    path.write_bytes(module.manifest_bytes(r))
+    git(world.root, 'add', 'instructions')
+    git(world.root, 'commit', '-q', '-m', 'test: prepare correction fixture')
+    commit_pair(world)
+    return module, r, path
+
+
+def test_staged_correction_validation(world):
+    module, r, path = installed_correction_record(world)
+    before = outputs(world)
+    r['events'].append(correction_event(r, 'c1', 'event-1'))
+    valid = module.manifest_bytes(r)
+    r['events'][-1]['evidence'] = ['missing']
+    path.write_bytes(module.manifest_bytes(r)); git(world.root, 'add', str(path))
+    path.write_bytes(valid)
+    assert build(world, 'check').returncode == 1
+    assert outputs(world) == before
+    git(world.root, 'add', str(path))
+    assert build(world, 'check').returncode == 0
+    path.write_text('invalid disk bytes')
+    assert build(world, 'check').returncode == 0
+
+
+def test_correction_only_sidecar_preserves_delivery(world):
+    module, r, path = installed_correction_record(world)
+    before = outputs(world)
+    _, scans = module.local_scans(world.root)
+    subjects = module.current_subjects(module.read_rule_set(world.root), scans)
+    assert set(subjects) == {RULE_A, r['revisions'][0]['clauses'][0]['id']}
+    r['events'].append(correction_event(r, 'c1', 'event-1'))
+    path.write_bytes(module.manifest_bytes(r)); git(world.root, 'add', str(path))
+    assert build(world, 'check').returncode == 0
+    assert build(world).returncode == 0
+    assert outputs(world) == before
+    _, scans = module.local_scans(world.root)
+    assert module.current_subjects(module.read_rule_set(world.root), scans) == subjects

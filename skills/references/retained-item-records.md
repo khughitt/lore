@@ -128,6 +128,13 @@ to have reverified them. A newly learned problem on another host still gets an
 explicit unknown object with its evidence and action, rather than hiding behind
 host scoping. Preserve last-known hashes in history, never as current proof.
 
+For an intended file replacement, preserve the prior version before editing and
+keep both exact versions recoverable through immutable attachments or retained
+copies. Inspect the intended replacement bytes, preserve that version, then record
+its new verified digest. An unexpected mismatch, unavailable prior evidence or
+unverifiable replacement instead stays unknown with a verification action. Merely
+knowing that a write occurred does not verify its bytes or preserve its predecessor.
+
 Timestamp and provenance of a legitimate new observation move to the checkpoint
 summary below, even when the item's fields did not change. An item that changes
 away and later back still gets both transitions; equality to an old historical

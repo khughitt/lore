@@ -149,6 +149,30 @@ Evidence-only changes need no refresh. Command execution is never adoption.
 
 ## Reading judgments in a target context
 
+### Retained corrections and effective contributions
+
+Corrections append evidence-bearing events; they never rewrite the original event,
+source, search or revision. The event contract is in `instruction-formats.md`.
+Each ordinary event's authorship and adoption are reduced independently. Corrections
+target that event and dimension; `supersedes` names earlier corrections in the same
+stream. Predecessors alone do not withdraw anything.
+
+The remaining correction tips determine eligibility: no corrections or agreeing
+restore tips are `active`, agreeing withdraw tips are `withdrawn`, and opposed tips
+are `conflicted`. Withdrawn/conflicted components do not contribute to origin state.
+Resolving all tips is sufficient; a partial resolution also works when all remaining
+tips agree. Dates and array order never choose a winner. Other qualifying events
+remain independent, even when they share a source.
+
+JSON `history[].event_contributions` lists ordinary event IDs and exact subject
+bindings, with `authorship` and `adoption` objects containing `state`, all qualified
+`corrections` and current `tips`. These are eligibility states, not truth verdicts.
+Correction events stay in full `events` history and do not become positive claims.
+Restoration still requires the original actor, evidence quality, exact current hash
+and clause-coverage qualifications. It cannot promote scope approval, agent adoption
+or an old revision. Historical authorship can remain unknown despite independent
+current adoption; purpose, applicability and effectiveness remain separate.
+
 ### Reading stored provenance without executing the assembler
 
 A read-only consumer such as documentation curation reads the delivered manifest

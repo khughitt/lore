@@ -1570,6 +1570,51 @@ def test_context_dependencies_and_multiple_targets(world, change, expected):
     assert report == module.assess_rules({r['id']: r}, [target, ctx], scans)
 
 
+@pytest.mark.parametrize('authored', ['clause', 'container'])
+@pytest.mark.parametrize('adopted', [None, 'clause', 'container'])
+def test_warning_group_preserves_unresolved_dimensions(world, authored, adopted):
+    module = load_assembler(world)
+    r, scans, ctx = judgment_world(module)
+    r['revisions'][0]['clauses'] = clause_record(module)['revisions'][0]['clauses']
+    clause = r['revisions'][0]['clauses'][0]
+    subjects = dict(container=dict(binding='revision', id=r['id'], sha256=r['revisions'][0]['sha256']),
+                    clause=dict(binding='revision', id=clause['id'], sha256=clause['sha256']))
+    fixture = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'] = fixture['sources']
+    event = fixture['events'][0]
+    event['subject'] = subjects[authored]
+    event['kind'] = 'proposal'
+    event['claim']['authorship'].update(actor='agent', basis='observed', role='wording')
+    event['claim']['evidence_quality'][0]['quality'] = 'originating-request/proposal'
+    event['claim']['adoption'] = dict(status='none-recovered', actor=None, target=None, evidence=[], covers_clauses=False)
+    r['events'] = [event]
+    if adopted:
+        adoption = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())['events'][0]
+        adoption.update(id='adoption', subject=subjects[adopted])
+        adoption['claim']['adoption'].update(target=subjects[adopted], covers_clauses=False)
+        r['events'].append(adoption)
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    # Exercise the JSON projection as well as both human renderers.
+    report = json.loads(module.manifest_bytes(report))
+    groups = [f for f in report['findings'] if f['kind'] == 'unknown-origin']
+    assert len(groups) == 1
+    group = groups[0]
+    unresolved = [name for name in subjects if name != adopted]
+    assert {f['subject'] for f in group['details']} == {subjects[name]['id'] for name in unresolved}
+    unknown_history = any(name != authored for name in unresolved)
+    assert ('Historic authorship unresolved' in group['reason']) == unknown_history
+    assert 'no evidenced exact-current human adoption' in group['reason']
+    assert group['reason'] in module.provenance_text(report)
+    assert group['reason'] in module.warning_summary(report, report, {r['id']})
+    assert group['sha256'] == r['revisions'][0]['sha256']
+    assert len(group['clauses']) == ('clause' in unresolved)
+    assert group['evidence'] == [] and group['differences'] == []
+    history = {s['subject']: s for s in report['history'][0]['subjects']}
+    for name, subject in subjects.items():
+        assert history[subject['id']]['historic_authorship'] == ('recorded' if name == authored else 'unknown')
+        assert history[subject['id']]['current_adoption'] == (name == adopted)
+
+
 def test_warning_output_is_bounded(world):
     module = load_assembler(world)
     records, raw = {}, b'## Rules\n\n'

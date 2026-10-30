@@ -847,6 +847,8 @@ def assess_rules(records, contexts, scans):
             if key not in grouped:
                 grouped[key] = dict(f, subject=f['container'], sha256=subjects[f['container']]['sha256'], clauses=[], details=[])
             group = grouped[key]
+            if f['kind'] == 'unknown-origin' and origins[f['subject']]['historic_authorship'] == 'unknown':
+                group['reason'] = f['reason']
             group['details'].append(f)
             if f['subject'] != f['container']: group['clauses'].append(f)
             group['differences'] = sorted(set(group['differences']) | set(f['differences']))

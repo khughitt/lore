@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 6.** The note names it, so a later pass can tell which criteria a
+**Rubric version 7.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -108,9 +108,40 @@ guides are read whole; reference-document sampling is defined below.
 
 The global-layer project (lore, whose `instructions/AGENTS.md` is the file every
 session loads) is read like any project for its root guides, and under criterion 5
-only for that generated file. Its provenance audit is `docs/instruction-provenance.md`
-in lore's records directory (`tasks where` in lore names it); use it as evidence,
-checking the current rule.
+only for that generated file. For annotated global text, read structured provenance
+before tracing origin manually:
+
+1. Read `instructions/AGENTS.manifest.json` at the registered lore checkout. Resolve
+   the fragment owner, rule/clause IDs, record path and delivered byte ranges. Check
+   the artifact hash and the subject slices against their hashes, then compare the
+   exact current source text (without rule markers). Clause offsets in the manifest
+   address artifact bytes; sidecar selectors address bytes within a retained rule.
+2. Read the sidecar at its stable record path and select the retained revision whose
+   hash matches the current subject, not merely the last revision. Check clause
+   text, hash and parent binding. The manifest does not hash the sidecar: it locates
+   evidence that may have grown since delivery. Read its events, sources, searches,
+   purpose, incidents and assessments, following supporting locators read-only.
+3. Keep each claim's subject, role, evidence quality and binding: clause authorship
+   never establishes whole-container authorship; user-supplied agent wording stays
+   agent-authored. Scope authorization, exact-current adoption, stated purpose,
+   current applicability and measured effectiveness are separate. A warning headline
+   cannot replace these details; `unknown-origin` can mean missing current adoption
+   even when authorship is recorded. A supplied full report is reusable only for its
+   identified subject hashes, context and evidence snapshot.
+4. Reuse retained bounded searches with their scope, cutoff, exclusions and unresolved
+   questions. Start another Git/task/session search only for an identified gap or
+   new question; name its additional scope instead of repeating a completed search.
+   Unannotated/external text, unavailable records or unmatched hashes take the manual
+   trace below. Historical claims remain evidence for their recorded revision, not
+   current adoption or current assessment. Unavailable originals stay unavailable;
+   distinguish inspected excerpts/derivatives from raw evidence and do not claim
+   re-verification. Missing evidence never establishes absent intent.
+
+The historical audit, `docs/instruction-provenance.md` in lore's records directory
+(`tasks where` in lore names it), is secondary evidence for that manual fallback,
+checked against the current rule. Read data only: no assembler, provenance, refresh
+or repair command is executed by this pass. Record stale or missing bindings for
+the owner to repair; keep the existing rule-removal gate.
 A finding names the owner and source in `instructions/AGENTS.manifest.json`:
 lore-owned rules resolve to their `instructions/fragments/` source; the Projects /
 Feedback owners fragment resolves to ops, whose identity declarations and renderer
@@ -151,9 +182,10 @@ and merit does not erase or reassign origin. An agent proposal later adopted by 
 user stays `agent proposal (adopted: <evidence>)`; adoption does not reassign its
 origin. A standing user preference is one the user stated or adopted. A purpose
 stated in the rule itself counts as recorded: distinguish that stated purpose from
-evidence that it still holds. Trace origin through the guide's git history, the task
-and source records it cites or that name it, and the filing session
-where a record carries a session stamp. Missing origin, incident or effectiveness
+evidence that it still holds. Use §2's structured evidence first when available;
+its manual fallback traces the guide's git history, the task and source records it
+cites or that name it, and the filing session where a record carries a session stamp.
+Missing origin, incident or effectiveness
 evidence is recorded as such and is never part of a removal's rationale; neither is a
 shorter document, a simpler rule set, or the pass's taste differing from a standing
 user preference. Taste alone is no evidenced defect in other text either. A removal's
@@ -229,9 +261,10 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    When the baseline is established and Rules are unchanged, record
    `not judged: Rules unchanged since <sha>`. When running it, each rule (a sentence
    under Rules) names, or the pass
-   finds in `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
+   finds in §2's retained evidence or its bounded manual fallback: `git log`, a retro note, or a task (`tasks -C <checkout> search "<phrase>"`,
    `grep -ril <word> <records>/tasks/`), the failure it prevents. Trace each rule's
-   origin and purpose (removal-provenance clause). A rule is `keep` whatever its
+   origin and purpose (removal-provenance clause), reusing prior searches as §2 says.
+   A rule is `keep` whatever its
    origin unless the pass finds an evidenced reason against it under that clause. A
    rule with no found failure has `no incident recorded`, which is never part of such
    a reason; nor is an unrecorded purpose (purpose `unknown`) or a difference of taste
@@ -368,7 +401,7 @@ from the preceding criterion numbers, even when every rule was kept; write 5 onc
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v6; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v7; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; provenance: <subject IDs/hashes, evidence/search refs reused, access or binding gaps, additional search scope>; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -423,7 +456,8 @@ that are the human's, grouped, omitting empty groups:
 
 - **removal candidates** (criterion 5, or any criterion proposing to delete a rule):
   the rule or section, its origin and current purpose, the reason for removal kept
-  apart from them, and what was searched;
+  apart from them, subject IDs/hashes where annotated, evidence and searches reused,
+  access/binding gaps and any additional search scope (§2);
 - **declarations** (criterion 11): the directory, and the two options;
 - **scope decisions** (criterion 3): the passage, recorded intent, proposed scope
   change and evidence; present it for the human's ruling before filing a finding task;
@@ -576,3 +610,11 @@ Nothing else. A pass with nothing in those groups says so in one line.
   unchanged. Application probes (adopter, non-adopter, declared out-of-`docs/`
   reference, undeclared nested reference, hybrid, older marker) are synthetic
   checks, not independent natural-case validation.
+
+- **v7** (2026-10-30, lore-827e48): §2 reads manifest bindings and sidecar subjects,
+  retained sources and bounded searches before manual tracing. Stale hashes and
+  unavailable/unannotated records use the explicit fallback; clause-only authorship,
+  relayed agent wording and historical scope authorization cannot become whole-rule
+  authorship or exact-current adoption. The note records subjects, reused evidence
+  and search limits; criterion numbers and no-tool-execution/removal gates remain.
+  Synthetic application probes cover these boundaries, not natural-case validation.

@@ -149,6 +149,34 @@ Evidence-only changes need no refresh. Command execution is never adoption.
 
 ## Reading judgments in a target context
 
+### Reading stored provenance without executing the assembler
+
+A read-only consumer such as documentation curation reads the delivered manifest
+and the sidecar at each rule's `record` path. Manifest `rules` entries identify
+stable rule/clause IDs, current subject hashes and byte ranges in the artifact.
+Verify the artifact and subject slices against those hashes, then compare current
+source bytes with markers removed. Sidecar clause offsets instead address bytes
+within their retained rule revision; verify the quote/hash and parent hash there.
+Select retained revisions by matching hashes, not array order. A stable ID alone
+does not make an old adoption or assessment current.
+
+The manifest deliberately omits sidecar hashes: evidence can grow without changing
+delivery. Read the sidecar's full events, sources and bounded searches before
+starting another origin search; cite the reused scope, cutoff and limitations.
+Authorship, scope approval, exact-current adoption, purpose, applicability and
+effectiveness remain separate. Clause evidence does not establish container
+authorship, and relaying agent wording does not make its supplier the author.
+Warning headlines do not replace subject details.
+
+Unmatched hashes, unavailable records and external/unannotated fragments require
+a bounded manual Git/task/session trace with the gap stated. Historical evidence
+still supports only its recorded binding; unavailable raw sources are not
+reverified by reading a derivative. Curation records a repair for the owner and
+runs no assembler, provenance or refresh command. See the curation skill for its
+human rule-removal gate. These checks establish bindings, not the truth of claims.
+
+### Computing a report for a supplied context
+
 ```
 python3 bin/assemble-instructions provenance
 python3 bin/assemble-instructions provenance --context claude.json --context codex.json --json

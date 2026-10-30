@@ -811,14 +811,39 @@ def compare_assessment(a, subject, target, available, known_local):
     return dict(changed=sorted(set(changed)), unknown=sorted(set(unknown)), drift=drift)
 
 
-def origin_state(record, subject, subjects):
+def event_contributions(record):
+    owner = record['id']
+    rows = {e['id']: dict(event=e['id'], subject=e['subject'],
+        authorship=dict(state='active', corrections=[], tips=[]),
+        adoption=dict(state='active', corrections=[], tips=[]))
+        for e in sorted(record['events'], key=lambda e: e['id']) if e['kind'] != 'correction'}
+    streams = {}
+    for event in record['events']:
+        if event['kind'] != 'correction': continue
+        claim = event['correction']
+        target = reference_identity(owner, claim['target'])[1]
+        streams.setdefault((target, claim['dimension']), []).append(event)
+    for (target, dimension), corrections in streams.items():
+        superseded = {reference_identity(owner, ref)[1] for e in corrections for ref in e['correction']['supersedes']}
+        tips = [e for e in corrections if e['id'] not in superseded]
+        actions = {e['correction']['action'] for e in tips}
+        state = 'withdrawn' if actions == {'withdraw'} else 'active' if actions == {'restore'} else 'conflicted'
+        rows[target][dimension] = dict(state=state,
+            corrections=sorted(owner + '#' + e['id'] for e in corrections), tips=sorted(owner + '#' + e['id'] for e in tips))
+    return rows
+
+
+def origin_state(record, subject, subjects, contributions):
     historic = False
     adopted = False
     for event in record['events']:
+        if event['kind'] == 'correction': continue
+        contribution = contributions[event['id']]
         bound = event['subject']
-        if bound['id'] == subject['id']:
+        if contribution['authorship']['state'] == 'active' and bound['id'] == subject['id']:
             author = event['claim']['authorship']
             if author['actor'] != 'unknown' and author['basis'] != 'unknown' and event['evidence'] and any(q['quality'] == 'originating-request/proposal' for q in event['claim']['evidence_quality']): historic = True
+        if contribution['adoption']['state'] != 'active': continue
         adoption = event['claim']['adoption']
         target = adoption['target']
         if adoption['status'] not in ('accepted', 'restated') or adoption['actor'] not in ('human', 'user') or not adoption['evidence'] or not target or target['binding'] != 'revision': continue
@@ -844,11 +869,13 @@ def assess_rules(records, contexts, scans):
     report = dict(schema=1, coverage=dict(rules=sum(s['id'] == s['parent'] for s in subjects.values()),
         clauses=sum(s['id'] != s['parent'] for s in subjects.values()), retired=sum(r['state'] == 'retired' for r in records.values()),
         tiers={tier: sum(r['state'] == 'active' and r['impact']['tier'] == tier for r in records.values()) for tier in TIERS}), contexts=[], findings=[], history=[])
-    origins = {sid: origin_state(records[s['parent']], s, subjects) for sid, s in subjects.items()}
+    contributions = {rid: event_contributions(record) for rid, record in records.items()}
+    origins = {sid: origin_state(records[s['parent']], s, subjects, contributions[s['parent']]) for sid, s in subjects.items()}
     for rid, record in sorted(records.items()):
         report['history'].append(dict(id=rid, title=record['title'], state=record['state'], subjects=[origins[s] for s in sorted(origins) if subjects[s]['parent'] == rid],
             purpose=record['purpose'], impact=record['impact'], relations=record['relations'], revisions=record['revisions'],
-            events=record['events'], incidents=record['incidents'], assessments=record['assessments'], sources=record['sources'], searches=record['searches']))
+            events=record['events'], event_contributions=list(contributions[rid].values()),
+            incidents=record['incidents'], assessments=record['assessments'], sources=record['sources'], searches=record['searches']))
     for context in sorted(contexts, key=lambda c: c['name']):
         diagnostics = []
         if context['model']['value'] is None: diagnostics.append('model unknown')

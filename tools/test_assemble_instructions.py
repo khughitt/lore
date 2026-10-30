@@ -2060,3 +2060,155 @@ def test_correction_only_sidecar_preserves_delivery(world):
     assert outputs(world) == before
     _, scans = module.local_scans(world.root)
     assert module.current_subjects(module.read_rule_set(world.root), scans) == subjects
+
+
+def correction_world(module):
+    r, scans, ctx = judgment_world(module)
+    fixture = json.loads((ROOT / 'tools/fixtures/rule-provenance/reaffirmed.json').read_bytes())
+    r['sources'] = fixture['sources']
+    author = deepcopy(fixture['events'][0]); author.update(id='origin-1', kind='proposal')
+    author['claim']['authorship'].update(actor='agent', basis='observed', role='wording', statement='Synthetic observed agent wording.')
+    author['claim']['evidence_quality'][0]['quality'] = 'originating-request/proposal'
+    author['claim']['adoption'] = dict(status='none-recovered', actor=None, target=None, evidence=[], covers_clauses=False)
+    adoption = deepcopy(fixture['events'][0]); adoption['id'] = 'adoption-1'
+    adoption['claim']['adoption']['covers_clauses'] = False
+    r['events'] = [author, adoption]
+    return r, scans, ctx
+
+
+def correction_report(module, r, scans, ctx):
+    report = module.assess_rules({r['id']: r}, [ctx], scans)
+    history = next(h for h in report['history'] if h['id'] == r['id'])
+    subjects = {s['subject']: s for s in history['subjects']}
+    return report, history, subjects
+
+
+def test_correction_authorship_withdrawal(world):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    r['events'].append(correction_event(r, 'withdraw-origin', 'origin-1'))
+    before = deepcopy(r)
+    report, history, subjects = correction_report(module, r, scans, ctx)
+    assert subjects[RULE_A] == dict(subject=RULE_A, historic_authorship='unknown', current_adoption=True, origin='reaffirmed-current')
+    rows = {e['event']: e for e in history['event_contributions']}
+    assert rows['origin-1']['authorship'] == dict(state='withdrawn', corrections=[RULE_A + '#withdraw-origin'], tips=[RULE_A + '#withdraw-origin'])
+    assert rows['origin-1']['adoption'] == dict(state='active', corrections=[], tips=[])
+    assert 'unknown-origin' not in finding_kinds(report)
+    assert history['events'] == before['events'] and history['sources'] == before['sources']
+    assert r == before
+
+
+def test_correction_adoption_withdrawal(world):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    r['events'].append(correction_event(r, 'withdraw-adoption', 'adoption-1', 'adoption'))
+    report, _, subjects = correction_report(module, r, scans, ctx)
+    assert subjects[RULE_A]['historic_authorship'] == 'recorded'
+    assert subjects[RULE_A]['current_adoption'] is False
+    assert 'unknown-origin' in finding_kinds(report)
+    other = deepcopy(r['events'][1]); other['id'] = 'adoption-2'; r['events'].append(other)
+    report, _, subjects = correction_report(module, r, scans, ctx)
+    assert subjects[RULE_A]['current_adoption'] is True
+    assert 'unknown-origin' not in finding_kinds(report)
+
+
+@pytest.mark.parametrize('dimension,event_id,other_id', [('authorship', 'origin-1', 'origin-2'), ('adoption', 'adoption-1', 'adoption-2')])
+def test_correction_shared_source_isolation(world, dimension, event_id, other_id):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    other = deepcopy(next(e for e in r['events'] if e['id'] == event_id)); other['id'] = other_id
+    r['events'].append(other)
+    r['events'].append(correction_event(r, 'withdraw-first', event_id, dimension))
+    before = deepcopy(r)
+    _, history, subjects = correction_report(module, r, scans, ctx)
+    rows = {e['event']: e for e in history['event_contributions']}
+    assert rows[event_id][dimension]['state'] == 'withdrawn'
+    assert rows[other_id][dimension] == dict(state='active', corrections=[], tips=[])
+    assert subjects[RULE_A]['historic_authorship'] == 'recorded' and subjects[RULE_A]['current_adoption'] is True
+    assert r == before and history['sources'] == before['sources']
+
+
+@pytest.mark.parametrize('covers', [False, True])
+def test_correction_clause_isolation(world, covers):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    clause = clause_record(module)['revisions'][0]['clauses'][0]
+    sibling = dict(id='clause:' + 'd' * 32, text='Use', offset=2, sha256=module.digest(b'Use'), parent_sha256=r['revisions'][0]['sha256'], overlaps=[])
+    r['revisions'][0]['clauses'] = [clause, sibling]
+    r['events'][0]['subject'] = dict(binding='revision', id=clause['id'], sha256=clause['sha256'])
+    r['events'][1]['claim']['adoption']['covers_clauses'] = covers
+    r['events'].append(correction_event(r, 'withdraw-clause', 'origin-1'))
+    _, _, subjects = correction_report(module, r, scans, ctx)
+    assert set(subjects) == {RULE_A, clause['id'], sibling['id']}
+    assert all(s['historic_authorship'] == 'unknown' for s in subjects.values())
+    assert subjects[RULE_A]['current_adoption'] is True
+    assert subjects[clause['id']]['current_adoption'] is covers
+    assert subjects[sibling['id']]['current_adoption'] is covers
+
+
+@pytest.mark.parametrize('actions,expected,tips', [([], 'active', []),
+    ([('a', 'withdraw', [])], 'withdrawn', ['a']), ([('a', 'restore', [])], 'active', ['a']),
+    ([('a', 'withdraw', []), ('b', 'withdraw', [])], 'withdrawn', ['a', 'b']),
+    ([('a', 'restore', []), ('b', 'restore', [])], 'active', ['a', 'b']),
+    ([('a', 'withdraw', []), ('b', 'restore', [])], 'conflicted', ['a', 'b']),
+    ([('a', 'withdraw', []), ('b', 'restore', ['a']), ('c', 'withdraw', ['b'])], 'withdrawn', ['c'])])
+@pytest.mark.parametrize('reverse', [False, True])
+def test_correction_tip_table(world, actions, expected, tips, reverse):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    for n, (ident, action, supersedes) in enumerate(actions):
+        e = correction_event(r, ident, 'origin-1', action=action, supersedes=supersedes)
+        e['recorded_at'] = f'2026-10-{20-n:02d}T00:00:00Z'  # The later correction has an older timestamp.
+        r['events'].append(e)
+    if reverse: r['events'].reverse()
+    before = deepcopy(r)
+    _, history, subjects = correction_report(module, r, scans, ctx)
+    rows = module.event_contributions(r)
+    assert rows['origin-1']['authorship'] == dict(state=expected, corrections=sorted(RULE_A + '#' + a[0] for a in actions), tips=[RULE_A + '#' + t for t in tips])
+    assert list(rows) == ['adoption-1', 'origin-1']
+    assert [e['event'] for e in history['event_contributions']] == list(rows)
+    assert subjects[RULE_A]['historic_authorship'] == ('recorded' if expected == 'active' else 'unknown')
+    assert subjects[RULE_A]['current_adoption'] is True
+    assert r == before
+
+
+@pytest.mark.parametrize('action,expected', [('restore', 'active'), ('withdraw', 'conflicted')])
+def test_correction_partial_resolution(world, action, expected):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    for ident, mode, supers in [('a', 'withdraw', []), ('b', 'restore', []), ('c', action, [RULE_A + '#a'])]:
+        r['events'].append(correction_event(r, ident, 'origin-1', action=mode, supersedes=supers))
+    correction_report(module, r, scans, ctx)
+    assert module.event_contributions(r)['origin-1']['authorship']['state'] == expected
+    assert module.event_contributions(r)['origin-1']['authorship']['tips'] == [RULE_A + '#b', RULE_A + '#c']
+    r['events'].append(correction_event(r, 'd', 'origin-1', supersedes=['b', 'c']))
+    correction_report(module, r, scans, ctx)
+    assert module.event_contributions(r)['origin-1']['authorship'] == dict(state='withdrawn', corrections=[RULE_A + '#' + c for c in 'abcd'], tips=[RULE_A + '#d'])
+
+
+@pytest.mark.parametrize('case', ['agent', 'scope', 'inferred', 'old-hash', 'quality', 'unknown'])
+def test_correction_restore_qualifications(world, case):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    author, adoption = r['events']
+    dimension, target = ('authorship', 'origin-1') if case in ('quality', 'unknown') else ('adoption', 'adoption-1')
+    if case == 'agent': adoption['claim']['adoption']['actor'] = 'agent'
+    elif case == 'scope': adoption['claim']['adoption']['target'] = dict(binding='scope', reference='task:fixture', revision=None, scope='Scope only.')
+    elif case == 'inferred': adoption['claim']['adoption']['status'] = 'inferred-only'
+    elif case == 'quality': author['claim']['evidence_quality'][0]['quality'] = 'first-known-appearance'
+    elif case == 'unknown': author['claim']['authorship'].update(actor='unknown', basis='unknown')
+    elif case == 'old-hash':
+        text = b'- Use clear conventional commits.\n'
+        r = module.refresh_rule(r, text, {})
+        scans = {'core': module.scan_rules(marked(RULE_A, text))}
+        ctx['instructions'][0]['sha256'] = module.digest(text)
+    r['events'].append(correction_event(r, 'withdraw', target, dimension))
+    r['events'].append(correction_event(r, 'restore', target, dimension, 'restore', ['withdraw']))
+    _, _, subjects = correction_report(module, r, scans, ctx)
+    assert module.event_contributions(r)[target][dimension]['state'] == 'active'
+    if dimension == 'authorship': assert subjects[RULE_A]['historic_authorship'] == 'unknown'
+    else: assert subjects[RULE_A]['current_adoption'] is False
+
+
+def test_correction_ordinary_history(world):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    _, history, subjects = correction_report(module, r, scans, ctx)
+    assert subjects[RULE_A] == dict(subject=RULE_A, historic_authorship='recorded', current_adoption=True, origin='recorded')
+    assert all(e[d] == dict(state='active', corrections=[], tips=[]) for e in history['event_contributions'] for d in ('authorship', 'adoption'))
+    r['events'] = [r['events'][1]]
+    _, history, subjects = correction_report(module, r, scans, ctx)
+    assert subjects[RULE_A]['historic_authorship'] == 'unknown'
+    assert subjects[RULE_A]['origin'] == 'reaffirmed-current'

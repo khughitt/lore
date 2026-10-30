@@ -2212,3 +2212,114 @@ def test_correction_ordinary_history(world):
     _, history, subjects = correction_report(module, r, scans, ctx)
     assert subjects[RULE_A]['historic_authorship'] == 'unknown'
     assert subjects[RULE_A]['origin'] == 'reaffirmed-current'
+
+
+def add_correction_conflict(r, target='origin-1', dimension='authorship', prefix='conflict'):
+    for action in ('withdraw', 'restore'):
+        r['events'].append(correction_event(r, prefix + '-' + action, target, dimension, action))
+
+
+@pytest.mark.parametrize('binding', ['current', 'historical-clause', 'retired'])
+@pytest.mark.parametrize('reverse', [False, True])
+def test_correction_warning_dimensions(world, binding, reverse):
+    module = load_assembler(world); r, scans, ctx = correction_world(module)
+    clause = clause_record(module)['revisions'][0]['clauses'][0]
+    if binding == 'current':
+        r['revisions'][0]['clauses'] = [clause]
+        r['events'][0]['subject'] = dict(binding='revision', id=clause['id'], sha256=clause['sha256'])
+    else:
+        historical = json.loads((ROOT / 'tools/fixtures/rule-provenance/historical-excerpt.json').read_bytes())['events'][0]['subject']
+        historical['id'] = clause['id']; r['events'][0]['subject'] = historical
+    if binding == 'retired': r['state'] = 'retired'; scans = {}
+    independent = deepcopy(r['events'][1]); independent['id'] = 'independent-adoption'; r['events'].append(independent)
+    add_correction_conflict(r)
+    add_correction_conflict(r, 'adoption-1', 'adoption', 'adoption-conflict')
+    if reverse: r['events'].reverse()
+    before = deepcopy(r)
+    other = deepcopy(ctx); other['name'] = 'codex'
+    report = module.assess_rules({RULE_A: r}, [ctx, other], scans)
+    groups = [f for f in report['findings'] if f['kind'] == 'conflicting-correction']
+    assert len(groups) == 2 and {g['context'] for g in groups} == {'claude', 'codex'}
+    for group in groups:
+        assert group['subject'] == RULE_A
+        assert not {'dimension', 'target_event', 'bound_subject', 'corrections', 'tips'} & group.keys()
+        assert group['sha256'] == (None if binding == 'retired' else r['revisions'][0]['sha256'])
+        assert group['differences'] == ['adoption', 'authorship']
+        assert group['reason'].count('adoption') == group['reason'].count('authorship') == 1
+        assert group['evidence'] == [RULE_A + '#source-1']
+        assert len(group['details']) == 2 and len(group['clauses']) == 1
+        by_dim = {d['dimension']: d for d in group['details']}
+        d = by_dim['authorship']
+        assert d['subject'] == clause['id'] and d['target_event'] == RULE_A + '#origin-1'
+        assert d['bound_subject'] == next(e for e in before['events'] if e['id'] == 'origin-1')['subject']
+        assert d['sha256'] == (clause['sha256'] if binding == 'current' else None)
+        assert d['tips'] == [RULE_A + '#conflict-restore', RULE_A + '#conflict-withdraw']
+        assert d['corrections'] == d['tips']
+        assert by_dim['adoption']['bound_subject']['sha256'] == r['revisions'][0]['sha256']
+    assert r == before
+
+
+def test_correction_cli_history(world):
+    module, _, path = installed_correction_record(world)
+    r, _, _ = correction_world(module)
+    add_correction_conflict(r)
+    r['events'].append(correction_event(r, 'withdraw-adoption', 'adoption-1', 'adoption'))
+    r['events'].append(correction_event(r, 'restore-adoption', 'adoption-1', 'adoption', 'restore', ['withdraw-adoption']))
+    path.write_bytes(module.manifest_bytes(r))
+    result = invoke(world, 'provenance', '--json')
+    assert result.returncode == 0, result.stderr
+    report = json.loads(result.stdout)
+    kinds = {f['kind'] for f in report['findings'] if f['subject'] == RULE_A}
+    assert 'conflicting-correction' in kinds and 'unknown-origin' not in kinds
+    history = next(h for h in report['history'] if h['id'] == RULE_A)
+    assert history['subjects'][0]['historic_authorship'] == 'unknown'
+    assert history['subjects'][0]['current_adoption'] is True
+    assert history['events'] == r['events'] and history['sources'] == r['sources']
+    rows = {e['event']: e for e in history['event_contributions']}
+    assert rows['origin-1']['authorship']['state'] == 'conflicted'
+    assert rows['adoption-1']['adoption']['state'] == 'active'
+    filtered = invoke(world, 'provenance', '--warning', 'conflicting-correction', '--json')
+    assert filtered.returncode == 0, filtered.stderr
+    data = json.loads(filtered.stdout)
+    assert finding_kinds(data) == {'conflicting-correction'} and data['history'] == report['history']
+    human = invoke(world, 'provenance', '--warning', 'conflicting-correction')
+    assert human.returncode == 0, human.stderr
+    text = human.stdout.decode()
+    assert 'authorship: conflicted' in text and 'adoption: active' in text
+    assert RULE_A + '#conflict-withdraw' in text and RULE_A + '#restore-adoption' in text
+    r['events'].append(correction_event(r, 'final-withdrawal', 'adoption-1', 'adoption', supersedes=['restore-adoption']))
+    path.write_bytes(module.manifest_bytes(r))
+    text = invoke(world, 'provenance').stdout.decode()
+    assert 'adoption: withdrawn' in text and RULE_A + '#final-withdrawal' in text
+
+
+def test_correction_warning_output(world):
+    module = load_assembler(world)
+    records, raw = {}, b'## Rules\n\n'
+    for n in range(7):
+        r, _, _ = correction_world(module); r['id'] = f'rule:{n:032x}'
+        for e in r['events']:
+            e['subject']['id'] = r['id']
+            if e['claim']['adoption']['target']: e['claim']['adoption']['target']['id'] = r['id']
+        add_correction_conflict(r)
+        records[r['id']] = r; raw += marked(r['id'], r['revisions'][0]['text'].encode())
+    scans = {'core': module.scan_rules(raw)}
+    def conflicts():
+        report = module.assess_rules(records, [], scans)
+        report['findings'] = [f for f in report['findings'] if f['kind'] == 'conflicting-correction']
+        return report
+    before = conflicts()
+    assert len(before['findings']) == 7
+    quiet = module.warning_summary(before, before, set())
+    assert 'rule:' not in quiet
+    changed = module.warning_summary(before, before, set(records))
+    assert len([l for l in changed.splitlines() if 'rule:' in l]) == 5
+    assert '2 details omitted' in changed
+    for r in records.values(): add_correction_conflict(r, 'adoption-1', 'adoption', 'adopt')
+    after = conflicts()
+    worse = module.warning_summary(after, before, set())
+    assert 'rule:' in worse and 'adoption' in worse
+    for r in records.values(): r['impact']['tier'] = 'low'
+    low = conflicts()
+    assert 'rule:' not in module.warning_summary(low, dict(before, findings=[]), set())
+    assert 'rule:' in module.warning_summary(low, low, set(records))

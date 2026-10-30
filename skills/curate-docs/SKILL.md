@@ -5,7 +5,7 @@ description: Use when asked to review, curate or audit a project's documentation
 
 # curate-docs
 
-**Rubric version 7.** The note names it, so a later pass can tell which criteria a
+**Rubric version 8.** The note names it, so a later pass can tell which criteria a
 project was last judged against.
 
 One pass judges one project's documents against the rubric below and records what it
@@ -121,6 +121,16 @@ before tracing origin manually:
    text, hash and parent binding. The manifest does not hash the sidecar: it locates
    evidence that may have grown since delivery. Read its events, sources, searches,
    purpose, incidents and assessments, following supporting locators read-only.
+   For corrected claims, read current `history[].event_contributions`, correction
+   events and full `conflicting-correction` details: target event, dimension, all
+   corrections and remaining tips. Withdrawn/conflicted components do not contribute;
+   independent authorship/adoption remain separate. Retained positive claims are
+   historical evidence, not automatically active. For a known corrected claim, an
+   older report without contribution state cannot establish current eligibility,
+   even when policy hashes match. Read the current correction graph; if inaccessible,
+   record effective state as unverified rather than reuse an old positive assertion.
+   Unavailable original evidence retains its access limitation and does not restore
+   a withdrawn component. No reviewed-project command is run to recover this state.
 3. Keep each claim's subject, role, evidence quality and binding: clause authorship
    never establishes whole-container authorship; user-supplied agent wording stays
    agent-authored. Scope authorization, exact-current adoption, stated purpose,
@@ -401,7 +411,7 @@ from the preceding criterion numbers, even when every rule was kept; write 5 onc
 `unresolved` counts the `stale`, `proposed` and mechanical findings; decisions wait on
 the human and are not counted.
 
-    tasks -C <checkout> note <review-id> "curate-docs: rubric v7; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; provenance: <subject IDs/hashes, evidence/search refs reused, access or binding gaps, additional search scope>; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
+    tasks -C <checkout> note <review-id> "curate-docs: rubric v8; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; provenance: <subject IDs/hashes, evidence/search refs reused, access or binding gaps, additional search scope>; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
 Review completion and finding resolution are separate states, so a pass writes two
 notes: the review note above, then the resolution note below. After the review note,
@@ -618,3 +628,11 @@ Nothing else. A pass with nothing in those groups says so in one line.
   authorship or exact-current adoption. The note records subjects, reused evidence
   and search limits; criterion numbers and no-tool-execution/removal gates remain.
   Synthetic application probes cover these boundaries, not natural-case validation.
+
+- **v8** (2026-10-30, lore-ca8021): §2 explicitly consumes correction contributions,
+  dimension-scoped tips and conflict details. Stored positive claims and older
+  reports cannot reactivate known corrected claims; inaccessible correction state
+  stays unverified. The accepted correction design requires this recipe regardless
+  of synthetic probe outcome. The v7 control already handled the supplied cases;
+  before/after application probes do not establish behavioral improvement or
+  natural-case effectiveness. Criterion numbers and execution/removal gates remain.

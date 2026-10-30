@@ -741,7 +741,7 @@ def refresh(root, args):
 
 TIERS = ('high', 'work', 'low', 'unknown')
 WARNING_KINDS = ('unknown-origin', 'uncertain-applicability', 'untested-effectiveness',
-                 'stale-assessment', 'currency-unverifiable', 'unassessed-context-drift')
+                 'stale-assessment', 'currency-unverifiable', 'unassessed-context-drift', 'conflicting-correction')
 
 
 def unknown_context():
@@ -917,12 +917,30 @@ def assess_rules(records, contexts, scans):
             if not fits or any(a['result']['verdict'] != 'applicable' for _, a in fits):
                 add('uncertain-applicability', 'No matching applicable judgment, or negative/uncertain/conflicting judgments remain.', evidence=[e for owner, a in fits for e in projected_evidence(owner, a)])
             if not any(a['kind'] == 'effectiveness' for _, a in current): add('untested-effectiveness', 'No observation or experiment matches this subject and target context.')
+        for rid, record in sorted(records.items()):
+            events = {e['id']: e for e in record['events']}
+            for row in contributions[rid].values():
+                for dimension in ('authorship', 'adoption'):
+                    state = row[dimension]
+                    if state['state'] != 'conflicted': continue
+                    evidence = {'#'.join(reference_identity(rid, ref))
+                        for correction in state['corrections']
+                        for ref in events[reference_identity(rid, correction)[1]]['evidence']}
+                    findings.append(dict(context=context['name'], subject=row['subject']['id'], container=rid,
+                        title=record['title'], tier=record['impact']['tier'], kind='conflicting-correction',
+                        reason='Conflicting correction tips for ' + dimension + '.', differences=[dimension],
+                        evidence=sorted(evidence), sha256=row['subject']['sha256'],
+                        next_action='Record an evidence-backed correction resolving the tips; retain original claims and evidence.',
+                        target_event=rid + '#' + row['event'], bound_subject=row['subject'], dimension=dimension,
+                        corrections=state['corrections'], tips=state['tips']))
         # Each container/kind appears once, while all clause findings remain inspectable.
         grouped = {}
         for f in findings:
             key = (f['container'], f['kind'])
             if key not in grouped:
-                grouped[key] = dict(f, subject=f['container'], sha256=subjects[f['container']]['sha256'], clauses=[], details=[])
+                grouped[key] = dict(f, subject=f['container'], sha256=subjects.get(f['container'], {}).get('sha256'), clauses=[], details=[])
+                if f['kind'] == 'conflicting-correction':
+                    for field in ('target_event', 'bound_subject', 'dimension', 'corrections', 'tips'): grouped[key].pop(field)
             group = grouped[key]
             if f['kind'] == 'unknown-origin' and origins[f['subject']]['historic_authorship'] == 'unknown':
                 group['reason'] = f['reason']
@@ -930,6 +948,8 @@ def assess_rules(records, contexts, scans):
             if f['subject'] != f['container']: group['clauses'].append(f)
             group['differences'] = sorted(set(group['differences']) | set(f['differences']))
             group['evidence'] = sorted(set(group['evidence']) | set(f['evidence']))
+            if f['kind'] == 'conflicting-correction':
+                group['reason'] = 'Conflicting correction tips for ' + ', '.join(group['differences']) + '.'
         report['findings'].extend(grouped.values())
     report['findings'].sort(key=lambda f: (f['context'], TIERS.index(f['tier']), f['subject'], f['kind']))
     return report
@@ -972,6 +992,12 @@ def provenance_text(report):
         for clause in f['clauses']: lines.append('  Clause ' + clause['subject'] + ': ' + clause['reason'])
     for item in report['history']:
         for subject in item['subjects']: lines.append(f'History {subject["subject"]}: {subject["origin"]}; historic authorship {subject["historic_authorship"]}')
+        for row in item['event_contributions']:
+            for dimension in ('authorship', 'adoption'):
+                state = row[dimension]
+                if state['corrections']:
+                    lines.append(f'  Event {item["id"]}#{row["event"]} {dimension}: {state["state"]}; corrections: ' +
+                        ', '.join(state['corrections']) + '; tips: ' + ', '.join(state['tips']))
         for a in item['assessments']: lines.append(f'  Assessment {a["id"]} {a["kind"]}: ' + json.dumps(a['result'], sort_keys=True))
         for source in item['sources']: lines.append(f'  Evidence {source["id"]}: {source["access"]}; {source["representation"]}')
     return '\n'.join(lines)

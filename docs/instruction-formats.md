@@ -193,3 +193,20 @@ claim's actor, evidence, scope or revision.
 Schema-variant failures identify the event index as `invalid variant`, using the
 existing assessment-variant diagnostic convention. Semantic correction/reference
 failures name their reason. No event-specific schema diagnostic parser is added.
+
+The schema-1 provenance report adds `history[].event_contributions`, ordered by
+ordinary event ID. Each row has `event` (unchanged local ID), its complete `subject`
+binding, and independent `authorship`/`adoption` objects with `state`
+(`active`, `withdrawn`, `conflicted`), sorted qualified `corrections` and `tips`.
+Correction events remain in the original `events` array but have no contribution
+row. Restored eligibility never upgrades the original claim's qualifications.
+
+Each `conflicting-correction` detail names `target_event` (qualified ordinary event),
+`dimension`, `corrections`, `tips` and the complete original `bound_subject`.
+Its `subject` is the bound ID and `sha256` is the bound hash, possibly null for a
+historical excerpt. Details retain their own source evidence and dimensions. The
+group's `subject` is the owning container; its hash is the current delivered hash,
+or null for a retired container. Detail-only event/tip fields are not promoted to
+the group. Group differences and its bounded reason include every conflicted
+dimension. Conflicts are reported for historical/retired subjects too, separately
+in each target context and independently of unrelated adoption or origin warnings.

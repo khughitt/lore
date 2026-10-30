@@ -287,7 +287,17 @@ an asserted observation from today's files. No rewriting is authorized here.
 If records are not Git-backed, use an immutable attached snapshot of the
 inventory with source note order/stamps, snapshot name and SHA-256 instead; obey
 caps and normal checks. If neither exact basis can be preserved, record an
-incomplete checkpoint and park with a concrete recovery action. Never claim success
+incomplete checkpoint and park with a concrete recovery action. Complete and
+incomplete checkpoints both begin with the exact lowercase prefix `retention checkpoint:`.
+Use this incomplete form (replace each angle-bracketed placeholder with the observed
+UTC time, inspected host, reason the basis is unavailable, and concrete recovery action):
+
+```text
+retention checkpoint: incomplete; observed <UTC> on <host>; basis unavailable: <reason>; Next: <concrete recovery action>.
+```
+
+Obs keeps the entire checkpoint opaque, including any blocker text. Record a cleanup
+blocker needing classification in a separate ordinary note. Never claim success
 from an unbound count. Records Git history must not be rewritten/discarded while
 checkpoints depend on it without preserving an equivalent verifiable snapshot.
 

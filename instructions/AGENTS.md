@@ -319,22 +319,19 @@ it this way:
   profile reached through a different configuration path, gets its own end-to-end check.
   An obligation a tool measures per host, such as a `test-latency` verify, is not a
   rollout check and stays per host.
-- At park and before `tasks done`, account on the task for each retained worktree,
-  task scratch directory and off-tree evidence copy: path, purpose, next owner and
-  cleanup trigger, plus SHA-256 for evidence files or a scratch/evidence directory
-  manifest and its hash.
+- At park and before `tasks done`, inspect and account on the task for the complete
+  retained set on the current host: worktrees, task scratch and off-tree evidence.
   Read `~/.agents/skills/references/retained-item-records.md` when creating,
-  refreshing or releasing these records; keep uncertainty explicit. An open task
-  owns items across activation review; only a closing session disposing of them
-  in the same turn may temporarily own integration, and anything kept longer
-  needs an open follow-up or agreed user handoff. A cleanup trigger, merge or done
-  grants no deletion permission; preserve unfinished work and the only needed raw
-  copy. Refresh carried resource and wait descriptions from observations. For a
-  layout-refused attachment, preserve hashed raw bytes as a retained item and
-  attach a placeholder-substituted derivative through normal checks, following
-  the reference. Keep that fallback until the executing checker admits a shipped
-  exemption, without treating design completion as shipment or discarding the
-  only raw copy.
+  refreshing or releasing records; follow its changed-item and exact host-checkpoint
+  procedure. Accounting does not require restating unchanged inventories. Keep
+  uncertainty explicit and refresh resource/wait descriptions from observations.
+  An open task owns items across activation review; only a closing session disposing
+  of them in the same turn may temporarily own integration. Anything kept longer
+  needs an open follow-up or agreed user handoff. A trigger, merge or done grants
+  no deletion permission; preserve unfinished work and the only needed raw copy.
+  For layout refusal, keep hashed raw bytes and attach a labelled portable derivative
+  under the reference's fallback until the executing checker accepts shipped support;
+  design completion alone never retires that fallback or authorizes raw deletion.
 - A task that spans sessions keeps its inputs where a reboot cannot take them. Its
   scratch lives in a per-task directory on persistent host-local storage off the synced
   tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user

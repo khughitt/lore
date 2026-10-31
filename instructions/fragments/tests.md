@@ -16,7 +16,8 @@
   for inline and delegated work alike; carry it into worker and reviewer prompts.
   A policy skip is not a pass, a test sample or proof of correctness. Record the actual
   focused scope, mandatory checks, skipped broad work and any remote evidence in the
-  done or park note, each as its own item; a worker also states them in its report.
+  done or park note, each as its own item; a worker states them in its report too,
+  whether or not it writes that note.
 - The protected focused route is `just test-one <runner args>` when declared, otherwise
   the project's documented focused route. If none exists, note the gap on the task and
   use the documented route; never invent a runner or disguise a full suite as focused

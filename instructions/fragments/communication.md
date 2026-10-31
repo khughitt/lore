@@ -37,7 +37,8 @@
   in the record.
   Work with no task record (a read-only answer, an ad hoc fix) keeps in the message
   what these or any other rules send to the task record, after what the user needs
-  first. Before
+  first; the note lines under Task notes for outcome measures need a task and are
+  skipped without one. Before
   shortening, check that no condition, reason or limit that could change the user's
   answer is lost and no claim becomes stronger.
 <!-- rule:fb8d914a2eb44a64acc7e086970328a0 end -->

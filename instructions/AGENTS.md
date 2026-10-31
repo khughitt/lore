@@ -111,14 +111,14 @@ this repository's own instructions, then the user in the session.
   than inventing one), deferred minors, and the closing disclosures (pushes, this
   session's surviving processes, others' work, worktree state, and each branch left
   unmerged with its location and what integrates it: who approves, which command).
-  Rulings and deferred minors stay in the plan ledger, with one task note naming
-  them; verification, deviations and disclosures go in the done or park note. What
-  the user must act on stays in the message: the approval or decision asked for and
-  the text they must read to give it (or its frozen revision: repository, commit and
-  path, or path and sha256), a surviving process with its pid and stop command, an error only they can
-  resolve, and each branch left unmerged, with its location and who integrates it.
-  "Nothing was pushed" does not establish integration state; name the branch. Task
-  notes are not shortened by these rules.
+  Rulings and deferred minors stay in the plan ledger, with one task note naming them;
+  verification, deviations and disclosures go in the done or park note. What the user
+  must act on stays in the message: the approval or decision asked for and the text
+  they must read to give it (or its frozen revision: repository, commit and path, or
+  path and sha256), a surviving process with its pid and stop command, an error only
+  they can resolve, and each branch left unmerged, with its location and who
+  integrates it. "Nothing was pushed" does not establish integration state; name the
+  branch. Task notes are not shortened by these rules.
 - Use no emoji in what you write: replies, reports, and task text (titles, bodies,
   notes). Their fixed colours cannot follow a project's identity colour. Content a
   project itself asks for, and other Unicode such as arrows or box drawing, is not

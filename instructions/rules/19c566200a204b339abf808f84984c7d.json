@@ -337,6 +337,29 @@
       "locator": null,
       "sha256": "2a95d0c9871c7963f3e41f692c12b30f5b71c395aabd17135c9909863b80382f",
       "text": "- Keep required content in the final message, whole: text under approval, every\n  required ruling and any deferred minors the governing workflow requires. Give\n  each ruling its own entry with the decision, labelled `Why:` (reason) and `Cost:`\n  (if wrong), and revision references; an entry may wrap. Say when a reason or cost\n  was not recorded rather than inventing one. Close with a concise line of applicable\n  disclosures about pushes, this session's surviving processes, others' work,\n  worktree state, and each branch this session left unmerged: its location and\n  what integrates it (who approves, which command). Repeat this integration state\n  from the lead paragraph; \"nothing was pushed\" does not establish it. Retain\n  required process ids and stop instructions. These rules govern final reports,\n  not progress updates or task notes.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:6c567f224a4e4834bbe13e18769195a2",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "e2c980257f835a7ea144a0924b5b6b880643483a135410672bcc13742fa41885",
+          "sha256": "8e92e8470849fb33887f29a3fe94407b1af10397123f64364451218f8703cc10",
+          "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n"
+        },
+        {
+          "id": "clause:84b2196069a448c08a86a42f79cdc08c",
+          "offset": 498,
+          "overlaps": [],
+          "parent_sha256": "e2c980257f835a7ea144a0924b5b6b880643483a135410672bcc13742fa41885",
+          "sha256": "5a0bd06347dfa9344a9e9a0669607f78cbb304eab775fa110a47e073165ac506",
+          "text": "  Rulings and deferred minors stay in the plan ledger, with one task note naming\n  them; verification, deviations and disclosures go in the done or park note. What\n  the user must act on stays in the message: the approval or decision asked for and\n  the text they must read to give it, a surviving process with its pid and stop\n  command, an error only they can resolve, and an unmerged branch they integrate.\n  \"Nothing was pushed\" does not establish integration state; name the branch. Task\n  notes are not shortened by these rules.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "e2c980257f835a7ea144a0924b5b6b880643483a135410672bcc13742fa41885",
+      "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n  Rulings and deferred minors stay in the plan ledger, with one task note naming\n  them; verification, deviations and disclosures go in the done or park note. What\n  the user must act on stays in the message: the approval or decision asked for and\n  the text they must read to give it, a surviving process with its pid and stop\n  command, an error only they can resolve, and an unmerged branch they integrate.\n  \"Nothing was pushed\" does not establish integration state; name the branch. Task\n  notes are not shortened by these rules.\n"
     }
   ],
   "schema": 1,

@@ -148,6 +148,12 @@
       "locator": null,
       "sha256": "40c6aa5b6fe804bb3f7c7c97e79e8259a94061e8322b2a6f310113c807824514",
       "text": "- Follow with the salient findings or landed changes, one claim per bullet when a\n  list helps. Keep each claim's conditions, reasons, scope and uncertainty with it;\n  do not pack independent changes into one sentence. Include verification and its\n  limits (checks, results and test counts where reported), deviations and their\n  rulings, and unfinished work with where it is tracked. Supporting detail may move\n  to a link only after checking that the destination holds it and opens from the main\n  checkout. Before shortening, check that no condition, reason or limit is lost and\n  no claim becomes stronger; covering the same topics is not enough.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "fa9714e88ad31d32f79a11baa2a9068511a379fed75e2cfa097003dc06b90efb",
+      "text": "- Supporting detail leaves the message for the task record: findings and landed\n  changes with their conditions and scope, verification and its limits (checks,\n  results, test counts), deviations and their rulings, rejected options, and\n  unfinished work with where it is tracked. Put it in a task note, the plan ledger,\n  an attachment or a linked report before writing the message, check that the\n  destination holds it and opens from the main checkout, and name it in the message\n  in a few words. A decision request is one line: what it is blocked on, the\n  recommended option, and one clause of reason, with the alternatives in the record.\n  Before shortening, check that no condition, reason or limit that could change the\n  user's answer is lost and no claim becomes stronger.\n"
     }
   ],
   "schema": 1,

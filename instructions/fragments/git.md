@@ -40,7 +40,8 @@
   rule. If the layout gate refuses a small attachment, use that rule's raw/portable
   fallback. Each plan
   workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
-  `minor (deferred)` lines have reached a final message, other plans' included;
+  `minor (deferred)` lines have reached the task record (a note or an attached
+  ledger), other plans' included;
   otherwise attach its ledger, or move and note it as above, on the task its plan
   served, so the ledger is found from that task's record alone. Remove the tree only
   after `tasks show` lists each attachment and each moved copy's sha256 matches.

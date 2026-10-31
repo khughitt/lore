@@ -154,6 +154,12 @@
       "locator": null,
       "sha256": "67f91299cdcc8866c6fe6cf108e826464b7eaf8ba19fdcefb549fa6683c4ae7b",
       "text": "- A message to the user at a turn end or a decision point (a final report, a progress\n  update, a decision or approval request, a relayed review) includes what changes the\n  user's understanding, decision or next action, and links the supporting record. By\n  default it is one to five statements or fragments: the outcome; the task's actual\n  state (done, stopped, still running, or blocked and on what); the one decision or\n  who acts next, with any approval trigger; and any uncertainty, trade-off or\n  limitation that could change the user's answer. The count is a default, not a cap:\n  a line that changes a decision stays, and a paragraph packed into a bullet is not\n  one statement. Prefer plain sentences and fragments to word compression.\n  Reviewers' full reports to controllers and explanations the user asks for keep\n  their full length.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "7a571cef784a424ea121edcca85fad9f25637b8da4fec4bd222d7bfa36a593e0",
+      "text": "- A message to the user at a turn end or a decision point (a final report, a progress\n  update, a decision or approval request, a relayed review) includes what changes the\n  user's understanding, decision or next action, and links the supporting record. By\n  default it is one to five statements or fragments: the outcome; the task's actual\n  state (done, stopped, still running, or blocked and on what); the one decision or\n  who acts next, with any approval trigger; and any uncertainty, trade-off or\n  limitation that could change the user's answer. The count is a default, not a cap:\n  a line that changes a decision stays, and a paragraph packed into a bullet is not\n  one statement. Prefer plain sentences and fragments to word compression. The\n  message stands alone, without progress updates or a harness recap. This covers a\n  skill's templated output to the user (brainstorming's playback chunks,\n  executing-plans' review relays) and outranks the length the skill states.\n  Reviewers' full reports to controllers and explanations the user asks for keep\n  their full length.\n"
     }
   ],
   "schema": 1,

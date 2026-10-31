@@ -154,6 +154,12 @@
       "locator": null,
       "sha256": "fa9714e88ad31d32f79a11baa2a9068511a379fed75e2cfa097003dc06b90efb",
       "text": "- Supporting detail leaves the message for the task record: findings and landed\n  changes with their conditions and scope, verification and its limits (checks,\n  results, test counts), deviations and their rulings, rejected options, and\n  unfinished work with where it is tracked. Put it in a task note, the plan ledger,\n  an attachment or a linked report before writing the message, check that the\n  destination holds it and opens from the main checkout, and name it in the message\n  in a few words. A decision request is one line: what it is blocked on, the\n  recommended option, and one clause of reason, with the alternatives in the record.\n  Before shortening, check that no condition, reason or limit that could change the\n  user's answer is lost and no claim becomes stronger.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "5f5e97c08680416d5070ae8a8cad6514b55cfdb34b4068ddc903a64b57456c84",
+      "text": "- Supporting detail leaves the message for the task record: findings and landed\n  changes with their conditions and scope, verification and its limits (checks,\n  results, test counts), deviations and their rulings, rejected options, and\n  unfinished work with where it is tracked. Put it in a task note, the plan ledger,\n  an attachment or a linked report before writing the message, check that the\n  destination holds it and opens from the main checkout, and name it in the message\n  in a few words. A decision request is one line: what it is blocked on, the\n  recommended option, and one clause of reason, with the alternatives in the record.\n  Work with no task record (a read-only answer, an ad hoc fix) keeps the detail in\n  the message, after what the user needs first. Before shortening, check that no condition, reason or limit that could change the\n  user's answer is lost and no claim becomes stronger.\n"
     }
   ],
   "schema": 1,

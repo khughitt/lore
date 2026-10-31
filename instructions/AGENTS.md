@@ -84,7 +84,8 @@ this repository's own instructions, then the user in the session.
   limitation that could change the user's answer. The count is a default, not a cap:
   a line that changes a decision stays, and a paragraph packed into a bullet is not
   one statement. Prefer plain sentences and fragments to word compression. The
-  message stands alone, without progress updates or a harness recap. This covers a
+  message stands alone, without restating earlier progress updates or a harness
+  recap. This covers a
   skill's templated output to the user (brainstorming's playback chunks,
   executing-plans' review relays) and outranks the length the skill states.
   Reviewers' full reports to controllers and explanations the user asks for keep
@@ -100,9 +101,10 @@ this repository's own instructions, then the user in the session.
   destination holds it and opens from the main checkout, and name it in the message
   in a few words. A decision request is one line: what it is blocked on, the
   recommended option, and one clause of reason, with the alternatives in the record.
-  Work with no task record (a read-only answer, an ad hoc fix) keeps the detail in
-  the message, after what the user needs first. Before shortening, check that no condition, reason or limit that could change the
-  user's answer is lost and no claim becomes stronger.
+  Work with no task record (a read-only answer, an ad hoc fix) keeps what these
+  rules relocate in the message, after what the user needs first. Before
+  shortening, check that no condition, reason or limit that could change the user's
+  answer is lost and no claim becomes stronger.
 - Required content is kept whole in the record, not the message: every required
   ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if
   wrong), and revision references; say when a reason or cost was not recorded rather
@@ -112,8 +114,8 @@ this repository's own instructions, then the user in the session.
   Rulings and deferred minors stay in the plan ledger, with one task note naming
   them; verification, deviations and disclosures go in the done or park note. What
   the user must act on stays in the message: the approval or decision asked for and
-  the text they must read to give it (or its frozen revision: repository, commit,
-  path), a surviving process with its pid and stop command, an error only they can
+  the text they must read to give it (or its frozen revision: repository, commit and
+  path, or path and sha256), a surviving process with its pid and stop command, an error only they can
   resolve, and each branch left unmerged, with its location and who integrates it.
   "Nothing was pushed" does not establish integration state; name the branch. Task
   notes are not shortened by these rules.

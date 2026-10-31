@@ -383,6 +383,29 @@
       "locator": null,
       "sha256": "c98131f2ce46707da4cea8ec5ced154476e00a6516a3ec69f121fd1d6593e778",
       "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n  Rulings and deferred minors stay in the plan ledger, with one task note naming\n  them; verification, deviations and disclosures go in the done or park note. What\n  the user must act on stays in the message: the approval or decision asked for and\n  the text they must read to give it (or its frozen revision: repository, commit,\n  path), a surviving process with its pid and stop command, an error only they can\n  resolve, and each branch left unmerged, with its location and who integrates it.\n  \"Nothing was pushed\" does not establish integration state; name the branch. Task\n  notes are not shortened by these rules.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:6c567f224a4e4834bbe13e18769195a2",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "0ed794555f67d16bffd58d276186cdfa279e78109cdd925c001d9bedd2b8cef7",
+          "sha256": "8e92e8470849fb33887f29a3fe94407b1af10397123f64364451218f8703cc10",
+          "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n"
+        },
+        {
+          "id": "clause:84b2196069a448c08a86a42f79cdc08c",
+          "offset": 498,
+          "overlaps": [],
+          "parent_sha256": "0ed794555f67d16bffd58d276186cdfa279e78109cdd925c001d9bedd2b8cef7",
+          "sha256": "91f1d484224c76697ad5e9abdc33013fe8e2a992d1c653540fd1a36ee3f3dfae",
+          "text": "  Rulings and deferred minors stay in the plan ledger, with one task note naming\n  them; verification, deviations and disclosures go in the done or park note. What\n  the user must act on stays in the message: the approval or decision asked for and\n  the text they must read to give it (or its frozen revision: repository, commit and\n  path, or path and sha256), a surviving process with its pid and stop command, an error only they can\n  resolve, and each branch left unmerged, with its location and who integrates it.\n  \"Nothing was pushed\" does not establish integration state; name the branch. Task\n  notes are not shortened by these rules.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "0ed794555f67d16bffd58d276186cdfa279e78109cdd925c001d9bedd2b8cef7",
+      "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n  Rulings and deferred minors stay in the plan ledger, with one task note naming\n  them; verification, deviations and disclosures go in the done or park note. What\n  the user must act on stays in the message: the approval or decision asked for and\n  the text they must read to give it (or its frozen revision: repository, commit and\n  path, or path and sha256), a surviving process with its pid and stop command, an error only they can\n  resolve, and each branch left unmerged, with its location and who integrates it.\n  \"Nothing was pushed\" does not establish integration state; name the branch. Task\n  notes are not shortened by these rules.\n"
     }
   ],
   "schema": 1,

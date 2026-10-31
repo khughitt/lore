@@ -190,6 +190,13 @@ def rule_schemas():
             evidence=refs, searches=refs),
         'context': context,
     }
+    event = defs['event']
+    ordinary = dict(event, properties=dict(event['properties'], kind=enum('appearance', 'proposal', 'adoption', 'restatement', 'amendment', 'relocation', 'retirement')))
+    correction = dict(event, properties=dict(event['properties'], kind=enum('correction'),
+        correction=object_schema(target=string, dimension=enum('authorship', 'adoption'), action=enum('withdraw', 'restore'), reason=string, supersedes=refs)),
+        required=event['required'] + ['correction'])
+    defs['event'] = {'anyOf': [ordinary, correction]}
+    defs['adoption-target'] = target
     assessment = object_schema(schema=enum(1), id=string, kind=enum('approval', 'applicability', 'effectiveness'), subject=revision_subject,
         question=string, assessor=object_schema(label=string, session=nullable), recorded_at=string, evidence=refs,
         context=ref('context'), instruction_dependencies=object_schema(items=array_schema(object_schema(ref=string, sha256=digest_schema)), rationale=nullable),
@@ -342,6 +349,47 @@ def validate_supersession(records, *, allow_external=False):
     for identity in assessments: visit(identity, set())
 
 
+def validate_corrections(record):
+    owner = record['id']
+    events = {e['id']: e for e in record['events']}
+    corrections = {key: e for key, e in events.items() if e['kind'] == 'correction'}
+    def local(ref):
+        rule, ident = reference_identity(owner, ref)
+        if rule != owner: raise ValueError('foreign correction reference')
+        return ident
+    def stream(event):
+        claim = event['correction']
+        return local(claim['target']), claim['dimension']
+    edges = {}
+    for ident, event in corrections.items():
+        claim = event['correction']
+        target, _ = stream(event)
+        if target not in events or events[target]['kind'] == 'correction': raise ValueError('correction target must be an ordinary event')
+        if event['subject'] != events[target]['subject']: raise ValueError('correction subject differs from target')
+        predecessors = [reference_identity(owner, ref) for ref in event['predecessors']]
+        if len(predecessors) != len(set(predecessors)) or (owner, target) not in predecessors:
+            raise ValueError('correction needs unique predecessors including target')
+        author = event['claim']['authorship']
+        if author['actor'] != 'unknown' or author['basis'] != 'unknown' or not author['statement'].strip():
+            raise ValueError('correction cannot assert authorship')
+        if event['claim']['adoption'] != dict(status='none-recovered', actor=None, target=None, evidence=[], covers_clauses=False):
+            raise ValueError('correction cannot assert adoption')
+        if not event['evidence'] or not claim['reason'].strip(): raise ValueError('correction needs evidence and reason')
+        supersedes = [local(ref) for ref in claim['supersedes']]
+        if len(supersedes) != len(set(supersedes)): raise ValueError('duplicate correction supersession')
+        for ref in supersedes:
+            if ref not in corrections: raise ValueError('dangling correction supersession')
+            if stream(corrections[ref]) != stream(event): raise ValueError('correction supersession crosses streams')
+        edges[ident] = supersedes
+    completed = set()
+    def visit(ident, path):
+        if ident in path: raise ValueError('correction supersession cycle')
+        if ident in completed: return
+        for ref in edges[ident]: visit(ref, path | {ident})
+        completed.add(ident)
+    for ident in edges: visit(ident, set())
+
+
 def validate_rule(record):
     validate_schema(record, rule_schemas()['rule'], 'rule')
     label = record['id']
@@ -393,6 +441,7 @@ def validate_rule(record):
         if adoption['status'] in ('accepted', 'restated'):
             if not adoption['actor'] or not adoption['target'] or not adoption['evidence']: raise ValueError('adoption needs actor, target and evidence')
             if adoption['target']['binding'] == 'revision': subject_bytes(record, adoption['target'])
+    validate_corrections(record)
     for a in record['assessments']:
         references(a['supersedes'], 'assessments')
         validate_context(a['context'], external=False)
@@ -408,7 +457,7 @@ def validate_rule(record):
             fields(result, {'verdict', 'authority', 'target'}, 'approval result')
             if result['verdict'] not in ('accepted', 'rejected', 'authorized-scope'): raise ValueError('invalid approval verdict')
             text(result['authority'], 'approval authority')
-            validate_schema(result['target'], rule_schemas()['rule']['$defs']['event']['properties']['claim']['properties']['adoption']['properties']['target'], 'approval target')
+            validate_schema(result['target'], rule_schemas()['rule']['$defs']['adoption-target'], 'approval target')
         elif a['kind'] == 'applicability':
             fields(result, {'verdict', 'goal', 'conditions', 'rationale'}, 'applicability result')
             if result['verdict'] not in ('applicable', 'not-applicable', 'uncertain'): raise ValueError('invalid applicability verdict')
@@ -468,6 +517,7 @@ def validate_rule_set(records, scans, exclusions):
         def walk(value):
             if isinstance(value, dict):
                 for key, child in value.items():
+                    if key == 'correction': continue  # Its closed, same-record references were validated above.
                     if key == 'source' and isinstance(child, str) and '#' in child:
                         owner, local = reference_identity(record['id'], child)
                         if owner not in records or not any(v['id'] == local for v in records[owner]['sources']): raise ValueError('dangling cross-rule source reference')
@@ -691,7 +741,7 @@ def refresh(root, args):
 
 TIERS = ('high', 'work', 'low', 'unknown')
 WARNING_KINDS = ('unknown-origin', 'uncertain-applicability', 'untested-effectiveness',
-                 'stale-assessment', 'currency-unverifiable', 'unassessed-context-drift')
+                 'stale-assessment', 'currency-unverifiable', 'unassessed-context-drift', 'conflicting-correction')
 
 
 def unknown_context():
@@ -761,14 +811,39 @@ def compare_assessment(a, subject, target, available, known_local):
     return dict(changed=sorted(set(changed)), unknown=sorted(set(unknown)), drift=drift)
 
 
-def origin_state(record, subject, subjects):
+def event_contributions(record):
+    owner = record['id']
+    rows = {e['id']: dict(event=e['id'], subject=e['subject'],
+        authorship=dict(state='active', corrections=[], tips=[]),
+        adoption=dict(state='active', corrections=[], tips=[]))
+        for e in sorted(record['events'], key=lambda e: e['id']) if e['kind'] != 'correction'}
+    streams = {}
+    for event in record['events']:
+        if event['kind'] != 'correction': continue
+        claim = event['correction']
+        target = reference_identity(owner, claim['target'])[1]
+        streams.setdefault((target, claim['dimension']), []).append(event)
+    for (target, dimension), corrections in streams.items():
+        superseded = {reference_identity(owner, ref)[1] for e in corrections for ref in e['correction']['supersedes']}
+        tips = [e for e in corrections if e['id'] not in superseded]
+        actions = {e['correction']['action'] for e in tips}
+        state = 'withdrawn' if actions == {'withdraw'} else 'active' if actions == {'restore'} else 'conflicted'
+        rows[target][dimension] = dict(state=state,
+            corrections=sorted(owner + '#' + e['id'] for e in corrections), tips=sorted(owner + '#' + e['id'] for e in tips))
+    return rows
+
+
+def origin_state(record, subject, subjects, contributions):
     historic = False
     adopted = False
     for event in record['events']:
+        if event['kind'] == 'correction': continue
+        contribution = contributions[event['id']]
         bound = event['subject']
-        if bound['id'] == subject['id']:
+        if contribution['authorship']['state'] == 'active' and bound['id'] == subject['id']:
             author = event['claim']['authorship']
             if author['actor'] != 'unknown' and author['basis'] != 'unknown' and event['evidence'] and any(q['quality'] == 'originating-request/proposal' for q in event['claim']['evidence_quality']): historic = True
+        if contribution['adoption']['state'] != 'active': continue
         adoption = event['claim']['adoption']
         target = adoption['target']
         if adoption['status'] not in ('accepted', 'restated') or adoption['actor'] not in ('human', 'user') or not adoption['evidence'] or not target or target['binding'] != 'revision': continue
@@ -794,11 +869,13 @@ def assess_rules(records, contexts, scans):
     report = dict(schema=1, coverage=dict(rules=sum(s['id'] == s['parent'] for s in subjects.values()),
         clauses=sum(s['id'] != s['parent'] for s in subjects.values()), retired=sum(r['state'] == 'retired' for r in records.values()),
         tiers={tier: sum(r['state'] == 'active' and r['impact']['tier'] == tier for r in records.values()) for tier in TIERS}), contexts=[], findings=[], history=[])
-    origins = {sid: origin_state(records[s['parent']], s, subjects) for sid, s in subjects.items()}
+    contributions = {rid: event_contributions(record) for rid, record in records.items()}
+    origins = {sid: origin_state(records[s['parent']], s, subjects, contributions[s['parent']]) for sid, s in subjects.items()}
     for rid, record in sorted(records.items()):
         report['history'].append(dict(id=rid, title=record['title'], state=record['state'], subjects=[origins[s] for s in sorted(origins) if subjects[s]['parent'] == rid],
             purpose=record['purpose'], impact=record['impact'], relations=record['relations'], revisions=record['revisions'],
-            events=record['events'], incidents=record['incidents'], assessments=record['assessments'], sources=record['sources'], searches=record['searches']))
+            events=record['events'], event_contributions=list(contributions[rid].values()),
+            incidents=record['incidents'], assessments=record['assessments'], sources=record['sources'], searches=record['searches']))
     for context in sorted(contexts, key=lambda c: c['name']):
         diagnostics = []
         if context['model']['value'] is None: diagnostics.append('model unknown')
@@ -840,12 +917,30 @@ def assess_rules(records, contexts, scans):
             if not fits or any(a['result']['verdict'] != 'applicable' for _, a in fits):
                 add('uncertain-applicability', 'No matching applicable judgment, or negative/uncertain/conflicting judgments remain.', evidence=[e for owner, a in fits for e in projected_evidence(owner, a)])
             if not any(a['kind'] == 'effectiveness' for _, a in current): add('untested-effectiveness', 'No observation or experiment matches this subject and target context.')
+        for rid, record in sorted(records.items()):
+            events = {e['id']: e for e in record['events']}
+            for row in contributions[rid].values():
+                for dimension in ('authorship', 'adoption'):
+                    state = row[dimension]
+                    if state['state'] != 'conflicted': continue
+                    evidence = {'#'.join(reference_identity(rid, ref))
+                        for correction in state['corrections']
+                        for ref in events[reference_identity(rid, correction)[1]]['evidence']}
+                    findings.append(dict(context=context['name'], subject=row['subject']['id'], container=rid,
+                        title=record['title'], tier=record['impact']['tier'], kind='conflicting-correction',
+                        reason='Conflicting correction tips for ' + dimension + '.', differences=[dimension],
+                        evidence=sorted(evidence), sha256=row['subject']['sha256'],
+                        next_action='Record an evidence-backed correction resolving the tips; retain original claims and evidence.',
+                        target_event=rid + '#' + row['event'], bound_subject=row['subject'], dimension=dimension,
+                        corrections=state['corrections'], tips=state['tips']))
         # Each container/kind appears once, while all clause findings remain inspectable.
         grouped = {}
         for f in findings:
             key = (f['container'], f['kind'])
             if key not in grouped:
-                grouped[key] = dict(f, subject=f['container'], sha256=subjects[f['container']]['sha256'], clauses=[], details=[])
+                grouped[key] = dict(f, subject=f['container'], sha256=subjects.get(f['container'], {}).get('sha256'), clauses=[], details=[])
+                if f['kind'] == 'conflicting-correction':
+                    for field in ('target_event', 'bound_subject', 'dimension', 'corrections', 'tips'): grouped[key].pop(field)
             group = grouped[key]
             if f['kind'] == 'unknown-origin' and origins[f['subject']]['historic_authorship'] == 'unknown':
                 group['reason'] = f['reason']
@@ -853,6 +948,8 @@ def assess_rules(records, contexts, scans):
             if f['subject'] != f['container']: group['clauses'].append(f)
             group['differences'] = sorted(set(group['differences']) | set(f['differences']))
             group['evidence'] = sorted(set(group['evidence']) | set(f['evidence']))
+            if f['kind'] == 'conflicting-correction':
+                group['reason'] = 'Conflicting correction tips for ' + ', '.join(group['differences']) + '.'
         report['findings'].extend(grouped.values())
     report['findings'].sort(key=lambda f: (f['context'], TIERS.index(f['tier']), f['subject'], f['kind']))
     return report
@@ -895,6 +992,12 @@ def provenance_text(report):
         for clause in f['clauses']: lines.append('  Clause ' + clause['subject'] + ': ' + clause['reason'])
     for item in report['history']:
         for subject in item['subjects']: lines.append(f'History {subject["subject"]}: {subject["origin"]}; historic authorship {subject["historic_authorship"]}')
+        for row in item['event_contributions']:
+            for dimension in ('authorship', 'adoption'):
+                state = row[dimension]
+                if state['corrections']:
+                    lines.append(f'  Event {item["id"]}#{row["event"]} {dimension}: {state["state"]}; corrections: ' +
+                        ', '.join(state['corrections']) + '; tips: ' + ', '.join(state['tips']))
         for a in item['assessments']: lines.append(f'  Assessment {a["id"]} {a["kind"]}: ' + json.dumps(a['result'], sort_keys=True))
         for source in item['sources']: lines.append(f'  Evidence {source["id"]}: {source["access"]}; {source["representation"]}')
     return '\n'.join(lines)

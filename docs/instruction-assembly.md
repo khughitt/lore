@@ -149,6 +149,38 @@ Evidence-only changes need no refresh. Command execution is never adoption.
 
 ## Reading judgments in a target context
 
+### Retained corrections and effective contributions
+
+Corrections append evidence-bearing events; they never rewrite the original event,
+source, search or revision. The event contract is in `instruction-formats.md`.
+Each ordinary event's authorship and adoption are reduced independently. Corrections
+target that event and dimension; `supersedes` names earlier corrections in the same
+stream. Predecessors alone do not withdraw anything.
+
+The remaining correction tips determine eligibility: no corrections or agreeing
+restore tips are `active`, agreeing withdraw tips are `withdrawn`, and opposed tips
+are `conflicted`. Withdrawn/conflicted components do not contribute to origin state.
+Resolving all tips is sufficient; a partial resolution also works when all remaining
+tips agree. Dates and array order never choose a winner. Other qualifying events
+remain independent, even when they share a source.
+
+JSON `history[].event_contributions` lists ordinary event IDs and exact subject
+bindings, with `authorship` and `adoption` objects containing `state`, all qualified
+`corrections` and current `tips`. These are eligibility states, not truth verdicts.
+Correction events stay in full `events` history and do not become positive claims.
+Restoration still requires the original actor, evidence quality, exact current hash
+and clause-coverage qualifications. It cannot promote scope approval, agent adoption
+or an old revision. Historical authorship can remain unknown despite independent
+current adoption; purpose, applicability and effectiveness remain separate.
+
+`conflicting-correction` is a separate warning even when another event establishes
+current adoption. Full details retain the bound subject, target event, dimension,
+sources and all correction/tip IDs. Its bounded group headline includes every
+conflicted dimension. Retired containers use a null group hash; historical details
+keep their original hashes or excerpt bindings rather than claim current delivery.
+Human history shows corrected active restorations as well as withdrawn/conflicted
+components. Filtering warnings never removes full history.
+
 ### Reading stored provenance without executing the assembler
 
 A read-only consumer such as documentation curation reads the delivered manifest
@@ -167,6 +199,14 @@ Authorship, scope approval, exact-current adoption, purpose, applicability and
 effectiveness remain separate. Clause evidence does not establish container
 authorship, and relaying agent wording does not make its supplier the author.
 Warning headlines do not replace subject details.
+
+Read current contribution rows and correction tips before reusing a positive
+historical claim. A matching policy hash does not establish an unchanged evidence
+snapshot: a report predating corrections or missing their contribution state cannot
+establish eligibility for a known corrected claim. Read the current sidecar graph;
+if inaccessible, record effective state as unverified. Unavailable original evidence
+does not reactivate a withdrawn contribution. Curators recover no state by executing
+the assembler; the no-execution and human removal gates remain unchanged.
 
 Unmatched hashes, unavailable records and external/unannotated fragments require
 a bounded manual Git/task/session trace with the gap stated. Historical evidence

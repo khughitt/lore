@@ -607,391 +607,815 @@
       "additionalProperties": false
     },
     "event": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "subject": {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "binding": {
-                  "enum": [
-                    "revision"
-                  ]
-                },
-                "id": {
-                  "type": "string",
-                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
-                },
-                "sha256": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
-                }
-              },
-              "required": [
-                "binding",
-                "id",
-                "sha256"
-              ],
-              "additionalProperties": false
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
             },
-            {
-              "type": "object",
-              "properties": {
-                "binding": {
-                  "enum": [
-                    "historical-excerpt"
-                  ]
-                },
-                "id": {
-                  "type": "string",
-                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
-                },
-                "sha256": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "pattern": "^[0-9a-f]{64}$"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "source": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "excerpt_sha256": {
-                  "type": "string",
-                  "pattern": "^[0-9a-f]{64}$"
-                },
-                "preservation": {
+            "subject": {
+              "anyOf": [
+                {
                   "type": "object",
                   "properties": {
-                    "kind": {
+                    "binding": {
                       "enum": [
-                        "git",
-                        "session",
-                        "attachment",
-                        "retained"
+                        "revision"
                       ]
                     },
-                    "owner": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "path": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "revision": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
-                    },
-                    "reference": {
+                    "id": {
                       "type": "string",
-                      "minLength": 1
+                      "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
                     }
                   },
                   "required": [
-                    "kind",
-                    "owner",
-                    "path",
-                    "revision",
-                    "reference"
+                    "binding",
+                    "id",
+                    "sha256"
                   ],
                   "additionalProperties": false
-                }
-              },
-              "required": [
-                "binding",
-                "id",
-                "sha256",
-                "source",
-                "excerpt_sha256",
-                "preservation"
-              ],
-              "additionalProperties": false
-            }
-          ]
-        },
-        "kind": {
-          "enum": [
-            "appearance",
-            "proposal",
-            "correction",
-            "adoption",
-            "restatement",
-            "amendment",
-            "relocation",
-            "retirement"
-          ]
-        },
-        "occurred_at": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "time_uncertainty": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "recorded_at": {
-          "type": "string",
-          "minLength": 1
-        },
-        "recorder": {
-          "type": "string",
-          "minLength": 1
-        },
-        "predecessors": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "claim": {
-          "type": "object",
-          "properties": {
-            "authorship": {
-              "type": "object",
-              "properties": {
-                "actor": {
-                  "enum": [
-                    "user",
-                    "agent",
-                    "unknown"
-                  ]
                 },
-                "role": {
-                  "enum": [
-                    "goal",
-                    "mechanism",
-                    "wording"
-                  ]
-                },
-                "statement": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "basis": {
-                  "enum": [
-                    "observed",
-                    "inferred",
-                    "unknown"
-                  ]
-                },
-                "reason": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "supplier": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "original_author": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                }
-              },
-              "required": [
-                "actor",
-                "role",
-                "statement",
-                "basis",
-                "reason",
-                "supplier",
-                "original_author"
-              ],
-              "additionalProperties": false
-            },
-            "adoption": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "enum": [
-                    "accepted",
-                    "restated",
-                    "authorized-scope",
-                    "inferred-only",
-                    "none-recovered"
-                  ]
-                },
-                "actor": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "target": {
-                  "anyOf": [
-                    {
+                {
+                  "type": "object",
+                  "properties": {
+                    "binding": {
+                      "enum": [
+                        "historical-excerpt"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                    },
+                    "sha256": {
                       "anyOf": [
                         {
-                          "type": "object",
-                          "properties": {
-                            "binding": {
-                              "enum": [
-                                "revision"
-                              ]
-                            },
-                            "id": {
-                              "type": "string",
-                              "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
-                            },
-                            "sha256": {
-                              "type": "string",
-                              "pattern": "^[0-9a-f]{64}$"
-                            }
-                          },
-                          "required": [
-                            "binding",
-                            "id",
-                            "sha256"
-                          ],
-                          "additionalProperties": false
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
                         },
                         {
-                          "type": "object",
-                          "properties": {
-                            "binding": {
-                              "enum": [
-                                "scope"
-                              ]
-                            },
-                            "reference": {
-                              "type": "string",
-                              "minLength": 1
-                            },
-                            "revision": {
-                              "type": [
-                                "string",
-                                "null"
-                              ]
-                            },
-                            "scope": {
-                              "type": "string",
-                              "minLength": 1
-                            }
-                          },
-                          "required": [
-                            "binding",
-                            "reference",
-                            "revision",
-                            "scope"
-                          ],
-                          "additionalProperties": false
+                          "type": "null"
                         }
                       ]
                     },
-                    {
-                      "type": "null"
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "excerpt_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "preservation": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "enum": [
+                            "git",
+                            "session",
+                            "attachment",
+                            "retained"
+                          ]
+                        },
+                        "owner": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "revision": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "reference": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "owner",
+                        "path",
+                        "revision",
+                        "reference"
+                      ],
+                      "additionalProperties": false
                     }
+                  },
+                  "required": [
+                    "binding",
+                    "id",
+                    "sha256",
+                    "source",
+                    "excerpt_sha256",
+                    "preservation"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "kind": {
+              "enum": [
+                "appearance",
+                "proposal",
+                "adoption",
+                "restatement",
+                "amendment",
+                "relocation",
+                "retirement"
+              ]
+            },
+            "occurred_at": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "time_uncertainty": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recorded_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "recorder": {
+              "type": "string",
+              "minLength": 1
+            },
+            "predecessors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "claim": {
+              "type": "object",
+              "properties": {
+                "authorship": {
+                  "type": "object",
+                  "properties": {
+                    "actor": {
+                      "enum": [
+                        "user",
+                        "agent",
+                        "unknown"
+                      ]
+                    },
+                    "role": {
+                      "enum": [
+                        "goal",
+                        "mechanism",
+                        "wording"
+                      ]
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "enum": [
+                        "observed",
+                        "inferred",
+                        "unknown"
+                      ]
+                    },
+                    "reason": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "supplier": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "original_author": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "actor",
+                    "role",
+                    "statement",
+                    "basis",
+                    "reason",
+                    "supplier",
+                    "original_author"
+                  ],
+                  "additionalProperties": false
+                },
+                "adoption": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "accepted",
+                        "restated",
+                        "authorized-scope",
+                        "inferred-only",
+                        "none-recovered"
+                      ]
+                    },
+                    "actor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "target": {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "binding": {
+                                  "enum": [
+                                    "revision"
+                                  ]
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                                },
+                                "sha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                }
+                              },
+                              "required": [
+                                "binding",
+                                "id",
+                                "sha256"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "binding": {
+                                  "enum": [
+                                    "scope"
+                                  ]
+                                },
+                                "reference": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "revision": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "binding",
+                                "reference",
+                                "revision",
+                                "scope"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "covers_clauses": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "actor",
+                    "target",
+                    "evidence",
+                    "covers_clauses"
+                  ],
+                  "additionalProperties": false
+                },
+                "evidence_quality": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "source": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quality": {
+                        "enum": [
+                          "originating-request/proposal",
+                          "first-known-appearance",
+                          "later-restatement",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "quality"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "authorship",
+                "adoption",
+                "evidence_quality"
+              ],
+              "additionalProperties": false
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "searches": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "id",
+            "subject",
+            "kind",
+            "occurred_at",
+            "time_uncertainty",
+            "recorded_at",
+            "recorder",
+            "predecessors",
+            "claim",
+            "evidence",
+            "searches"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subject": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "binding": {
+                      "enum": [
+                        "revision"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "binding",
+                    "id",
+                    "sha256"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "binding": {
+                      "enum": [
+                        "historical-excerpt"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                    },
+                    "sha256": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "excerpt_sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "preservation": {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "enum": [
+                            "git",
+                            "session",
+                            "attachment",
+                            "retained"
+                          ]
+                        },
+                        "owner": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "path": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "revision": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "reference": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "owner",
+                        "path",
+                        "revision",
+                        "reference"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "binding",
+                    "id",
+                    "sha256",
+                    "source",
+                    "excerpt_sha256",
+                    "preservation"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "kind": {
+              "enum": [
+                "correction"
+              ]
+            },
+            "occurred_at": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "time_uncertainty": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recorded_at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "recorder": {
+              "type": "string",
+              "minLength": 1
+            },
+            "predecessors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "claim": {
+              "type": "object",
+              "properties": {
+                "authorship": {
+                  "type": "object",
+                  "properties": {
+                    "actor": {
+                      "enum": [
+                        "user",
+                        "agent",
+                        "unknown"
+                      ]
+                    },
+                    "role": {
+                      "enum": [
+                        "goal",
+                        "mechanism",
+                        "wording"
+                      ]
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "enum": [
+                        "observed",
+                        "inferred",
+                        "unknown"
+                      ]
+                    },
+                    "reason": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "supplier": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "original_author": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "actor",
+                    "role",
+                    "statement",
+                    "basis",
+                    "reason",
+                    "supplier",
+                    "original_author"
+                  ],
+                  "additionalProperties": false
+                },
+                "adoption": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "accepted",
+                        "restated",
+                        "authorized-scope",
+                        "inferred-only",
+                        "none-recovered"
+                      ]
+                    },
+                    "actor": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "target": {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "binding": {
+                                  "enum": [
+                                    "revision"
+                                  ]
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+                                },
+                                "sha256": {
+                                  "type": "string",
+                                  "pattern": "^[0-9a-f]{64}$"
+                                }
+                              },
+                              "required": [
+                                "binding",
+                                "id",
+                                "sha256"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "binding": {
+                                  "enum": [
+                                    "scope"
+                                  ]
+                                },
+                                "reference": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "revision": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "binding",
+                                "reference",
+                                "revision",
+                                "scope"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "covers_clauses": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "actor",
+                    "target",
+                    "evidence",
+                    "covers_clauses"
+                  ],
+                  "additionalProperties": false
+                },
+                "evidence_quality": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "source": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "quality": {
+                        "enum": [
+                          "originating-request/proposal",
+                          "first-known-appearance",
+                          "later-restatement",
+                          "unknown"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "source",
+                      "quality"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "authorship",
+                "adoption",
+                "evidence_quality"
+              ],
+              "additionalProperties": false
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "searches": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "correction": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "dimension": {
+                  "enum": [
+                    "authorship",
+                    "adoption"
                   ]
                 },
-                "evidence": {
+                "action": {
+                  "enum": [
+                    "withdraw",
+                    "restore"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "supersedes": {
                   "type": "array",
                   "items": {
                     "type": "string",
                     "minLength": 1
                   }
-                },
-                "covers_clauses": {
-                  "type": "boolean"
                 }
               },
               "required": [
-                "status",
-                "actor",
                 "target",
-                "evidence",
-                "covers_clauses"
+                "dimension",
+                "action",
+                "reason",
+                "supersedes"
               ],
               "additionalProperties": false
-            },
-            "evidence_quality": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "source": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "quality": {
-                    "enum": [
-                      "originating-request/proposal",
-                      "first-known-appearance",
-                      "later-restatement",
-                      "unknown"
-                    ]
-                  }
-                },
-                "required": [
-                  "source",
-                  "quality"
-                ],
-                "additionalProperties": false
-              }
             }
           },
           "required": [
-            "authorship",
-            "adoption",
-            "evidence_quality"
+            "id",
+            "subject",
+            "kind",
+            "occurred_at",
+            "time_uncertainty",
+            "recorded_at",
+            "recorder",
+            "predecessors",
+            "claim",
+            "evidence",
+            "searches",
+            "correction"
           ],
           "additionalProperties": false
-        },
-        "evidence": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "searches": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
         }
-      },
-      "required": [
-        "id",
-        "subject",
-        "kind",
-        "occurred_at",
-        "time_uncertainty",
-        "recorded_at",
-        "recorder",
-        "predecessors",
-        "claim",
-        "evidence",
-        "searches"
-      ],
-      "additionalProperties": false
+      ]
     },
     "context": {
       "type": "object",
@@ -1125,6 +1549,65 @@
         "environment"
       ],
       "additionalProperties": false
+    },
+    "adoption-target": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "binding": {
+              "enum": [
+                "revision"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^(rule:[0-9a-f]{32}|clause:[0-9a-f]{32})$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "binding",
+            "id",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binding": {
+              "enum": [
+                "scope"
+              ]
+            },
+            "reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "scope": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "binding",
+            "reference",
+            "revision",
+            "scope"
+          ],
+          "additionalProperties": false
+        }
+      ]
     },
     "assessment": {
       "anyOf": [

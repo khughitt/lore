@@ -40,21 +40,23 @@ def home(tmp_path, monkeypatch):
     return path
 
 
-def git(root, *args):
+def git(root, *args, env=None):
+    """Run Git in a fixture repository; `env` defaults to the running test's GIT_ENV."""
     return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True,
-                          env=GIT_ENV).stdout
+                          env=GIT_ENV if env is None else env).stdout
 
 
-def commit_all(repo):
-    git(repo, 'init', '-q', '-b', 'main')
-    assert Path(git(repo, 'rev-parse', '--show-toplevel').decode().strip()).resolve() == repo.resolve()
-    assert Path(git(repo, 'rev-parse', '--absolute-git-dir').decode().strip()).resolve().is_relative_to(repo.resolve())
-    git(repo, 'config', 'user.name', 'Assembly fixture')
-    git(repo, 'config', 'user.email', 'assembly-fixture@example.invalid')
-    git(repo, 'config', 'core.hooksPath', 'fixture-no-hooks')
-    git(repo, 'config', 'commit.gpgsign', 'false')
-    git(repo, 'add', '.')
-    git(repo, 'commit', '-q', '-m', 'test: bootstrap sources without manifest')
+def commit_all(repo, env=None):
+    run = lambda *args: git(repo, *args, env=env)
+    run('init', '-q', '-b', 'main')
+    assert Path(run('rev-parse', '--show-toplevel').decode().strip()).resolve() == repo.resolve()
+    assert Path(run('rev-parse', '--absolute-git-dir').decode().strip()).resolve().is_relative_to(repo.resolve())
+    run('config', 'user.name', 'Assembly fixture')
+    run('config', 'user.email', 'assembly-fixture@example.invalid')
+    run('config', 'core.hooksPath', 'fixture-no-hooks')
+    run('config', 'commit.gpgsign', 'false')
+    run('add', '.')
+    run('commit', '-q', '-m', 'test: bootstrap sources without manifest')
 
 
 def invoke(world, *args):
@@ -66,9 +68,11 @@ def build(world, command='write', *args):
     return invoke(world, command, '--owner-root', f'ops={world.ops}', *args)
 
 
-@pytest.fixture
-def world(tmp_path, home):
-    root, ops, store = tmp_path / 'lore', tmp_path / 'ops', tmp_path / 'records'
+def build_world(base, home):
+    """Build a reference world under `base`: lore, ops and records repositories and a
+    tasks registry. Git runs under `home`'s hermetic environment, not a test's."""
+    git_env = isolated_env(home)
+    root, ops, store = base / 'lore', base / 'ops', base / 'records'
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
     shutil.rmtree(root / 'instructions/rules', ignore_errors=True)
@@ -109,11 +113,11 @@ def world(tmp_path, home):
     (ops / 'bin').mkdir()
     (ops / 'bin/ops-projects').write_text('import sys\nassert sys.argv[1:] == ["render"]\n'
                                          f'sys.stdout.buffer.write({projects!r})\n')
-    config = tmp_path / 'config/tasks'
+    config = base / 'config/tasks'
     config.mkdir(parents=True)
     # Evidence owned by lore:records lives in a records directory inside a records repository.
     (config / 'projects.toml').write_text('[projects]\nops = ' + json.dumps(str(ops)) +
-                                          '\nlore = ' + json.dumps(str(tmp_path / 'wrong-lore')) +
+                                          '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
                                           '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n')
     directories = {'lore': root, 'ops': ops, 'lore:records': store / 'lore'}
     (store / 'lore').mkdir(parents=True)
@@ -125,10 +129,10 @@ def world(tmp_path, home):
             file.write_text('Disposable historical evidence.\n')
     (store / 'lore/.keep').touch()
     for repo in (root, ops, store):
-        commit_all(repo)
-    heads = {'lore': git(root, 'rev-parse', 'HEAD').decode().strip(),
-             'ops': git(ops, 'rev-parse', 'HEAD').decode().strip(),
-             'lore:records': git(store, 'rev-parse', 'HEAD').decode().strip()}
+        commit_all(repo, git_env)
+    heads = {'lore': git(root, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
+             'ops': git(ops, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
+             'lore:records': git(store, 'rev-parse', 'HEAD', env=git_env).decode().strip()}
     path = root / 'instructions/assembly.toml'
     text = path.read_text()
     for fragment in catalog['fragments']:
@@ -140,6 +144,45 @@ def world(tmp_path, home):
     return SimpleNamespace(root=root, ops=ops, store=store, config=config,
                            env=isolated_env(home, XDG_CONFIG_HOME=str(config.parent)),
                            initial=initial)
+
+
+@pytest.fixture(scope='session')
+def world_template(tmp_path_factory):
+    """One reference world per session (per xdist worker), copied into each test."""
+    base = tmp_path_factory.mktemp('world-template')
+    home = base / 'home'
+    home.mkdir()
+    return build_world(base, home)
+
+
+WORLD_PARTS = ('lore', 'ops', 'records', 'config')
+
+
+def copy_world(template, base, home):
+    """Copy `template`'s world under `base` and point its registry at the copy. Refuses a
+    copy in which any file still names the template's directory."""
+    source = template.root.parent
+    for part in WORLD_PARTS:
+        shutil.copytree(source / part, base / part, symlinks=True)
+    config = base / 'config/tasks'
+    store = base / 'records'
+    (config / 'projects.toml').write_text(
+        '[projects]\nops = ' + json.dumps(str(base / 'ops')) +
+        '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
+        '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n')
+    stale = os.fsencode(source)
+    for part in WORLD_PARTS:
+        for path in sorted((base / part).rglob('*')):
+            if path.is_file() and not path.is_symlink() and stale in path.read_bytes():
+                raise AssertionError(f'world copy still names its template: {path.relative_to(base)}')
+    return SimpleNamespace(root=base / 'lore', ops=base / 'ops', store=store, config=config,
+                           env=isolated_env(home, XDG_CONFIG_HOME=str(base / 'config')),
+                           initial=template.initial)
+
+
+@pytest.fixture
+def world(tmp_path, home, world_template):
+    return copy_world(world_template, tmp_path, home)
 
 
 def outputs(world):
@@ -286,6 +329,32 @@ def inventory(root):
     catalog = tomllib.loads((root / 'instructions/assembly.toml').read_text())
     return ([f['id'] for f in catalog['fragments']],
             {f['classification'] for f in catalog['fragments']})
+
+
+def test_world_copies_are_independent(world_template, tmp_path, home):
+    a = copy_world(world_template, tmp_path / 'a', home)
+    b = copy_world(world_template, tmp_path / 'b', home)
+    with (a.root / 'instructions/assembly.toml').open('a') as stream:
+        stream.write('# changed in a\n')
+    git(a.root, 'commit', '-q', '-am', 'test: change one copy')
+    catalog = 'instructions/assembly.toml'
+    assert (b.root / catalog).read_bytes() == (world_template.root / catalog).read_bytes()
+    assert git(b.root, 'rev-parse', 'HEAD') == git(world_template.root, 'rev-parse', 'HEAD')
+    assert git(a.root, 'rev-parse', 'HEAD') != git(b.root, 'rev-parse', 'HEAD')
+
+
+def test_world_copy_registry_names_its_own_directories(world, tmp_path):
+    registry = tomllib.loads((world.config / 'projects.toml').read_text())
+    assert registry['projects']['ops'] == str(world.ops)
+    assert registry['projects']['lore'] == str(tmp_path / 'wrong-lore')
+    assert registry['records']['lore'] == str(world.store / 'lore')
+
+
+def test_world_copy_refuses_a_stale_template_path(world_template, tmp_path, home):
+    private = copy_world(world_template, tmp_path / 'p', home)
+    (private.root / 'stale.txt').write_text(str(tmp_path / 'p') + '\n')
+    with pytest.raises(AssertionError, match='stale.txt'):
+        copy_world(private, tmp_path / 'q', home)
 
 
 def test_catalog_inventory_preserves_v1_mandatory_ids():

@@ -15,8 +15,12 @@ Relevant staged changes select the entire index; otherwise it checks disk.
 The executing assembler must equal its index bytes in a staged check.
 
 Use `just test-one tools/test_assemble_instructions.py -k staged` for staged cases.
-`just test-fast` and `just test` both run all tests in `tools/`; there is no
-affected-only selection. The pre-push hook carries the full suite; there is no CI.
+`just test-fast` and `just test` both run all tests in `tools/` on 4 pytest-xdist
+workers; there is no affected-only selection. `just test-one` runs serially. Tests run
+in the locked environment `pyproject.toml` and `uv.lock` declare: `just setup` installs
+it into `.venv` on the system interpreter, and the test recipes refuse, naming
+`just setup`, while it is missing. Rerun `just setup` after a system Python upgrade or
+a lock change. The pre-push hook carries the full suite; there is no CI.
 Historical proof commands are acceptance checks outside the recurring gates.
 
 For a new obligation, use `python3 bin/assemble-instructions add-rule <fragment-id>

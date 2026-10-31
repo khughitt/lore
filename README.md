@@ -19,8 +19,9 @@ does not have; the corpus, profiles and skills are plain files and read on their
 
 ## Setup
 
-Run `just setup` after a clone to prepare worktree storage and initialize the pinned
-superpowers submodule. Checks use Python 3.11+, pytest, Git and just. Run `just check`
+Run `just setup` after a clone to prepare worktree storage, initialize the pinned
+superpowers submodule and install the locked test environment (pytest and pytest-xdist,
+from `uv.lock`) into `.venv`. Checks use Python 3.11+, uv, Git and just. Run `just check`
 and `just test-fast` to verify the corpus and its assembly outputs.
 
 ## Usage

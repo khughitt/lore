@@ -40,7 +40,8 @@
   rule. If the layout gate refuses a small attachment, use that rule's raw/portable
   fallback. Each plan
   workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
-  `minor (deferred)` lines have reached a final message, other plans' included;
+  `minor (deferred)` lines have reached the task record (a note or an attached
+  ledger), other plans' included;
   otherwise attach its ledger, or move and note it as above, on the task its plan
   served, so the ledger is found from that task's record alone. Remove the tree only
   after `tasks show` lists each attachment and each moved copy's sha256 matches.
@@ -74,33 +75,50 @@ this repository's own instructions, then the user in the session.
 ## Communication
 
 - If the user suddenly switches the conversation to a different project, confirm that it was intentional.
-- Final work reports lead with a short paragraph: outcome first, the task's actual
-  state, and who acts next, including any action or approval trigger the user needs.
-  No fixed lead marker or word cap. The report stands alone without progress updates
-  or a harness recap; omit empty sections and use plain paragraphs when a brief reply
-  suffices. This shape does not shorten reviewers' full reports to controllers.
+- A message to the user at a turn end or a decision point (a final report, a progress
+  update, a decision or approval request, a relayed review) includes what changes the
+  user's understanding, decision or next action, and links the supporting record. By
+  default it is one to five statements or fragments: the outcome; the task's actual
+  state (done, stopped, still running, or blocked and on what); the one decision or
+  who acts next, with any approval trigger; and any uncertainty, trade-off or
+  limitation that could change the user's answer. The count is a default, not a cap:
+  a line that changes a decision stays, and a paragraph packed into a bullet is not
+  one statement. Prefer plain sentences and fragments to word compression. The
+  message stands alone, without restating earlier progress updates or a harness
+  recap. This covers a
+  skill's templated output to the user (brainstorming's playback chunks,
+  executing-plans' review relays) and outranks the length the skill states.
+  Reviewers' full reports to controllers and explanations the user asks for keep
+  their full length.
 - Write task ids in replies and reports bare in their canonical form
   (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;
   an id inside a command shown as code stays in that command.
-- Follow with the salient findings or landed changes, one claim per bullet when a
-  list helps. Keep each claim's conditions, reasons, scope and uncertainty with it;
-  do not pack independent changes into one sentence. Include verification and its
-  limits (checks, results and test counts where reported), deviations and their
-  rulings, and unfinished work with where it is tracked. Supporting detail may move
-  to a link only after checking that the destination holds it and opens from the main
-  checkout. Before shortening, check that no condition, reason or limit is lost and
-  no claim becomes stronger; covering the same topics is not enough.
-- Keep required content in the final message, whole: text under approval, every
-  required ruling and any deferred minors the governing workflow requires. Give
-  each ruling its own entry with the decision, labelled `Why:` (reason) and `Cost:`
-  (if wrong), and revision references; an entry may wrap. Say when a reason or cost
-  was not recorded rather than inventing one. Close with a concise line of applicable
-  disclosures about pushes, this session's surviving processes, others' work,
-  worktree state, and each branch this session left unmerged: its location and
-  what integrates it (who approves, which command). Repeat this integration state
-  from the lead paragraph; "nothing was pushed" does not establish it. Retain
-  required process ids and stop instructions. These rules govern final reports,
-  not progress updates or task notes.
+- Supporting detail leaves the message for the task record: findings and landed
+  changes with their conditions and scope, verification and its limits (checks,
+  results, test counts), deviations and their rulings, rejected options, and
+  unfinished work with where it is tracked. Put it in a task note, the plan ledger,
+  an attachment or a linked report before writing the message, check that the
+  destination holds it and opens from the main checkout, and name it in the message
+  in a few words. A decision request is one line: what it is blocked on, the
+  recommended option, and one clause of reason, with the alternatives in the record.
+  Work with no task record (a read-only answer, an ad hoc fix) keeps what these
+  rules relocate in the message, after what the user needs first. Before
+  shortening, check that no condition, reason or limit that could change the user's
+  answer is lost and no claim becomes stronger.
+- Required content is kept whole in the record, not the message: every required
+  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if
+  wrong), and revision references; say when a reason or cost was not recorded rather
+  than inventing one), deferred minors, and the closing disclosures (pushes, this
+  session's surviving processes, others' work, worktree state, and each branch left
+  unmerged with its location and what integrates it: who approves, which command).
+  Rulings and deferred minors stay in the plan ledger, with one task note naming them;
+  verification, deviations and disclosures go in the done or park note. What the user
+  must act on stays in the message: the approval or decision asked for and the text
+  they must read to give it (or its frozen revision: repository, commit and path, or
+  path and sha256), a surviving process with its pid and stop command, an error only
+  they can resolve, and each branch left unmerged, with its location and who
+  integrates it. "Nothing was pushed" does not establish integration state; name the
+  branch. Task notes are not shortened by these rules.
 - Use no emoji in what you write: replies, reports, and task text (titles, bodies,
   notes). Their fixed colours cannot follow a project's identity colour. Content a
   project itself asks for, and other Unicode such as arrows or box drawing, is not
@@ -197,8 +215,8 @@ it this way:
   a human decision.
 - A turn that ends with work still owed reports the observed status, not what the turn
   ending implies: which work has stopped and why, what is still running (a background
-  check, a dispatched child) and how its result is picked up, and who owns the next step
-  — never "is underway" for work that stopped. A step you own (a review you dispatch, a
+  check, a dispatched child) and who owns the next step — never "is underway" for work
+  that stopped; how a running result is picked up goes in the task note. A step you own (a review you dispatch, a
   check you rerun, a child you have not started) is never reported as waiting on the
   user: finish it, or `tasks park` the task with that step as the next action and resume
   it; hand it over only explicitly (`--waiting-on user --reason review`). A park's next
@@ -236,7 +254,8 @@ it this way:
   deferred minor is a re-grade proposal: the controller confirms or rejects it by its
   consequence for the person, records each decision as a ledger `Ruling:` line, and
   admits confirmed proposals to corrective rounds as Important; rejected proposals
-  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes
+  stay `minor (deferred)` in the ledger, named in a task note that the final message
+  links. A fix subagent makes the fixes
   under subagent-driven execution; inline,
   you make them yourself, each still proven RED→GREEN with policy-appropriate checks
   under Tests: a green suite when policy is enabled, focused evidence and mandatory
@@ -245,7 +264,8 @@ it this way:
   executing-plans' "do not dispatch a re-review" and "no second fix pass" and
   subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".
   Without a subagent tool, the re-review is a self-review, recorded as such in the
-  ledger and the final message, as executing-plans' final-review fallback does. External
+  ledger and the task note the final message links, as executing-plans'
+  final-review fallback does. External
   actions stay gated.
 - A review correction to a task already closed as `done`, before its branch is
   integrated, reopens that record: the agent that makes the fix (the fix subagent, or
@@ -264,8 +284,8 @@ it this way:
   child burning CPU in a dead `kitty-*.scope`. A process that must outlive the turn (a
   server a later step drives) is named in the end-of-turn report with its pid and how to
   stop it; before that report, `host-load --section session` (ops's `bin/host-load`, on
-  `~/.local/bin`) lists what this session's scope left running, and the report repeats
-  it or says nothing was left. `host-load` also names the load a preflight refuses on
+  `~/.local/bin`) lists what this session's scope left running; the done or park note
+  records that result, and the report repeats only a process that survives. `host-load` also names the load a preflight refuses on
   and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.
 - A launcher that leaves a process running behind a tracked channel (the harness's
   shell tool, `ssh host cmd`, a hook) redirects all three of that process's standard
@@ -549,7 +569,8 @@ If it exits non-zero, show the user its error and do not choose flow on or off u
   reports under its project's prefix; outside every project the report
   is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would
   misstate the source. If filing fails (a broken config, `tasks` missing), name the
-  tool, its owner, and the error in your end-of-turn report, and the user decides.
+  tool, its owner, and the error in your end-of-turn message, since only the user can
+  decide.
 - A defect in code the user does not maintain (a vendored submodule, an installed tool, a
   library) is checked upstream before anything else, scoping included: search the
   project's open and closed issues and PRs, its default and development branches, and

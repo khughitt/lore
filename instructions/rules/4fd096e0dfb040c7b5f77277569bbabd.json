@@ -23,6 +23,12 @@
       "locator": null,
       "sha256": "7a48d8bf099fa2409eed665087c71217a9ed6a2cbb74ddd5653d40a50ca92c41",
       "text": "- A turn that ends with work still owed reports the observed status, not what the turn\n  ending implies: which work has stopped and why, what is still running (a background\n  check, a dispatched child) and how its result is picked up, and who owns the next step\n  \u2014 never \"is underway\" for work that stopped. A step you own (a review you dispatch, a\n  check you rerun, a child you have not started) is never reported as waiting on the\n  user: finish it, or `tasks park` the task with that step as the next action and resume\n  it; hand it over only explicitly (`--waiting-on user --reason review`). A park's next\n  step is an action and who takes it (\"rerun `just gate` in .worktrees/x, then dispatch\n  the Task 6 review\"), never a state (\"waiting for next steps\"). An unblocked task you\n  hold is not parked between increments: continue until a blocker, a gate that needs a\n  person, or the end of the session.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4ada85f4a3e1299907e073b520c2326fbc5024f42a934ca46fd99cbe612043b8",
+      "text": "- A turn that ends with work still owed reports the observed status, not what the turn\n  ending implies: which work has stopped and why, what is still running (a background\n  check, a dispatched child) and who owns the next step \u2014 never \"is underway\" for work\n  that stopped; how a running result is picked up goes in the task note. A step you own (a review you dispatch, a\n  check you rerun, a child you have not started) is never reported as waiting on the\n  user: finish it, or `tasks park` the task with that step as the next action and resume\n  it; hand it over only explicitly (`--waiting-on user --reason review`). A park's next\n  step is an action and who takes it (\"rerun `just gate` in .worktrees/x, then dispatch\n  the Task 6 review\"), never a state (\"waiting for next steps\"). An unblocked task you\n  hold is not parked between increments: continue until a blocker, a gate that needs a\n  person, or the end of the session.\n"
     }
   ],
   "schema": 1,

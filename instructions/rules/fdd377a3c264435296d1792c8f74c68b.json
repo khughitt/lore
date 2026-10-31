@@ -23,6 +23,12 @@
       "locator": null,
       "sha256": "d4350203954a4abe5f0f50a7a6ad495fef40aab7991d8ea88147fef2287d83dd",
       "text": "- When you hold a recommendation for a bounded decision, state it with the alternative\n  you rejected and act on it. Do not end the turn to ask for confirmation: the user\n  overrides in free text if they disagree, and a wrong default costs one correction\n  while a question costs a stop. This applies to \"which approach\", \"where should this\n  land\", \"does this section look right\", \"which follow-ups to file\", and \"execute now\".\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1be75c78f07b30682fe5d917b39350530e62281468fd6f40837627787d94cfc4",
+      "text": "- When you hold a recommendation for a bounded decision, state it with one clause of\n  reason and act on it; the alternative you rejected goes to the record, as Communication\n  sends rejected options. Do not end the turn to ask for confirmation: the user\n  overrides in free text if they disagree, and a wrong default costs one correction\n  while a question costs a stop. This applies to \"which approach\", \"where should this\n  land\", \"does this section look right\", \"which follow-ups to file\", and \"execute now\".\n"
     }
   ],
   "schema": 1,

@@ -21,14 +21,23 @@ set positional-arguments
 
 tt := "python3 tools/tt"
 
+# Every test command first checks the locked environment `just setup` installs: a missing
+# .venv, or one a system Python upgrade has broken, fails here and names the fix instead of
+# letting a runner create or reuse an environment in place.
+venv_guard := "{ .venv/bin/python -c \"import pytest, xdist\" >/dev/null 2>&1 || { echo \"test recipes need the locked environment: run just setup\" >&2; exit 1; }; }"
+
 # The three commands, each written once. Recipes and hooks all run these, so a hook can
 # never drift from the gate it is supposed to be. Avoid single quotes inside them.
 # With no affected-only mechanism, set fast_cmd to the same command as test_cmd and say
 # so here; the target must always exist and the report shows the gap as equal durations.
 # Fast and full run the same tools directory; there is no affected-only selection.
+# Both run it on 4 pytest-xdist workers from the locked environment. Pilot on a 32-CPU host,
+# 2026-10-31, 396 tests: serial 149 s, -n 4 34.5 s, -n 8 19.6 s (load 7-8); 4 is the
+# smallest count under the 45 s target. Not -n auto: that starts one worker per CPU (32
+# there), each building its own fixture template, on a host shared with other sessions.
 # Temporary JUnit reports let tt record each run's five slowest tests.
-fast_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-test_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+test_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
@@ -56,14 +65,14 @@ ci_remote := "origin"
 # crates changed since <base> and their reverse dependencies), falling back explicitly
 # to the fast set when the base cannot be resolved; testmon's own selection (fast_cmd
 # may serve); or the project's fixed fast set. Say which here.
-# The push gate runs the same complete tools directory as the fast loop.
-push_fast_cmd := "python3 -m pytest tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+# The push gate runs the same complete tools directory, on the same workers, as the fast loop.
+push_fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which
 # forms work is the runner's business (pytest: a path, path::name, -k expr; vitest: a
 # filename filter, -t "<name>"); name them in AGENTS.md under Gates.
-one_cmd := "python3 -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+one_cmd := venv_guard + " && .venv/bin/python -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # What a fresh checkout or worktree needs before the suite can run: dependency installs
 # (npm ci, uv sync) and any gitignored inputs the tests read, hydrated from the main
@@ -82,8 +91,9 @@ one_cmd := "python3 -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytes
 # catches both kinds only every two hours. Use explicit, audited paths; never
 # ignore source parents. Linux needs attr installed. Attribute failures must
 # fail setup, not be swallowed.
-# Initialize the pinned skill submodule after preparing host-local worktree storage.
-setup_cmd := "just work-link .worktrees && git submodule update --init"
+# Initialize the pinned skill submodule after preparing host-local worktree storage, then
+# install the locked test environment (pyproject.toml, uv.lock) into the work-linked .venv.
+setup_cmd := "just work-link .worktrees .venv && git submodule update --init && uv sync --frozen"
 
 # Affected-only: the inner loop.
 test-fast:

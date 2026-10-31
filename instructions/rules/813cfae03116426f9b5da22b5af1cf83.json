@@ -683,6 +683,46 @@
       },
       "sha256": "f4b26e182b60c6d0e7b550f09f22973d68dc41950773d27ebcc25982cf97111b",
       "text": "- Plain `git worktree remove` deletes ignored files without `--force`. Before any\n  removal, list them (`git -C <path> status --ignored --porcelain`) and give each entry\n  a disposition rather than archiving the lot. Discard what is regenerable (caches,\n  build output, installed dependencies, config `just setup` hydrates) or already kept\n  elsewhere (committed on a branch, attached to a task). Attach each small file still\n  needed (a review screenshot, a report, a log) to the task it serves, one\n  `tasks attach <id> <file> --caption \"<what it shows>\"` per file. Move the rare needed\n  item too large to commit with a task record to that task's\n  `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item\n  rule. If the layout gate refuses a small attachment, use that rule's raw/portable\n  fallback. Each plan\n  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and\n  `minor (deferred)` lines have reached a final message, other plans' included;\n  otherwise attach its ledger, or move and note it as above, on the task its plan\n  served, so the ledger is found from that task's record alone. Remove the tree only\n  after `tasks show` lists each attachment and each moved copy's sha256 matches.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:a59acb33ebce47cd9158455b8c37d22b",
+          "offset": 0,
+          "overlaps": [
+            "clause:f027bb69cc014e8798a6452a8cf46f93",
+            "clause:7ff63dd01a8949d7a242953ddee8e989"
+          ],
+          "parent_sha256": "1b13b1d86cea96f8bcd29d9515dc757e7b746b8118406651157b3e476976e241",
+          "sha256": "1b13b1d86cea96f8bcd29d9515dc757e7b746b8118406651157b3e476976e241",
+          "text": "- Plain `git worktree remove` deletes ignored files without `--force`. Before any\n  removal, list them (`git -C <path> status --ignored --porcelain`) and give each entry\n  a disposition rather than archiving the lot. Discard what is regenerable (caches,\n  build output, installed dependencies, config `just setup` hydrates) or already kept\n  elsewhere (committed on a branch, attached to a task). Attach each small file still\n  needed (a review screenshot, a report, a log) to the task it serves, one\n  `tasks attach <id> <file> --caption \"<what it shows>\"` per file. Move the rare needed\n  item too large to commit with a task record to that task's\n  `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item\n  rule. If the layout gate refuses a small attachment, use that rule's raw/portable\n  fallback. Each plan\n  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and\n  `minor (deferred)` lines have reached the task record (a note or an attached\n  ledger), other plans' included;\n  otherwise attach its ledger, or move and note it as above, on the task its plan\n  served, so the ledger is found from that task's record alone. Remove the tree only\n  after `tasks show` lists each attachment and each moved copy's sha256 matches.\n"
+        },
+        {
+          "id": "clause:f027bb69cc014e8798a6452a8cf46f93",
+          "offset": 217,
+          "overlaps": [
+            "clause:a59acb33ebce47cd9158455b8c37d22b",
+            "clause:7ff63dd01a8949d7a242953ddee8e989"
+          ],
+          "parent_sha256": "1b13b1d86cea96f8bcd29d9515dc757e7b746b8118406651157b3e476976e241",
+          "sha256": "1f71ee5ce877b319dbc1862a117e20d1365401b0725e765a328e2da83f83a4db",
+          "text": "Discard what is regenerable (caches,\n  build output, installed dependencies, config `just setup` hydrates) or already kept\n  elsewhere (committed on a branch, attached to a task). Attach each small file still\n  needed (a review screenshot, a report, a log) to the task it serves, one\n  `tasks attach <id> <file> --caption \"<what it shows>\"` per file. Move the rare needed\n  item too large to commit with a task record to that task's\n  `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item\n  rule. If the layout gate refuses a small attachment, use that rule's raw/portable\n  fallback. Each plan\n  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and\n  `minor (deferred)` lines have reached the task record (a note or an attached\n  ledger), other plans' included;\n  otherwise attach its ledger, or move and note it as above, on the task its plan\n  served, so the ledger is found from that task's record alone. Remove the tree only\n  after `tasks show` lists each attachment and each moved copy's sha256 matches."
+        },
+        {
+          "id": "clause:7ff63dd01a8949d7a242953ddee8e989",
+          "offset": 739,
+          "overlaps": [
+            "clause:a59acb33ebce47cd9158455b8c37d22b",
+            "clause:f027bb69cc014e8798a6452a8cf46f93"
+          ],
+          "parent_sha256": "1b13b1d86cea96f8bcd29d9515dc757e7b746b8118406651157b3e476976e241",
+          "sha256": "7e15ab5201fa6b949f05db3a0cc3cabdd936e6454acbb474503bd387f09b6d9a",
+          "text": "If the layout gate refuses a small attachment, use that rule's raw/portable\n  fallback."
+        }
+      ],
+      "locator": null,
+      "sha256": "1b13b1d86cea96f8bcd29d9515dc757e7b746b8118406651157b3e476976e241",
+      "text": "- Plain `git worktree remove` deletes ignored files without `--force`. Before any\n  removal, list them (`git -C <path> status --ignored --porcelain`) and give each entry\n  a disposition rather than archiving the lot. Discard what is regenerable (caches,\n  build output, installed dependencies, config `just setup` hydrates) or already kept\n  elsewhere (committed on a branch, attached to a task). Attach each small file still\n  needed (a review screenshot, a report, a log) to the task it serves, one\n  `tasks attach <id> <file> --caption \"<what it shows>\"` per file. Move the rare needed\n  item too large to commit with a task record to that task's\n  `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item\n  rule. If the layout gate refuses a small attachment, use that rule's raw/portable\n  fallback. Each plan\n  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and\n  `minor (deferred)` lines have reached the task record (a note or an attached\n  ledger), other plans' included;\n  otherwise attach its ledger, or move and note it as above, on the task its plan\n  served, so the ledger is found from that task's record alone. Remove the tree only\n  after `tasks show` lists each attachment and each moved copy's sha256 matches.\n"
     }
   ],
   "schema": 1,

@@ -420,6 +420,45 @@
       "locator": null,
       "sha256": "e0848563c47b37a0755ea96c9151ba7ecd593385aeae26b288bbe3370517429f",
       "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike, fix (or rule on, as the skills allow) its Critical and Important\n  findings in corrective rounds, up to five; then surface what remains. A round is one\n  fix pass plus one scoped re-review of it, and another follows while that re-review\n  reports any Critical or Important finding, persisting or introduced by the fix. Minor\n  findings never enter a round; they go to the ledger as `minor (deferred)`, as both\n  skills say. In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes\n  under subagent-driven execution; inline,\n  you make them yourself, each still proven RED\u2192GREEN with policy-appropriate checks\n  under Tests: a green suite when policy is enabled, focused evidence and mandatory\n  hygiene when it is off. A skipped suite is never green evidence. A fresh\n  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks\n  executing-plans' \"do not dispatch a re-review\" and \"no second fix pass\" and\n  subagent-driven-development's \"exactly one scoped re-review\" and \"no second fix wave\".\n  Without a subagent tool, the re-review is a self-review, recorded as such in the\n  ledger and the final message, as executing-plans' final-review fallback does. External\n  actions stay gated.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:853cf3ff745d42b9865ee5791e5bf7b4",
+          "offset": 202,
+          "overlaps": [],
+          "parent_sha256": "b402abf8c532dca4374027651d318a6d71e3f89b1d7d70122ded9b155d73e7ab",
+          "sha256": "de9eaa3419602b81055c234528214cda83e2060c7fda93deeb324723ab5cac96",
+          "text": "up to five; then surface what remains."
+        },
+        {
+          "id": "clause:3b0364d9e6d44e4f92835bf319d01627",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "b402abf8c532dca4374027651d318a6d71e3f89b1d7d70122ded9b155d73e7ab",
+          "sha256": "d57e5a6c0c96f77d91ae7716e8e07e084396ce4d4cff0e37518e8422f027f8c7",
+          "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike,"
+        },
+        {
+          "id": "clause:39ee97ce06f7465e9f5c6be6c942439f",
+          "offset": 528,
+          "overlaps": [],
+          "parent_sha256": "b402abf8c532dca4374027651d318a6d71e3f89b1d7d70122ded9b155d73e7ab",
+          "sha256": "cd92c4d7f701b4a00ad80ea9e7847789168a92ec248475ee184f2497aca95d27",
+          "text": "In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` in the ledger, named in a task note that the final message\n  links."
+        },
+        {
+          "id": "clause:014874825b0247e1b8cca9c21bc7cb0f",
+          "offset": 1023,
+          "overlaps": [],
+          "parent_sha256": "b402abf8c532dca4374027651d318a6d71e3f89b1d7d70122ded9b155d73e7ab",
+          "sha256": "1ade75c83aa310f73147710a2caa2b4e5c7596fa3d5976383769ea60cbad3565",
+          "text": "you make them yourself, each still proven RED\u2192GREEN with policy-appropriate checks\n  under Tests: a green suite when policy is enabled, focused evidence and mandatory\n  hygiene when it is off. A skipped suite is never green evidence."
+        }
+      ],
+      "locator": null,
+      "sha256": "b402abf8c532dca4374027651d318a6d71e3f89b1d7d70122ded9b155d73e7ab",
+      "text": "- After a final whole-branch review, in subagent-driven and inline (executing-plans)\n  execution alike, fix (or rule on, as the skills allow) its Critical and Important\n  findings in corrective rounds, up to five; then surface what remains. A round is one\n  fix pass plus one scoped re-review of it, and another follows while that re-review\n  reports any Critical or Important finding, persisting or introduced by the fix. Minor\n  findings never enter a round; they go to the ledger as `minor (deferred)`, as both\n  skills say. In either execution mode, a final review's \"fix before merge\" call on a\n  deferred minor is a re-grade proposal: the controller confirms or rejects it by its\n  consequence for the person, records each decision as a ledger `Ruling:` line, and\n  admits confirmed proposals to corrective rounds as Important; rejected proposals\n  stay `minor (deferred)` in the ledger, named in a task note that the final message\n  links. A fix subagent makes the fixes\n  under subagent-driven execution; inline,\n  you make them yourself, each still proven RED\u2192GREEN with policy-appropriate checks\n  under Tests: a green suite when policy is enabled, focused evidence and mandatory\n  hygiene when it is off. A skipped suite is never green evidence. A fresh\n  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks\n  executing-plans' \"do not dispatch a re-review\" and \"no second fix pass\" and\n  subagent-driven-development's \"exactly one scoped re-review\" and \"no second fix wave\".\n  Without a subagent tool, the re-review is a self-review, recorded as such in the\n  ledger and the task note the final message links, as executing-plans'\n  final-review fallback does. External\n  actions stay gated.\n"
     }
   ],
   "schema": 1,

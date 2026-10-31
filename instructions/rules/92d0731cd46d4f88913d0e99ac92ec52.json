@@ -412,6 +412,45 @@
       "locator": null,
       "sha256": "24f3efd414a6551425289cc72923f8463c3c15d3cd6f31c7a829fc0040be0d5f",
       "text": "- File from where you stand. A project checkout (one `tasks where` names a project\n  for, whatever its `kind`: records in the tree, under the records root, or linked)\n  reports under its project's prefix; outside every project the report\n  is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would\n  misstate the source. If filing fails (a broken config, `tasks` missing), name the\n  tool, its owner, and the error in your end-of-turn report, and the user decides.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:54fba52a1dea4929be2ac3f6ca6d5593",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399",
+          "sha256": "a3b3174eedeb538371ea7fb1e99b9043f07ef980687067db9828d13ca48e1976",
+          "text": "- File from where you stand. "
+        },
+        {
+          "id": "clause:4c12bb3fedd34f6c9ed29bc3259fe322",
+          "offset": 29,
+          "overlaps": [],
+          "parent_sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399",
+          "sha256": "d8628dfe27c4aa81f8d3931d08447462860f240cd539cb5f0717fa571f84b1f2",
+          "text": "A project checkout (one `tasks where` names a project\n  for, whatever its `kind`: records in the tree, under the records root, or linked)\n  "
+        },
+        {
+          "id": "clause:802676e4beba4c1199ddb706b914f1f0",
+          "offset": 169,
+          "overlaps": [],
+          "parent_sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399",
+          "sha256": "6ad5d6b927c4ffd636a24ef8de2371fbc52526fdded1542a09e353032d3ec179",
+          "text": "reports under its project's prefix; outside every project the report\n  is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would\n  misstate the source. "
+        },
+        {
+          "id": "clause:725271de6beb455ba2e1666cf879e304",
+          "offset": 347,
+          "overlaps": [],
+          "parent_sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399",
+          "sha256": "f2148327007251895eaf31bea7442ee4cf837019e3af6f71afd07fadf610e2a4",
+          "text": "If filing fails (a broken config, `tasks` missing), name the\n  tool, its owner, and the error in your end-of-turn message, since only the user can\n  decide.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399",
+      "text": "- File from where you stand. A project checkout (one `tasks where` names a project\n  for, whatever its `kind`: records in the tree, under the records root, or linked)\n  reports under its project's prefix; outside every project the report\n  is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would\n  misstate the source. If filing fails (a broken config, `tasks` missing), name the\n  tool, its owner, and the error in your end-of-turn message, since only the user can\n  decide.\n"
     }
   ],
   "schema": 1,

@@ -8,8 +8,8 @@
   child burning CPU in a dead `kitty-*.scope`. A process that must outlive the turn (a
   server a later step drives) is named in the end-of-turn report with its pid and how to
   stop it; before that report, `host-load --section session` (ops's `bin/host-load`, on
-  `~/.local/bin`) lists what this session's scope left running, and the report repeats
-  it or says nothing was left. `host-load` also names the load a preflight refuses on
+  `~/.local/bin`) lists what this session's scope left running; the done or park note
+  records that result, and the report repeats only a process that survives. `host-load` also names the load a preflight refuses on
   and sweeps orphans across sessions; its `--kill` is the user's decision, not yours.
 <!-- rule:12e31cf7fafe40db95ec74909738b868 end -->
 <!-- rule:ba000efb53984b8f900cba2bef168728 begin -->

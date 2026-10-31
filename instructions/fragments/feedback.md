@@ -44,7 +44,8 @@
   reports under its project's prefix; outside every project the report
   is tagged `from:unregistered`. Never borrow another checkout with `-C`, which would
   misstate the source. If filing fails (a broken config, `tasks` missing), name the
-  tool, its owner, and the error in your end-of-turn report, and the user decides.
+  tool, its owner, and the error in your end-of-turn message, since only the user can
+  decide.
 <!-- rule:92d0731cd46d4f88913d0e99ac92ec52 end -->
 <!-- rule:bd35453d8e704d1c8905187a28adc47f begin -->
 - A defect in code the user does not maintain (a vendored submodule, an installed tool, a

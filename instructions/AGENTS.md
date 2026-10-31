@@ -99,8 +99,9 @@ this repository's own instructions, then the user in the session.
   unfinished work with where it is tracked. Put it in a task note, the plan ledger,
   an attachment or a linked report before writing the message, check that the
   destination holds it and opens from the main checkout, and name it in the message
-  in a few words. A decision request is one line: what it is blocked on, the
-  recommended option, and one clause of reason, with the alternatives in the record.
+  in a few words. A decision request is one full sentence, not fragments: what it is
+  blocked on, the recommended option, and one clause of reason, with the alternatives
+  in the record.
   Work with no task record (a read-only answer, an ad hoc fix) keeps what these
   rules relocate in the message, after what the user needs first. Before
   shortening, check that no condition, reason or limit that could change the user's
@@ -182,12 +183,13 @@ it this way:
   the commit, and leave an out-of-tree file unedited. A later draft reaches review only
   as a new frozen revision, named in the next round's request, and each finding is
   judged against the revision its request named.
-- A question, when asked, carries your recommendation as the first option and is one
-  question, not a series. A question that asks the user to describe what they want
-  (brainstorming's open questions, and its playback asking what is wrong or missing)
-  carries no options; a guess they can correct stands in for the recommendation. That
-  playback is not a "does this section look right" decision: what they want is theirs
-  to say.
+- A question, when asked, is one question, not a series, and leads with your
+  recommendation: the first option of a choice tool, or in a message the decision
+  request's one sentence, with the alternatives in the record. A question that asks
+  the user to describe what they want (brainstorming's open questions, and its
+  playback asking what is wrong or missing) carries no options; a guess they can
+  correct stands in for the recommendation. That playback is not a "does this section
+  look right" decision: what they want is theirs to say.
 - Before a question asks the user what work should achieve or why (brainstorming's
   opening questions, its playback, its builder check's "theirs" pile), find out who
   holds that intent. Work the user describes in this session starts with the
@@ -390,13 +392,15 @@ it this way:
   whole-suite/green-suite requirements in executing-plans, subagent-driven-development,
   using-git-worktrees, finishing-a-development-branch and verification-before-completion,
   for inline and delegated work alike; carry it into worker and reviewer prompts.
-  A policy skip is not a pass, a test sample or proof of correctness. Report the actual
-  focused scope, mandatory checks, skipped broad work and any remote evidence separately.
+  A policy skip is not a pass, a test sample or proof of correctness. Record the actual
+  focused scope, mandatory checks, skipped broad work and any remote evidence separately
+  in the done or park note.
 - The protected focused route is `just test-one <runner args>` when declared, otherwise
-  the project's documented focused route. If none exists, report the gap and use the
-  documented route; never invent a runner or disguise a full suite as focused work.
-  Adoption must settle this gap before switching off. Documentation-only work creates
-  no test obligation. Known correctness failures still need a fix or explicit disposition.
+  the project's documented focused route. If none exists, note the gap on the task and
+  use the documented route; never invent a runner or disguise a full suite as focused
+  work. Adoption must settle this gap before switching off. Documentation-only work
+  creates no test obligation. Known correctness failures still need a fix or explicit
+  disposition.
 - Deliberate broad verification uses `TT_FORCE=1 just test`, or `just test-full` when
   the project declares that alias. Additional focused integration tests cover affected
   behavior; policy-off does not force a broad rerun because hooks are absent or a fast
@@ -412,9 +416,9 @@ it this way:
   - No `test-fast` recipe: `just test-one` when the justfile has it, otherwise the test
     command the project's guide documents (or the package test script or README command
     it points to); before committing, that documented command.
-  - Neither a recipe nor a documented command: say in your report that the project
-    declares no test route. Do not guess a runner, skip the check silently, or add
-    recipes to the project to fill the gap.
+  - Neither a recipe nor a documented command: say in the done or park note that the
+    project declares no test route. Do not guess a runner, skip the check silently, or
+    add recipes to the project to fill the gap.
 - With policy enabled or absent, the full suite runs in CI where CI is configured for
   it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
@@ -506,9 +510,9 @@ Two note shapes are read by obs's outcome measures; write them as plain
   `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when
   verified and `codex` otherwise. Copy the printed value; when the command exits
   non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the
-  stderr reason or the exit status in the review, or in the final message for a
-  self-review, never in the note. A reviewer writes no note: it states that value in
-  its review for the note writer to record.
+  stderr reason or the exit status in the review, or for a self-review in a separate
+  task note, never in the `review:` note. A reviewer writes no note: it states that
+  value in its review for the note writer to record.
   Only a session noting its own self-review records it directly.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a

@@ -166,6 +166,12 @@
       "locator": null,
       "sha256": "e31cac6b1bb1fb44180696d4842200a660156c73d9078f5f424ed411de192ce4",
       "text": "- Supporting detail leaves the message for the task record: findings and landed\n  changes with their conditions and scope, verification and its limits (checks,\n  results, test counts), deviations and their rulings, rejected options, and\n  unfinished work with where it is tracked. Put it in a task note, the plan ledger,\n  an attachment or a linked report before writing the message, check that the\n  destination holds it and opens from the main checkout, and name it in the message\n  in a few words. A decision request is one line: what it is blocked on, the\n  recommended option, and one clause of reason, with the alternatives in the record.\n  Work with no task record (a read-only answer, an ad hoc fix) keeps what these\n  rules relocate in the message, after what the user needs first. Before\n  shortening, check that no condition, reason or limit that could change the user's\n  answer is lost and no claim becomes stronger.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "ed6b0c933ddd16ffa82dccd38fb2de58aa0c61cad45b4c0beb7aa385c8c18678",
+      "text": "- Supporting detail leaves the message for the task record: findings and landed\n  changes with their conditions and scope, verification and its limits (checks,\n  results, test counts), deviations and their rulings, rejected options, and\n  unfinished work with where it is tracked. Put it in a task note, the plan ledger,\n  an attachment or a linked report before writing the message, check that the\n  destination holds it and opens from the main checkout, and name it in the message\n  in a few words. A decision request is one full sentence, not fragments: what it is\n  blocked on, the recommended option, and one clause of reason, with the alternatives\n  in the record.\n  Work with no task record (a read-only answer, an ad hoc fix) keeps what these\n  rules relocate in the message, after what the user needs first. Before\n  shortening, check that no condition, reason or limit that could change the user's\n  answer is lost and no claim becomes stronger.\n"
     }
   ],
   "schema": 1,

@@ -32,8 +32,9 @@
   unfinished work with where it is tracked. Put it in a task note, the plan ledger,
   an attachment or a linked report before writing the message, check that the
   destination holds it and opens from the main checkout, and name it in the message
-  in a few words. A decision request is one line: what it is blocked on, the
-  recommended option, and one clause of reason, with the alternatives in the record.
+  in a few words. A decision request is one full sentence, not fragments: what it is
+  blocked on, the recommended option, and one clause of reason, with the alternatives
+  in the record.
   Work with no task record (a read-only answer, an ad hoc fix) keeps what these
   rules relocate in the message, after what the user needs first. Before
   shortening, check that no condition, reason or limit that could change the user's

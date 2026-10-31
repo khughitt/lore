@@ -35,8 +35,9 @@
   in a few words. A decision request is one full sentence, not fragments: what it is
   blocked on, the recommended option, and one clause of reason, with the alternatives
   in the record.
-  Work with no task record (a read-only answer, an ad hoc fix) keeps what these
-  rules relocate in the message, after what the user needs first. Before
+  Work with no task record (a read-only answer, an ad hoc fix) keeps in the message
+  what these or any other rules send to the task record, after what the user needs
+  first. Before
   shortening, check that no condition, reason or limit that could change the user's
   answer is lost and no claim becomes stronger.
 <!-- rule:fb8d914a2eb44a64acc7e086970328a0 end -->

@@ -181,6 +181,21 @@
       "locator": null,
       "sha256": "a29a1030ea9ee0d72b82020dc0bf8e081dbdda8f474f1f8ef7ef1aaebd479b5e",
       "text": "- A question, when asked, is one question, not a series, and leads with your\n  recommendation: the first option of a choice tool, or in a message the decision\n  request's one sentence, with the alternatives in the record. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 274,
+          "overlaps": [],
+          "parent_sha256": "90d44aa0da5d5252634509b1e77c7c9599f55219d521b8bc2c4412c14a24aa13",
+          "sha256": "ec9f4f4d51990f6c39a247f6b8cf8feb33a7e83992ff2444068fa9e467c8f24b",
+          "text": "A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "90d44aa0da5d5252634509b1e77c7c9599f55219d521b8bc2c4412c14a24aa13",
+      "text": "- A question, when asked, is one question, not a series, and carries your\n  recommendation: in a harness's multiple-choice question tool, as the first option;\n  in a message, inside the decision request's one sentence (Communication), with the\n  alternatives in the record. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
     }
   ],
   "schema": 1,

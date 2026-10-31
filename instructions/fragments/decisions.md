@@ -28,9 +28,10 @@
   judged against the revision its request named.
 <!-- rule:f431707097c0418c9822d67074875c51 end -->
 <!-- rule:2c5785f136ca4ee590e1c69406276623 begin -->
-- A question, when asked, is one question, not a series, and leads with your
-  recommendation: the first option of a choice tool, or in a message the decision
-  request's one sentence, with the alternatives in the record. A question that asks
+- A question, when asked, is one question, not a series, and carries your
+  recommendation: in a harness's multiple-choice question tool, as the first option;
+  in a message, inside the decision request's one sentence (Communication), with the
+  alternatives in the record. A question that asks
   the user to describe what they want (brainstorming's open questions, and its
   playback asking what is wrong or missing) carries no options; a guess they can
   correct stands in for the recommendation. That playback is not a "does this section

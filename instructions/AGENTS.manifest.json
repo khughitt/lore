@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "765340e7f609247bc20087f30516d29528970dbf2d0167df87707e66b2004b74"
+    "sha256": "2c2473a98306e7d33749f67edd03b136c121cbbd3f122921893e17cc34eba2ac"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -511,8 +511,8 @@
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
-      "rendered_sha256": "19342bb3dbeb88f16b797168ba955d5cd7dba780eca4d3775005e216e7c392b2",
-      "revision": "72bb04c9f908623a4027814d2a3966ea7579ef68",
+      "rendered_sha256": "5698e37d0a8a001977d714335d383aeb6374a290487c6c3ad2503a191e143aff",
+      "revision": "b0d70dd0498a6e8fdeede4ad70ce3dcc434a433a",
       "rules": [
         {
           "clauses": [],
@@ -558,14 +558,14 @@
               "id": "clause:84b2196069a448c08a86a42f79cdc08c",
               "length": 644,
               "offset": 14167,
-              "sha256": "91f1d484224c76697ad5e9abdc33013fe8e2a992d1c653540fd1a36ee3f3dfae"
+              "sha256": "e1e6cc1b92401c0cadf71ca45d16991ca6fd72158e31c9901c955b936d81cbb7"
             }
           ],
           "id": "rule:19c566200a204b339abf808f84984c7d",
           "length": 1142,
           "offset": 13669,
           "record": "instructions/rules/19c566200a204b339abf808f84984c7d.json",
-          "sha256": "0ed794555f67d16bffd58d276186cdfa279e78109cdd925c001d9bedd2b8cef7"
+          "sha256": "e2e1f11b79fdad9a9f818a95a79a504b3ea648d96cc3836930efde912123ab5b"
         },
         {
           "clauses": [],
@@ -592,7 +592,7 @@
           "sha256": "6febfe6df38f60c74cca50235a65c11bd5c55b4db8712ca0920d768525dd8759"
         }
       ],
-      "sha256": "060d2b008275adde93a7cfd1e3258f97daddafa1f486d2829d7f20f2cc50f8bc",
+      "sha256": "8e58a115efde0eea2d85057d72f82ea4f2449a1bb6c93454eed257a9f5bc2c69",
       "source": "instructions/fragments/communication.md"
     },
     {

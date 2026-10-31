@@ -2,8 +2,10 @@
 
 <!-- rule:fdd377a3c264435296d1792c8f74c68b begin -->
 - When you hold a recommendation for a bounded decision, state it with one clause of
-  reason and act on it; the alternative you rejected goes to the record, as Communication
-  sends rejected options. Do not end the turn to ask for confirmation: the user
+  reason and act on it; the alternative you rejected goes to the task record, as
+  Communication sends rejected options (without a record, after the recommendation in the
+  message), while a trade-off that could change the user's answer stays in the message.
+  Do not end the turn to ask for confirmation: the user
   overrides in free text if they disagree, and a wrong default costs one correction
   while a question costs a stop. This applies to "which approach", "where should this
   land", "does this section look right", "which follow-ups to file", and "execute now".
@@ -12,7 +14,8 @@
 - Stop and ask only when the answer needs the user: an artifact they must inspect and
   judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority
   that is the user's to make (your recommendation informs it but cannot settle it, and
-  the question still carries it), money to spend, or an action outside the repository.
+  the question carries your recommendation, or the guess that stands in for one, as the
+  question rule below says), money to spend, or an action outside the repository.
 <!-- rule:8d52bc64e99b42d78f4219f73c3b375c end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are

@@ -67,8 +67,8 @@
 <!-- rule:4fd096e0dfb040c7b5f77277569bbabd begin -->
 - A turn that ends with work still owed reports the observed status, not what the turn
   ending implies: which work has stopped and why, what is still running (a background
-  check, a dispatched child) and how its result is picked up, and who owns the next step
-  — never "is underway" for work that stopped. A step you own (a review you dispatch, a
+  check, a dispatched child) and who owns the next step — never "is underway" for work
+  that stopped; how a running result is picked up goes in the task note. A step you own (a review you dispatch, a
   check you rerun, a child you have not started) is never reported as waiting on the
   user: finish it, or `tasks park` the task with that step as the next action and resume
   it; hand it over only explicitly (`--waiting-on user --reason review`). A park's next
@@ -114,7 +114,8 @@
   deferred minor is a re-grade proposal: the controller confirms or rejects it by its
   consequence for the person, records each decision as a ledger `Ruling:` line, and
   admits confirmed proposals to corrective rounds as Important; rejected proposals
-  stay `minor (deferred)` and reach the final message. A fix subagent makes the fixes
+  stay `minor (deferred)` in the ledger, named in a task note that the final message
+  links. A fix subagent makes the fixes
   under subagent-driven execution; inline,
   you make them yourself, each still proven RED→GREEN with policy-appropriate checks
   under Tests: a green suite when policy is enabled, focused evidence and mandatory
@@ -123,7 +124,8 @@
   executing-plans' "do not dispatch a re-review" and "no second fix pass" and
   subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".
   Without a subagent tool, the re-review is a self-review, recorded as such in the
-  ledger and the final message, as executing-plans' final-review fallback does. External
+  ledger and the task note the final message links, as executing-plans'
+  final-review fallback does. External
   actions stay gated.
 <!-- rule:d21e7a02223e4d00adbb602627e441a6 end -->
 <!-- rule:e5201d5768794401bf9d88a39b1ee445 begin -->

@@ -14,13 +14,16 @@
   whole-suite/green-suite requirements in executing-plans, subagent-driven-development,
   using-git-worktrees, finishing-a-development-branch and verification-before-completion,
   for inline and delegated work alike; carry it into worker and reviewer prompts.
-  A policy skip is not a pass, a test sample or proof of correctness. Report the actual
-  focused scope, mandatory checks, skipped broad work and any remote evidence separately.
+  A policy skip is not a pass, a test sample or proof of correctness. Record the actual
+  focused scope, mandatory checks, skipped broad work and any remote evidence in the
+  done or park note, each as its own item; a worker states them in its report too,
+  whether or not it writes that note.
 - The protected focused route is `just test-one <runner args>` when declared, otherwise
-  the project's documented focused route. If none exists, report the gap and use the
-  documented route; never invent a runner or disguise a full suite as focused work.
-  Adoption must settle this gap before switching off. Documentation-only work creates
-  no test obligation. Known correctness failures still need a fix or explicit disposition.
+  the project's documented focused route. If none exists, note the gap on the task and
+  use the documented route; never invent a runner or disguise a full suite as focused
+  work. Adoption must settle this gap before switching off. Documentation-only work
+  creates no test obligation. Known correctness failures still need a fix or explicit
+  disposition.
 - Deliberate broad verification uses `TT_FORCE=1 just test`, or `just test-full` when
   the project declares that alias. Additional focused integration tests cover affected
   behavior; policy-off does not force a broad rerun because hooks are absent or a fast
@@ -36,9 +39,9 @@
   - No `test-fast` recipe: `just test-one` when the justfile has it, otherwise the test
     command the project's guide documents (or the package test script or README command
     it points to); before committing, that documented command.
-  - Neither a recipe nor a documented command: say in your report that the project
-    declares no test route. Do not guess a runner, skip the check silently, or add
-    recipes to the project to fill the gap.
+  - Neither a recipe nor a documented command: note on the task that the project
+    declares no test route. Do not guess a runner, skip the check silently, or
+    add recipes to the project to fill the gap.
 <!-- rule:c6567204f9e443b68cb95a08c8264b3f end -->
 <!-- rule:48ef50fb32d24e7fa13b92a69affc29b begin -->
 - With policy enabled or absent, the full suite runs in CI where CI is configured for

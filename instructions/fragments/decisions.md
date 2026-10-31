@@ -28,12 +28,14 @@
   judged against the revision its request named.
 <!-- rule:f431707097c0418c9822d67074875c51 end -->
 <!-- rule:2c5785f136ca4ee590e1c69406276623 begin -->
-- A question, when asked, carries your recommendation as the first option and is one
-  question, not a series. A question that asks the user to describe what they want
-  (brainstorming's open questions, and its playback asking what is wrong or missing)
-  carries no options; a guess they can correct stands in for the recommendation. That
-  playback is not a "does this section look right" decision: what they want is theirs
-  to say.
+- A question, when asked, is one question, not a series, and carries your
+  recommendation: in a harness's multiple-choice question tool, as the first option;
+  in a message, inside the decision request's one sentence (Communication), with the
+  alternatives in the record. A question that asks
+  the user to describe what they want (brainstorming's open questions, and its
+  playback asking what is wrong or missing) carries no options; a guess they can
+  correct stands in for the recommendation. That playback is not a "does this section
+  look right" decision: what they want is theirs to say.
 <!-- rule:2c5785f136ca4ee590e1c69406276623 end -->
 <!-- rule:c165eee5aa0a4b819061b34386c78c23 begin -->
 - Before a question asks the user what work should achieve or why (brainstorming's

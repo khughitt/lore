@@ -151,6 +151,51 @@
       "locator": null,
       "sha256": "2efe09947445d7fa7c2f79c4ada56387b9c5e9ad9bbf612f12358894ef7c4053",
       "text": "- A question, when asked, carries your recommendation as the first option and is one\n  question, not a series. A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 222,
+          "overlaps": [],
+          "parent_sha256": "dadd4674cdd3d0eb1a5771e17d244ce10df1ce0d0f1e76b28f6e584a3ac4b4a5",
+          "sha256": "d91b5df338eb607f1b2bf1ca791c045cd5c50b48b333c55a8c44505a948927fb",
+          "text": "A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "dadd4674cdd3d0eb1a5771e17d244ce10df1ce0d0f1e76b28f6e584a3ac4b4a5",
+      "text": "- A question, when asked, is one question, not a series, and leads with your\n  recommendation: the first option of a choice tool, or in a message the decision\n  request's one sentence, with the alternatives in the record. A question that asks the user to describe what they want\n  (brainstorming's open questions, and its playback asking what is wrong or missing)\n  carries no options; a guess they can correct stands in for the recommendation. That\n  playback is not a \"does this section look right\" decision: what they want is theirs\n  to say.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 222,
+          "overlaps": [],
+          "parent_sha256": "a29a1030ea9ee0d72b82020dc0bf8e081dbdda8f474f1f8ef7ef1aaebd479b5e",
+          "sha256": "ec9f4f4d51990f6c39a247f6b8cf8feb33a7e83992ff2444068fa9e467c8f24b",
+          "text": "A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "a29a1030ea9ee0d72b82020dc0bf8e081dbdda8f474f1f8ef7ef1aaebd479b5e",
+      "text": "- A question, when asked, is one question, not a series, and leads with your\n  recommendation: the first option of a choice tool, or in a message the decision\n  request's one sentence, with the alternatives in the record. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 274,
+          "overlaps": [],
+          "parent_sha256": "90d44aa0da5d5252634509b1e77c7c9599f55219d521b8bc2c4412c14a24aa13",
+          "sha256": "ec9f4f4d51990f6c39a247f6b8cf8feb33a7e83992ff2444068fa9e467c8f24b",
+          "text": "A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "90d44aa0da5d5252634509b1e77c7c9599f55219d521b8bc2c4412c14a24aa13",
+      "text": "- A question, when asked, is one question, not a series, and carries your\n  recommendation: in a harness's multiple-choice question tool, as the first option;\n  in a message, inside the decision request's one sentence (Communication), with the\n  alternatives in the record. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
     }
   ],
   "schema": 1,

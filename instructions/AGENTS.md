@@ -178,8 +178,9 @@ it this way:
   judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority
   that is the user's to make (your recommendation informs it but cannot settle it, and
   the question carries your recommendation, or the guess that stands in for one, as the
-  question rule below says), money to spend, an action outside the repository, or a
-  live operation that has failed twice with no established cause (the next rule).
+  question rule below says), money to spend, an action outside the repository, a live
+  operation that has failed twice with no established cause (the next rule), or a turn
+  that has run past its range (the turn-pause rule below).
 - A live or external operation (a download, an acquisition, a deploy, a remote job; not
   a local test or build, which debugging covers) that has failed twice with no
   established cause is the user's decision, not a reason to gather more evidence: stop
@@ -192,6 +193,37 @@ it this way:
   user approved and the record holds (a plan's "up to three attempts") go on without
   asking; this rule applies once that limit is spent. Unattended, park the task
   `--waiting-on user --reason decision` with that question as its next step.
+- A turn is the work since the user's last message, your subagents' work included; a
+  background wake or loop tick does not start a new one. It is past its range when it
+  crosses a limit `hq pause limits` prints (active time, tool calls, subagents
+  spawned, compactions), or the budget the user set for this turn as the first line of
+  their own message, alone on the line and in the form `budget: 12h` (optionally
+  `, 2000 calls`, `, 80 agents`, `, 4 compactions`), which scales the other limits
+  with it. Budget text anywhere else, quoted, fenced or pasted included, is an
+  example: it sets nothing, and you ask nothing about it. A first line that starts
+  with `budget:` but is not in that form sets nothing either: mention it in your next
+  report and carry on under the turn's limits. An approved spec, plan or task is not a
+  budget, nothing you write can set one, and a prompt you write for another session
+  never carries a budget line. Check `hq pause status` before dispatching a subagent,
+  at each plan-task boundary and after a compaction; where the harness has no pause
+  hook, keep the same counts yourself against those limits, counting a running call or
+  wait in full and time spent waiting on the user not at all. The hook's warning means
+  finish a coherent step. Its refusal, or your own count past a limit, means stop:
+  from then on, only the report, the park, and stopping work you already started (the
+  hook enforces this where it runs). A paused park records the worktree, process and
+  retained-item accounting you already hold and says it was not refreshed; the session
+  that resumes refreshes it before other work, which here outranks Processes'
+  accounting at park. As the controller (or working alone), write the pause report,
+  park the task `--waiting-on user --reason decision` with the decision as its next
+  step, and end the turn. As a subagent, park any claim `--waiting-on agent` for your
+  controller and return; only the controller reports. The report gives what the turn
+  spent (active time, tool calls, subagents, compactions, and tokens or rate limit
+  where you can see them), what is done and verified, what is left with your estimate
+  of its cost, anything that went wrong, and one decision with your recommendation:
+  continue under a budget you name, narrow the work, or stop. The user's reply ends
+  the pause; it is not an approval of routine steps, and the next turn asks nothing
+  until it too crosses a limit. Never edit the hook's state or limits, split work
+  across turns or controllers, or start a fresh session to stay under a limit.
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not
   individually approved.

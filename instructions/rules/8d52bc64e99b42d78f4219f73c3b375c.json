@@ -41,6 +41,12 @@
       "locator": null,
       "sha256": "ef30f52f02aaa63954f01511e123d5f6a3354addf481aa868b05a780e1721283",
       "text": "- Stop and ask only when the answer needs the user: an artifact they must inspect and\n  judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority\n  that is the user's to make (your recommendation informs it but cannot settle it, and\n  the question carries your recommendation, or the guess that stands in for one, as the\n  question rule below says), money to spend, an action outside the repository, or a\n  live operation that has failed twice with no established cause (the next rule).\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "e86fe98e2716142d31cd84c087d41d70ff7930cbaed5b3d3fa0161ff75e85506",
+      "text": "- Stop and ask only when the answer needs the user: an artifact they must inspect and\n  judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority\n  that is the user's to make (your recommendation informs it but cannot settle it, and\n  the question carries your recommendation, or the guess that stands in for one, as the\n  question rule below says), money to spend, an action outside the repository, a live\n  operation that has failed twice with no established cause (the next rule), or a turn\n  that has run past its range (the turn-pause rule below).\n"
     }
   ],
   "schema": 1,

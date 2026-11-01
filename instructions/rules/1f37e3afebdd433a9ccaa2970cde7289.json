@@ -1,0 +1,36 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:1f37e3afebdd433a9ccaa2970cde7289",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "1c3b18d13cf45fde20def062fded86d150be803789e1443a8a0cc75278ce78ef",
+      "text": "- A turn is the work since the user's last message, your subagents' work included; a\n  background wake or loop tick does not start a new one. It is past its range when it\n  crosses a limit `hq pause limits` prints (active time, tool calls, subagents\n  spawned, compactions), or the budget the user set for this turn on the first line of\n  their own message (`budget: 12h`, alone on the line, which scales the other limits\n  with it). Budget text anywhere else, quoted, fenced or pasted included, is an\n  example: it sets nothing, and you ask nothing about it. When the hook reports a\n  malformed first-line directive, mention it in your next report and carry on under\n  the turn's limits. An approved spec, plan or task is not a budget, nothing you write\n  can set one, and a prompt you write for another session never carries a budget line.\n  Check `hq pause status` before dispatching a subagent, at each plan-task boundary\n  and after a compaction; where the harness has no pause hook, keep the same counts\n  yourself against those limits, counting a running call or wait in full and time\n  spent waiting on the user not at all. The hook's warning means finish a coherent\n  step. Its refusal, or your own count past a limit, means stop: from then on, only\n  the report, the park, and stopping work you already started (the hook enforces this\n  where it runs). A paused park records the worktree, process and retained-item\n  accounting you already hold and says it was not refreshed; the session that resumes\n  refreshes it before other work, which here outranks Processes' accounting at park.\n  As the controller (or working alone), write the pause report, park the task\n  `--waiting-on user --reason decision` with the decision as its next step, and end\n  the turn. As a subagent, park any claim `--waiting-on agent` for your controller and\n  return; only the controller reports. The report gives what the turn spent (active\n  time, tool calls, subagents, compactions, and tokens or rate limit where you can see\n  them), what is done and verified, what is left with your estimate of its cost,\n  anything that went wrong, and one decision with your recommendation: continue under\n  a budget you name, narrow the work, or stop. The user's reply ends the pause; it is\n  not an approval of routine steps, and the next turn asks nothing until it too\n  crosses a limit. Never edit the hook's state or limits, split work across turns or\n  controllers, or start a fresh session to stay under a limit.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "8c1241f1229055df37b0b64db7341581e8b31855d4aea61ac8d95c2f3ac55d42",
+      "text": "- A turn is the work since the user's last message, your subagents' work included; a\n  background wake or loop tick does not start a new one. It is past its range when it\n  crosses a limit `hq pause limits` prints (active time, tool calls, subagents\n  spawned, compactions), or the budget the user set for this turn as the first line of\n  their own message, alone on the line and in the form `budget: 12h` (optionally\n  `, 2000 calls`, `, 80 agents`, `, 4 compactions`), which scales the other limits\n  with it. Budget text anywhere else, quoted, fenced or pasted included, is an\n  example: it sets nothing, and you ask nothing about it. A first line that starts\n  with `budget:` but is not in that form sets nothing either: mention it in your next\n  report and carry on under the turn's limits. An approved spec, plan or task is not a\n  budget, nothing you write can set one, and a prompt you write for another session\n  never carries a budget line. Check `hq pause status` before dispatching a subagent,\n  at each plan-task boundary and after a compaction; where the harness has no pause\n  hook, keep the same counts yourself against those limits, counting a running call or\n  wait in full and time spent waiting on the user not at all. The hook's warning means\n  finish a coherent step. Its refusal, or your own count past a limit, means stop:\n  from then on, only the report, the park, and stopping work you already started (the\n  hook enforces this where it runs). A paused park records the worktree, process and\n  retained-item accounting you already hold and says it was not refreshed; the session\n  that resumes refreshes it before other work, which here outranks Processes'\n  accounting at park. As the controller (or working alone), write the pause report,\n  park the task `--waiting-on user --reason decision` with the decision as its next\n  step, and end the turn. As a subagent, park any claim `--waiting-on agent` for your\n  controller and return; only the controller reports. The report gives what the turn\n  spent (active time, tool calls, subagents, compactions, and tokens or rate limit\n  where you can see them), what is done and verified, what is left with your estimate\n  of its cost, anything that went wrong, and one decision with your recommendation:\n  continue under a budget you name, narrow the work, or stop. The user's reply ends\n  the pause; it is not an approval of routine steps, and the next turn asks nothing\n  until it too crosses a limit. Never edit the hook's state or limits, split work\n  across turns or controllers, or start a fresh session to stay under a limit.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Pause a turn past its range"
+}

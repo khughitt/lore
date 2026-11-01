@@ -72,8 +72,16 @@
 
 <!-- rule:13f54add0c144229bf870b4b39835acf begin -->
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
-the session-start message name it. To start other blocked work, use `tasks start
-<id> --force --reason "<why>"` so the override is recorded.
+the session-start message name it. Starting other blocked work there overrides the
+halt and needs the user's approval: given in this session, or a standing grant
+recorded on the halt at the user's request, in their words and with the session it
+came from, naming the tasks or work it covers (such as the remedy and the runs a
+latency incident's verification needs). Override with `tasks start <id> --force
+--reason "<why>"`, whose reason quotes or cites that approval so the override is
+recorded. A reason the agent writes for itself is not approval, and neither is a
+controller's instruction to its subagent. Without approval, park the blocked work
+(`tasks park <id> "<next step>" --waiting-on user --reason approval`) rather than
+force it.
 <!-- rule:13f54add0c144229bf870b4b39835acf end -->
 
 <!-- rule:b6576b5590d4430da697c160e083b10c begin -->

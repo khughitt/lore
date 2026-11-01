@@ -15,8 +15,23 @@
   judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority
   that is the user's to make (your recommendation informs it but cannot settle it, and
   the question carries your recommendation, or the guess that stands in for one, as the
-  question rule below says), money to spend, or an action outside the repository.
+  question rule below says), money to spend, an action outside the repository, or a
+  live operation that has failed twice with no established cause (the next rule).
 <!-- rule:8d52bc64e99b42d78f4219f73c3b375c end -->
+<!-- rule:052f6da8885c4d2f81b11c0602eb6e92 begin -->
+- A live or external operation (a download, an acquisition, a deploy, a remote job; not
+  a local test or build, which debugging covers) that has failed twice with no
+  established cause is the user's decision, not a reason to gather more evidence: stop
+  and ask whether to retry, change approach or defer, recommending one. The question
+  names what each attempt cost (wall time, holds on the host, quota or rate limit spent)
+  and what is known and unknown about the cause. A cause is established when evidence
+  shows it (an error that names it, a reproduction), not when a hypothesis fits. A new
+  diagnosis, build, review or re-scope aimed at the same operation does not reset the
+  count, and neither does a fix for a cause that was guessed. Retries inside a limit the
+  user approved and the record holds (a plan's "up to three attempts") go on without
+  asking; this rule applies once that limit is spent. Unattended, park the task
+  `--waiting-on user --reason decision` with that question as its next step.
+<!-- rule:052f6da8885c4d2f81b11c0602eb6e92 end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not

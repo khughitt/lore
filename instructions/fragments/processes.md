@@ -63,7 +63,8 @@
   first run the smallest version that exercises every gate end to end through its
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
-  retrying. When asking for the machine, name the pilot and what it showed.
+  retrying; a second failure with no established cause goes to the user (Decisions).
+  When asking for the machine, name the pilot and what it showed.
 <!-- rule:558c97f11b5d4a9ea13f1637c10bf95f end -->
 <!-- rule:fd94c4f5761740cfaef4497c38d1a6ae begin -->
 - A plan or runbook that verifies a rollout across hosts and profiles verifies one host

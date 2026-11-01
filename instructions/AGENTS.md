@@ -178,7 +178,20 @@ it this way:
   judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority
   that is the user's to make (your recommendation informs it but cannot settle it, and
   the question carries your recommendation, or the guess that stands in for one, as the
-  question rule below says), money to spend, or an action outside the repository.
+  question rule below says), money to spend, an action outside the repository, or a
+  live operation that has failed twice with no established cause (the next rule).
+- A live or external operation (a download, an acquisition, a deploy, a remote job; not
+  a local test or build, which debugging covers) that has failed twice with no
+  established cause is the user's decision, not a reason to gather more evidence: stop
+  and ask whether to retry, change approach or defer, recommending one. The question
+  names what each attempt cost (wall time, holds on the host, quota or rate limit spent)
+  and what is known and unknown about the cause. A cause is established when evidence
+  shows it (an error that names it, a reproduction), not when a hypothesis fits. A new
+  diagnosis, build, review or re-scope aimed at the same operation does not reset the
+  count, and neither does a fix for a cause that was guessed. Retries inside a limit the
+  user approved and the record holds (a plan's "up to three attempts") go on without
+  asking; this rule applies once that limit is spent. Unattended, park the task
+  `--waiting-on user --reason decision` with that question as its next step.
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not
   individually approved.
@@ -341,7 +354,8 @@ it this way:
   first run the smallest version that exercises every gate end to end through its
   verdict, one case per check, and read the result. When a long run is refused or
   aborted partway, analyze the parts it completed before changing the environment and
-  retrying. When asking for the machine, name the pilot and what it showed.
+  retrying; a second failure with no established cause goes to the user (Decisions).
+  When asking for the machine, name the pilot and what it showed.
 - A plan or runbook that verifies a rollout across hosts and profiles verifies one host
   and one profile end to end, and treats the other hosts and profiles configured by the
   same process (the same installer, links and settings source) as covered: an issue that

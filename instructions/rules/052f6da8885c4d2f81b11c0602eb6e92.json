@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:052f6da8885c4d2f81b11c0602eb6e92",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "eca5f1bf4de9ddab2dfda80eafd232368702d323a82a5a0b38235278cb80e4d9",
+      "text": "- A live or external operation (a download, an acquisition, a deploy, a remote job; not\n  a local test or build, which debugging covers) that has failed twice with no\n  established cause is the user's decision, not a reason to gather more evidence: stop\n  and ask whether to retry, change approach or defer, recommending one. The question\n  names what each attempt cost (wall time, holds on the host, quota or rate limit spent)\n  and what is known and unknown about the cause. A cause is established when evidence\n  shows it (an error that names it, a reproduction), not when a hypothesis fits. A new\n  diagnosis, build, review or re-scope aimed at the same operation does not reset the\n  count, and neither does a fix for a cause that was guessed. Retries inside a limit the\n  user approved and the record holds (a plan's \"up to three attempts\") go on without\n  asking; this rule applies once that limit is spent. Unattended, park the task\n  `--waiting-on user --reason decision` with that question as its next step.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Repeated live failure goes to the user"
+}

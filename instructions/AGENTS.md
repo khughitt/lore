@@ -448,8 +448,16 @@ it this way:
 - Before removing a worktree, run `tt-report` so its test timings are harvested.
 
 A project with an open task tagged `halt` takes that task first; `tasks prime` and
-the session-start message name it. To start other blocked work, use `tasks start
-<id> --force --reason "<why>"` so the override is recorded.
+the session-start message name it. Starting other blocked work there overrides the
+halt and needs the user's approval: given in this session, or a standing grant
+recorded on the halt at the user's request, in their words and with the session it
+came from, naming the tasks or work it covers (such as the remedy and the runs a
+latency incident's verification needs). Override with `tasks start <id> --force
+--reason "<why>"`, whose reason quotes or cites that approval so the override is
+recorded. A reason the agent writes for itself is not approval, and neither is a
+controller's instruction to its subagent. Without approval, park the blocked work
+(`tasks park <id> "<next step>" --waiting-on user --reason approval`) rather than
+force it.
 
 For adopted policy-off projects, disabled broad targets create no routine latency
 obligation; timing findings on remaining local paths are advisory. Forced runs are

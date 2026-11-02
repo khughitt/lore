@@ -8,8 +8,8 @@ Authority: `docs/instruction-formats.md`, `docs/profile-delivery.md`, `docs/inst
 
 ## Gates
 
-`just check` runs `ops-check`, `ops-docs check`, `tasks check`, assembly validation
-and Python compilation. `python3 bin/assemble-instructions check` compares the
+`just check` (the `check-hygiene` target) runs `ops-check`, `ops-docs check`,
+`tasks check`, assembly validation and Python compilation. `python3 bin/assemble-instructions check` compares the
 selected artifact and manifest with the catalog and the live ops renderer.
 Relevant staged changes select the entire index; otherwise it checks disk.
 The executing assembler must equal its index bytes in a staged check.
@@ -20,8 +20,13 @@ workers; there is no affected-only selection. `just test-one` runs serially. Tes
 in the locked environment `pyproject.toml` and `uv.lock` declare: `just setup` installs
 it into `.venv` on the system interpreter, and the test recipes refuse, naming
 `just setup`, while it is missing. Rerun `just setup` after a system Python upgrade or
-a lock change. The pre-push hook carries the full suite; there is no CI.
-Historical proof commands are acceptance checks outside the recurring gates.
+a lock change. `just test-full` (`TT_FORCE=1 just test`) runs the full suite under any
+test execution policy. `just test-live` runs `tools/test_claude_profile.py` against the
+live ops checkout the host registry names. ops is private, so where no ops checkout can
+exist, `LORE_TEST_LIVE_OPS=unavailable` skips those tests with a stated reason; any other
+value fails collection. The pre-push hook runs hygiene (timed as the hook), then
+`test-live`, then the suite; there is no CI. Since that split, hook timings cover
+hygiene only and are not comparable with earlier ones. Historical proof commands are acceptance checks outside the recurring gates.
 
 For a new obligation, use `python3 bin/assemble-instructions add-rule <fragment-id>
 --start-line N --end-line M --title TEXT`. After editing existing rule prose, run

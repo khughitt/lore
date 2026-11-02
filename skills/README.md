@@ -1,7 +1,8 @@
 # skills
 
 hq's `links.toml` declares `~/.agents/skills` as a real directory of individual links
-into this repository, into tasks and ops, and into the superpowers submodule here;
+into this repository, into the tasks, ops, flows, hq and quarry checkouts, and into
+the superpowers submodule here;
 it is the skill directory for every harness other
 than Claude Code, which reads skills from `~/.claude/skills` and plugins from its own
 cache. Its readers are Codex (shown as root `r0`), OpenCode (a recursive `**/SKILL.md`
@@ -22,6 +23,8 @@ dropped or added. Keep new skills at this depth.
   the checked-out version. A new skill is a declaration there for each home surface;
   `just link --apply` creates the links.
 - `flow` and `session-logs` — served from the flows and hq checkouts, declared the same way.
+- `quarry` and `quarry-biology` — served from the quarry checkout's `skills/`, declared
+  the same way.
 - `references/retained-item-records.md` — lore-authored closeout record guidance,
   read on demand from the global Processes rule. The existing hq directory link
   serves it at `~/.agents/skills/references/retained-item-records.md`; it is separate

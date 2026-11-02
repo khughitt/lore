@@ -197,7 +197,9 @@ it this way:
   session you launch from the shell (`claude -p`, `codex exec`, a dispatched worker or
   reviewer) is a subagent here, so check before launching one and count it as spawned
   and its work as your turn's. A background wake or loop tick does not start a new
-  turn. It is past its range when it crosses a limit `hq pause limits` prints (active
+  turn. If the hook says a message the user typed matched a pending scheduled prompt,
+  ask them to rephrase it; that message has not reset the turn or ended a pause.
+  A turn is past its range when it crosses a limit `hq pause limits` prints (active
   time, tool calls, subagents spawned, compactions), or the budget the user set for
   this turn as the first line of their own message, alone on the line and in the form
   `budget: 12h` (optionally `, 2000 calls`, `, 80 agents`, `, 4 compactions`), which
@@ -207,14 +209,17 @@ it this way:
   in your next report and carry on under the turn's limits. An approved spec, plan or
   task is not a budget, nothing you write can set one, and a prompt you write for
   another session never carries a budget line. Check `hq pause status` before
-  dispatching a subagent, at each plan-task boundary and after a compaction; where the
-  harness has no pause hook, keep the same counts yourself against those limits,
-  counting a running call or wait in full and time spent waiting on the user not at
-  all. The hook's warning means finish a coherent step. Its refusal, or your own count
+  dispatching a subagent, at each plan-task boundary and after a compaction. Keep any
+  count the hook does not keep yourself, as `hq pause status` shows; where no pause
+  hook runs, keep all the counts yourself against those limits. Count a running call
+  or wait in full and time spent waiting on the user not at all. The hook's warning
+  means finish a coherent step. Its refusal, or your own count
   past a limit, means stop: start nothing new, stop the work you already started
   (interrupt your subagents and the sessions you launched, stop your background calls
-  and processes), then only the report and the park (the hook enforces this where it
-  runs); this outranks Processes' wait for a running child. A paused park records the
+  and processes). Pause any active goal of yours when authorized; if its tool requires
+  a user pause request you do not have, include that request in the decision below.
+  Then only the report and the park (the hook enforces this where it runs); this
+  outranks Processes' wait for a running child. A paused park records the
   worktree, process and retained-item accounting you already hold and says it was not
   refreshed; the session that resumes refreshes it before other work, which here
   outranks Processes' accounting at park. As the controller (or working alone), write

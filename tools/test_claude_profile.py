@@ -59,10 +59,12 @@ profiles = ["external"]
 [home.personal]
 claude = "~/.claude"
 codex = "~/.codex"
+agy = "~/.gemini/antigravity-cli"
 
 [home.work]
 claude = "~/.claude-work"
 codex = "~/.codex-work"
+agy = "~/.gemini/antigravity-cli"
 """
 
 

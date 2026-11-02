@@ -565,8 +565,24 @@ def load_assembler(world):
     loader = importlib.machinery.SourceFileLoader('tested_assembly', str(world.root / 'bin/assemble-instructions'))
     spec = importlib.util.spec_from_loader(loader.name, loader)
     module = importlib.util.module_from_spec(spec)
-    loader.exec_module(module)
+    # No bytecode beside the world's assembler: copy_world would reject the pyc.
+    previous, sys.dont_write_bytecode = sys.dont_write_bytecode, True
+    try:
+        loader.exec_module(module)
+    finally:
+        sys.dont_write_bytecode = previous
     return module
+
+
+def test_loading_the_assembler_writes_no_bytecode_beside_it(tmp_path, monkeypatch):
+    # A pyc beside a world's assembler names its template, which copy_world rejects; a
+    # host that sets PYTHONPYCACHEPREFIX hides this, so pin the hosted runner's default.
+    (tmp_path / 'bin').mkdir()
+    shutil.copy(ROOT / 'bin/assemble-instructions', tmp_path / 'bin/assemble-instructions')
+    monkeypatch.setattr(sys, 'pycache_prefix', None)
+    monkeypatch.setattr(sys, 'dont_write_bytecode', False)
+    load_assembler(SimpleNamespace(root=tmp_path))
+    assert not (tmp_path / 'bin/__pycache__').exists()
 
 
 def test_interrupted_pair_is_detected_and_repaired(world, monkeypatch):

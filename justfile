@@ -64,7 +64,9 @@ ci_remote := "origin"
 # private, so no hosted runner has it: the workflow sets LORE_TEST_LIVE_OPS=unavailable and
 # those tests skip there with a stated reason. Both pre-push recipes run this target, which
 # is not broad, so they stay routinely checked on the hosts that have ops (about 2 s).
-live_cmd := venv_guard + " && .venv/bin/python -m pytest tools/test_claude_profile.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+# It drops an inherited marker, so test-live always means live: on a host without ops it
+# fails rather than passing with every test skipped.
+live_cmd := venv_guard + " && env -u LORE_TEST_LIVE_OPS .venv/bin/python -m pytest tools/test_claude_profile.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which

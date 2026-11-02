@@ -1,0 +1,41 @@
+name: Test suite
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      # Broad targets run only when forced; the wrapper refuses a hosted skip without this.
+      TT_FORCE: '1'
+      # ops is private: the profile-hook tests skip here with a stated reason and run
+      # locally in `just test-live`.
+      LORE_TEST_LIVE_OPS: unavailable
+      GIT_CONFIG_NOSYSTEM: '1'
+    steps:
+      - name: Isolate Git configuration
+        run: echo "GIT_CONFIG_GLOBAL=$RUNNER_TEMP/tt-gitconfig" >> "$GITHUB_ENV"
+      # Full history: the assembly tests read historical lore revisions.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.14.8'
+      - name: Install uv
+        run: python -m pip install uv==0.13.6
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+        with:
+          just-version: '1.59.0'
+      - name: Set up the checkout
+        run: just setup
+      - name: Full suite with skip reasons
+        run: just test

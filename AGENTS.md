@@ -8,20 +8,33 @@ Authority: `docs/instruction-formats.md`, `docs/profile-delivery.md`, `docs/inst
 
 ## Gates
 
-`just check` runs `ops-check`, `ops-docs check`, `tasks check`, assembly validation
-and Python compilation. `python3 bin/assemble-instructions check` compares the
-selected artifact and manifest with the catalog and the live ops renderer.
-Relevant staged changes select the entire index; otherwise it checks disk.
-The executing assembler must equal its index bytes in a staged check.
+`just check` (the `check-hygiene` target) runs `ops-check`, `ops-docs check`,
+`tasks check`, assembly validation and Python compilation; the pre-commit hook runs it.
+`python3 bin/assemble-instructions check` compares the selected artifact and manifest
+with the catalog and the live ops renderer. Relevant staged changes select the entire
+index; otherwise it checks disk. The executing assembler must equal its index bytes in
+a staged check.
 
 Use `just test-one tools/test_assemble_instructions.py -k staged` for staged cases.
-`just test-fast` and `just test` both run all tests in `tools/` on 4 pytest-xdist
-workers; there is no affected-only selection. `just test-one` runs serially. Tests run
-in the locked environment `pyproject.toml` and `uv.lock` declare: `just setup` installs
-it into `.venv` on the system interpreter, and the test recipes refuse, naming
+`just test-one` runs serially. `just test-fast` and `just test` both cover all tests in
+`tools/` on 4 pytest-xdist workers; there is no affected-only selection. Tests run in
+the locked environment `pyproject.toml` and `uv.lock` declare: `just setup` installs it
+into `.venv` on the system interpreter, and the test recipes refuse, naming
 `just setup`, while it is missing. Rerun `just setup` after a system Python upgrade or
-a lock change. The pre-push hook carries the full suite; there is no CI.
-Historical proof commands are acceptance checks outside the recurring gates.
+a lock change.
+
+`.tt.toml` sets `automatic_broad = false`: locally, `just test` and `just test-fast`
+record a skip instead of running. `just test-full` (`TT_FORCE=1 just test`) is the
+deliberate local full run. `.github/workflows/ci.yml` runs `just setup` and the full
+suite with `TT_FORCE=1` on every branch push to `origin`. `just test-live` runs
+`tools/test_claude_profile.py` against the live ops checkout the host registry names
+under every policy. ops is private, so the hosted run sets `LORE_TEST_LIVE_OPS=unavailable`,
+which makes the suite routes (`test`, `test-fast`) skip those 12 tests with a stated
+reason; any other value fails collection, and `test-live` ignores the marker. Both
+pre-push recipes run hygiene (timed as the hook), then `test-live`, then `test`
+(full route) or `test-fast` (when every pushed ref is covered by CI, the fast route).
+Since that split, hook timings cover hygiene only and are not comparable with earlier
+ones. Historical proof commands are acceptance checks outside the recurring gates.
 
 For a new obligation, use `python3 bin/assemble-instructions add-rule <fragment-id>
 --start-line N --end-line M --title TEXT`. After editing existing rule prose, run

@@ -36,8 +36,8 @@ venv_guard := "{ .venv/bin/python -c \"import pytest, xdist\" >/dev/null 2>&1 ||
 # smallest count under the 45 s target. Not -n auto: that starts one worker per CPU (32
 # there), each building its own fixture template, on a host shared with other sessions.
 # Temporary JUnit reports let tt record each run's five slowest tests.
-fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-test_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+test_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
@@ -54,19 +54,19 @@ docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && ta
 # Leave "" when CI runs no full suite on push: a workflow that runs a subset, or only on
 # a schedule or on pull requests, covers no ref. A push takes the shortened gate only
 # when CI covers every ref in it.
-ci_suite_refs := ""
+ci_suite_refs := "refs/heads/*"
 
 # The remote whose pushes CI runs for: a push to any other remote (a mirror, a fork)
 # takes the full gate.
 ci_remote := "origin"
 
-# The fast loop against what is being pushed, for the shortened gate. One of: selection
-# against the push base, naming the base (vitest run --changed <base>; nextest over the
-# crates changed since <base> and their reverse dependencies), falling back explicitly
-# to the fast set when the base cannot be resolved; testmon's own selection (fast_cmd
-# may serve); or the project's fixed fast set. Say which here.
-# The push gate runs the same complete tools directory, on the same workers, as the fast loop.
-push_fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+# The profile-hook tests against the live ops checkout the host registry names. ops is
+# private, so no hosted runner has it: the workflow sets LORE_TEST_LIVE_OPS=unavailable and
+# those tests skip there with a stated reason. Both pre-push recipes run this target, which
+# is not broad, so they stay routinely checked on the hosts that have ops (about 2 s).
+# It drops an inherited marker, so test-live always means live: on a host without ops it
+# fails rather than passing with every test skipped.
+live_cmd := venv_guard + " && env -u LORE_TEST_LIVE_OPS .venv/bin/python -m pytest tools/test_claude_profile.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which
@@ -107,15 +107,27 @@ test-fast:
 test-one +args:
     {{tt}} test-one -- sh -c '{{one_cmd}} "$@" 2>&1' test-one "$@"
 
-# The full suite.
+# The full suite. Broad: under a policy-off .tt.toml it records a skip instead of running.
 test:
     {{tt}} test -- sh -c '{{test_cmd}}'
 
-# Seconds, not minutes: format, lint, typecheck, tasks check.
-check:
-    {{tt}} check -- sh -c '{{check_cmd}}'
+# The deliberate local full run, whatever the policy. Untimed alias: only the inner test
+# is recorded, as forced.
+test-full:
+    TT_FORCE=1 just test
 
-gate: check test
+# The live-ops profile tests (see live_cmd). Not broad: runs under every policy.
+test-live:
+    {{tt}} test-live -- sh -c '{{live_cmd}}'
+
+# Seconds, not minutes: the mandatory hygiene. Every check here is inexpensive, so
+# there is no broad check-code target.
+check-hygiene:
+    {{tt}} check-hygiene -- sh -c '{{check_cmd}}'
+
+check: check-hygiene
+
+gate: check test-live test
 
 # Regenerate identity regions in README.md and AGENTS.md, and the README status region,
 # from identity.toml and the tracker. The only thing that edits those regions; `check`
@@ -143,13 +155,21 @@ hook-pre-commit:
 hook-pre-commit-docs:
     {{tt}} hook-pre-commit-docs -- sh -c '{{docs_check_cmd}}'
 
-# What the pre-push hook runs: the same commands as `gate`, under one hook target.
+# What the pre-push hook runs: hygiene timed once under the hook target, then the
+# live-ops tests and the suite under their own targets, each recording its own policy
+# decision. From this split on, hook-pre-push times hygiene only: its earlier durations
+# (hygiene plus suite) are not comparable.
 hook-pre-push:
-    {{tt}} hook-pre-push -- sh -c '{{check_cmd}} && {{test_cmd}}'
+    {{tt}} hook-pre-push -- sh -c '{{check_cmd}}'
+    just test-live
+    just test
 
-# What the pre-push hook runs when CI runs the full suite for every pushed ref.
+# What the pre-push hook runs when CI runs the full suite for every pushed ref. The fast
+# loop is the same complete tools directory: lore has no affected-only selection.
 hook-pre-push-fast:
-    {{tt}} hook-pre-push-fast -- sh -c '{{check_cmd}} && {{push_fast_cmd}}'
+    {{tt}} hook-pre-push-fast -- sh -c '{{check_cmd}}'
+    just test-live
+    just test-fast
 
 # Build delivered instructions and their provenance; pass explicit owner roots in preparation.
 assemble *args:

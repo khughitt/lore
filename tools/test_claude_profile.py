@@ -7,6 +7,10 @@ family path validates); profiles.toml and identity-mirror.toml in the scratch op
 profile fragments; git checkouts; and the live ops checkout's bin/ops-profile with the two
 siblings it loads from beside itself, copied into the scratch ops bin/. Beyond the live
 registry (to find ops) and those three files, nothing on the machine is read.
+
+Where no ops checkout can exist (the hosted runner; ops is private), LORE_TEST_LIVE_OPS=unavailable
+skips each sandbox test with a stated reason; any other value fails collection. Locally these tests
+also run on every push through `just test-live`.
 """
 import json
 import os
@@ -59,11 +63,27 @@ profiles = ["external"]
 [home.personal]
 claude = "~/.claude"
 codex = "~/.codex"
+agy = "~/.gemini/antigravity-cli"
 
 [home.work]
 claude = "~/.claude-work"
 codex = "~/.codex-work"
+agy = "~/.gemini/antigravity-cli"
 """
+
+
+MARKER = "LORE_TEST_LIVE_OPS"
+SKIP_REASON = "live ops checkout unavailable (private sibling); runs locally in test-live"
+
+
+def live_ops_unavailable(environ):
+    """True when the environment declares the live ops checkout unavailable (the hosted
+    runner); False when it says nothing, so a missing registry still fails as before."""
+    if MARKER not in environ:
+        return False
+    if environ[MARKER] == "unavailable":
+        return True
+    raise ValueError(f"{MARKER} must be absent or exactly 'unavailable', not {environ[MARKER]!r}")
 
 
 def live_ops_root():
@@ -71,6 +91,7 @@ def live_ops_root():
     return pathlib.Path(os.path.expanduser(tomllib.loads(registry.read_text())["projects"]["ops"]))
 
 
+@unittest.skipIf(live_ops_unavailable(os.environ), SKIP_REASON)
 class ProfileSandbox(unittest.TestCase):
     def setUp(self):
         self.base = pathlib.Path(self.enterContext(tempfile.TemporaryDirectory())).resolve()
@@ -231,3 +252,17 @@ class ProfileHookTests(ProfileSandbox):
         self.assertEqual(result.returncode, 0)
         first = result.stdout.splitlines()[0] if result.stdout else ""
         self.assertTrue(first.startswith("profile: unresolved — "), result.stdout)
+
+
+class LiveOpsMarkerTests(unittest.TestCase):
+    def test_marker_absent_means_live(self):
+        self.assertFalse(live_ops_unavailable({}))
+
+    def test_marker_unavailable_skips(self):
+        self.assertTrue(live_ops_unavailable({"LORE_TEST_LIVE_OPS": "unavailable"}))
+
+    def test_marker_rejects_other_values(self):
+        for value in ("", "1", "Unavailable"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, "LORE_TEST_LIVE_OPS"):
+                    live_ops_unavailable({"LORE_TEST_LIVE_OPS": value})

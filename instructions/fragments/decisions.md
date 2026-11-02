@@ -125,6 +125,18 @@
   the existing ledger, ruling and retention rules; saving a report does not replace
   those records.
 <!-- rule:046dfb8c365f454a86390b6b4167e487 end -->
+<!-- rule:6a846b1f53ee406d9b48c7434364a2cf begin -->
+- Before dispatching a final whole-branch review, and before any measurement compared
+  against the branch's merge base (a cost or latency gate, a size budget), the
+  controller (you, inline) checks whether the plan's base branch has moved, in
+  subagent-driven and inline (executing-plans) execution alike: `git merge-base
+  --is-ancestor <base> HEAD` fails when it has. Task reviews see only their own diffs
+  and cannot catch it. When it has moved, merge the base into the branch (not a rebase,
+  which strands the ledger's task SHAs), resolve conflicts, rerun the policy-appropriate
+  checks under Tests, and record the merge commit in the ledger; only then review or
+  measure, against the new merge base, so the review package covers the merge
+  resolution. A measurement taken before that merge does not count toward its gate.
+<!-- rule:6a846b1f53ee406d9b48c7434364a2cf end -->
 <!-- rule:d21e7a02223e4d00adbb602627e441a6 begin -->
 - After a final whole-branch review, in subagent-driven and inline (executing-plans)
   execution alike, fix (or rule on, as the skills allow) its Critical and Important

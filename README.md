@@ -22,7 +22,8 @@ does not have; the corpus, profiles and skills are plain files and read on their
 Run `just setup` after a clone to prepare worktree storage, initialize the pinned
 superpowers submodule and install the locked test environment (pytest and pytest-xdist,
 from `uv.lock`) into `.venv`. Checks use Python 3.11+, uv, Git and just. Run `just check`
-and `just test-fast` to verify the corpus and its assembly outputs.
+and `just test-full` to verify the corpus and its assembly outputs; routine `just test`
+runs on GitHub Actions at push (see AGENTS.md, Gates).
 
 ## Usage
 

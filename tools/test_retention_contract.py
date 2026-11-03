@@ -2,8 +2,10 @@
 import importlib.machinery
 import importlib.util
 import json
+import re
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -24,8 +26,8 @@ def reject_constant(value):
     raise ValueError(f'non-JSON constant: {value}')
 
 
-@pytest.fixture(scope='module')
-def validate():
+@pytest.fixture(scope='module', params=['fullmatch', 'search'])
+def validate(request):
     loader = importlib.machinery.SourceFileLoader('retention_assembly', str(ROOT / 'bin/assemble-instructions'))
     spec = importlib.util.spec_from_loader(loader.name, loader)
     module = importlib.util.module_from_spec(spec)
@@ -34,6 +36,9 @@ def validate():
         loader.exec_module(module)
     finally:
         sys.dont_write_bytecode = previous
+    if request.param == "search":
+        # JSON Schema patterns search; the assembler supplies fullmatch by default.
+        module.re = SimpleNamespace(fullmatch=re.search)
     return module.validate_schema
 
 
@@ -50,3 +55,25 @@ def test_retention_v1_structure(case, validate):
     except ValueError:
         valid = False
     assert valid == case['structural_valid']
+
+
+@pytest.mark.parametrize('kind,selector,good,bad', [
+    ('record', 'digest', 'a' * 64, ['x' + 'a' * 64, 'a' * 64 + 'x', 'a' * 64 + '\n']),
+    ('record', 'owner', 'task:lore-a8b553', ['!task:lore-a8b553', 'task:lore-a8b553!', 'task:lore-a8b553\n']),
+    ('record', 'location', '/tmp/item', ['relative/tmp/item', '/tmp/item\n', '/tmp/item\x00']),
+    ('record', 'trigger', 'after review', ['none', 'after review\n', 'after\x00review']),
+    ('record', 'worktree-path', '.worktrees/item', ['bad.worktrees/item', '.worktrees/item\n']),
+    ('manifest', 'member-path', 'dir/file', ['../dir/file', '/dir/file', 'dir/file/', 'dir/file\n']),
+])
+def test_exported_patterns_bound_the_whole_value(kind, selector, good, bad):
+    schema = json.loads((ROOT / f'skills/references/retention-v1-{kind}.schema.json').read_text())
+    if selector == 'worktree-path':
+        pattern = schema['anyOf'][0]['properties']['path']['pattern']
+    elif selector == 'member-path':
+        pattern = schema['properties']['entries']['items']['anyOf'][0]['properties']['path']['pattern']
+    else:
+        pattern = schema['$defs'][selector]['pattern']
+    assert re.search(pattern, good)
+    # A bare dollar anchor can match before a final newline; reject that suffix too.
+    for value in bad:
+        assert re.search(pattern, value) is None, repr(value)

@@ -1,7 +1,7 @@
 # Retained item records
 
-Type: guide, data model; document types 1. These unversioned fields are
-lore-authored guidance, not a new tasks CLI or parser interface. Obs already
+Type: guide, data model; document types 1. The current writer form is unversioned.
+Retention 1 below is a prepared, inactive contract; it is not a shipped tasks CLI. Obs already
 consumes the eight item fields; its recorded assertions are separate from current
 filesystem inspection. A `retention checkpoint:` is opaque dated evidence unless
 a consumer validates its exact basis. Read this when creating, refreshing or
@@ -454,3 +454,134 @@ retained: {"host":"host-a","kind":"worktree","path":".worktrees/example","state"
 EOF
 )"
 ```
+
+
+## Retention 1 contract (prepared; writers inactive)
+
+This section specifies the reader contract for lore-a8b553. It does not activate
+new writers or workspace placement. All writers, including agents writing notes
+by hand, keep the unversioned form until an explicitly authorized reference
+activation after obs-50bfe3 lands and passes the frozen shared fixtures. At that
+single cutover every newly written retained object uses integer `version: 1`.
+The later tasks CLI uses the same version; its delivery causes no second cutover.
+Stale sessions must refresh the reference before writing after activation.
+Historical notes and the examples above are never rewritten or silently stamped v1.
+
+The structural contracts are [record schema](retention-v1-record.schema.json) and
+[manifest schema](retention-v1-manifest.schema.json). Portable positive/negative
+examples live in [cases.json](../../tools/fixtures/retention-contract/cases.json).
+Each case names its kind, exact raw JSON, structural verdict and separate semantic
+expectation. Consumers parse strict JSON, rejecting repeated keys and non-JSON
+constants before schema validation. Unknown fields, versions and wrong types
+(including boolean/string versions) fail; no unknown version passes as an older
+subset. Structural acceptance alone grants no filesystem or cleanup verdict.
+
+### Records and semantic checks
+
+V1 adds only `version` to the eight required item fields above, preserving their
+meanings and identity `(host, kind, path)` within a task. Cross-task operations
+also identify the task. Conditional fields remain `handoff`, `sha256`, `manifest`
+and `verification_action`. Verified worktrees have no content digest; verified
+evidence files have their exact digest; scratch/evidence directories require a
+complete manifest and its digest. Because `kind: evidence` does not distinguish
+files from directories, the consumer must require `manifest` when the observed
+item is a directory, and verify the digest against the appropriate bytes.
+Unknown data has a null current digest and a concrete verification action; unknown
+directories name their last located manifest or explicitly use null if none is
+located. An unknown worktree has the action and no content digest. A verified
+successor omits the resolved action. User ownership requires a durable agreement
+and next action in `handoff`; syntactically nonempty text does not prove agreement.
+Task owners must be open; session ownership must meet the integration window.
+Released v1 records use verified disposition, owner/trigger `none`, and omit
+current digest/manifest, action and handoff; earlier evidence stays in history.
+
+The schemas check field shapes, not agreement, open-task status, host accessibility,
+full directory enumeration or verified disposition. Those are consumer obligations.
+Recorded path spelling remains stable; tokens are never evaluated as shell text.
+Relative worktree paths begin `.worktrees/`; foreign worktrees are absolute;
+data and manifest locations are absolute or begin literal `$WORK_ROOT/`.
+Converting an alias requires the explicit verified transition described above.
+
+A malformed later note blocks reliance on the predecessor it could supersede.
+When identity is unavailable, mark the affected host scope incomplete, or the
+whole task if the host is unavailable. A correction cites the bad source note;
+diagnostics remain visible. Historical unversioned records retain their provenance
+and original interpretation under an explicitly supported historical reader.
+Unsupported historical forms fail visibly, never acquire v1 authority by inference.
+
+### Manifest 1 and exact retrieval
+
+A v1 manifest is `{ "version": 1, "entries": [...] }`. Each entry has a unique,
+normalized relative `path` and a `type`: `file` with `sha256`, `directory`, or
+`symlink` with literal `target`. Include hidden entries and empty directories.
+Paths have no absolute/drive prefix, backslashes, empty components or `.`/`..`
+components. Symlink targets may contain traversal text because they are recorded,
+never followed. A symlink does not retain target bytes. Reject duplicate member
+paths, unsupported special files, unreadable or unstable entries, and incomplete
+enumeration. Duplicate paths and complete filesystem coverage are semantic checks,
+not enforced by these structural schemas. Serialize entries in path order; hash
+the exact saved UTF-8 bytes, without treating formatting as a digest substitute.
+
+Keep every checkpoint's manifest version outside its inventoried container, with
+locators for every exact payload version. Each reviewed report version uses a
+distinct immutable member path; the ledger binds it to review round, reviewer and
+reviewed input revision. Before replacing/deleting members, preserve needed old
+bytes in immutable attachments or retained copies. A manifest cannot recover lost
+payloads. Retrieve pinned history, manifest and member bytes; any missing version
+or mismatched digest is a recovery failure, never permission to use the latest file.
+Existing independent identities remain exceptions with their own disposition,
+even while their bytes occur in the complete enclosing manifest.
+
+If the entire task directory already has a scratch identity, no descendant path
+can hold its off-container manifest. Until a separate placement decision, use a
+verified attachment outside that container. A cap/layout refusal leaves evidence
+retained and the checkpoint incomplete; it does not authorize another storage root
+or excluding metadata from the manifest. Full hashing of all parent members remains
+required at each changed checkpoint, including reports; fewer records save no bytes
+hashed by themselves.
+
+### Derived history and future operations
+
+A current-state query is derived from complete logical note history, including
+verified archive segments, at an immutable published basis. Name contract version,
+repository/layout, full commit and task path (or the supported immutable non-Git
+snapshot), host filter, completeness and diagnostics. Locate source notes by ordinal
+within that pinned history, not timestamp alone. Dirty/unstable history cannot
+claim a committed basis. Expose recorded intent and dated observations separately
+from fresh filesystem inspection. A history query makes no implicit current or
+remote verification claim. Caches are disposable and revision-keyed, never a second
+editable ledger. Unaffected rows may be exposed with diagnostics; incomplete scope
+never supports successful verification or cleanup.
+
+Tasks owns the future operation envelope and implementation (tasks-4ef22d), not
+this reference's prose examples. Resolve claims and expected committed bases,
+validate inputs and publish durable intent before mutation. Bind an operation ID
+to its input revisions, selected identities and requested terms; reuse with other
+inputs refuses. Durable receipts live in history or referenced immutable evidence;
+losing a local journal cannot erase transitions. Keep receipts while needed.
+
+Checkpoint order remains inspection, payload/manifest preservation, changed objects,
+published exact basis, complete checkpoint, then park/done. Machine checkpoint
+format is for the tasks design to settle: it must preserve time, host, observer
+(or explicit unknown attribution), exact basis, scope, counts, changed count,
+unresolved actions and operation ID, discoverable by `retention checkpoint:`.
+Historical prose checkpoints stay opaque unless their exact basis is validated.
+A retry inspects published history and bytes, completes missing phases and never
+repeats a committed transition merely because its reply was lost. Reinspect for
+a new observation; interrupted inspection is not a complete checkpoint.
+
+Ownership transfer and physical relocation are distinct. Verify and durably
+publish the receiver's kept identities plus exact payload/manifest references
+before releasing the sender; ownership-only transfer never implies moving or
+deleting bytes. Receiver-only progress remains visible and resumable. Conflicting
+receiver state refuses release. Select independent exceptions explicitly.
+Serialize competing operations, check intervening changes before publication,
+and refuse stale bases, competing intents, uncertain durability or synced-write
+conflicts. A claim is neither a filesystem snapshot nor a cross-host lock.
+The tasks design must specify locking, publication, crash recovery and supported
+same/cross-repository or non-Git boundaries; unsupported cases fail before mutation.
+This is an implementation obligation, not a claim that lifecycle operations ship.
+
+Full byte verification remains required at checkpoint, transfer, canonical reuse,
+frozen-input validation and disposal. Metadata change detection is not integrity
+verification. No incremental hashing or relaxed scrub policy is introduced.

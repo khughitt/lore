@@ -343,9 +343,18 @@ checkpoint without blindly re-appending unchanged objects. A checkpoint written
 before an interrupted park remains historical evidence; retrying park after new
 changes requires a new checkpoint.
 
-Move/transfer order is unchanged: preserve and hash destination, record the
-receiving kept identity, then release only the sending identity whose verified
-disposition actually occurred. A partial transfer leaves both copies retained.
+Move/transfer order is unchanged: preserve and hash destinations, then write all
+receiving kept objects with `tasks note <receiver> --stdin < receiving.txt`.
+Each input line is one complete `retained: {…}` note for an independent identity.
+The CLI validates every line before saving once in input order, with one commit
+when record commits are enabled; empty input or any invalid line (including a
+blank or whitespace-only line) writes nothing and an invalid-line error names
+its line number. Verify all receiving kept records landed, including committed
+bytes when required, before writing the sending released objects with
+`tasks note <sender> --stdin < released.txt` in the same format. Release only
+sending identities whose verified dispositions actually occurred; preserve each
+identity and its history. These are two separate writes, not a cross-task
+transaction. A partial transfer leaves both copies retained.
 Attachment of a derivative never releases raw bytes. A trigger is a recheck event,
 not deletion permission. Closed tasks, merged branches and missing files grant none.
 

@@ -177,12 +177,13 @@
   round before acting, and reads the finding rationale and context needed for its
   decisions. It does not rewrite the report or hash it merely to prove persistence;
   separate frozen-input, attachment and retained-evidence checks still apply.
-  Missing files, failed writes or inconsistent findings block acceptance until
-  resolved. If the harness refuses the designated write, or no plan workspace exists
-  yet (including early spec and plan reviews), the reviewer returns its full review
+  Inconsistent findings block acceptance until reconciled. If the designated write
+  fails or is refused, the report cannot be verified as present and nonempty, or no
+  plan workspace exists yet (including early spec and plan reviews), the reviewer
+  returns its full review
   in the final message and the controller persists it as `<slug>-report.md` in the
   existing authorized document destination, recording the reviewer identity and
-  any write refusal; claim no file-handoff savings in that case. This applies to
+  the actual write failure or refusal; claim no file-handoff savings in that case. This applies to
   task reviews, scoped re-reviews and final whole-branch reviews and overrides a
   skill that requires full final reports or forbids this designated report write.
   Keep the existing ledger, ruling and retention rules; saving a report does not

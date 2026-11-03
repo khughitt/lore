@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Run one focused check, retain every attempt, and success-gate the external ledger.
+set -euo pipefail
+fail() { echo "plan-task-done: $*" >&2; exit 2; }
+[[ $# -ge 6 && $3 =~ ^[1-9][0-9]*$ && $5 == -- ]] || fail 'usage: plan-task-done WORKSPACE PLAN N BASE -- COMMAND...'
+[[ -d $1 && -f $2 ]] || fail 'workspace and plan must already exist'
+workspace=$(cd -- "$1" && pwd -P)
+plan=$(cd -- "$(dirname -- "$2")" && printf '%s/%s' "$(pwd -P)" "$(basename -- "$2")")
+n=$3; base=$4; shift 5
+root=$(git rev-parse --show-toplevel)
+[[ $workspace != "$root" && $workspace != "$root/"* ]] || fail 'workspace must be outside the code worktree'
+[[ -f $workspace/plan-path && $(cat "$workspace/plan-path") == "$plan" ]] || fail 'workspace belongs to another plan or was not started'
+ledger=$workspace/progress.md
+[[ -f $ledger && $(head -n 1 "$ledger") == "# SDD ledger — plan: $plan" ]] || fail 'ledger belongs to another plan'
+[[ -f $workspace/task-$n-base && $(cat "$workspace/task-$n-base") == "$base" ]] || fail 'BASE differs from the recorded start'
+[[ $base =~ ^[0-9a-f]{40}$ ]] && git merge-base --is-ancestor "$base" HEAD || fail 'recorded BASE is not an ancestor of HEAD'
+grep -Fxq "Task $n: BASE $base" "$ledger" || fail 'task start is absent from the ledger'
+log=$(mktemp "$workspace/task-$n-tests-XXXXXX.log")
+printf -v command '%q ' "$@"
+rc=0
+"$@" > "$log" 2>&1 || rc=$?
+tail -n 5 "$log"
+printf 'Task %s: attempt (status %s, command: %s, log: %s)\n' "$n" "$rc" "${command% }" "$log" >> "$ledger"
+if [[ $rc != 0 ]]; then
+    echo "plan-task-done: check exited $rc; no completion recorded (log: $log)" >&2
+    exit "$rc"
+fi
+head=$(git rev-parse HEAD)
+if grep -Fq "Task $n: complete (commits $base..$head," "$ledger"; then
+    echo "Task $n: already complete at this HEAD; fresh check retained in $log"
+    exit 0
+fi
+line="Task $n: complete (commits $base..$head, command: ${command% }, status: 0, log: $log)"
+printf '%s\n' "$line" >> "$ledger"
+printf 'ledger: %s\n' "$line"

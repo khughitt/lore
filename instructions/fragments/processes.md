@@ -118,3 +118,14 @@
   then lands in the subagent's final message instead of the file. hq's
   `subagent-write-refused` capability fact records the rule and its probe.
 <!-- rule:a941cf1e2d044f1b9eb509074ad01504 end -->
+
+<!-- rule:a633687fc016417da6efd42470071ab5 begin -->
+- New plan executions keep their workspace at
+  `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/`, owned by the open
+  controller task. Follow the retained-item reference's execution-workspace section
+  for creation, explicit-path helpers, resume, review packages and cleanup; it
+  overrides the execution skills' worktree-local workspace instructions. Children
+  cite the parent's workspace without duplicating its identity. Keep existing
+  workspaces in place until a separately reviewed migration; unavailable declared
+  storage fails visibly, with no guessed worktree or tmpfs fallback.
+<!-- rule:a633687fc016417da6efd42470071ab5 end -->

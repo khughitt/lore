@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:a633687fc016417da6efd42470071ab5",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d89ddd38ab334caa8335dbdac8a5f9235fc8f683e18521b440e9108ee8f7b034",
+      "text": "- New plan executions keep their workspace at\n  `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/`, owned by the open\n  controller task. Follow the retained-item reference's execution-workspace section\n  for creation, explicit-path helpers, resume, review packages and cleanup; it\n  overrides the execution skills' worktree-local workspace instructions. Children\n  cite the parent's workspace without duplicating its identity. Keep existing\n  workspaces in place until a separately reviewed migration; unavailable declared\n  storage fails visibly, with no guessed worktree or tmpfs fallback.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Keep plan execution evidence in a task-owned external workspace"
+}

@@ -585,3 +585,78 @@ This is an implementation obligation, not a claim that lifecycle operations ship
 Full byte verification remains required at checkpoint, transfer, canonical reuse,
 frozen-input validation and disposal. Metadata change detection is not integrity
 verification. No incremental hashing or relaxed scrub policy is introduced.
+
+
+## Execution workspaces (prepared; placement inactive)
+
+This override of superpowers execution setup, task loop, resume, review packaging
+and cleanup activates only with the separately approved lore delivery. Existing
+workspaces are not moved or folded. For new executions after activation, create
+one workspace at `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/` on the
+current host's declared persistent storage. Specs/plans stay in their profile's
+authorized destination. Missing or inaccessible storage requires resolution, never
+a guessed alternate root. Record host, literal path, owning task, plan repository
+and path, and initial frozen revision in a task creation note immediately. A basename
+collision needs a deliberately distinct key; resume reads the existing mapping.
+Plan revisions do not silently change the key or workspace.
+
+The open controller/standalone task owns the container. Children cite it without
+copying its retained identity; independently owned outputs remain explicit exceptions.
+Group only matching purpose, owner and cleanup trigger. Complete manifests include
+all members and exceptions; directory membership grants no disposal authority.
+A containing task directory is a namespace unless already independently recorded
+as scratch, in which case its complete-manifest duties and nonrecursive metadata
+placement still apply. Keep the owner open across review and activation gates.
+
+Resolve lore's registered checkout once through `tasks projects`; use its explicit
+`bin/plan-task-start` and `bin/plan-task-done` paths. They are lore-owned scripts,
+not installed plugin modifications. Call from the implementing code worktree:
+
+```sh
+"$LORE_ROOT/bin/plan-task-start" "$WORKSPACE" "$PLAN" "$N"
+# Read the printed brief and preserve the printed BASE before changing code.
+"$LORE_ROOT/bin/plan-task-done" "$WORKSPACE" "$PLAN" "$N" "$BASE" -- just test-one <focused arguments>
+```
+
+Here LORE_ROOT is the resolved checkout, WORKSPACE is the exact recorded per-plan
+directory, PLAN is the frozen plan file, and N is its positive task number. Create
+and record the empty workspace before starting. Start binds the plan identity,
+checks ledger identity, captures BASE once and extracts a digest-named brief via
+the pinned `task-brief` script's explicit OUTFILE. Resume reuses BASE and preserves
+old briefs when a reviewed plan revision changes. Read the new brief; a hash-shaped
+name is not permission to skip frozen-input verification. Start fails for an
+unmarked occupied directory, another plan's ledger, or BASE outside HEAD ancestry.
+
+Completion runs the required command in the implementing worktree and preserves
+its actual status and full output in a new attempt log. Failure appends an attempt,
+never a completion. Success adds the task completion at BASE..HEAD; repeated
+success at that HEAD keeps fresh attempt evidence without duplicating completion.
+A correction at a new HEAD is checked again. The caller must first satisfy the
+rest of the execution skill's completion contract: all expected results, meaningful
+focused tests under the invoking checkout's policy, mandatory hygiene and committed
+implementation. A zero exit from a policy skip is not test evidence; pass the
+protected focused route, never a disabled broad target. Inspect the attempt log
+and ledger on resume; a leftover log or lost tool reply alone proves nothing.
+These local scripts assume one acting controller, not a distributed writer lock.
+
+Do not invoke the pinned `sdd-workspace`, `task-start` or `task-done` for an external
+workspace, and do not symlink its old worktree path. For subagent task briefs and
+all task/corrective/final review packages, pass the external OUTFILE explicitly to
+`task-brief` / `review-package`. This includes calls shown in execution references
+and reviewer prompts. Give every review version a distinct report/package name,
+then bind reviewed input, round, reviewer and member locator in the ledger. Keep
+existing reviewer ownership and report-handoff rules; this changes no review gate.
+
+Worktree removal follows the recorded external mapping, verifies the owner's
+ledger is still reachable, and leaves that workspace retained. Workspace disposal
+is separate: preserve required ledger rulings/deferred minors on the owner task,
+resolve every manifest member and independent exception, and perform ordinary
+verification and disposition checks. Neither a clean review nor a code-worktree
+removal authorizes deletion of the external evidence.
+
+Retire this interim route only after the installed and pinned upstream release
+supports the generic root setting and its returned path matches the recorded
+workspace. Upstream issues #1991/#2398 and closed PR #1999 are prior art; neither
+the proposed variable name nor its `/sdd` suffix is promised here. A different
+resolved path needs a separate migration decision, not a second ledger. No vendor,
+plugin cache, shared launcher or host configuration is changed by these scripts.

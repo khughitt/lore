@@ -38,8 +38,10 @@
   item too large to commit with a task record to that task's
   `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item
   rule. If the layout gate refuses a small attachment, use that rule's raw/portable
-  fallback. Each plan
-  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
+  fallback. Inspect worktree-local plan workspaces (`ls <path>/.superpowers/sdd/`)
+  and follow every recorded external workspace mapping. Removing the code worktree
+  leaves external workspaces with their recorded open owner; verify their ledgers
+  remain discoverable from that task. Each plan workspace goes only after its ledger's `Ruling:` and
   `minor (deferred)` lines have reached the task record (a note or an attached
   ledger), other plans' included;
   otherwise attach its ledger, or move and note it as above, on the task its plan

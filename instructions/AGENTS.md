@@ -38,8 +38,10 @@
   item too large to commit with a task record to that task's
   `$WORK_ROOT/<project>/<task-id>/` and record it under Processes' retained-item
   rule. If the layout gate refuses a small attachment, use that rule's raw/portable
-  fallback. Each plan
-  workspace (`ls <path>/.superpowers/sdd/`) goes only after its ledger's `Ruling:` and
+  fallback. Inspect worktree-local plan workspaces (`ls <path>/.superpowers/sdd/`)
+  and follow every recorded external workspace mapping. Removing the code worktree
+  leaves external workspaces with their recorded open owner; verify their ledgers
+  remain discoverable from that task. Each plan workspace goes only after its ledger's `Ruling:` and
   `minor (deferred)` lines have reached the task record (a note or an attached
   ledger), other plans' included;
   otherwise attach its ledger, or move and note it as above, on the task its plan
@@ -470,6 +472,15 @@ it this way:
   to those names ("Subagents should return findings as text"), and the whole report
   then lands in the subagent's final message instead of the file. hq's
   `subagent-write-refused` capability fact records the rule and its probe.
+
+- New plan executions keep their workspace at
+  `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/`, owned by the open
+  controller task. Follow the retained-item reference's execution-workspace section
+  for creation, explicit-path helpers, resume, review packages and cleanup; it
+  overrides the execution skills' worktree-local workspace instructions. Children
+  cite the parent's workspace without duplicating its identity. Keep existing
+  workspaces in place until a separately reviewed migration; unavailable declared
+  storage fails visibly, with no guessed worktree or tmpfs fallback.
 
 ## Tests
 

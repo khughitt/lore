@@ -67,70 +67,70 @@
     "kind": "record",
     "raw": "{\"version\": true, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-version-1",
     "kind": "record",
     "raw": "{\"version\": \"1\", \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-version-2",
     "kind": "record",
     "raw": "{\"version\": 2, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-host-",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-path-relative/file",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \"relative/file\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-kind-branch",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"branch\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-purpose-",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-next_owner-none",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"none\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-cleanup_trigger-none",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"none\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-extra-ignored?",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"extra\": \"ignored?\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "missing-version",
@@ -200,70 +200,70 @@
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"evidence\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/report.md\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "directory-missing-manifest",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"scratch\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/plans/p\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "bad-hash",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"evidence\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/report.md\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "bad-manifest",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"scratch\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/plans/p\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"manifest\": \"relative.json\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "unknown-stale-hash",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"evidence\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/report.md\", \"state\": \"kept\", \"verification\": \"unknown\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", \"verification_action\": \"Recover missing file and verify exact bytes\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "unknown-no-action",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"evidence\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/report.md\", \"state\": \"kept\", \"verification\": \"unknown\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": null}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "user-no-agreement",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"evidence\", \"path\": \"$WORK_ROOT/lore/lore-a8b553/report.md\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"user\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "released-unknown",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"released\", \"verification\": \"unknown\", \"purpose\": \"Review pending\", \"next_owner\": \"none\", \"cleanup_trigger\": \"none\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "worktree-content-hash",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "duplicate-key",
     "kind": "record",
     "raw": "{\"version\": 1, \"host\": \"host-a\", \"kind\": \"worktree\", \"path\": \".worktrees/example\", \"state\": \"kept\", \"verification\": \"verified\", \"purpose\": \"Review pending\", \"next_owner\": \"task:lore-a8b553\", \"cleanup_trigger\": \"After approved integration and removal checks\", \"version\": 1}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "malformed-later-note",
@@ -312,118 +312,118 @@
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'.'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \".\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'..'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"..\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'../escape'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"../escape\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'a/../b'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"a/../b\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'/absolute'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"/absolute\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'a//b'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"a//b\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'a/./b'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"a/./b\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'a/'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"a/\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'C:/drive'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"C:/drive\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "invalid-member-'a\\\\b'",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"a\\\\b\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "unsupported-type",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"socket\", \"type\": \"socket\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "file-no-hash",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"report\", \"type\": \"file\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "symlink-no-target",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"link\", \"type\": \"symlink\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "directory-extra-hash",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \"dir\", \"type\": \"directory\", \"sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "manifest-unknown-version",
     "kind": "manifest",
     "raw": "{\"version\": 2, \"entries\": [{\"path\": \".hidden\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}, {\"path\": \"empty\", \"type\": \"directory\"}, {\"path\": \"link\", \"type\": \"symlink\", \"target\": \"../external\"}]}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   },
   {
     "name": "manifest-extra-field",
     "kind": "manifest",
     "raw": "{\"version\": 1, \"entries\": [{\"path\": \".hidden\", \"type\": \"file\", \"sha256\": \"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}, {\"path\": \"empty\", \"type\": \"directory\"}, {\"path\": \"link\", \"type\": \"symlink\", \"target\": \"../external\"}], \"unknown\": true}",
     "structural_valid": false,
-    "semantic_expectation": "Accept structure; filesystem verification remains required."
+    "semantic_expectation": "Reject structure; do not infer a valid retained state from this record."
   }
 ]

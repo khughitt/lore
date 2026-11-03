@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Interim external workspace route until the pinned upstream resolver supports it.
+set -euo pipefail
+fail() { echo "plan-task-start: $*" >&2; exit 2; }
+[[ $# == 3 && $3 =~ ^[1-9][0-9]*$ ]] || fail 'usage: plan-task-start WORKSPACE PLAN N'
+[[ -d $1 && -f $2 ]] || fail 'workspace and plan must already exist'
+workspace=$(cd -- "$1" && pwd -P)
+plan=$(cd -- "$(dirname -- "$2")" && printf '%s/%s' "$(pwd -P)" "$(basename -- "$2")")
+n=$3
+root=$(git rev-parse --show-toplevel)
+[[ $workspace != "$root" && $workspace != "$root/"* ]] || fail 'workspace must be outside the code worktree'
+[[ $workspace != *$'\n'* && $plan != *$'\n'* && $plan != *$'\r'* ]] || fail 'multiline paths cannot identify a ledger'
+identity="# SDD ledger — plan: $plan"
+if [[ -e $workspace/plan-path ]]; then
+    [[ $(cat "$workspace/plan-path") == "$plan" ]] || fail 'workspace belongs to another plan'
+else
+    [[ -z $(find "$workspace" -mindepth 1 -maxdepth 1 -print -quit) ]] || fail 'refusing an occupied workspace without a plan identity'
+    (set -o noclobber; printf '%s\n' "$plan" > "$workspace/plan-path")
+fi
+ledger=$workspace/progress.md
+if [[ -e $ledger ]]; then
+    [[ $(head -n 1 "$ledger") == "$identity" ]] || fail 'ledger belongs to another plan'
+else
+    (set -o noclobber; printf '%s\n' "$identity" > "$ledger")
+fi
+basefile=$workspace/task-$n-base
+if [[ ! -e $basefile ]]; then
+    base=$(git rev-parse HEAD)
+    (set -o noclobber; printf '%s\n' "$base" > "$basefile")
+fi
+base=$(cat "$basefile")
+[[ $base =~ ^[0-9a-f]{40}$ ]] && git merge-base --is-ancestor "$base" HEAD || fail 'recorded BASE is not an ancestor of HEAD'
+# The plan digest distinguishes revised briefs without overwriting reviewed bytes.
+digest=$(sha256sum "$plan"); digest=${digest%% *}
+brief=$workspace/task-$n-brief-$digest.md
+tmp=$(mktemp "$workspace/.brief-XXXXXX")
+trap 'rm -f -- "$tmp"' EXIT
+helper=$(cd -- "$(dirname -- "$0")/../vendor/superpowers/skills/subagent-driven-development/scripts" && pwd)
+bash "$helper/task-brief" "$plan" "$n" "$tmp" >/dev/null
+current=$(sha256sum "$plan"); [[ ${current%% *} == "$digest" ]] || fail 'plan changed while extracting brief'
+if [[ -e $brief ]]; then
+    cmp -s "$tmp" "$brief" || fail 'saved brief differs from the frozen plan'
+else
+    mv -- "$tmp" "$brief"
+fi
+line="Task $n: BASE $base"
+grep -Fxq "$line" "$ledger" || printf '%s\n' "$line" >> "$ledger"
+printf 'brief: %s\nbase: %s\n' "$brief" "$base"

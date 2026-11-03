@@ -305,13 +305,29 @@ it this way:
   ownership. A push, a PR, or a merge that changes a live global surface (these global
   instructions, hooks, services) stays an action outside the repository under every
   profile and authorization.
-- Reviewers stay read-only and return their full review in their final message;
-  dispatches must not ask them to write report files. When persistence is needed,
-  the controller saves the full returned text in the plan workspace as
-  `<slug>-report.md`, with the reviewer identity recorded alongside it. This applies
-  to initial task reviews, scoped re-reviews and final whole-branch reviews. Keep
-  the existing ledger, ruling and retention rules; saving a report does not replace
-  those records.
+- Reviewers do not modify reviewed code, input evidence, task records or the ledger.
+  When a plan workspace already exists, the dispatch names one unique
+  `<slug>-report.md` there, outside the reviewed code and inputs; the reviewer may
+  write only that report. It saves the full review, reviewed revision and verified
+  reviewer identity, checks the write succeeded and the file has nonzero size,
+  then returns a concise handoff: verdict, reviewed revision, verified reviewer
+  identity, every actionable finding with severity and location, report path, byte
+  size and write outcome. The saved report is the
+  authoritative full review; never overwrite a previous round's report.
+  The controller checks the write result and file existence/size, records the review
+  round before acting, and reads the finding rationale and context needed for its
+  decisions. It does not rewrite the report or hash it merely to prove persistence;
+  separate frozen-input, attachment and retained-evidence checks still apply.
+  Missing files, failed writes or inconsistent findings block acceptance until
+  resolved. If the harness refuses the designated write, or no plan workspace exists
+  yet (including early spec and plan reviews), the reviewer returns its full review
+  in the final message and the controller persists it as `<slug>-report.md` in the
+  existing authorized document destination, recording the reviewer identity and
+  any write refusal; claim no file-handoff savings in that case. This applies to
+  task reviews, scoped re-reviews and final whole-branch reviews and overrides a
+  skill that requires full final reports or forbids this designated report write.
+  Keep the existing ledger, ruling and retention rules; saving a report does not
+  replace those records. Needed report reads remain required.
 - Before dispatching a final whole-branch review, and before any measurement compared
   against the branch's merge base (a cost or latency gate, a size budget), the
   controller (you, inline) checks whether the plan's base branch has moved, in

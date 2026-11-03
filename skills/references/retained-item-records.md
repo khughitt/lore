@@ -1,9 +1,10 @@
 # Retained item records
 
-Type: guide, data model; document types 1. The current writer form is unversioned.
-Retention 1 below is a prepared, inactive contract; it is not a shipped tasks CLI. Obs already
-consumes the eight item fields; its recorded assertions are separate from current
-filesystem inspection. A `retention checkpoint:` is opaque dated evidence unless
+Type: guide, data model; document types 1. The current writer version is retention 1.
+Every new retained object includes integer `version: 1`; historical unversioned
+notes and examples remain historical. The lifecycle tasks CLI is not shipped.
+Obs explicitly recognizes v1 and historical input; recorded assertions remain
+separate from current filesystem inspection. A `retention checkpoint:` is opaque dated evidence unless
 a consumer validates its exact basis. Read this when creating, refreshing or
 releasing records. Existing process/service, Git removal, privacy and publication
 rules still apply. No history rewrite, bulk backfill or migration is authorized.
@@ -465,13 +466,12 @@ EOF
 ```
 
 
-## Retention 1 contract (prepared; writers inactive)
+## Retention 1 contract (active writer version)
 
-This section specifies the reader contract for lore-a8b553. It does not activate
-new writers or workspace placement. All writers, including agents writing notes
-by hand, keep the unversioned form until an explicitly authorized reference
-activation after obs-50bfe3 lands and passes the frozen shared fixtures. At that
-single cutover every newly written retained object uses integer `version: 1`.
+This section specifies the active reader and writer contract. Following the
+authorized cutover after obs-50bfe3 landed and passed the frozen shared fixtures,
+all newly written retained objects use integer `version: 1`, including notes
+written by agents by hand. There is one current writer version.
 The later tasks CLI uses the same version; its delivery causes no second cutover.
 Stale sessions must refresh the reference before writing after activation.
 Historical notes and the examples above are never rewritten or silently stamped v1.
@@ -596,11 +596,11 @@ frozen-input validation and disposal. Metadata change detection is not integrity
 verification. No incremental hashing or relaxed scrub policy is introduced.
 
 
-## Execution workspaces (prepared; placement inactive)
+## Execution workspaces (active placement)
 
 This override of superpowers execution setup, task loop, resume, review packaging
-and cleanup activates only with the separately approved lore delivery. Existing
-workspaces are not moved or folded. For new executions after activation, create
+and cleanup is active following the approved lore delivery. Existing workspaces
+are not moved or folded. For new executions, create
 one workspace at `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/` on the
 current host's declared persistent storage. Specs/plans stay in their profile's
 authorized destination. Missing or inaccessible storage requires resolution, never

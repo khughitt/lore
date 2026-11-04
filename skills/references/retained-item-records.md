@@ -333,8 +333,10 @@ permission to fall back to today's working file or delete anything.
 ## Writes, interruption and migration boundary
 
 The following manual checkpoint and transfer procedures remain available where
-automation is unsupported. Do not use them to bypass a pending lifecycle reservation
-or a refusal: recover or reconcile the operation through its owning contract first.
+automation is unsupported, including an unsupported-mode refusal before durable
+intent. Do not use them to bypass a pending lifecycle reservation or a validation/
+publication failure: resolve that failure through the owning contract, recovering
+or reconciling a published operation first.
 
 Manual checkpoint order: inspect; preserve changed evidence/manifest versions; write
 changed item objects; commit and check the basis; append the checkpoint; then

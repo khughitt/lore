@@ -262,8 +262,18 @@ it this way:
   judged against the revision its request named.
 - A question, when asked, is one question, not a series, and carries your
   recommendation: in a harness's multiple-choice question tool, as the first option;
-  in a message, inside the decision request's one sentence (Communication), with the
-  alternatives in the record. A question that asks
+  on relay's typed `question` schema, as `recommended` on each choice item (`single`
+  or `multi`) where you hold a view; in a message, inside the decision request's one
+  sentence (Communication), with the alternatives in the record. Use the available
+  supported channel (the harness's question tool or an active relay question route)
+  without mandating an uninstalled connector, activating services, or turning a
+  bounded recommendation under the first rule above into a stop. Over the typed
+  channel, keep the question `class` values distinct: `clarification` for scope,
+  priority, taste or intent, `artifact-review` with `artifact.ref` and
+  `artifact.revision` for an artifact the user must inspect, and `authorization`
+  (answerable only from a local surface) for an external, host, spend or live-surface
+  gate; transporting an answer delivers the user's response and grants no authority
+  beyond the gate asked. A question that asks
   the user to describe what they want (brainstorming's open questions, and its
   playback asking what is wrong or missing) carries no options; a guess they can
   correct stands in for the recommendation. That playback is not a "does this section
@@ -303,7 +313,14 @@ it this way:
   step is an action and who takes it ("rerun `just gate` in .worktrees/x, then dispatch
   the Task 6 review"), never a state ("waiting for next steps"). An unblocked task you
   hold is not parked between increments: continue until a blocker, a gate that needs a
-  person, or the end of the session.
+  person, or the end of the session. On a typed question channel, `defer` is not an
+  answer and advances no gate: the decision remains unresolved whether relay's entry
+  moves to `released` on a route with native handback or stays `pending` with
+  `presentation: desktop` on a non-handback route. A question and `tasks park` do not
+  write each other: continue independent work while a pending or deferred question
+  waits, and when you actually stop on it, `tasks park --waiting-on user` with the
+  actionable next step and the question `id` when available (and `context.taskId` on
+  the question when known).
 - A skill's scripted question or stop (an integration menu, a "surface residual
   findings" step) is a bounded decision under this rule unless it falls in the stop
   list above; this rule outranks the skill's "exactly as written".

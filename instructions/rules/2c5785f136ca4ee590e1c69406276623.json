@@ -196,6 +196,21 @@
       "locator": null,
       "sha256": "90d44aa0da5d5252634509b1e77c7c9599f55219d521b8bc2c4412c14a24aa13",
       "text": "- A question, when asked, is one question, not a series, and carries your\n  recommendation: in a harness's multiple-choice question tool, as the first option;\n  in a message, inside the decision request's one sentence (Communication), with the\n  alternatives in the record. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
+          "offset": 1084,
+          "overlaps": [],
+          "parent_sha256": "1dc1e814ef39f0847d9c8fcaf65f234ff083f0fbe8a39e2052450a68a8829b9e",
+          "sha256": "ec9f4f4d51990f6c39a247f6b8cf8feb33a7e83992ff2444068fa9e467c8f24b",
+          "text": "A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "1dc1e814ef39f0847d9c8fcaf65f234ff083f0fbe8a39e2052450a68a8829b9e",
+      "text": "- A question, when asked, is one question, not a series, and carries your\n  recommendation: in a harness's multiple-choice question tool, as the first option;\n  on relay's typed `question` schema, as `recommended` on each choice item (`single`\n  or `multi`) where you hold a view; in a message, inside the decision request's one\n  sentence (Communication), with the alternatives in the record. Use the available\n  supported channel (the harness's question tool or an active relay question route)\n  without mandating an uninstalled connector, activating services, or turning a\n  bounded recommendation under the first rule above into a stop. Over the typed\n  channel, keep the question `class` values distinct: `clarification` for scope,\n  priority, taste or intent, `artifact-review` with `artifact.ref` and\n  `artifact.revision` for an artifact the user must inspect, and `authorization`\n  (answerable only from a local surface) for an external, host, spend or live-surface\n  gate; transporting an answer delivers the user's response and grants no authority\n  beyond the gate asked. A question that asks\n  the user to describe what they want (brainstorming's open questions, and its\n  playback asking what is wrong or missing) carries no options; a guess they can\n  correct stands in for the recommendation. That playback is not a \"does this section\n  look right\" decision: what they want is theirs to say.\n"
     }
   ],
   "schema": 1,

@@ -2,16 +2,25 @@
 
 Type: guide, data model; document types 1. The current writer version is retention 1.
 Every new retained object includes integer `version: 1`; historical unversioned
-notes and examples remain historical. The lifecycle tasks CLI is not shipped.
+notes and examples remain historical. Tasks ships `tasks retained state`,
+`checkpoint`, `transfer` and `reconcile` under this same writer version.
 Obs explicitly recognizes v1 and historical input; recorded assertions remain
 separate from current filesystem inspection. A `retention checkpoint:` is opaque dated evidence unless
 a consumer validates its exact basis. Read this when creating, refreshing or
 releasing records. Existing process/service, Git removal, privacy and publication
 rules still apply. No history rewrite, bulk backfill or migration is authorized.
 
+Tasks owns the command, request and receipt contracts: read its README's Retained
+state, Retained checkpoints, Retained transfers and Retained reconciliation
+sections and the installed tasks skill's Retained-state queries section. Resolve
+the owning checkout through `tasks projects`. This reference owns retention
+semantics and the manual/recovery obligations below; it is not a second CLI spec.
+
 ## Record an item
 
-Use `tasks note <id>` with `retained: ` followed by one complete JSON object for
+Use `tasks retained checkpoint` for supported automated host accounting; it
+publishes new or changed item records after inspection. For manual recording, use
+`tasks note <id>` with `retained: ` followed by one complete JSON object for
 a new item or changed fields. At park and before done, inspect and account for all
 known kept worktrees, task scratch directories and off-tree evidence on this host.
 Compare parsed fields with the immediate effective predecessor; do not repeat an
@@ -218,10 +227,11 @@ existing plain closeout note; do not add an empty checkpoint. If only another ho
 has kept items, name that host's last checkpoint and the needed verification in
 the park summary; do not create an empty local checkpoint or reset its inventory.
 
-Otherwise use one concise `retention checkpoint:` note for the inspected host per
-completed park/done checkpoint. This is a fixed prose convention, not a new tasks
-command; obs may expose it as opaque dated evidence, not infer freshness from it
-without validating its basis. It contains:
+Otherwise `tasks retained checkpoint` publishes a JSON `retention checkpoint:`
+envelope for supported automated accounting. The prose procedure below remains
+the manual/recovery route: use one concise `retention checkpoint:` note for the
+inspected host per completed park/done checkpoint. Historical prose is opaque dated
+evidence unless its exact basis is validated. The manual note contains:
 
 - Observation time in UTC and the inspected host.
 - A **basis**: task-record repository identity, full commit and repository-relative
@@ -322,7 +332,11 @@ permission to fall back to today's working file or delete anything.
 
 ## Writes, interruption and migration boundary
 
-Checkpoint order: inspect; preserve changed evidence/manifest versions; write
+The following manual checkpoint and transfer procedures remain available where
+automation is unsupported. Do not use them to bypass a pending lifecycle reservation
+or a refusal: recover or reconcile the operation through its owning contract first.
+
+Manual checkpoint order: inspect; preserve changed evidence/manifest versions; write
 changed item objects; commit and check the basis; append the checkpoint; then
 park/done. With `[git] commit = true`, use the successful auto-commit of the last
 item/artifact write, or the existing committed state if nothing changed; do not
@@ -472,7 +486,7 @@ This section specifies the active reader and writer contract. Following the
 authorized cutover after obs-50bfe3 landed and passed the frozen shared fixtures,
 all newly written retained objects use integer `version: 1`, including notes
 written by agents by hand. There is one current writer version.
-The later tasks CLI uses the same version; its delivery causes no second cutover.
+The shipped tasks CLI uses the same version; its delivery causes no second cutover.
 Stale sessions must refresh the reference before writing after activation.
 Historical notes and the examples above are never rewritten or silently stamped v1.
 
@@ -549,7 +563,7 @@ or excluding metadata from the manifest. Full hashing of all parent members rema
 required at each changed checkpoint, including reports; fewer records save no bytes
 hashed by themselves.
 
-### Derived history and future operations
+### Derived history and shipped operations
 
 A current-state query is derived from complete logical note history, including
 verified archive segments, at an immutable published basis. Name contract version,
@@ -562,22 +576,39 @@ remote verification claim. Caches are disposable and revision-keyed, never a sec
 editable ledger. Unaffected rows may be exposed with diagnostics; incomplete scope
 never supports successful verification or cleanup.
 
-Tasks owns the future operation envelope and implementation (tasks-4ef22d), not
-this reference's prose examples. Resolve claims and expected committed bases,
-validate inputs and publish durable intent before mutation. Bind an operation ID
-to its input revisions, selected identities and requested terms; reuse with other
-inputs refuses. Durable receipts live in history or referenced immutable evidence;
-losing a local journal cannot erase transitions. Keep receipts while needed.
+The shipped state query requires a Git basis. Lifecycle mutations require
+Git-backed auto-commit records (`[git] commit = true`), a named retained branch,
+normal owned claims and exact current input bases. They support in-tree, detached
+and linked records, including transfers between records repositories, and inspect
+only the executing host. Use one coordinated writer host for every participating
+task; prevent other-host writes until completion or reconciliation has committed
+and records have synchronized. Claims and locks are host-local, not cross-host
+coordination. Non-Git queries and non-Git/manual-commit mutations refuse explicitly;
+the manual snapshot and publication procedures above remain their recovery route.
+
+Tasks owns the shipped operation envelopes and implementation.
+The CLI validates claims and committed bases and publishes durable intent before
+mutation. An operation ID binds its parsed request, input revisions, selected
+identities and requested terms; reuse with different inputs refuses. Retry the
+original immutable request after interruption. Durable receipts live in history
+or referenced immutable evidence; losing a local journal cannot erase transitions.
+Keep receipts and exact referenced payload/manifest versions while needed.
 
 Checkpoint order remains inspection, payload/manifest preservation, changed objects,
-published exact basis, complete checkpoint, then park/done. Machine checkpoint
-format is for the tasks design to settle: it must preserve time, host, observer
+published exact basis, complete checkpoint, then park/done. The shipped machine
+checkpoint preserves time, host, observer
 (or explicit unknown attribution), exact basis, scope, counts, changed count,
 unresolved actions and operation ID, discoverable by `retention checkpoint:`.
-Historical prose checkpoints stay opaque unless their exact basis is validated.
+Only the lifecycle command publishes machine operation/checkpoint notes; do not
+forge them through `tasks note`. Historical prose checkpoints stay opaque unless
+their exact basis is validated. Complete accounting with unknown observations is
+`accounted_unknown`, not verification of those items. The command never parks or
+closes the task.
 A retry inspects published history and bytes, completes missing phases and never
 repeats a committed transition merely because its reply was lost. Reinspect for
-a new observation; interrupted inspection is not a complete checkpoint.
+a new observation; interrupted inspection is not a complete checkpoint. A completed
+retry returns historical publication references without inspecting current bytes;
+later accounting needs a fresh operation and input bases.
 
 Ownership transfer and physical relocation are distinct. Verify and durably
 publish the receiver's kept identities plus exact payload/manifest references
@@ -587,9 +618,15 @@ receiver state refuses release. Select independent exceptions explicitly.
 Serialize competing operations, check intervening changes before publication,
 and refuse stale bases, competing intents, uncertain durability or synced-write
 conflicts. A claim is neither a filesystem snapshot nor a cross-host lock.
-The tasks design must specify locking, publication, crash recovery and supported
-same/cross-repository or non-Git boundaries; unsupported cases fail before mutation.
-This is an implementation obligation, not a claim that lifecycle operations ship.
+Pending operations reserve task/evidence mutation while allowing reads, unrelated
+appended notes, normal claim refresh/start and park. Finish the original operation
+or explicitly reconcile it before closure or competing changes. Reconciliation
+keeps custody, records unknown observations and verifies all participant ready
+commits before ending the reservation through the coordinator terminal. It never
+completes the requested checkpoint/transfer or releases bytes. A committed sender
+release requires finishing the original transfer's receipts; reconciliation refuses.
+Malformed history stays blocked for explicit repair. Unsupported cases and uncertain
+publication fail visibly; normal permission, attachment and hygiene gates remain.
 
 Full byte verification remains required at checkpoint, transfer, canonical reuse,
 frozen-input validation and disposal. Metadata change detection is not integrity

@@ -100,9 +100,12 @@ dependency, approval or retention lifetime. A long log or many rows alone is a
 reason for an artifact, not task decomposition. A closed task cannot own retained
 items: transfer to an open follow-up or an agreed user handoff as today.
 
-An over-cap manifest stays losslessly retained off-tree pending tasks-b81063's
-supported transport decision. Do not split, compress, raise caps or relabel a raw
-blob as a records document to evade checks. A layout refusal keeps the existing
+For an over-cap UTF-8 manifest within the project's multipart limits, use the
+shipped `tasks attach --multipart` route below. Only that route may split one
+document: manual splitting, compression, raised caps and relabelling raw bytes as
+records documents to evade checks remain forbidden. If admission or publication
+fails, keep the exact source bytes and resolve the stated cause; an eligible
+off-tree copy remains governed by the placement rules below. A layout refusal keeps the existing
 raw-plus-portable fallback, with the mapping in a task note; only acceptance by the
 executing shipped checker retires that fallback. Other refusals retain their own
 diagnosis. Normal publication permission still applies in every destination.
@@ -213,12 +216,59 @@ accepts that cost instead of introducing incremental manifests or silent exclusi
 
 Preserve each manifest version used by a checkpoint. Prefer a small immutable
 attachment, with its digest in the container record and its actual storage path
-as `manifest`; when this cannot pass size/layout checks, retain an immutable
+as `manifest`. For an over-cap text manifest use the multipart procedure below;
+when attachment is unavailable, retain an immutable
 off-tree file outside the inventoried container with an explicit evidence record.
 This avoids recursively inventorying checkpoint metadata. Reuse the exact version
 when contents are unchanged; do not create another manifest attachment at each park.
 Keep manifests for as long as their checkpoint evidence is needed. A mutable
 `manifest.json` alone cannot substantiate an old checkpoint after it is overwritten.
+
+### Multipart manifests
+
+Tasks owns the command and admission contract (README, Multipart text attachments
+and Export and recovery). Attach one whole UTF-8 source with
+`tasks attach <id> <path> --multipart`, or stream it into
+`tasks attach <id> - --name <name>.json --multipart`. Use a new logical name for a
+changed version. The installed route preserves exact bytes as bounded parts plus a
+catalog, each under the ordinary per-file cap; defaults limit one artifact to
+16 MiB and 16 parts, not cumulative history. The project must declare
+`multipart_validators`: absent refuses admission; `[]` explicitly declares no extra
+whole-document gates. Built-in JSON validation is not Manifest 1 schema or complete
+filesystem-coverage validation; perform those checks too, and preserve all normal
+content/layout and publication-permission requirements.
+
+Inspect the attach result's `publication.state`, not just its exit status:
+
+- `published` binds reconstruction and current validation to `publication.commit`.
+  Preserve the task, logical `files:<name>` reference, whole-file byte count and
+  SHA-256, full publication commit and returned `validation` object in checkpoint
+  evidence. Confirm `tasks show` declares the logical artifact and its digest.
+- `local` is an incomplete publication even on exit 0. Resolve its `cause` and
+  follow `next`; commit where needed and verify the resulting named commit with
+  `tasks export <id> <name> --at <commit> --verify`. Inspect both integrity and
+  `validation.passed`, preserving that current-runtime validation result. A local
+  save or a working-tree-only export cannot complete the publication requirement.
+
+There is no whole-file storage path: neither a part nor the catalog is the
+manifest. Recover exact bytes with
+`tasks export <id> <name> --at <commit> -o <destination>`, and compare their hash
+with the pinned whole-file SHA-256 before use. Export checks integrity; it does not
+run current validators unless `--verify` is requested. Rebuilds and validator input
+are in memory; file export writes atomically beside the destination. Keep any
+materialized copy outside the inventoried container. A per-run copy may be removed
+after its exact bytes and durable publication are verified; preserve the logical
+locator and commit so it can be reconstructed before the next inspection.
+
+V1 item records still use an actual inspected file path in `manifest`, with the
+whole-file digest. Record the immutable multipart locator and export instruction
+separately on the task; do not put `files:<name>` or a catalog path into that field.
+Reconstruct the pinned manifest before reusing such a record. Native retained
+checkpoint/transfer commands still use ordinary attachment caps and do not
+automatically transport oversized manifests. Use the existing manual procedure
+only where supported; never bypass a pending operation or publication failure.
+Published manifest bytes satisfy preservation, not the remaining item verification,
+exact-basis, ownership and complete-checkpoint obligations.
 
 ## Exact checkpoint and recovery
 
@@ -558,10 +608,16 @@ Existing independent identities remain exceptions with their own disposition,
 even while their bytes occur in the complete enclosing manifest.
 
 If the entire task directory already has a scratch identity, no descendant path
-can hold its off-container manifest. Until a separate placement decision, use a
-verified attachment outside that container. A cap/layout refusal leaves evidence
-retained and the checkpoint incomplete; it does not authorize another storage root
-or excluding metadata from the manifest. Full hashing of all parent members remains
+can hold its off-container manifest. Use a verified attachment outside that
+container; for an over-cap manifest within admission limits, use the explicit
+multipart route above. Generate it as a stream or a per-run copy outside the
+container, require publication at a named commit and pin its whole-file digest
+and validation evidence before completing the manual checkpoint. Recover the
+pinned bytes outside the container before inspection; no new persistent storage
+root or metadata exclusion is needed. An admission, layout or unresolved
+publication refusal keeps evidence retained and the checkpoint incomplete; it
+does not authorize another storage root or excluding metadata from the manifest.
+Full hashing of all parent members remains
 required at each changed checkpoint, including reports; fewer records save no bytes
 hashed by themselves.
 

@@ -73,11 +73,13 @@
   limit where you can see them), what is done and verified, what is left with your
   estimate of its cost, anything that went wrong, and one decision with your
   recommendation: continue under a budget you name, given as the exact first line for
-  the user to send (a reply without it continues under the default limits), narrow the
-  work, or stop. The user's reply ends the pause; it is not an approval of routine
-  steps, and the next turn asks nothing about continuing until it too crosses a limit;
-  the other stops above still apply. Never edit the hook's state or limits, split work
-  across turns or controllers, or start a fresh session to stay under a limit.
+  the user to send (a reply without it continues under the default limits), continue
+  in a user-chosen fresh controller when compaction or context growth is the binding
+  cause, narrow the work, or stop. The user's reply ends the pause; it is not an
+  approval of routine steps, and the next turn asks nothing about continuing until it
+  too crosses a limit; the other stops above still apply. Never edit the hook's state
+  or limits, split work across turns or controllers, or start a fresh session to stay
+  under a limit.
 <!-- rule:1f37e3afebdd433a9ccaa2970cde7289 end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are
@@ -235,3 +237,72 @@
   before reporting. Such a correction stays a review finding; a `concerns:` task is
   filed only for work that fell short after its branch landed.
 <!-- rule:e5201d5768794401bf9d88a39b1ee445 end -->
+<!-- rule:4411cf3f68ce4834a40a5379234ddc3b begin -->
+- A custody check belongs to one acting owner for a given input revision and purpose;
+  separate review seats still perform their own independent reviews. The author or
+  controller freezes a spec or plan revision once and keeps it unchanged while review
+  is open; the receiving reviewer verifies and reads the dispatched revision; the
+  implementer runs changed-behavior tests under Tests and reports the command, tested
+  revision, results/counts and limits for the controller to pass to the reviewer; the
+  reviewer persists its report under the designated-report rule above; the controller
+  advances the plan ledger once per transition; and the current item or claim owner on
+  that host observes retained items at park, done or disposal, reporting its checkpoint
+  basis before releasing its claim. When a child's report binds the relevant input
+  revision (commit and path, or path and sha256) and scope, is complete, and has no
+  conflicting evidence, the controller relies on that result for the same revision and
+  purpose without rehashing the unchanged input or rerunning the child's checks merely
+  at handoff. Do not compute routine report sha256 digests or write report hashes to
+  the ledger; use the report path and reviewed revision, while a report that is itself
+  a frozen review input, independent retained evidence or a published attachment still
+  obeys that distinct contract at its required boundary. When a review accepts with a
+  substantive concern or actionable finding, the controller reads the concern and
+  records its disposition or ruling; a short verdict never hides an actionable concern.
+  Missing inputs, an unbound verdict, an observed mismatch, changed bytes (such as
+  evidence for revision A when the input is now revision B), a failed persistence
+  operation or contradictory evidence require a targeted check or return to the
+  responsible actor; never infer success from silence, a passing attach exit status
+  alone, a notification or an omitted failure, and keep an in-flight child under
+  tracked waiting. Checks whose purpose requires a new observation stay fresh when
+  their event occurs: receiving a frozen revision, recovering after context loss,
+  current retained-item inventory at park/done/disposal, claim transfer, host-pointer
+  inspection before removal, and branch freshness before final review or base-relative
+  measurement. A previous hash never proves mutable bytes stayed unchanged, and at
+  park, done or disposal the acting owner inspects the complete known local retained
+  set; if an explicitly delegated check supplies evidence, the recording actor names
+  the observer and never describes another actor's observation as its own recheck.
+<!-- rule:4411cf3f68ce4834a40a5379234ddc3b end -->
+<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 begin -->
+- In planned execution, the controller reads the plan and binding constraints once at
+  setup, keeps the plan ledger as the recovery map (current task and phase, completed
+  ranges, pending review or corrective round, findings, rulings, deferred minors and
+  next action), and dispatches narrow task briefs with applicable constraints and
+  needed interfaces. Keep full review reports and clean supporting logs in files so
+  only concise handoffs and the finding sections needed for decisions or rulings enter
+  controller context. After compaction below `hq pause limits`, check `hq pause status`
+  (maintaining any counts the hook does not observe) and recover inside the current
+  turn budget by reading the current task, the plan's ledger and the referenced
+  sections needed for the next decision, and verifying the named current Git state;
+  reconcile any conflict between ledger, task records and Git state before dispatch,
+  and never replay completed task sequences, respawn completed workers, reload every
+  prior report, or ask permission to recover. When compactions cross `hq pause limits`
+  (with no separate earlier threshold), stop under the turn-pause rule above and, when
+  compaction or context growth is the binding cause, recommend a user-chosen fresh
+  controller in the pause decision. During the permitted pause report and park, record
+  the durable handoff in the task record and its existing ledger/report references:
+  actual status, task/plan/spec identities and frozen revisions, branch/worktree,
+  current HEAD/base and next action with its owner; completed task ranges, current
+  review round, findings, rulings, deferred minors, and evidence locations and
+  revision-bound verdicts with limits (preserving full reports); claims, running
+  processes with stop/pickup commands, host pointers, and retained items/checkpoint
+  basis, stating which accounting was not refreshed at the limit instead of starting
+  fresh inventory or cleanup work; and observed spend/counts (keeping unknown counters
+  unknown), limit reached, remaining estimate and the user's outstanding decision.
+  Never auto-launch a replacement controller, start another session, continue work
+  merely to finish a handoff, or reset budgets; a user who continues the current
+  controller receives the same normal checks. A receiving controller reads the handoff
+  and task before claiming work, verifies current claim, process and Git state and the
+  evidence it needs before reuse, refreshes stale or unrefreshed accounting first,
+  reconciles any state change, and resumes the first unfinished action without
+  treating old reports as fresh filesystem observations or rerunning completed reviews
+  merely because the controller changed.
+<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 end -->

@@ -130,6 +130,10 @@ object only for a new item or a change in its retention fields: purpose, owner,
 trigger, verification state/action, digest, manifest, path/alias disposition or
 release. Compare parsed fields, not JSON whitespace or field order. An unchanged
 hash is a result of fresh inspection, not permission to skip reading bytes.
+At park, done or disposal, the acting owner inspects the complete known local
+retained set; delegated observations do not waive that obligation. An explicitly
+delegated check may supply evidence, but the recording actor names the observer
+and never describes another actor's observation as its own recheck.
 
 For an inaccessible item within the host being inspected, or an actually observed
 missing file/hash mismatch, transition a formerly verified object to kept/unknown,
@@ -181,8 +185,13 @@ note with host, path, purpose and current task owner, saying contents are mutabl
 and not yet checkpointed. Do not fabricate a hash. If `WORK_ROOT` is absent,
 ask the user where persistent storage belongs rather than inventing a root.
 Keep canonical multi-session inputs on that persistent storage; tmpfs holds only
-per-run copies. Checkpoint at park/done and verify recorded hashes before reuse,
-especially before claiming an idle-host window or the user's machine.
+per-run copies. For a changing plan workspace or task scratch/evidence directory,
+content additions or edits (new reports, ledger appends, ordinary handoffs) do not
+themselves trigger a complete manifest or checkpoint; generate the complete manifest
+and checkpoint at real park, done or disposal boundaries. Reuse after interruption
+or compaction checks the specific canonical input bytes needed before relying on
+them, especially before claiming an idle-host window or the user's machine, without
+an unsolicited whole-container manifest.
 
 A scratch/evidence-directory record covers newly retained contained files by
 default when they have the same purpose, next owner and cleanup trigger, and the
@@ -196,8 +205,18 @@ raw copy in the layout fallback is also explicit. Its bytes still appear in the
 container manifest, but the specific item's retention intent overrides inherited
 container terms. A parent owner cannot release a child owner's evidence.
 
-Changed contents require a fresh complete manifest and its SHA-256, then a changed
-container record. Incomplete enumeration or a missing/unreadable file makes the
+At a park, done or disposal checkpoint, changed container contents require a fresh
+complete manifest and its SHA-256, then a changed container record. During active
+work between checkpoints, an in-progress mutable container has changed since its
+last checkpoint; that earlier checkpoint is historical and must not be claimed as
+current proof. Immediate creation notes and changes of owner, purpose, disposition
+or observed uncertainty still get recorded when they occur, and frozen review
+inputs, preserved replacement versions, attachment verification and domain-specific
+integrity checks still happen at their own required boundaries. A child task's
+`done` is a done boundary for the child's own retained set; it does not
+automatically checkpoint a container that remains owned by an open parent.
+Ownership must be real and recorded, never transferred merely to avoid a required
+checkpoint. Incomplete enumeration or a missing/unreadable file makes the
 container checkpoint unknown; independently verified files may keep their own
 verified records. A container never claims complete verification over an unreadable
 exception. Before removal, every manifest member and independently retained item

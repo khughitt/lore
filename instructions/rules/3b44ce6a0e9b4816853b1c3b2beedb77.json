@@ -310,6 +310,37 @@
       "locator": null,
       "sha256": "f82290e539ff9cbee650727bf09af91917fb5f4e22e66c09d7c43b6d1f1b340c",
       "text": "- At park and before `tasks done`, inspect and account on the task for the complete\n  retained set on the current host: worktrees, task scratch and off-tree evidence.\n  Read `~/.agents/skills/references/retained-item-records.md` when creating,\n  refreshing or releasing records; follow its changed-item and exact host-checkpoint\n  procedure. Accounting does not require restating unchanged inventories. Keep\n  uncertainty explicit and refresh resource/wait descriptions from observations.\n  An open task owns items across activation review; only a closing session disposing\n  of them in the same turn may temporarily own integration. Anything kept longer\n  needs an open follow-up or agreed user handoff. A trigger, merge or done grants\n  no deletion permission; preserve unfinished work and the only needed raw copy.\n  For layout refusal, keep hashed raw bytes and attach a labelled portable derivative\n  under the reference's fallback until the executing checker accepts shipped support;\n  design completion alone never retires that fallback or authorizes raw deletion.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:4c106ff39eb3436d96b1f48af5fb6564",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "beff0adc06f618f7de134fa94a69a20051b88032e9d9527cf1f8a0674aa87553",
+          "sha256": "c5e01dba5035a90155948c2b9f9962c72861dfe06a0816b46bc7e2af0b823e5b",
+          "text": "- At park and before `tasks done`, inspect and account on the task for the complete\n  retained set on the current host: worktrees, task scratch and off-tree evidence.\n"
+        },
+        {
+          "id": "clause:18ad92d779304a2bb4b8bc3e20cc961b",
+          "offset": 167,
+          "overlaps": [],
+          "parent_sha256": "beff0adc06f618f7de134fa94a69a20051b88032e9d9527cf1f8a0674aa87553",
+          "sha256": "219682be6c61bcb56e1b1d895fbb230c94c207981891a645b3e7bb72932a3df1",
+          "text": "  Read `~/.agents/skills/references/retained-item-records.md` when creating,\n  refreshing or releasing records; follow its changed-item and exact host-checkpoint\n  procedure. For a changing plan workspace or task scratch/evidence directory, content\n  additions or edits (reports, ledger appends, ordinary handoffs) do not trigger a\n  complete manifest or checkpoint per edit: generate complete manifests and checkpoints\n  at real `park`, `done` or disposal boundaries, while recording immediate creation\n  notes and changes of owner, purpose, disposition or uncertainty when they occur and\n  keeping frozen-input, replacement-preservation, attachment, recovery and integrity\n  checks at their own boundaries. A child task's `done` accounts for the child's own\n  retained set and does not automatically checkpoint a container that remains owned by\n  an open parent; ownership must be real and recorded, never transferred to avoid a\n  checkpoint. Between checkpoints an earlier checkpoint on a mutating container is\n  historical, not current proof; at `park`, `done` or disposal the acting owner\n  inspects the complete known local retained set (naming the observer when an\n  explicitly delegated check supplied evidence, never calling another actor's\n  observation its own recheck). Accounting does not require restating unchanged\n  inventories. "
+        },
+        {
+          "id": "clause:e22f51621be04bb482f887ca0453e67c",
+          "offset": 1512,
+          "overlaps": [],
+          "parent_sha256": "beff0adc06f618f7de134fa94a69a20051b88032e9d9527cf1f8a0674aa87553",
+          "sha256": "88aa7b721e3d340c392da73a3e09db67f388472a43014c17a9a2fddfc65b95d6",
+          "text": "Keep uncertainty explicit and refresh resource/wait descriptions from\n  observations. An open task owns items across activation review; only a closing\n  session disposing of them in the same turn may temporarily own integration. Anything\n  kept longer needs an open follow-up or agreed user handoff. A trigger, merge or done\n  grants no deletion permission; preserve unfinished work and the only needed raw copy.\n  For layout refusal, keep hashed raw bytes and attach a labelled portable derivative\n  under the reference's fallback until the executing checker accepts shipped support;\n  design completion alone never retires that fallback or authorizes raw deletion.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "beff0adc06f618f7de134fa94a69a20051b88032e9d9527cf1f8a0674aa87553",
+      "text": "- At park and before `tasks done`, inspect and account on the task for the complete\n  retained set on the current host: worktrees, task scratch and off-tree evidence.\n  Read `~/.agents/skills/references/retained-item-records.md` when creating,\n  refreshing or releasing records; follow its changed-item and exact host-checkpoint\n  procedure. For a changing plan workspace or task scratch/evidence directory, content\n  additions or edits (reports, ledger appends, ordinary handoffs) do not trigger a\n  complete manifest or checkpoint per edit: generate complete manifests and checkpoints\n  at real `park`, `done` or disposal boundaries, while recording immediate creation\n  notes and changes of owner, purpose, disposition or uncertainty when they occur and\n  keeping frozen-input, replacement-preservation, attachment, recovery and integrity\n  checks at their own boundaries. A child task's `done` accounts for the child's own\n  retained set and does not automatically checkpoint a container that remains owned by\n  an open parent; ownership must be real and recorded, never transferred to avoid a\n  checkpoint. Between checkpoints an earlier checkpoint on a mutating container is\n  historical, not current proof; at `park`, `done` or disposal the acting owner\n  inspects the complete known local retained set (naming the observer when an\n  explicitly delegated check supplied evidence, never calling another actor's\n  observation its own recheck). Accounting does not require restating unchanged\n  inventories. Keep uncertainty explicit and refresh resource/wait descriptions from\n  observations. An open task owns items across activation review; only a closing\n  session disposing of them in the same turn may temporarily own integration. Anything\n  kept longer needs an open follow-up or agreed user handoff. A trigger, merge or done\n  grants no deletion permission; preserve unfinished work and the only needed raw copy.\n  For layout refusal, keep hashed raw bytes and attach a labelled portable derivative\n  under the reference's fallback until the executing checker accepts shipped support;\n  design completion alone never retires that fallback or authorizes raw deletion.\n"
     }
   ],
   "schema": 1,

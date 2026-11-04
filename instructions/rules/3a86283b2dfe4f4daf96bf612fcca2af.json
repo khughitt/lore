@@ -1,0 +1,140 @@
+{
+  "assessments": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "spec-scale-review-to-risk-1860fff05"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-56a1c7; lore:records:lore/docs/specs/2026-11-04-scale-review-to-risk-design.md",
+            "revision": "1860fff05cf90e4f4fd0ed5a1222b4124ef5d47f",
+            "scope": "User accepted design spec 1860fff05cf90e4f4fd0ed5a1222b4124ef5d47f for planning after external scoped re-review; live activation of exact current rule bytes remains gated on separate user merge approval."
+          }
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": "Observed in the committed design spec 1860fff05cf90e4f4fd0ed5a1222b4124ef5d47f and task lore-56a1c7.",
+          "role": "mechanism",
+          "statement": "Agent proposed the four-tier step-risk classification, cumulative six-review per-plan-task cap, and turn-pause routing in response to the user goal from claude-code:1219a183-f486-4832-ac92-170d315e5fc2 line 250.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "spec-scale-review-to-risk-1860fff05"
+          }
+        ]
+      },
+      "evidence": [
+        "spec-scale-review-to-risk-1860fff05"
+      ],
+      "id": "lore-56a1c7-design-proposal-and-planning-approval",
+      "kind": "proposal",
+      "occurred_at": "2026-11-04T17:40:10Z",
+      "predecessors": [],
+      "recorded_at": "2026-11-04T18:18:00Z",
+      "recorder": "antigravity",
+      "searches": [],
+      "subject": {
+        "binding": "revision",
+        "id": "rule:3a86283b2dfe4f4daf96bf612fcca2af",
+        "sha256": "73873ec10a8061cf1e9bb06c4d2361b089543fe72b53bc588a92ad525d94b3e7"
+      },
+      "time_uncertainty": null
+    }
+  ],
+  "id": "rule:3a86283b2dfe4f4daf96bf612fcca2af",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [
+    {
+      "evidence": [
+        "spec-scale-review-to-risk-1860fff05",
+        "brief-bounded-execution-3692f8044"
+      ],
+      "id": "sun-fbaf80-review-multiplication",
+      "rationale": "Motivated by the sun-fbaf80 unattended Codex rollout (codex:01a18943-2b9d-7e50-926f-b74169571349, profiled on obs-59789b and filed from claude-code:1219a183-f486-4832-ac92-170d315e5fc2 line 250), where 16 plan tasks multiplied to 109 subagent spawns (69 review/rereview spawns and 83 review: task notes) through sub-stage counter resets, operational/bookkeeping review spawns, and SDD breaker continuation; also constrained by seven qualitative positive review reports (lore-c67d08, lore-75dbd5, lore-f33844, lore-f49e10, lore-abb45e, lore-350819, lore-782e4f) whose original runs are unattached.",
+      "status": "recorded",
+      "subject": {
+        "binding": "revision",
+        "id": "rule:3a86283b2dfe4f4daf96bf612fcca2af",
+        "sha256": "73873ec10a8061cf1e9bb06c4d2361b089543fe72b53bc588a92ad525d94b3e7"
+      }
+    }
+  ],
+  "purpose": {
+    "basis": "observed",
+    "sources": [
+      "spec-scale-review-to-risk-1860fff05"
+    ],
+    "text": "Scale planned-execution review to step risk and bound independent reviews per plan task at six before routing exhaustion to the turn pause."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "73873ec10a8061cf1e9bb06c4d2361b089543fe72b53bc588a92ad525d94b3e7",
+      "text": "- In planned execution (subagent-driven and inline alike), scale review to step risk\n  and bound independent reviews per plan task. A step that changes repository code,\n  tests, build or lock files, schemas, runtime configuration, or a plan-designated\n  reviewed artifact gets independent review: under subagent-driven execution, one\n  task review of the task's `BASE..HEAD` diff and implementer report plus one scoped\n  corrective re-review per fix round on `FIX_BASE..HEAD` using the implementer's\n  saved test evidence (running a focused test only when reading the diff raises a\n  specific named doubt the saved run does not answer); inline, the task's completion\n  contract and the final whole-branch review cover it. A plan amendment or interface\n  ruling is verified by the controller against the binding spec, recorded as a ledger\n  `Ruling:` line with `Why:`, `Cost:` and revision references, and checked by the\n  affected build and final reviews; never spawn a standalone scope, authority or\n  preflight reviewer solely to bless a ruling before implementation. Operational\n  execution of already-reviewed code (a run task after an accepted build-to-run\n  barrier, a bounded live continuation slice, a `--resume-scope` invocation, or an\n  end-to-end pilot run or rerun on an accepted build commit) gets an operator or\n  controller self-check that `HEAD` is at or descendant of the accepted build commit\n  with no unreviewed runner/reader edits, the command, slice/resume arguments and\n  input hashes match the plan, ruling or pilot check, and the exit status and output\n  satisfy the task's `Expected:` contract (and Processes' smallest-run gate and\n  verdict check where applicable); never spawn a pre-invocation, scope, pilot-invariance\n  or pilot-qualification reviewer for that run, while whether an end-to-end pilot\n  must run or rerun stays governed by Processes, Tests and project requirements (if a\n  run task commits a final human-facing report the plan explicitly marks as a\n  reviewed deliverable, dispatch at most one task review at the end of the run task\n  for that deliverable). Bookkeeping, custody and task-record maintenance (task notes,\n  `retained:` declarations, container manifests, checkpoints, transfers, ledger\n  appends and workspace cleanup) get the acting owner's self-check and never an\n  independent reviewer or assessment subagent. Across the life of any numbered plan\n  task, dispatch at most six independent reviews in total (one initial task review\n  plus up to five scoped corrective re-reviews), batching all open Critical and\n  Important findings and confirmed spec gaps from a review into one fix pass and one\n  scoped re-review per round, and never dispatch a re-review for a round that changed\n  only ledger lines or task notes. Splitting a plan task into internal sub-stages or\n  reopening a build task after a downstream operational run exposes a defect\n  continues that plan task's cumulative review count and monotonic `review: impl\n  round <R>` sequence (`R = 1..6`) without resetting the counter. When a plan task's\n  fifth corrective re-review (sixth independent review) still reports a spec gap or an\n  unresolved Critical or Important finding, or when a reopened build task has already\n  spent all six reviews and needs a code fix, do not rule past the cap, split a new\n  sub-stage or start another review round: stop under the turn-pause rule above,\n  name the plan task, the six reviews spent, the open findings (with report paths) or\n  reason a seventh review would be needed, and one recommended decision in the pause\n  report, and park the task `--waiting-on user --reason decision`. This outranks\n  subagent-driven-development's \"Never skip the task review\", \"Every round ends with\n  a scoped re-review\", \"Rulings, not stalls\" and `references/fix-loop.md`'s breaker\n  continuation past the cap.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [
+    {
+      "access": "available",
+      "id": "spec-scale-review-to-risk-1860fff05",
+      "inspected_at": "2026-11-04T17:24:28Z",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "lore/docs/specs/2026-11-04-scale-review-to-risk-design.md",
+        "reference": "lore-56a1c7 accepted design spec (sha256 5af1ae137632c397abce87742105de06a66a3d9a2b9fff881ac8b6db314523a9).",
+        "revision": "1860fff05cf90e4f4fd0ed5a1222b4124ef5d47f"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "lore/docs/specs/2026-11-04-scale-review-to-risk-design.md",
+        "reference": "Committed design spec in lore:records.",
+        "revision": "1860fff05cf90e4f4fd0ed5a1222b4124ef5d47f"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "5af1ae137632c397abce87742105de06a66a3d9a2b9fff881ac8b6db314523a9",
+      "source_time": "2026-11-04T17:23:12Z",
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "brief-bounded-execution-3692f8044",
+      "inspected_at": "2026-11-04T16:40:00Z",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "lore/docs/notes/2026-10-31-bounded-execution-brief.md",
+        "reference": "Bounded-execution brief summarizing the sun-fbaf80 incident and the seven woken qualitative review reports.",
+        "revision": "3692f8044dbbfc7bca23b03e31fd9c80b927af68"
+      },
+      "preservation": null,
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": null,
+      "source_time": "2026-11-04T16:40:00Z",
+      "transformation": null
+    }
+  ],
+  "state": "active",
+  "title": "Scale review to step risk and bound per-task reviews"
+}

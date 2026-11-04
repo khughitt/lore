@@ -203,10 +203,63 @@
   measure, against the new merge base, so the review package covers the merge
   resolution. A measurement taken before that merge does not count toward its gate.
 <!-- rule:6a846b1f53ee406d9b48c7434364a2cf end -->
+<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af begin -->
+- In planned execution (subagent-driven and inline alike), scale review to step risk
+  and bound independent reviews per plan task. A step that changes repository code,
+  tests, build or lock files, schemas, runtime configuration, or a plan-designated
+  reviewed artifact gets independent review: under subagent-driven execution, one
+  task review of the task's `BASE..HEAD` diff and implementer report plus one scoped
+  corrective re-review per fix round on `FIX_BASE..HEAD` using the implementer's
+  saved test evidence (running a focused test only when reading the diff raises a
+  specific named doubt the saved run does not answer); inline, the task's completion
+  contract and the final whole-branch review cover it. A plan amendment or interface
+  ruling is verified by the controller against the binding spec, recorded as a ledger
+  `Ruling:` line with `Why:`, `Cost:` and revision references, and checked by the
+  affected build and final reviews; never spawn a standalone scope, authority or
+  preflight reviewer solely to bless a ruling before implementation. Operational
+  execution of already-reviewed code (a run task after an accepted build-to-run
+  barrier, a bounded live continuation slice, a `--resume-scope` invocation, or an
+  end-to-end pilot run or rerun on an accepted build commit) gets an operator or
+  controller self-check that `HEAD` is at or descendant of the accepted build commit
+  with no unreviewed runner/reader edits, the command, slice/resume arguments and
+  input hashes match the plan, ruling or pilot check, and the exit status and output
+  satisfy the task's `Expected:` contract (and Processes' smallest-run gate and
+  verdict check where applicable); never spawn a pre-invocation, scope, pilot-invariance
+  or pilot-qualification reviewer for that run, while whether an end-to-end pilot
+  must run or rerun stays governed by Processes, Tests and project requirements (if a
+  run task commits a final human-facing report the plan explicitly marks as a
+  reviewed deliverable, dispatch at most one task review at the end of the run task
+  for that deliverable). Bookkeeping, custody and task-record maintenance (task notes,
+  `retained:` declarations, container manifests, checkpoints, transfers, ledger
+  appends and workspace cleanup) get the acting owner's self-check and never an
+  independent reviewer or assessment subagent. Across the life of any numbered plan
+  task, dispatch at most six independent reviews in total (one initial task review
+  plus up to five scoped corrective re-reviews), batching all open Critical and
+  Important findings and confirmed spec gaps from a review into one fix pass and one
+  scoped re-review per round, and never dispatch a re-review for a round that changed
+  only ledger lines or task notes. Splitting a plan task into internal sub-stages or
+  reopening a build task after a downstream operational run exposes a defect
+  continues that plan task's cumulative review count and monotonic `review: impl
+  round <R>` sequence (`R = 1..6`) without resetting the counter. When a plan task's
+  fifth corrective re-review (sixth independent review) still reports a spec gap or an
+  unresolved Critical or Important finding, or when a reopened build task has already
+  spent all six reviews and needs a code fix, do not rule past the cap, split a new
+  sub-stage or start another review round: stop under the turn-pause rule above,
+  name the plan task, the six reviews spent, the open findings (with report paths) or
+  reason a seventh review would be needed, and one recommended decision in the pause
+  report, and park the task `--waiting-on user --reason decision`. This outranks
+  subagent-driven-development's "Never skip the task review", "Every round ends with
+  a scoped re-review", "Rulings, not stalls" and `references/fix-loop.md`'s breaker
+  continuation past the cap.
+<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af end -->
 <!-- rule:d21e7a02223e4d00adbb602627e441a6 begin -->
 - After a final whole-branch review, in subagent-driven and inline (executing-plans)
   execution alike, fix (or rule on, as the skills allow) its Critical and Important
-  findings in corrective rounds, up to five; then surface what remains. A round is one
+  findings in corrective rounds, up to five, under the same one-fix-pass,
+  one-scoped-re-review and saved-evidence discipline as per-task reviews above; if
+  the fifth corrective round still leaves any Critical or Important finding
+  unresolved, surface what remains by stopping and parking for the user under the
+  turn-pause rule above rather than proceeding to integration. A round is one
   fix pass plus one scoped re-review of it, and another follows while that re-review
   reports any Critical or Important finding, persisting or introduced by the fix. Minor
   findings never enter a round; they go to the ledger as `minor (deferred)`, as both

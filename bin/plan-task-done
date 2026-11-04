@@ -9,7 +9,9 @@ plan=$(cd -- "$(dirname -- "$2")" && printf '%s/%s' "$(pwd -P)" "$(basename -- "
 n=$3; base=$4; shift 5
 root=$(git rev-parse --show-toplevel)
 [[ $workspace != "$root" && $workspace != "$root/"* ]] || fail 'workspace must be outside the code worktree'
-[[ -f $workspace/plan-path && $(cat "$workspace/plan-path") == "$plan" ]] || fail 'workspace belongs to another plan or was not started'
+[[ -f $workspace/plan-path ]] || fail "workspace was not started ($workspace/plan-path is missing)"
+recorded_plan=$(cat "$workspace/plan-path")
+[[ $recorded_plan == "$plan" ]] || fail "workspace belongs to another plan (recorded in $workspace/plan-path: $recorded_plan; supplied PLAN: $plan); pass the recorded plan path from $workspace/plan-path when completing the same execution from another checkout after verifying the plan bytes match, or use the workspace for the supplied plan when they are distinct plans"
 ledger=$workspace/progress.md
 [[ -f $ledger && $(head -n 1 "$ledger") == "# SDD ledger — plan: $plan" ]] || fail 'ledger belongs to another plan'
 [[ -f $workspace/task-$n-base && $(cat "$workspace/task-$n-base") == "$base" ]] || fail 'BASE differs from the recorded start'

@@ -129,8 +129,82 @@ def test_refuses_other_plan_or_unusable_workspace(world, failure):
     before = {p: p.read_bytes() for p in w.workspace.glob('*') if p.is_file()}
     result = start(w)
     assert result.returncode != 0
+    if failure == 'collision':
+        assert result.returncode == 2
+        assert str(w.plan.parent.parent / w.plan.name) in result.stderr
+        assert str(w.plan) in result.stderr
+        assert str(w.workspace / 'plan-path') in result.stderr
+        assert 'pass the recorded plan path' in result.stderr
+        assert 'distinct plans' in result.stderr
     assert all(p.read_bytes() == data for p, data in before.items())
     assert not (w.repo / '.superpowers').exists()
+
+
+def test_completion_refuses_unstarted_workspace_distinct_from_plan_mismatch(world):
+    w = world
+    result = done(w, 'print("must not run")')
+    assert result.returncode == 2
+    assert 'not started' in result.stderr
+    assert str(w.workspace / 'plan-path') in result.stderr
+    assert 'another plan' not in result.stderr
+    assert 'must not run' not in result.stdout and 'must not run' not in result.stderr
+    assert list(w.workspace.iterdir()) == []
+
+
+def test_completion_explains_post_integration_plan_path_mismatch_and_recovers(world):
+    w = world
+    rel_plan = Path('docs/plans/in-tree-plan.md')
+    (w.repo / rel_plan.parent).mkdir(parents=True)
+    (w.repo / rel_plan).write_text('# Plan\n\n### Task 1: One\n\nDo it.\n')
+    w.git('add', '.')
+    w.git('-c', 'commit.gpgsign=false', 'commit', '-qm', 'test: add in-tree plan')
+    base = w.git('rev-parse', 'HEAD')
+
+    wt = w.repo.parent / 'worktree-task-1'
+    w.git('worktree', 'add', '-q', '-b', 'feat/task-1', str(wt))
+    started = subprocess.run(
+        ['bash', str(ROOT / 'bin/plan-task-start'), str(w.workspace), str(rel_plan), '1'],
+        cwd=wt, env=w.env, capture_output=True, text=True,
+    )
+    assert started.returncode == 0, started.stderr
+    recorded = str((wt / rel_plan).resolve())
+    supplied = str((w.repo / rel_plan).resolve())
+    assert (w.workspace / 'plan-path').read_text().strip() == recorded
+
+    (wt / 'code.txt').write_text('implemented in worktree\n')
+    subprocess.run(['git', 'add', '.'], cwd=wt, env=w.env, check=True)
+    subprocess.run(
+        ['git', '-c', 'commit.gpgsign=false', 'commit', '-qm', 'feat: worktree change'],
+        cwd=wt, env=w.env, check=True,
+    )
+    w.git('merge', '--ff-only', 'feat/task-1')
+
+    before = {p: p.read_bytes() for p in w.workspace.iterdir()}
+    mismatch = invoke(
+        w, 'plan-task-done', w.workspace, rel_plan, 1, base,
+        '--', sys.executable, '-c', 'print("must not run")',
+    )
+    assert mismatch.returncode == 2
+    assert 'another plan' in mismatch.stderr
+    assert 'not started' not in mismatch.stderr
+    assert recorded in mismatch.stderr
+    assert supplied in mismatch.stderr
+    assert str(w.workspace / 'plan-path') in mismatch.stderr
+    assert 'pass the recorded plan path' in mismatch.stderr
+    assert 'distinct plans' in mismatch.stderr
+    assert 'must not run' not in mismatch.stdout and 'must not run' not in mismatch.stderr
+    assert {p: p.read_bytes() for p in w.workspace.iterdir()} == before
+
+    recorded_arg = (w.workspace / 'plan-path').read_text().strip()
+    assert Path(recorded_arg).read_bytes() == (w.repo / rel_plan).read_bytes()
+    recovered = invoke(
+        w, 'plan-task-done', w.workspace, recorded_arg, 1, base,
+        '--', sys.executable, '-c', 'print("post-integration check passed")',
+    )
+    assert recovered.returncode == 0, recovered.stderr
+    assert 'Task 1: complete' in (w.workspace / 'progress.md').read_text()
+    assert (w.workspace / 'plan-path').read_text().strip() == recorded
+    assert not (w.repo / '.superpowers').exists() and not (wt / '.superpowers').exists()
 
 
 def test_completion_rejects_wrong_base_before_running_command(world):

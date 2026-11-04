@@ -668,12 +668,18 @@ not installed plugin modifications. Call from the implementing code worktree:
 
 Here LORE_ROOT is the resolved checkout, WORKSPACE is the exact recorded per-plan
 directory, PLAN is the frozen plan file, and N is its positive task number. Create
-and record the empty workspace before starting. Start binds the plan identity,
-checks ledger identity, captures BASE once and extracts a digest-named brief via
-the pinned `task-brief` script's explicit OUTFILE. Resume reuses BASE and preserves
-old briefs when a reviewed plan revision changes. Read the new brief; a hash-shaped
-name is not permission to skip frozen-input verification. Start fails for an
-unmarked occupied directory, another plan's ledger, or BASE outside HEAD ancestry.
+and record the empty workspace before starting. Start binds the canonical `PLAN`
+path in `$WORKSPACE/plan-path` and the ledger header, checks ledger identity,
+captures BASE once and extracts a digest-named brief via the pinned `task-brief`
+script's explicit OUTFILE. `PLAN` remains bound to that canonical path recorded at
+start: when resuming or calling `plan-task-done` from another checkout (such as
+`main` after integrating a worktree branch that started with a relative in-tree
+plan path), verify the plan bytes match and pass the recorded `$WORKSPACE/plan-path`
+value rather than a relative path that resolves to the new checkout. Resume reuses
+BASE and preserves old briefs when a reviewed plan revision changes. Read the new
+brief; a hash-shaped name is not permission to skip frozen-input verification.
+Start fails for an unmarked occupied directory, another plan's ledger, or BASE
+outside HEAD ancestry.
 
 Completion runs the required command in the implementing worktree and preserves
 its actual status and full output in a new attempt log. Failure appends an attempt,

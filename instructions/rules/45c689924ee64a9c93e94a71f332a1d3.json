@@ -351,6 +351,37 @@
       "locator": null,
       "sha256": "74446c7d890f1da713881cf0d73ce321e224952c2499e773274cd38a6e434506",
       "text": "- A task that spans sessions keeps its inputs where a reboot cannot take them. Its\n  scratch lives in a per-task directory on persistent host-local storage off the synced\n  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user\n  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only\n  per-run copies made from that persistent canonical copy. Note directory creation\n  immediately (host, path, purpose and current task owner; contents still mutable),\n  then checkpoint under the retained-item rule above at park and done. A resume\n  checks that its inputs exist and match the recorded hash before it claims an\n  idle-host window or the user's machine.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:b42903ada76a46d09ee57916c2dd4772",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "90a7828c094520fb77e5921f04d88521d06964ceea78cade31b6c6b5aa7f4dfd",
+          "sha256": "f7acd7af7849edaaa69e2f9cc6f05bbc30cc4a9efa5a46d106a8212ee91b4116",
+          "text": "- A task that spans sessions keeps its inputs where a reboot cannot take them. Its\n  scratch lives in a per-task directory on persistent host-local storage off the synced\n  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user\n  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only\n  per-run copies made from that persistent canonical copy. "
+        },
+        {
+          "id": "clause:23b986ea4b5c426fa18bb225ac1b1e31",
+          "offset": 402,
+          "overlaps": [],
+          "parent_sha256": "90a7828c094520fb77e5921f04d88521d06964ceea78cade31b6c6b5aa7f4dfd",
+          "sha256": "3a92f231357d0d26cefb1b2c973bcc4a1000b760c69f5cb5d4d86c0ae2311541",
+          "text": "Note directory creation\n  immediately (host, path, purpose and current task owner; contents still mutable),\n  then checkpoint under the retained-item rule above at park, done or disposal rather\n  than after every content edit. "
+        },
+        {
+          "id": "clause:8e6d0438a4864e1ea6cb2a39fecefdf8",
+          "offset": 629,
+          "overlaps": [],
+          "parent_sha256": "90a7828c094520fb77e5921f04d88521d06964ceea78cade31b6c6b5aa7f4dfd",
+          "sha256": "828d0334f78ae1c6cabe27473c0554f4a9117384cdbddd4a1955adde9ccc476a",
+          "text": "A resume or post-compaction recovery checks that the\n  specific canonical inputs it needs exist and match their recorded hashes before\n  relying on them or claiming an idle-host window or the user's machine, without an\n  unsolicited whole-container manifest.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "90a7828c094520fb77e5921f04d88521d06964ceea78cade31b6c6b5aa7f4dfd",
+      "text": "- A task that spans sessions keeps its inputs where a reboot cannot take them. Its\n  scratch lives in a per-task directory on persistent host-local storage off the synced\n  tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user\n  where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only\n  per-run copies made from that persistent canonical copy. Note directory creation\n  immediately (host, path, purpose and current task owner; contents still mutable),\n  then checkpoint under the retained-item rule above at park, done or disposal rather\n  than after every content edit. A resume or post-compaction recovery checks that the\n  specific canonical inputs it needs exist and match their recorded hashes before\n  relying on them or claiming an idle-host window or the user's machine, without an\n  unsolicited whole-container manifest.\n"
     }
   ],
   "schema": 1,

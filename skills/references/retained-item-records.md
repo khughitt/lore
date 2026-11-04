@@ -100,9 +100,12 @@ dependency, approval or retention lifetime. A long log or many rows alone is a
 reason for an artifact, not task decomposition. A closed task cannot own retained
 items: transfer to an open follow-up or an agreed user handoff as today.
 
-An over-cap manifest stays losslessly retained off-tree pending tasks-b81063's
-supported transport decision. Do not split, compress, raise caps or relabel a raw
-blob as a records document to evade checks. A layout refusal keeps the existing
+For an over-cap UTF-8 manifest within the project's multipart limits, use the
+shipped `tasks attach --multipart` route below. Only that route may split one
+document: manual splitting, compression, raised caps and relabelling raw bytes as
+records documents to evade checks remain forbidden. If admission or publication
+fails, keep the exact source bytes and resolve the stated cause; an eligible
+off-tree copy remains governed by the placement rules below. A layout refusal keeps the existing
 raw-plus-portable fallback, with the mapping in a task note; only acceptance by the
 executing shipped checker retires that fallback. Other refusals retain their own
 diagnosis. Normal publication permission still applies in every destination.
@@ -127,6 +130,10 @@ object only for a new item or a change in its retention fields: purpose, owner,
 trigger, verification state/action, digest, manifest, path/alias disposition or
 release. Compare parsed fields, not JSON whitespace or field order. An unchanged
 hash is a result of fresh inspection, not permission to skip reading bytes.
+At park, done or disposal, the acting owner inspects the complete known local
+retained set; delegated observations do not waive that obligation. An explicitly
+delegated check may supply evidence, but the recording actor names the observer
+and never describes another actor's observation as its own recheck.
 
 For an inaccessible item within the host being inspected, or an actually observed
 missing file/hash mismatch, transition a formerly verified object to kept/unknown,
@@ -178,8 +185,13 @@ note with host, path, purpose and current task owner, saying contents are mutabl
 and not yet checkpointed. Do not fabricate a hash. If `WORK_ROOT` is absent,
 ask the user where persistent storage belongs rather than inventing a root.
 Keep canonical multi-session inputs on that persistent storage; tmpfs holds only
-per-run copies. Checkpoint at park/done and verify recorded hashes before reuse,
-especially before claiming an idle-host window or the user's machine.
+per-run copies. For a changing plan workspace or task scratch/evidence directory,
+content additions or edits (new reports, ledger appends, ordinary handoffs) do not
+themselves trigger a complete manifest or checkpoint; generate the complete manifest
+and checkpoint at real park, done or disposal boundaries. Reuse after interruption
+or compaction checks the specific canonical input bytes needed before relying on
+them, especially before claiming an idle-host window or the user's machine, without
+an unsolicited whole-container manifest.
 
 A scratch/evidence-directory record covers newly retained contained files by
 default when they have the same purpose, next owner and cleanup trigger, and the
@@ -193,8 +205,18 @@ raw copy in the layout fallback is also explicit. Its bytes still appear in the
 container manifest, but the specific item's retention intent overrides inherited
 container terms. A parent owner cannot release a child owner's evidence.
 
-Changed contents require a fresh complete manifest and its SHA-256, then a changed
-container record. Incomplete enumeration or a missing/unreadable file makes the
+At a park, done or disposal checkpoint, changed container contents require a fresh
+complete manifest and its SHA-256, then a changed container record. During active
+work between checkpoints, an in-progress mutable container has changed since its
+last checkpoint; that earlier checkpoint is historical and must not be claimed as
+current proof. Immediate creation notes and changes of owner, purpose, disposition
+or observed uncertainty still get recorded when they occur, and frozen review
+inputs, preserved replacement versions, attachment verification and domain-specific
+integrity checks still happen at their own required boundaries. A child task's
+`done` is a done boundary for the child's own retained set; it does not
+automatically checkpoint a container that remains owned by an open parent.
+Ownership must be real and recorded, never transferred merely to avoid a required
+checkpoint. Incomplete enumeration or a missing/unreadable file makes the
 container checkpoint unknown; independently verified files may keep their own
 verified records. A container never claims complete verification over an unreadable
 exception. Before removal, every manifest member and independently retained item
@@ -213,12 +235,59 @@ accepts that cost instead of introducing incremental manifests or silent exclusi
 
 Preserve each manifest version used by a checkpoint. Prefer a small immutable
 attachment, with its digest in the container record and its actual storage path
-as `manifest`; when this cannot pass size/layout checks, retain an immutable
+as `manifest`. For an over-cap text manifest use the multipart procedure below;
+when attachment is unavailable, retain an immutable
 off-tree file outside the inventoried container with an explicit evidence record.
 This avoids recursively inventorying checkpoint metadata. Reuse the exact version
 when contents are unchanged; do not create another manifest attachment at each park.
 Keep manifests for as long as their checkpoint evidence is needed. A mutable
 `manifest.json` alone cannot substantiate an old checkpoint after it is overwritten.
+
+### Multipart manifests
+
+Tasks owns the command and admission contract (README, Multipart text attachments
+and Export and recovery). Attach one whole UTF-8 source with
+`tasks attach <id> <path> --multipart`, or stream it into
+`tasks attach <id> - --name <name>.json --multipart`. Use a new logical name for a
+changed version. The installed route preserves exact bytes as bounded parts plus a
+catalog, each under the ordinary per-file cap; defaults limit one artifact to
+16 MiB and 16 parts, not cumulative history. The project must declare
+`multipart_validators`: absent refuses admission; `[]` explicitly declares no extra
+whole-document gates. Built-in JSON validation is not Manifest 1 schema or complete
+filesystem-coverage validation; perform those checks too, and preserve all normal
+content/layout and publication-permission requirements.
+
+Inspect the attach result's `publication.state`, not just its exit status:
+
+- `published` binds reconstruction and current validation to `publication.commit`.
+  Preserve the task, logical `files:<name>` reference, whole-file byte count and
+  SHA-256, full publication commit and returned `validation` object in checkpoint
+  evidence. Confirm `tasks show` declares the logical artifact and its digest.
+- `local` is an incomplete publication even on exit 0. Resolve its `cause` and
+  follow `next`; commit where needed and verify the resulting named commit with
+  `tasks export <id> <name> --at <commit> --verify`. Inspect both integrity and
+  `validation.passed`, preserving that current-runtime validation result. A local
+  save or a working-tree-only export cannot complete the publication requirement.
+
+There is no whole-file storage path: neither a part nor the catalog is the
+manifest. Recover exact bytes with
+`tasks export <id> <name> --at <commit> -o <destination>`, and compare their hash
+with the pinned whole-file SHA-256 before use. Export checks integrity; it does not
+run current validators unless `--verify` is requested. Rebuilds and validator input
+are in memory; file export writes atomically beside the destination. Keep any
+materialized copy outside the inventoried container. A per-run copy may be removed
+after its exact bytes and durable publication are verified; preserve the logical
+locator and commit so it can be reconstructed before the next inspection.
+
+V1 item records still use an actual inspected file path in `manifest`, with the
+whole-file digest. Record the immutable multipart locator and export instruction
+separately on the task; do not put `files:<name>` or a catalog path into that field.
+Reconstruct the pinned manifest before reusing such a record. Native retained
+checkpoint/transfer commands still use ordinary attachment caps and do not
+automatically transport oversized manifests. Use the existing manual procedure
+only where supported; never bypass a pending operation or publication failure.
+Published manifest bytes satisfy preservation, not the remaining item verification,
+exact-basis, ownership and complete-checkpoint obligations.
 
 ## Exact checkpoint and recovery
 
@@ -558,10 +627,16 @@ Existing independent identities remain exceptions with their own disposition,
 even while their bytes occur in the complete enclosing manifest.
 
 If the entire task directory already has a scratch identity, no descendant path
-can hold its off-container manifest. Until a separate placement decision, use a
-verified attachment outside that container. A cap/layout refusal leaves evidence
-retained and the checkpoint incomplete; it does not authorize another storage root
-or excluding metadata from the manifest. Full hashing of all parent members remains
+can hold its off-container manifest. Use a verified attachment outside that
+container; for an over-cap manifest within admission limits, use the explicit
+multipart route above. Generate it as a stream or a per-run copy outside the
+container, require publication at a named commit and pin its whole-file digest
+and validation evidence before completing the manual checkpoint. Recover the
+pinned bytes outside the container before inspection; no new persistent storage
+root or metadata exclusion is needed. An admission, layout or unresolved
+publication refusal keeps evidence retained and the checkpoint incomplete; it
+does not authorize another storage root or excluding metadata from the manifest.
+Full hashing of all parent members remains
 required at each changed checkpoint, including reports; fewer records save no bytes
 hashed by themselves.
 

@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:4411cf3f68ce4834a40a5379234ddc3b",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "5b2e7931a1084db9c1e3bf18656961f28ce2bee0aac6c42d52dcac67f56bc6c5",
+      "text": "- A custody check belongs to one acting owner for a given input revision and purpose;\n  separate review seats still perform their own independent reviews. The author or\n  controller freezes a spec or plan revision once and keeps it unchanged while review\n  is open; the receiving reviewer verifies and reads the dispatched revision; the\n  implementer runs changed-behavior tests under Tests and reports the command, tested\n  revision, results/counts and limits for the controller to pass to the reviewer; the\n  reviewer persists its report under the designated-report rule above; the controller\n  advances the plan ledger once per transition; and the current item or claim owner on\n  that host observes retained items at park, done or disposal, reporting its checkpoint\n  basis before releasing its claim. When a child's report binds the relevant input\n  revision (commit and path, or path and sha256) and scope, is complete, and has no\n  conflicting evidence, the controller relies on that result for the same revision and\n  purpose without rehashing the unchanged input or rerunning the child's checks merely\n  at handoff. Do not compute routine report sha256 digests or write report hashes to\n  the ledger; use the report path and reviewed revision, while a report that is itself\n  a frozen review input, independent retained evidence or a published attachment still\n  obeys that distinct contract at its required boundary. When a review accepts with a\n  substantive concern or actionable finding, the controller reads the concern and\n  records its disposition or ruling; a short verdict never hides an actionable concern.\n  Missing inputs, an unbound verdict, an observed mismatch, changed bytes (such as\n  evidence for revision A when the input is now revision B), a failed persistence\n  operation or contradictory evidence require a targeted check or return to the\n  responsible actor; never infer success from silence, a passing attach exit status\n  alone, a notification or an omitted failure, and keep an in-flight child under\n  tracked waiting. Checks whose purpose requires a new observation stay fresh when\n  their event occurs: receiving a frozen revision, recovering after context loss,\n  current retained-item inventory at park/done/disposal, claim transfer, host-pointer\n  inspection before removal, and branch freshness before final review or base-relative\n  measurement. A previous hash never proves mutable bytes stayed unchanged, and at\n  park, done or disposal the acting owner inspects the complete known local retained\n  set; if an explicitly delegated check supplies evidence, the recording actor names\n  the observer and never describes another actor's observation as its own recheck.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Assign each custody check to one acting owner and rely on revision-bound results"
+}

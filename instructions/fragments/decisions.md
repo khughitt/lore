@@ -81,11 +81,13 @@
   limit where you can see them), what is done and verified, what is left with your
   estimate of its cost, anything that went wrong, and one decision with your
   recommendation: continue under a budget you name, given as the exact first line for
-  the user to send (a reply without it continues under the default limits), narrow the
-  work, or stop. The user's reply ends the pause; it is not an approval of routine
-  steps, and the next turn asks nothing about continuing until it too crosses a limit;
-  the other stops above still apply. Never edit the hook's state or limits, split work
-  across turns or controllers, or start a fresh session to stay under a limit.
+  the user to send (a reply without it continues under the default limits), continue
+  in a user-chosen fresh controller when compaction or context growth is the binding
+  cause, narrow the work, or stop. The user's reply ends the pause; it is not an
+  approval of routine steps, and the next turn asks nothing about continuing until it
+  too crosses a limit; the other stops above still apply. Never edit the hook's state
+  or limits, split work across turns or controllers, or start a fresh session to stay
+  under a limit.
 <!-- rule:1f37e3afebdd433a9ccaa2970cde7289 end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are
@@ -209,10 +211,63 @@
   measure, against the new merge base, so the review package covers the merge
   resolution. A measurement taken before that merge does not count toward its gate.
 <!-- rule:6a846b1f53ee406d9b48c7434364a2cf end -->
+<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af begin -->
+- In planned execution (subagent-driven and inline alike), scale review to step risk
+  and bound independent reviews per plan task. A step that changes repository code,
+  tests, build or lock files, schemas, runtime configuration, or a plan-designated
+  reviewed artifact gets independent review: under subagent-driven execution, one
+  task review of the task's `BASE..HEAD` diff and implementer report plus one scoped
+  corrective re-review per fix round on `FIX_BASE..HEAD` using the implementer's
+  saved test evidence (running a focused test only when reading the diff raises a
+  specific named doubt the saved run does not answer); inline, the task's completion
+  contract and the final whole-branch review cover it. A plan amendment or interface
+  ruling is verified by the controller against the binding spec, recorded as a ledger
+  `Ruling:` line with `Why:`, `Cost:` and revision references, and checked by the
+  affected build and final reviews; never spawn a standalone scope, authority or
+  preflight reviewer solely to bless a ruling before implementation. Operational
+  execution of already-reviewed code (a run task after an accepted build-to-run
+  barrier, a bounded live continuation slice, a `--resume-scope` invocation, or an
+  end-to-end pilot run or rerun on an accepted build commit) gets an operator or
+  controller self-check that `HEAD` is at or descendant of the accepted build commit
+  with no unreviewed runner/reader edits, the command, slice/resume arguments and
+  input hashes match the plan, ruling or pilot check, and the exit status and output
+  satisfy the task's `Expected:` contract (and Processes' smallest-run gate and
+  verdict check where applicable); never spawn a pre-invocation, scope, pilot-invariance
+  or pilot-qualification reviewer for that run, while whether an end-to-end pilot
+  must run or rerun stays governed by Processes, Tests and project requirements (if a
+  run task commits a final human-facing report the plan explicitly marks as a
+  reviewed deliverable, dispatch at most one task review at the end of the run task
+  for that deliverable). Bookkeeping, custody and task-record maintenance (task notes,
+  `retained:` declarations, container manifests, checkpoints, transfers, ledger
+  appends and workspace cleanup) get the acting owner's self-check and never an
+  independent reviewer or assessment subagent. Across the life of any numbered plan
+  task, dispatch at most six independent reviews in total (one initial task review
+  plus up to five scoped corrective re-reviews), batching all open Critical and
+  Important findings and confirmed spec gaps from a review into one fix pass and one
+  scoped re-review per round, and never dispatch a re-review for a round that changed
+  only ledger lines or task notes. Splitting a plan task into internal sub-stages or
+  reopening a build task after a downstream operational run exposes a defect
+  continues that plan task's cumulative review count and monotonic `review: impl
+  round <R>` sequence (`R = 1..6`) without resetting the counter. When a plan task's
+  fifth corrective re-review (sixth independent review) still reports a spec gap or an
+  unresolved Critical or Important finding, or when a reopened build task has already
+  spent all six reviews and needs a code fix, do not rule past the cap, split a new
+  sub-stage or start another review round: stop under the turn-pause rule above,
+  name the plan task, the six reviews spent, the open findings (with report paths) or
+  reason a seventh review would be needed, and one recommended decision in the pause
+  report, and park the task `--waiting-on user --reason decision`. This outranks
+  subagent-driven-development's "Never skip the task review", "Every round ends with
+  a scoped re-review", "Rulings, not stalls" and `references/fix-loop.md`'s breaker
+  continuation past the cap.
+<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af end -->
 <!-- rule:d21e7a02223e4d00adbb602627e441a6 begin -->
 - After a final whole-branch review, in subagent-driven and inline (executing-plans)
   execution alike, fix (or rule on, as the skills allow) its Critical and Important
-  findings in corrective rounds, up to five; then surface what remains. A round is one
+  findings in corrective rounds, up to five, under the same one-fix-pass,
+  one-scoped-re-review and saved-evidence discipline as per-task reviews above; if
+  the fifth corrective round still leaves any Critical or Important finding
+  unresolved, surface what remains by stopping and parking for the user under the
+  turn-pause rule above rather than proceeding to integration. A round is one
   fix pass plus one scoped re-review of it, and another follows while that re-review
   reports any Critical or Important finding, persisting or introduced by the fix. Minor
   findings never enter a round; they go to the ledger as `minor (deferred)`, as both
@@ -243,3 +298,72 @@
   before reporting. Such a correction stays a review finding; a `concerns:` task is
   filed only for work that fell short after its branch landed.
 <!-- rule:e5201d5768794401bf9d88a39b1ee445 end -->
+<!-- rule:4411cf3f68ce4834a40a5379234ddc3b begin -->
+- A custody check belongs to one acting owner for a given input revision and purpose;
+  separate review seats still perform their own independent reviews. The author or
+  controller freezes a spec or plan revision once and keeps it unchanged while review
+  is open; the receiving reviewer verifies and reads the dispatched revision; the
+  implementer runs changed-behavior tests under Tests and reports the command, tested
+  revision, results/counts and limits for the controller to pass to the reviewer; the
+  reviewer persists its report under the designated-report rule above; the controller
+  advances the plan ledger once per transition; and the current item or claim owner on
+  that host observes retained items at park, done or disposal, reporting its checkpoint
+  basis before releasing its claim. When a child's report binds the relevant input
+  revision (commit and path, or path and sha256) and scope, is complete, and has no
+  conflicting evidence, the controller relies on that result for the same revision and
+  purpose without rehashing the unchanged input or rerunning the child's checks merely
+  at handoff. Do not compute routine report sha256 digests or write report hashes to
+  the ledger; use the report path and reviewed revision, while a report that is itself
+  a frozen review input, independent retained evidence or a published attachment still
+  obeys that distinct contract at its required boundary. When a review accepts with a
+  substantive concern or actionable finding, the controller reads the concern and
+  records its disposition or ruling; a short verdict never hides an actionable concern.
+  Missing inputs, an unbound verdict, an observed mismatch, changed bytes (such as
+  evidence for revision A when the input is now revision B), a failed persistence
+  operation or contradictory evidence require a targeted check or return to the
+  responsible actor; never infer success from silence, a passing attach exit status
+  alone, a notification or an omitted failure, and keep an in-flight child under
+  tracked waiting. Checks whose purpose requires a new observation stay fresh when
+  their event occurs: receiving a frozen revision, recovering after context loss,
+  current retained-item inventory at park/done/disposal, claim transfer, host-pointer
+  inspection before removal, and branch freshness before final review or base-relative
+  measurement. A previous hash never proves mutable bytes stayed unchanged, and at
+  park, done or disposal the acting owner inspects the complete known local retained
+  set; if an explicitly delegated check supplies evidence, the recording actor names
+  the observer and never describes another actor's observation as its own recheck.
+<!-- rule:4411cf3f68ce4834a40a5379234ddc3b end -->
+<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 begin -->
+- In planned execution, the controller reads the plan and binding constraints once at
+  setup, keeps the plan ledger as the recovery map (current task and phase, completed
+  ranges, pending review or corrective round, findings, rulings, deferred minors and
+  next action), and dispatches narrow task briefs with applicable constraints and
+  needed interfaces. Keep full review reports and clean supporting logs in files so
+  only concise handoffs and the finding sections needed for decisions or rulings enter
+  controller context. After compaction below `hq pause limits`, check `hq pause status`
+  (maintaining any counts the hook does not observe) and recover inside the current
+  turn budget by reading the current task, the plan's ledger and the referenced
+  sections needed for the next decision, and verifying the named current Git state;
+  reconcile any conflict between ledger, task records and Git state before dispatch,
+  and never replay completed task sequences, respawn completed workers, reload every
+  prior report, or ask permission to recover. When compactions cross `hq pause limits`
+  (with no separate earlier threshold), stop under the turn-pause rule above and, when
+  compaction or context growth is the binding cause, recommend a user-chosen fresh
+  controller in the pause decision. During the permitted pause report and park, record
+  the durable handoff in the task record and its existing ledger/report references:
+  actual status, task/plan/spec identities and frozen revisions, branch/worktree,
+  current HEAD/base and next action with its owner; completed task ranges, current
+  review round, findings, rulings, deferred minors, and evidence locations and
+  revision-bound verdicts with limits (preserving full reports); claims, running
+  processes with stop/pickup commands, host pointers, and retained items/checkpoint
+  basis, stating which accounting was not refreshed at the limit instead of starting
+  fresh inventory or cleanup work; and observed spend/counts (keeping unknown counters
+  unknown), limit reached, remaining estimate and the user's outstanding decision.
+  Never auto-launch a replacement controller, start another session, continue work
+  merely to finish a handoff, or reset budgets; a user who continues the current
+  controller receives the same normal checks. A receiving controller reads the handoff
+  and task before claiming work, verifies current claim, process and Git state and the
+  evidence it needs before reuse, refreshes stale or unrefreshed accounting first,
+  reconciles any state change, and resumes the first unfinished action without
+  treating old reports as fresh filesystem observations or rerunning completed reviews
+  merely because the controller changed.
+<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 end -->

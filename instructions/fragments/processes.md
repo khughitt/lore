@@ -80,12 +80,25 @@
   retained set on the current host: worktrees, task scratch and off-tree evidence.
   Read `~/.agents/skills/references/retained-item-records.md` when creating,
   refreshing or releasing records; follow its changed-item and exact host-checkpoint
-  procedure. Accounting does not require restating unchanged inventories. Keep
-  uncertainty explicit and refresh resource/wait descriptions from observations.
-  An open task owns items across activation review; only a closing session disposing
-  of them in the same turn may temporarily own integration. Anything kept longer
-  needs an open follow-up or agreed user handoff. A trigger, merge or done grants
-  no deletion permission; preserve unfinished work and the only needed raw copy.
+  procedure. For a changing plan workspace or task scratch/evidence directory, content
+  additions or edits (reports, ledger appends, ordinary handoffs) do not trigger a
+  complete manifest or checkpoint per edit: generate complete manifests and checkpoints
+  at real `park`, `done` or disposal boundaries, while recording immediate creation
+  notes and changes of owner, purpose, disposition or uncertainty when they occur and
+  keeping frozen-input, replacement-preservation, attachment, recovery and integrity
+  checks at their own boundaries. A child task's `done` accounts for the child's own
+  retained set and does not automatically checkpoint a container that remains owned by
+  an open parent; ownership must be real and recorded, never transferred to avoid a
+  checkpoint. Between checkpoints an earlier checkpoint on a mutating container is
+  historical, not current proof; at `park`, `done` or disposal the acting owner
+  inspects the complete known local retained set (naming the observer when an
+  explicitly delegated check supplied evidence, never calling another actor's
+  observation its own recheck). Accounting does not require restating unchanged
+  inventories. Keep uncertainty explicit and refresh resource/wait descriptions from
+  observations. An open task owns items across activation review; only a closing
+  session disposing of them in the same turn may temporarily own integration. Anything
+  kept longer needs an open follow-up or agreed user handoff. A trigger, merge or done
+  grants no deletion permission; preserve unfinished work and the only needed raw copy.
   For layout refusal, keep hashed raw bytes and attach a labelled portable derivative
   under the reference's fallback until the executing checker accepts shipped support;
   design completion alone never retires that fallback or authorizes raw deletion.
@@ -97,9 +110,11 @@
   where rather than inventing a path). tmpfs (`/dev/shm`, `/tmp`, `/run`) holds only
   per-run copies made from that persistent canonical copy. Note directory creation
   immediately (host, path, purpose and current task owner; contents still mutable),
-  then checkpoint under the retained-item rule above at park and done. A resume
-  checks that its inputs exist and match the recorded hash before it claims an
-  idle-host window or the user's machine.
+  then checkpoint under the retained-item rule above at park, done or disposal rather
+  than after every content edit. A resume or post-compaction recovery checks that the
+  specific canonical inputs it needs exist and match their recorded hashes before
+  relying on them or claiming an idle-host window or the user's machine, without an
+  unsolicited whole-container manifest.
 <!-- rule:45c689924ee64a9c93e94a71f332a1d3 end -->
 <!-- rule:0c5fc9cf30154db6b11fb7f73662249a begin -->
 - Work that takes the live desktop (opens windows on it, moves focus, switches

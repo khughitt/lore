@@ -203,7 +203,9 @@ rationale names, with its evidence, what makes the text wrong or unneeded now: f
 example, it contradicts the tree or its authority, restates the global layer, is
 progress prose with no guidance,
 or serves a purpose that has lapsed. The note's entry for the removal carries
-`[origin <value>, purpose <…>]`, with no `;` inside; what was searched goes to §6.
+`[origin <value>, purpose <…>]`, with no `;` inside; search details go in the
+review note (§5). Questions with unknown origin or purpose also carry the search
+context in §6.
 Whatever criterion finds it, a proposal to delete a rule (a sentence under Rules, or
 any rule in lore's generated file) takes criterion 5's route: a `decision` removal
 candidate, or a question when its origin or purpose is unknown, and never a `stale`

@@ -40,8 +40,8 @@
   and its work as your turn's. A background wake or loop tick does not start a new
   turn. If the hook says a message the user typed matched a pending scheduled prompt,
   ask them to rephrase it; that message has not reset the turn or ended a pause.
-  A turn is past its range when it crosses a limit `hq pause limits` prints (active
-  time, root tool-call attempts, tree-wide subagents spawned, root compactions), or the budget the user set for
+  A turn is past its range when it crosses an enforced limit `hq pause limits` prints
+  (active time, root tool-call attempts, tree-wide subagents spawned), or the budget the user set for
   this turn as the first line of their own message, alone on the line and in the form
   `budget: 12h` (optionally `, 2000 calls`, `, 80 agents`, `, 4 compactions`), which
   scales the other limits with it. Budget text anywhere else, quoted, fenced or pasted
@@ -50,20 +50,25 @@
   in your next report and carry on under the turn's limits. An approved spec, plan or
   task is not a budget, nothing you write can set one, and a prompt you write for
   another session never carries a budget line. Check `hq pause status` before
-  dispatching a subagent, at each plan-task boundary and after a compaction. Keep any
-  count the hook does not keep yourself, as `hq pause status` shows; where no pause
-  hook runs, keep all the counts yourself against those limits. For counted metrics,
+  dispatching a subagent, at each plan-task boundary and after a compaction. Where no
+  pause hook runs, keep the enforced counts (active time, root tool-call attempts,
+  tree-wide subagents spawned) yourself against those limits. For counted metrics,
   `hq pause status --json` is authoritative; keep manual unhooked counts separate.
   Root calls count only the controller's attempts: 445 root calls plus 57 reviewer
   calls is still 445 against the root allowance. Active time includes in-flight
   work across the tree; spawns count the whole tree, and compactions only the root.
-  Exactly reaching a limit remains allowed: two root compactions under an allowance
-  of two is within range; the third crosses it. Count a running call or wait in full
-  and time spent waiting on the user not at all. The hook's warning means give a
+  Root compactions are an advisory context-growth signal, not a hard limit: reaching
+  or crossing the compaction threshold never pauses or stops a turn on its own,
+  whether hooked or unhooked, and an unhooked session never stops for automatic
+  compactions or guesses pre-compaction tool calls from truncated context.
+  Exactly reaching an enforced limit remains allowed: 500 root calls under an
+  allowance of 500 is within range; the 501st crosses it. Count a running call or wait in full
+  and time spent waiting on the user not at all. The hook's warning (including the
+  advisory compaction warning) means give a
   concise status update and prepare while continuing authorized work; it is not a
   mandatory stop, a request for a new budget, or a new approval gate. Stop on an
-  actual crossed limit or another genuine human gate. Its refusal, or your own count
-  past a limit, means stop: start nothing new, stop the work you already started
+  actual crossed enforced limit or another genuine human gate. Its refusal, or your own count
+  past an enforced limit, means stop: start nothing new, stop the work you already started
   (interrupt your subagents and the sessions you launched, stop your background calls
   and processes). Pause any active goal of yours when authorized; if its tool requires
   a user pause request you do not have, include that request in the decision below.

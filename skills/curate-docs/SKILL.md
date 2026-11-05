@@ -290,8 +290,8 @@ set, the root's and each declared subsystem's own `identity.toml`, `README.md` a
    with the reason and what was searched. Rules kept with `no incident recorded` are
    listed by short name, grouped by origin with `|`
    between groups and no `;`, in the note's `keep:` segment even when criterion 5 has
-   other verdicts, and on its §6 line with what was searched; this is the one
-   exception to §6's one phrase. Evidence: the search and the trace. `decision`: the
+   other verdicts; keep their search details in the note too. Evidence: the search
+   and the trace. `decision`: the
    rule is a removal candidate for the human, never deleted by the pass.
 6. **Budget — mechanical only.** Record `not judged: retired in v2; budget checked
    mechanically`. §1 records `ops-docs check`'s line-limit findings. It does not judge
@@ -459,15 +459,19 @@ observed state. Keep the generator's settings and use only acknowledgment mode.
 
 ## 6. Summary to the human
 
-One line per criterion: its number, verdict, and one phrase (or `not judged: <why>`).
-Then the review task id, the commit judged, and the acknowledgment result (priority,
-status and defer date, or blocker with next action and owner). Then the decisions
-that are the human's, grouped, omitting empty groups:
+Lead with the pass outcome, the count of routine `keep` criteria, the review task
+id, the commit judged, and the acknowledgment result (priority, status and defer
+date, or blocker with next action and owner). Link the review task note (§5).
+Then list only non-`keep` criteria and criteria not judged: one line each with its
+number, **verdict**, and one phrase (or **not judged**: <why>). Routine `keep`
+criteria stay in the note. Then the decisions that are the human's, grouped,
+omitting empty groups:
 
 - **removal candidates** (criterion 5, or any criterion proposing to delete a rule):
   the rule or section, its origin and current purpose, the reason for removal kept
-  apart from them, subject IDs/hashes where annotated, evidence and searches reused,
-  access/binding gaps and any additional search scope (§2);
+  apart from them. Keep subject IDs/hashes where annotated, evidence and searches
+  reused, access/binding gaps and additional search scope (§2) in the review task
+  note (§5);
 - **declarations** (criterion 11): the directory, and the two options;
 - **scope decisions** (criterion 3): the passage, recorded intent, proposed scope
   change and evidence; present it for the human's ruling before filing a finding task;

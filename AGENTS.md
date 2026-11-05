@@ -63,10 +63,13 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   `instruction-assembly.md`). Specs, plans, briefs and the provenance audit live in the
   records root (`tasks where` names it). This repository's history no longer holds the
   19 documents archived there; the records repository keeps theirs in its lore directory
-  (`git -C <records root> log --follow -- lore/docs/<path>`). Commits from before the
-  2026-10-27 history rewrite have new ids; the combined-map.json attachment on lore-72153d
-  (`tasks show lore-72153d` prints its path) maps each old lore SHA to its rewritten
-  commit, its records-archive commit, or both.
+  (`git -C <records root> log --follow -- lore/docs/<path>`). Two history rewrites
+  changed commit ids. A commit from before the 2026-11-05 rewrite, which removed vendored
+  agent-skills copies, maps through the agent-skills-commit-map.txt attachment on
+  lore-1be62d (old and new id per line; zeros mark a pruned commit). A commit from before
+  the 2026-10-27 rewrite first maps through the combined-map.json attachment on
+  lore-72153d (to its rewritten commit, its records-archive commit, or both), then
+  through the lore-1be62d map. `tasks show <task>` prints each attachment's path.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from hq's hook files; it reaches ops's resolver through the tasks registry.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.

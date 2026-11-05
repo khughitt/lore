@@ -73,9 +73,9 @@ affect them.
 
 | Input | Value |
 | --- | --- |
-| Lore proof revision | `f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4` |
+| Lore proof revision | `e73938cf41ca425c45dfb132947041dddfea4fd5` |
 | Ops revision (initial proof) | `3c176f25455291abb1eaf2d0fe917f16b7be797d` |
-| Extraction revision (baseline reference) | `49568066eeb8a6b4a09e453a10e81fade87919e7` |
+| Extraction revision (baseline reference) | `541428a34f2dfc9898d0204bbc7ba86eef73720f` |
 | Baseline reference | blob `5297be329c58bc758b20c48a504a87887be5470a`, SHA-256 `66f5ae3d32e218ac3688969171179501ecdcc253e4d9a01f48c05ddb04350642` |
 | Initial reference | blob `08bd5862dcd0fa47000dac7f13e8617875f99586`, SHA-256 `2729ca9ae116c50501a65764af73b4729498df283407f8b6a5a5e98e15cc2760` |
 
@@ -84,11 +84,11 @@ registered ops checkout (tasks registry) whose history contains the ops revision
 From the lore checkout:
 
 ```sh
-python3 bin/assemble-instructions verify-baseline --revision f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4
-python3 bin/assemble-instructions verify-initial --revision f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4 \
+python3 bin/assemble-instructions verify-baseline --revision e73938cf41ca425c45dfb132947041dddfea4fd5
+python3 bin/assemble-instructions verify-initial --revision e73938cf41ca425c45dfb132947041dddfea4fd5 \
   --projects-revision 3c176f25455291abb1eaf2d0fe917f16b7be797d
-git merge-base --is-ancestor f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4 HEAD
-git merge-base --is-ancestor 49568066eeb8a6b4a09e453a10e81fade87919e7 HEAD
+git merge-base --is-ancestor e73938cf41ca425c45dfb132947041dddfea4fd5 HEAD
+git merge-base --is-ancestor 541428a34f2dfc9898d0204bbc7ba86eef73720f HEAD
 ```
 
 In the ops checkout, `git merge-base --is-ancestor 3c176f25455291abb1eaf2d0fe917f16b7be797d main`

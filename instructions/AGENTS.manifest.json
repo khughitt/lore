@@ -5,8 +5,8 @@
   },
   "assembler": {
     "path": "bin/assemble-instructions",
-    "revision": "0179988f5559d9a3c1bdf3fec58a23960af67cb9",
-    "sha256": "0173620398ca93baa43b129aa7411b49304d0597e2305f768da482d6824f1f48"
+    "revision": "f8c8586ae464993c6579f29a75b612403533c0a5",
+    "sha256": "6450f2626de42ea92ad30e294b2290704959acfd68363cc25f61fae7c0b3abc5"
   },
   "catalog": {
     "path": "instructions/assembly.toml",

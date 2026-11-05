@@ -1953,7 +1953,7 @@ def historical_pair(world):
     saved = {p: p.read_bytes() for p in paths}
     for path in paths[1:]:
         if b'<!-- rule:' in saved[path]: path.write_bytes(module.scan_rules(saved[path])['rendered'])
-    paths[0].write_bytes(git(ROOT, 'show', 'f6d5acc2bc88523e4ac9ff18a5bfd6ea42f396b4:bin/assemble-instructions'))
+    paths[0].write_bytes(git(ROOT, 'show', 'e73938cf41ca425c45dfb132947041dddfea4fd5:bin/assemble-instructions'))
     commit_pair(world)
     revision = git(world.root, 'rev-parse', 'HEAD').decode().strip()
     for path, data in saved.items(): path.write_bytes(data)

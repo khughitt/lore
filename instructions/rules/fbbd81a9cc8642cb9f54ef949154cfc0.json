@@ -1,0 +1,198 @@
+{
+  "assessments": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "spec-intent-cost",
+            "review-intent-cost",
+            "plan-intent-cost",
+            "execution-authority"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-02c7f3; lore:records:docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+            "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25",
+            "scope": "User approved preparation under this plan; exact current rule text and live global activation await separate approval."
+          }
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": null,
+          "role": "wording",
+          "statement": "Current wording authored by the implementing agent from the approved design and accepted review requirement.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "spec-intent-cost"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "review-intent-cost"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "plan-intent-cost"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "execution-authority"
+          }
+        ]
+      },
+      "evidence": [
+        "spec-intent-cost",
+        "review-intent-cost",
+        "plan-intent-cost",
+        "execution-authority"
+      ],
+      "id": "proposal-intent-cost-2026-11-05",
+      "kind": "proposal",
+      "occurred_at": "2026-11-05T10:40:36.234865+00:00",
+      "predecessors": [],
+      "recorded_at": "2026-11-05T10:40:36.234865+00:00",
+      "recorder": "codex",
+      "searches": [],
+      "subject": {
+        "binding": "revision",
+        "id": "rule:fbbd81a9cc8642cb9f54ef949154cfc0",
+        "sha256": "30a3fa2440459349b4b105a7146b131c2103dfd0f029f8f8dd62aadf9047a1c6"
+      },
+      "time_uncertainty": null
+    }
+  ],
+  "id": "rule:fbbd81a9cc8642cb9f54ef949154cfc0",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "observed",
+    "sources": [
+      "spec-intent-cost",
+      "review-intent-cost"
+    ],
+    "text": "Require proportionate experimental designs, upfront estimates and enforcing total-run cost controls before paid invocation, preserving ordinary interactive and no-charge workflows."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "30a3fa2440459349b4b105a7146b131c2103dfd0f029f8f8dd62aadf9047a1c6",
+      "text": "- For an experiment, pipeline, batch or dedicated supporting infrastructure whose\n  intended run incurs additional metered model or external-service charges,\n  including an optional paid path, establish cost and proportionality upfront.\n  Before accepting its design or implementing dedicated experimental machinery,\n  record the simple/manual baseline, the proposed benefit over it, a cost range\n  and assumptions, and the proposed enforcing control. The estimate names workload\n  units, unit-price basis and date, expected volume, a conservative charge bound\n  including retries and concurrent in-flight work, and material uncertainty.\n  State any user-approved spending limit separately; leave it unset when absent.\n  An estimate or design approval grants no spending authority and sets no default\n  budget. Before accepting the implementation plan, make implementation and\n  verification of the control a dependency of every paid run, including a cheap\n  pilot. Reuse a suitable existing cap or small bounded runner; building the control\n  itself does not require it already to exist, and no new service is required.\n  Before any paid invocation, verify that the control refuses work exceeding the\n  authorized total across all charge paths, including retries, concurrency,\n  resumption and unavoidable already-admitted charges, without resetting the\n  allowance per step. A provider cap, runner guard or conservatively priced fixed\n  workload qualifies only if it actually bounds those charges; an estimate, log,\n  alert or promise to monitor does not. If the bound or control is unestablished,\n  keep paid execution blocked and recommend a bounded alternative or return the\n  unresolved scope or budget choice to the user. Explicit spending permission\n  remains required; within that authority, do not repeat approval for each step.\n  Authors and reviewers check these requirements against recorded human intent,\n  rejecting unjustified expansion or a missing control dependency before dedicated\n  machinery is implemented; internal consistency or a late spend checkpoint alone\n  is insufficient. Ordinary interactive use under the current harness arrangement\n  and local no-charge analysis create no experiment-accounting obligation merely\n  because the assistant uses a model. A tool that launches a metered experimental\n  run remains within this rule.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [
+    {
+      "access": "available",
+      "id": "spec-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-05-intent-proportionality-cost-control-design.md",
+        "reference": "Approved design defining both obligations",
+        "revision": "1e2118ba39ddcf296859ad238fcf84319fda6d7d"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-05-intent-proportionality-cost-control-design.md",
+        "reference": "Approved design defining both obligations",
+        "revision": "1e2118ba39ddcf296859ad238fcf84319fda6d7d"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "c3546025fe1e21d0d85225db95f43ac9f750e34cf7d45a32a559d17aed28cf10",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "review-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-05-intent-cost-design-r2-report.md",
+        "reference": "External Minor and human approval for planning",
+        "revision": "8069ac3992f5d4741ed5c376c523c3afe2a2722f"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-05-intent-cost-design-r2-report.md",
+        "reference": "External Minor and human approval for planning",
+        "revision": "8069ac3992f5d4741ed5c376c523c3afe2a2722f"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "f3459c0941878cce2ff774f577301dc49310abdc0d40549d00d5f2f73caf9dfc",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "plan-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+        "reference": "Implementation plan approved for preparation",
+        "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+        "reference": "Implementation plan approved for preparation",
+        "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "51efbd558010bdf12ddac70cc1ae4f547f1b2ce69808dd300c98d882ec1bc0f5",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "execution-authority",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "tasks/lore-02c7f3.md",
+        "reference": "Controller record of current human plan approval; not exact-text adoption",
+        "revision": "f94dd6e4b79ceecc8edb3dd07b29ab486f130020"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "tasks/lore-02c7f3.md",
+        "reference": "Controller record of current human plan approval; not exact-text adoption",
+        "revision": "f94dd6e4b79ceecc8edb3dd07b29ab486f130020"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8990970c6fad0fbd31175c8588b011476c4f816b084f20c8a7b754b759522532",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
+  "state": "active",
+  "title": "Estimate and control experimental spend upfront"
+}

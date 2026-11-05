@@ -130,15 +130,31 @@
   look right" decision: what they want is theirs to say.
 <!-- rule:2c5785f136ca4ee590e1c69406276623 end -->
 <!-- rule:c165eee5aa0a4b819061b34386c78c23 begin -->
-- Before a question asks the user what work should achieve or why (brainstorming's
-  opening questions, its playback, its builder check's "theirs" pile), find out who
-  holds that intent. Work the user describes in this session starts with the
-  question; naming a task to take up is not describing it. Other work (filed by
+- Before drafting or resuming a design or spec/plan amendment, even when no question
+  is planned, and before asking the user what work should achieve or why
+  (brainstorming's opening questions, playback or builder check), establish the
+  latest human goal and limits. Work the user describes in this session starts with
+  that description; ask only what it leaves unresolved. Naming a task to take up
+  is not describing it. Other work (filed by
   another session or agent, captured earlier, grown by scope passes, or derived as a
   follow-up, feedback report or decomposition child) starts by reading what already
   exists: the task's body, notes and references, its `source` and parent chain, and
-  the session that filed it, whose human turns around the filing the session-logs
-  skill recovers. Reading needs no offer or permission. Play back
+  the session that filed it. Use session-logs to recover its relevant human turns
+  and follow continuation notes, handoffs and prior amendments to relevant human
+  turns in any later sessions they reference, including further referenced
+  clarifications. Reading needs no offer or permission. Compare inherited
+  architecture and scope against those human words, keeping agent assumptions
+  separate. State the simplest route satisfying the goal and binding constraints,
+  and justify any extra machinery by those requirements; prior investment,
+  implemented capability, a continuation note or earlier approval does not establish
+  necessity. Remove unnecessary proposed scope without deleting existing code,
+  evidence or unfinished work. A human clarification contradicting an inherited
+  scope assumption supersedes approval of the affected design or plan: preserve
+  the old artifact and approval as history, record the clarification and affected
+  assumption, and submit a corrected frozen revision for review before implementing
+  it. Old approval does not approve that corrected artifact. A clarification leaving
+  approved scope intact creates no new review gate by itself and revokes no unrelated
+  authorization. Play back
   what you found and where each part came from, keeping the user's recorded words
   apart from what agents added. Then ask only what the evidence leaves to the user (a
   choice of taste, scope or priority, or a premise the evidence contradicts), each
@@ -148,6 +164,38 @@
   written design's review stays the user's gate. This outranks brainstorming's first
   message and its offer to go look.
 <!-- rule:c165eee5aa0a4b819061b34386c78c23 end -->
+<!-- rule:fbbd81a9cc8642cb9f54ef949154cfc0 begin -->
+- For an experiment, pipeline, batch or dedicated supporting infrastructure whose
+  intended run incurs additional metered model or external-service charges,
+  including an optional paid path, establish cost and proportionality upfront.
+  Before accepting its design or implementing dedicated experimental machinery,
+  record the simple/manual baseline, the proposed benefit over it, a cost range
+  and assumptions, and the proposed enforcing control. The estimate names workload
+  units, unit-price basis and date, expected volume, a conservative charge bound
+  including retries and concurrent in-flight work, and material uncertainty.
+  State any user-approved spending limit separately; leave it unset when absent.
+  An estimate or design approval grants no spending authority and sets no default
+  budget. Before accepting the implementation plan, make implementation and
+  verification of the control a dependency of every paid run, including a cheap
+  pilot. Reuse a suitable existing cap or small bounded runner; building the control
+  itself does not require it already to exist, and no new service is required.
+  Before any paid invocation, verify that the control refuses work exceeding the
+  authorized total across all charge paths, including retries, concurrency,
+  resumption and unavoidable already-admitted charges, without resetting the
+  allowance per step. A provider cap, runner guard or conservatively priced fixed
+  workload qualifies only if it actually bounds those charges; an estimate, log,
+  alert or promise to monitor does not. If the bound or control is unestablished,
+  keep paid execution blocked and recommend a bounded alternative or return the
+  unresolved scope or budget choice to the user. Explicit spending permission
+  remains required; within that authority, do not repeat approval for each step.
+  Authors and reviewers check these requirements against recorded human intent,
+  rejecting unjustified expansion or a missing control dependency before dedicated
+  machinery is implemented; internal consistency or a late spend checkpoint alone
+  is insufficient. Ordinary interactive use under the current harness arrangement
+  and local no-charge analysis create no experiment-accounting obligation merely
+  because the assistant uses a model. A tool that launches a metered experimental
+  run remains within this rule.
+<!-- rule:fbbd81a9cc8642cb9f54ef949154cfc0 end -->
 <!-- rule:96e7765f238045f4af07742ea0783816 begin -->
 - In assessments and reviews, distinguish tree-verified current capability from
   recorded intended direction. Before characterising intended scope, read the relevant

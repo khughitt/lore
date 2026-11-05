@@ -172,6 +172,73 @@
         "source": "session-572ee51e-2f53-4729-96f8-f122a2cc8305"
       },
       "time_uncertainty": "Transcript timestamp; no claim about an earlier unobserved origin."
+    },
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "spec-intent-cost",
+            "review-intent-cost",
+            "plan-intent-cost",
+            "execution-authority"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-02c7f3; lore:records:docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+            "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25",
+            "scope": "User approved preparation under this plan; exact current rule text and live global activation await separate approval."
+          }
+        },
+        "authorship": {
+          "actor": "agent",
+          "basis": "observed",
+          "original_author": "agent",
+          "reason": null,
+          "role": "wording",
+          "statement": "Current wording authored by the implementing agent from the approved design and accepted review requirement.",
+          "supplier": "agent"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "spec-intent-cost"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "review-intent-cost"
+          },
+          {
+            "quality": "originating-request/proposal",
+            "source": "plan-intent-cost"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "execution-authority"
+          }
+        ]
+      },
+      "evidence": [
+        "spec-intent-cost",
+        "review-intent-cost",
+        "plan-intent-cost",
+        "execution-authority"
+      ],
+      "id": "proposal-intent-cost-2026-11-05",
+      "kind": "proposal",
+      "occurred_at": "2026-11-05T10:40:36.234865+00:00",
+      "predecessors": [],
+      "recorded_at": "2026-11-05T10:40:36.234865+00:00",
+      "recorder": "codex",
+      "searches": [],
+      "subject": {
+        "binding": "revision",
+        "id": "rule:c165eee5aa0a4b819061b34386c78c23",
+        "sha256": "9d6a0df0966a3138318a78f3fe23b805484e9da93370e2544e695a0e7c628c06"
+      },
+      "time_uncertainty": null
     }
   ],
   "id": "rule:c165eee5aa0a4b819061b34386c78c23",
@@ -185,9 +252,12 @@
   },
   "incidents": [],
   "purpose": {
-    "basis": "inferred",
-    "sources": [],
-    "text": "Paraphrase inferred from current policy: recover recorded intent before questions."
+    "basis": "observed",
+    "sources": [
+      "spec-intent-cost",
+      "review-intent-cost"
+    ],
+    "text": "Recover latest human intent across filing and later referenced sessions before design authoring or questions; test inherited scope and supersede only contradicted approvals."
   },
   "relations": [],
   "revisions": [
@@ -196,6 +266,12 @@
       "locator": null,
       "sha256": "992315a1198e4b52c1c66d5082ea74bc6e731bfa2f37d65a48c9847644fbddd9",
       "text": "- Before a question asks the user what work should achieve or why (brainstorming's\n  opening questions, its playback, its builder check's \"theirs\" pile), find out who\n  holds that intent. Work the user describes in this session starts with the\n  question; naming a task to take up is not describing it. Other work (filed by\n  another session or agent, captured earlier, grown by scope passes, or derived as a\n  follow-up, feedback report or decomposition child) starts by reading what already\n  exists: the task's body, notes and references, its `source` and parent chain, and\n  the session that filed it, whose human turns around the filing the session-logs\n  skill recovers. Reading needs no offer or permission. Play back\n  what you found and where each part came from, keeping the user's recorded words\n  apart from what agents added. Then ask only what the evidence leaves to the user (a\n  choice of taste, scope or priority, or a premise the evidence contradicts), each\n  question naming what you found; when nothing remains, write the design and mark each\n  call as yours. Never ask the user to recall what a record or transcript holds; when\n  a source cannot be found, say so and offer your reading for them to correct. The\n  written design's review stays the user's gate. This outranks brainstorming's first\n  message and its offer to go look.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "9d6a0df0966a3138318a78f3fe23b805484e9da93370e2544e695a0e7c628c06",
+      "text": "- Before drafting or resuming a design or spec/plan amendment, even when no question\n  is planned, and before asking the user what work should achieve or why\n  (brainstorming's opening questions, playback or builder check), establish the\n  latest human goal and limits. Work the user describes in this session starts with\n  that description; ask only what it leaves unresolved. Naming a task to take up\n  is not describing it. Other work (filed by\n  another session or agent, captured earlier, grown by scope passes, or derived as a\n  follow-up, feedback report or decomposition child) starts by reading what already\n  exists: the task's body, notes and references, its `source` and parent chain, and\n  the session that filed it. Use session-logs to recover its relevant human turns\n  and follow continuation notes, handoffs and prior amendments to relevant human\n  turns in any later sessions they reference, including further referenced\n  clarifications. Reading needs no offer or permission. Compare inherited\n  architecture and scope against those human words, keeping agent assumptions\n  separate. State the simplest route satisfying the goal and binding constraints,\n  and justify any extra machinery by those requirements; prior investment,\n  implemented capability, a continuation note or earlier approval does not establish\n  necessity. Remove unnecessary proposed scope without deleting existing code,\n  evidence or unfinished work. A human clarification contradicting an inherited\n  scope assumption supersedes approval of the affected design or plan: preserve\n  the old artifact and approval as history, record the clarification and affected\n  assumption, and submit a corrected frozen revision for review before implementing\n  it. Old approval does not approve that corrected artifact. A clarification leaving\n  approved scope intact creates no new review gate by itself and revokes no unrelated\n  authorization. Play back\n  what you found and where each part came from, keeping the user's recorded words\n  apart from what agents added. Then ask only what the evidence leaves to the user (a\n  choice of taste, scope or priority, or a premise the evidence contradicts), each\n  question naming what you found; when nothing remains, write the design and mark each\n  call as yours. Never ask the user to recall what a record or transcript holds; when\n  a source cannot be found, say so and offer your reading for them to correct. The\n  written design's review stays the user's gate. This outranks brainstorming's first\n  message and its offer to go look.\n"
     }
   ],
   "schema": 1,
@@ -288,8 +364,104 @@
       "sha256": "ac2ac8d3c66328e11f04699f4e1bc2f68cb8d830b5d6f61497fd60e138a62484",
       "source_time": null,
       "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "spec-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-05-intent-proportionality-cost-control-design.md",
+        "reference": "Approved design defining both obligations",
+        "revision": "1e2118ba39ddcf296859ad238fcf84319fda6d7d"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-05-intent-proportionality-cost-control-design.md",
+        "reference": "Approved design defining both obligations",
+        "revision": "1e2118ba39ddcf296859ad238fcf84319fda6d7d"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "c3546025fe1e21d0d85225db95f43ac9f750e34cf7d45a32a559d17aed28cf10",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "review-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-05-intent-cost-design-r2-report.md",
+        "reference": "External Minor and human approval for planning",
+        "revision": "8069ac3992f5d4741ed5c376c523c3afe2a2722f"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-05-intent-cost-design-r2-report.md",
+        "reference": "External Minor and human approval for planning",
+        "revision": "8069ac3992f5d4741ed5c376c523c3afe2a2722f"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "f3459c0941878cce2ff774f577301dc49310abdc0d40549d00d5f2f73caf9dfc",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "plan-intent-cost",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+        "reference": "Implementation plan approved for preparation",
+        "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/plans/2026-11-05-intent-proportionality-cost-control.md",
+        "reference": "Implementation plan approved for preparation",
+        "revision": "db85dee82b7f1d1571c981acce630e9ce2e40e25"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "51efbd558010bdf12ddac70cc1ae4f547f1b2ce69808dd300c98d882ec1bc0f5",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "execution-authority",
+      "inspected_at": "2026-11-05T10:40:36.234865+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "tasks/lore-02c7f3.md",
+        "reference": "Controller record of current human plan approval; not exact-text adoption",
+        "revision": "f94dd6e4b79ceecc8edb3dd07b29ab486f130020"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "tasks/lore-02c7f3.md",
+        "reference": "Controller record of current human plan approval; not exact-text adoption",
+        "revision": "f94dd6e4b79ceecc8edb3dd07b29ab486f130020"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "8990970c6fad0fbd31175c8588b011476c4f816b084f20c8a7b754b759522532",
+      "source_time": null,
+      "transformation": null
     }
   ],
   "state": "active",
-  "title": "Recover recorded intent before questions"
+  "title": "Recover recorded intent before designs, continuations and questions"
 }

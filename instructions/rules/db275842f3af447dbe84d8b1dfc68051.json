@@ -74,10 +74,10 @@
       "inspected_at": "2026-10-29T16:39:53.428702+00:00",
       "locator": {
         "kind": "git",
-        "owner": "ops",
-        "path": "docs/reports/2026-09-11-friction-diagnosis.md",
+        "owner": "records",
+        "path": "ops/docs/reports/2026-09-11-friction-diagnosis.md",
         "reference": "Exact cited secondary context, not originating user authorship.",
-        "revision": "cc2ab76ca9bf6918636c2b003cc80b0ed8314a4c"
+        "revision": "a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3"
       },
       "preservation": {
         "kind": "attachment",

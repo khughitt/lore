@@ -10,7 +10,7 @@
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "b11dc903c220f7293c57b12c0623f7a9d18b5187e1862bc3c4dc860b79b7a6fb"
+    "sha256": "06b984ee6aa75663fa3cff21eb7098dd0f5231bb872181d467e6b967b0aa7e61"
   },
   "fragments": [
     {
@@ -1867,9 +1867,9 @@
       "evidence": [
         {
           "location": "Assembly amendment and original identity contract.",
-          "owner": "ops",
+          "owner": "ops:records",
           "path": "docs/specs/2026-09-07-project-identity-design.md",
-          "revision": "3c176f25455291abb1eaf2d0fe917f16b7be797d",
+          "revision": "a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3",
           "status": "n/a"
         }
       ],

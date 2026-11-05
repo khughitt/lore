@@ -18,7 +18,7 @@ is the one an agent guesses; nested skill directories were read back with a leve
 dropped or added. Keep new skills at this depth.
 
 - `curate-docs/` — the documentation-review rubric (ops
-  `docs/specs/2026-09-22-project-guides-design.md` §8, extended), shaped like `curate`.
+  `docs/project-guides.md` and `docs/operations.md`), shaped like `curate`.
   Served by a `lore:skills/curate-docs` declaration in hq's `links.toml` for each home
   surface.
 - `tasks`, `curate`, `scope`, `quick-add` — served from the tasks and ops checkouts by

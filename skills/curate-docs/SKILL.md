@@ -220,7 +220,7 @@ questions, record `not judged: <finding criterion>: <rule> — origin unknown`,
 `purpose unknown`, or `origin and purpose unknown` as applicable, and put the
 reason and searches in §6's questions; do not file a finding task before the ruling.
 
-**Root and declared subsystem guides (project-guides design §8), judged once per guide
+**Root and declared subsystem guides (ops `docs/project-guides.md`), judged once per guide
 set, the root's and each declared subsystem's own `identity.toml`, `README.md` and
 `AGENTS.md`:**
 
@@ -507,8 +507,9 @@ Nothing else. A pass with nothing in those groups says so in one line.
 
 ## Rubric history
 
-- **v1** (2026-10-23): criteria 1–7 from ops
-  `docs/specs/2026-09-22-project-guides-design.md` §8; 8–11 added for completeness by
+- **v1** (2026-10-23): criteria 1–7 from private ops records
+  `ops/docs/specs/2026-09-22-project-guides-design.md` §8 at archive
+  `a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3`; 8–11 added for completeness by
   reader needs, factual drift kept apart from preference, reference documents, and
   undeclared guides. Deliberate departures from §8's text, each to be confirmed or
   reverted by the pilot: every criterion may return `not judged: <why>`; criteria 1–7 are
@@ -528,8 +529,9 @@ Nothing else. A pass with nothing in those groups says so in one line.
   pilot applied the seven source criteria plus completeness and drift before final v1;
   it did not test the final eleven-criterion skill end to end.
 
-- **v2** (2026-10-24, lore-1e46ee): revised from ops-65a068's
-  `docs/notes/2026-10-23-doc-review-pilot-report.md` (in ops). Three personal-profile
+- **v2** (2026-10-24, lore-1e46ee): revised from ops-65a068's private ops records
+  `ops/docs/notes/2026-10-23-doc-review-pilot-report.md` at archive
+  `a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3`. Three personal-profile
   projects yielded 24 actionable findings and 24 rejected candidates; the report
   gives no candidate breakdown sufficient to attribute false positives to each
   criterion. Low yield alone does not establish a defective criterion. The 40-line

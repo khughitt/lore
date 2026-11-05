@@ -115,12 +115,14 @@ def build_world(base, home):
                                          f'sys.stdout.buffer.write({projects!r})\n')
     config = base / 'config/tasks'
     config.mkdir(parents=True)
-    # Evidence owned by lore:records lives in a records directory inside a records repository.
+    # Evidence owned by lore:records or ops:records lives in a records directory inside a records repository.
     (config / 'projects.toml').write_text('[projects]\nops = ' + json.dumps(str(ops)) +
                                           '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
-                                          '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n')
-    directories = {'lore': root, 'ops': ops, 'lore:records': store / 'lore'}
+                                          '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) +
+                                          '\nops = ' + json.dumps(str(store / 'ops')) + '\n')
+    directories = {'lore': root, 'ops': ops, 'lore:records': store / 'lore', 'ops:records': store / 'ops'}
     (store / 'lore').mkdir(parents=True)
+    (store / 'ops').mkdir(parents=True)
     for fragment in catalog['fragments']:
         for evidence in fragment['evidence']:
             if evidence['path'] in ('none recorded', 'n/a'): continue
@@ -132,7 +134,8 @@ def build_world(base, home):
         commit_all(repo, git_env)
     heads = {'lore': git(root, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
              'ops': git(ops, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
-             'lore:records': git(store, 'rev-parse', 'HEAD', env=git_env).decode().strip()}
+             'lore:records': git(store, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
+             'ops:records': git(store, 'rev-parse', 'HEAD', env=git_env).decode().strip()}
     path = root / 'instructions/assembly.toml'
     text = path.read_text()
     for fragment in catalog['fragments']:
@@ -169,7 +172,8 @@ def copy_world(template, base, home):
     (config / 'projects.toml').write_text(
         '[projects]\nops = ' + json.dumps(str(base / 'ops')) +
         '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
-        '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n')
+        '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) +
+        '\nops = ' + json.dumps(str(store / 'ops')) + '\n')
     stale = os.fsencode(source)
     for part in WORLD_PARTS:
         for path in sorted((base / part).rglob('*')):
@@ -307,7 +311,9 @@ def test_records_evidence_owner_reads_the_registered_records_directory(world, ca
     expected = change_evidence(world, owner='lore:records', path=path,
                                revision=git(store, 'rev-parse', 'HEAD').decode().strip())
     registry = world.config / 'projects.toml'
-    records = '' if case == 'unregistered' else '[records]\nlore = ' + json.dumps(str(store / 'lore')) + '\n'
+    records = ('[records]\n' +
+               ('' if case == 'unregistered' else 'lore = ' + json.dumps(str(store / 'lore')) + '\n') +
+               'ops = ' + json.dumps(str(store / 'ops')) + '\n')
     registry.write_text(registry.read_text().partition('[records]\n')[0] + records)
     args = ()
     if case == 'alien':
@@ -729,7 +735,8 @@ def test_unreadable_historical_blob_is_rejected(world):
 def test_evidence_validation_spawns_one_git_per_owner(world, monkeypatch):
     module = load_assembler(world)
     catalog = module.catalog_from((world.root / 'instructions/assembly.toml').read_bytes())
-    owners = {'lore': world.root, 'ops': world.ops, 'lore:records': world.store / 'lore'}
+    owners = {'lore': world.root, 'ops': world.ops,
+              'lore:records': world.store / 'lore', 'ops:records': world.store / 'ops'}
     concrete = {e['owner'] for f in catalog['fragments'] for e in f['evidence']
                 if e['path'] not in ('none recorded', 'n/a')}
     calls = []

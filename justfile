@@ -8,12 +8,12 @@
 # Adoption: copy templates/githooks/ to .githooks/ and run
 # `git config core.hooksPath .githooks`; append templates/gitignore to .gitignore so the
 # fallback log directory `.tt/` is never committed; vendor ops bin/tt as tools/tt and ops
-# bin/ops-check as tools/ops-check; vendor ops bin/ops-docs as tools/ops-docs and copy templates/identity.toml, templates/README.md, and templates/AGENTS.md (design: docs/specs/2026-09-22-project-guides-design.md). The check command runs ops-check first: the shared
+# bin/ops-check as tools/ops-check; vendor ops bin/ops-docs as tools/ops-docs and copy templates/identity.toml, templates/README.md, and templates/AGENTS.md (reference: docs/project-guides.md). The check command runs ops-check first: the shared
 # hygiene checks (doc references exist, no Dropbox conflicted copies) in milliseconds.
 # Every recipe runs through the vendored timing wrapper so the run is recorded. The
 # wrapper counts tests from stdout; if the runner reports on stderr (python unittest
 # does), end that command with `2>&1`.
-# Design: ops docs/specs/2026-09-04-test-ci-audit-design.md, docs/specs/2026-09-28-test-ci-act-design.md.
+# Reference: ops docs/tooling.md.
 # Recipe lines are not echoed: the wrapper records every command it runs, `tasks check`
 # is silent when clean, and a clean commit should print nothing. `just --verbose` shows them.
 set quiet

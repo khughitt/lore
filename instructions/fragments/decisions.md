@@ -361,16 +361,17 @@
   next action), and dispatches narrow task briefs with applicable constraints and
   needed interfaces. Keep full review reports and clean supporting logs in files so
   only concise handoffs and the finding sections needed for decisions or rulings enter
-  controller context. After compaction below `hq pause limits`, check `hq pause status`
-  (maintaining any counts the hook does not observe) and recover inside the current
-  turn budget by reading the current task, the plan's ledger and the referenced
-  sections needed for the next decision, and verifying the named current Git state;
-  reconcile any conflict between ledger, task records and Git state before dispatch,
-  and never replay completed task sequences, respawn completed workers, reload every
-  prior report, or ask permission to recover. When compactions cross `hq pause limits`
-  (with no separate earlier threshold), stop under the turn-pause rule above and, when
-  compaction or context growth is the binding cause, recommend a user-chosen fresh
-  controller in the pause decision. During the permitted pause report and park, record
+  controller context. After compaction while enforced `hq pause limits` remain
+  uncrossed, check `hq pause status` (maintaining the enforced counts where no pause
+  hook runs) and recover inside the current turn budget by reading the current task,
+  the plan's ledger and the referenced sections needed for the next decision, and
+  verifying the named current Git state; reconcile any conflict between ledger, task
+  records and Git state before dispatch, and never replay completed task sequences,
+  respawn completed workers, reload every prior report, or ask permission to recover.
+  Compaction alone never triggers a pause; when an enforced limit crosses `hq pause
+  limits`, stop under the turn-pause rule above and, when compaction or context
+  growth is the binding cause, recommend a user-chosen fresh controller in the pause
+  decision. During the permitted pause report and park, record
   the durable handoff in the task record and its existing ledger/report references:
   actual status, task/plan/spec identities and frozen revisions, branch/worktree,
   current HEAD/base and next action with its owner; completed task ranges, current

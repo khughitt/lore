@@ -27,13 +27,27 @@ dropped or added. Keep new skills at this depth.
   the same way.
 - `references/retained-item-records.md` — lore-authored closeout record guidance,
   read on demand from the global Processes rule. The existing hq directory link
-  serves it at `~/.agents/skills/references/retained-item-records.md`; it is separate
-  from the vendored checklists below and is not a skill.
-- `api-and-interface-design/`, `code-simplification/`, `context-engineering/`,
-  `documentation-and-adrs/`, `observability-and-instrumentation/`,
-  `performance-optimization/`, `security-and-hardening/` — vendored copies from
-  addyosmani/agent-skills. Their shared checklists live in `references/` (not a skill;
-  `references/source.md` names the origin), cited from a skill as `../references/<file>.md`.
+  serves it at `~/.agents/skills/references/retained-item-records.md`, beside the
+  retention-v1 schemas; it is not a skill.
+- Nine addyosmani/agent-skills skills (`api-and-interface-design`,
+  `code-simplification`, `context-engineering`, `documentation-and-adrs`,
+  `frontend-ui-engineering`, `observability-and-instrumentation`,
+  `performance-optimization`, `security-and-hardening`, `source-driven-development`) —
+  served from `vendor/agent-skills/skills/` here, a git submodule of
+  addyosmani/agent-skills pinned at a release tag (`0.6.15`), by one hq `links.toml`
+  declaration per skill in `[required]` (`~/.agents/skills/<name>`) and in
+  `[harness.claude.links]` (`skills/<name>`), so every harness sees the same set.
+  Upstream skills cite their shared checklists as `../../references/<file>.md`; hq
+  links `~/.agents/references` and `~/.claude/references` to
+  `lore:vendor/agent-skills/references` so that path resolves from either skill
+  directory. The other 16 upstream skills are not served: several duplicate or collide
+  with superpowers skills, and the rest conflict with the global instructions or need
+  tooling not set up here (lore-1be62d records each reason). In Claude Code, overlap
+  with the `code-simplifier`, `security-guidance` and `frontend-design` plugins is
+  accepted. Lore carries no patches to upstream text. Bump with
+  `git -C vendor/agent-skills checkout <tag>` and commit the pointer; a change to the
+  selected set needs the matching hq declarations on both surfaces in the same change
+  set.
 - The superpowers skills (`brainstorming`, `writing-plans`, … one declaration per skill) —
   served from `vendor/superpowers/skills/` here, a git submodule of obra/superpowers
   pinned at a release tag. This is the only superpowers copy the non-Claude harnesses

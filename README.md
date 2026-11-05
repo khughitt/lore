@@ -20,7 +20,7 @@ does not have; the corpus, profiles and skills are plain files and read on their
 ## Setup
 
 Run `just setup` after a clone to prepare worktree storage, initialize the pinned
-superpowers submodule and install the locked test environment (pytest and pytest-xdist,
+submodules (superpowers, agent-skills) and install the locked test environment (pytest and pytest-xdist,
 from `uv.lock`) into `.venv`. Checks use Python 3.11+, uv, Git and just. Run `just check`
 and `just test-full` to verify the corpus and its assembly outputs; routine `just test`
 runs on GitHub Actions at push (see AGENTS.md, Gates).
@@ -56,7 +56,7 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 
 - `instructions/`: policy fragments, ordered catalog, generated global artifact and manifest.
 - Root `AGENTS.md`: the project guide; `bin/assemble-instructions`: assembler and guard.
-- `profiles/`, `skills/`, `vendor/superpowers/`, `.skill-lock.json`: the instruction corpus.
+- `profiles/`, `skills/`, `vendor/superpowers/`, `vendor/agent-skills/`, `.skill-lock.json`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
 - `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
   task records live in the records root (`tasks where` names it). The archived documents'

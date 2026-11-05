@@ -54,9 +54,10 @@ is a warning, while broken bindings or uncovered obligations are fatal.
 - `instructions/assembly.toml` and `instructions/fragments/`: editable catalog and
   policy sources. Ops owns the external Projects fragment.
 - `profiles/`: the personal, work and external fragments resolved by ops-profile.
-- `skills/`: seven vendored skills, the `curate-docs` skill, `skills/references/` and
-  the skill README.
-- `vendor/superpowers`: the pinned submodule; `just setup` initializes it.
+- `skills/`: the `curate-docs` skill, `skills/references/` (lore-authored retention
+  guidance and schemas) and the skill README.
+- `vendor/superpowers` and `vendor/agent-skills`: the pinned submodules; `just setup`
+  initializes them.
 - `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
 - `docs/`: the reference documents (`instruction-formats.md`, `profile-delivery.md`,
   `instruction-assembly.md`). Specs, plans, briefs and the provenance audit live in the
@@ -94,3 +95,5 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   (`~/.claude/plugins/installed_plugins.json`). A bump that adds or removes a skill
   needs a commit here and a declaration in hq `./links.toml`, or harnesses run
   different skills.
+- Keep `vendor/agent-skills` at an upstream release tag. A bump that changes the
+  selected skills needs the hq declarations, on both surfaces, in the same change set.

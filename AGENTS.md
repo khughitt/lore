@@ -65,7 +65,7 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   19 documents archived there; the records repository keeps theirs in its lore directory
   (`git -C <records root> log --follow -- lore/docs/<path>`). Two history rewrites
   changed commit ids. A commit from before the 2026-11-05 rewrite, which removed vendored
-  agent-skills copies, maps through the agent-skills-commit-map.txt attachment on
+  agent-skills copies, maps through the agent-skills-commit-map-v2.txt attachment on
   lore-1be62d (old and new id per line; zeros mark a pruned commit). A commit from before
   the 2026-10-27 rewrite first maps through the combined-map.json attachment on
   lore-72153d (to its rewritten commit, its records-archive commit, or both), then

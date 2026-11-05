@@ -107,14 +107,17 @@
   reading and stops on a mismatch. While that review is open, never amend or rebase
   the commit, and leave an out-of-tree file unedited. A later draft reaches review only
   as a new frozen revision, named in the next round's request, and each finding is
-  judged against the revision its request named.
+  judged against the revision its request named. When asking the user to approve a
+  frozen artifact or amendment, keep the frozen revision in the linked record or
+  change summary rather than as raw hashes in the message, and for an amendment state
+  the change and its consequences with the full document linked (Communication).
 <!-- rule:f431707097c0418c9822d67074875c51 end -->
 <!-- rule:2c5785f136ca4ee590e1c69406276623 begin -->
 - A question, when asked, is one question, not a series, and carries your
   recommendation: in a harness's multiple-choice question tool, as the first option;
   on relay's typed `question` schema, as `recommended` on each choice item (`single`
-  or `multi`) where you hold a view; in a message, inside the decision request's one
-  sentence (Communication), with the alternatives in the record. Use the available
+  or `multi`) where you hold a view; in a message, inside the decision request
+  (Communication), with the alternatives in the record. Use the available
   supported channel (the harness's question tool or an active relay question route)
   without mandating an uninstalled connector, activating services, or turning a
   bounded recommendation under the first rule above into a stop. Over the typed

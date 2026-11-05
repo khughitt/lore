@@ -252,6 +252,37 @@
       "locator": null,
       "sha256": "37e4dc91eefb2faae9bf7ca19f97af68cf59eea7b959aeff163100b0224e7abd",
       "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading and stops on a mismatch. While that review is open, never amend or rebase\n  the commit, and leave an out-of-tree file unedited. A later draft reaches review only\n  as a new frozen revision, named in the next round's request, and each finding is\n  judged against the revision its request named.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:340c80c5c94447988769c4719bd75d1f",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "ba162c10a8785f0201bc7d2c8b56816f57239e0f3a46c7b5be29f8a0db82360e",
+          "sha256": "9dce14fd12130cdfd0f0a52a8017243f672e5b9a897233026acbdda01fb906ad",
+          "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. "
+        },
+        {
+          "id": "clause:797be969084b47f8a07a3c2d8348994e",
+          "offset": 200,
+          "overlaps": [],
+          "parent_sha256": "ba162c10a8785f0201bc7d2c8b56816f57239e0f3a46c7b5be29f8a0db82360e",
+          "sha256": "c795fbf64719b2525b1e05cad74d99ea8f9c79a2b9cdd157654b8d36111d15cf",
+          "text": "Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading"
+        },
+        {
+          "id": "clause:3a52659cfd474d7dbf664309348819d4",
+          "offset": 348,
+          "overlaps": [],
+          "parent_sha256": "ba162c10a8785f0201bc7d2c8b56816f57239e0f3a46c7b5be29f8a0db82360e",
+          "sha256": "7b1c434f27d84805041ac446b8f877ba7a6b2f6c4429871fbc8883c2af0e12f4",
+          "text": "and stops on a mismatch."
+        }
+      ],
+      "locator": null,
+      "sha256": "ba162c10a8785f0201bc7d2c8b56816f57239e0f3a46c7b5be29f8a0db82360e",
+      "text": "- A request to review a spec or plan names the frozen revision under review: the\n  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`\n  rather than the working file. Where the profile keeps the document out of the tree,\n  the request names its path and sha256, and the reviewer checks that sha256 before\n  reading and stops on a mismatch. While that review is open, never amend or rebase\n  the commit, and leave an out-of-tree file unedited. A later draft reaches review only\n  as a new frozen revision, named in the next round's request, and each finding is\n  judged against the revision its request named. When asking the user to approve a\n  frozen artifact or amendment, keep the frozen revision in the linked record or\n  change summary rather than as raw hashes in the message, and for an amendment state\n  the change and its consequences with the full document linked (Communication).\n"
     }
   ],
   "schema": 1,

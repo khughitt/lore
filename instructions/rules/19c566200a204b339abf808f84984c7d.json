@@ -429,6 +429,29 @@
       "locator": null,
       "sha256": "e2e1f11b79fdad9a9f818a95a79a504b3ea648d96cc3836930efde912123ab5b",
       "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n  Rulings and deferred minors stay in the plan ledger, with one task note naming them;\n  verification, deviations and disclosures go in the done or park note. What the user\n  must act on stays in the message: the approval or decision asked for and the text\n  they must read to give it (or its frozen revision: repository, commit and path, or\n  path and sha256), a surviving process with its pid and stop command, an error only\n  they can resolve, and each branch left unmerged, with its location and who\n  integrates it. \"Nothing was pushed\" does not establish integration state; name the\n  branch. Task notes are not shortened by these rules.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:6c567f224a4e4834bbe13e18769195a2",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "2f580d9f3078a7c8632566ca248298edf705f32b91af4aed44f72d9827d53bda",
+          "sha256": "8e92e8470849fb33887f29a3fe94407b1af10397123f64364451218f8703cc10",
+          "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n"
+        },
+        {
+          "id": "clause:84b2196069a448c08a86a42f79cdc08c",
+          "offset": 498,
+          "overlaps": [],
+          "parent_sha256": "2f580d9f3078a7c8632566ca248298edf705f32b91af4aed44f72d9827d53bda",
+          "sha256": "ff64913a0a9ed4867904d7187c9e56da46235d3063a992c991b20914650696bf",
+          "text": "  Rulings and deferred minors stay in the plan ledger, with one task note naming them;\n  verification, deviations and disclosures (including routine non-actions such as\n  \"nothing pushed\", no surviving process, a merged branch or a cleaned-up worktree)\n  go in the done or park note. What the user must act on stays in the message: the\n  approval or decision asked for and a link to the text or change summary they must\n  read to give it (with its frozen revision \u2014 repository, commit and path, or path\n  and sha256 \u2014 preserved in that linked record), a surviving process with its pid and\n  stop command, an error only they can resolve, and each branch left unmerged, with\n  its location and who integrates it. \"Nothing was pushed\" does not establish\n  integration state; name an unmerged branch in the message and record a merged one\n  in the note. Task notes are not shortened by these rules.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "2f580d9f3078a7c8632566ca248298edf705f32b91af4aed44f72d9827d53bda",
+      "text": "- Required content is kept whole in the record, not the message: every required\n  ruling (its own entry with the decision, labelled `Why:` (reason) and `Cost:` (if\n  wrong), and revision references; say when a reason or cost was not recorded rather\n  than inventing one), deferred minors, and the closing disclosures (pushes, this\n  session's surviving processes, others' work, worktree state, and each branch left\n  unmerged with its location and what integrates it: who approves, which command).\n  Rulings and deferred minors stay in the plan ledger, with one task note naming them;\n  verification, deviations and disclosures (including routine non-actions such as\n  \"nothing pushed\", no surviving process, a merged branch or a cleaned-up worktree)\n  go in the done or park note. What the user must act on stays in the message: the\n  approval or decision asked for and a link to the text or change summary they must\n  read to give it (with its frozen revision \u2014 repository, commit and path, or path\n  and sha256 \u2014 preserved in that linked record), a surviving process with its pid and\n  stop command, an error only they can resolve, and each branch left unmerged, with\n  its location and who integrates it. \"Nothing was pushed\" does not establish\n  integration state; name an unmerged branch in the message and record a merged one\n  in the note. Task notes are not shortened by these rules.\n"
     }
   ],
   "schema": 1,

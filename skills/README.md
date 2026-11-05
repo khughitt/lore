@@ -9,6 +9,9 @@ cache. Its readers are Codex (shown as root `r0`), OpenCode (a recursive `**/SKI
 scan) and Crush (dotfiles' `crush/patch_skills_user_invocable.py` patches the
 directory for its command palette).
 
+Upstream revisions are pinned by the Git submodules; hq's `links.toml` records
+which skills are served. There is no separate installer lock inventory.
+
 The layout is flat: every skill is served at `~/.agents/skills/<name>/SKILL.md`,
 from a directory here or in its owner's checkout. Codex shows each as `r0/<name>/SKILL.md`, and a flat path
 is the one an agent guesses; nested skill directories were read back with a level

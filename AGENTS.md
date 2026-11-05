@@ -58,7 +58,7 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   guidance and schemas) and the skill README.
 - `vendor/superpowers` and `vendor/agent-skills`: the pinned submodules; `just setup`
   initializes them.
-- `.skill-lock.json`: skill source metadata. `bin/skill-sizes.py`: the inventory utility.
+- `bin/skill-sizes.py`: the skill inventory utility.
 - `docs/`: the reference documents (`instruction-formats.md`, `profile-delivery.md`,
   `instruction-assembly.md`). Specs, plans, briefs and the provenance audit live in the
   records root (`tasks where` names it). This repository's history no longer holds the

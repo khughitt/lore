@@ -56,7 +56,7 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 
 - `instructions/`: policy fragments, ordered catalog, generated global artifact and manifest.
 - Root `AGENTS.md`: the project guide; `bin/assemble-instructions`: assembler and guard.
-- `profiles/`, `skills/`, `vendor/superpowers/`, `vendor/agent-skills/`, `.skill-lock.json`: the instruction corpus.
+- `profiles/`, `skills/`, `vendor/superpowers/`, `vendor/agent-skills/`: the instruction corpus.
 - `bin/skill-sizes.py`: the skill inventory utility.
 - `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
   task records live in the records root (`tasks where` names it). The archived documents'

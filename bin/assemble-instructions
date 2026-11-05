@@ -488,7 +488,7 @@ def validate_context(context, *, external=True):
         if item['value'] is None and not item['reason']: raise ValueError('unknown environment value needs reason')
 
 
-def validate_rule_set(records, scans, exclusions):
+def validate_rule_set(records, scans, exclusions, *, require_current=True):
     live = {}
     for fragment, scan in scans.items():
         for rule in scan['rules']:
@@ -508,7 +508,7 @@ def validate_rule_set(records, scans, exclusions):
         validate_rule(record)
         if key != record['id']: raise ValueError('record filename/id mismatch')
         if (key in live) != (record['state'] == 'active'): raise ValueError('active/retired rule coverage mismatch')
-        if key in live and not any(r['sha256'] == live[key]['sha256'] and r['text'] == live[key]['text'] for r in record['revisions']): raise ValueError(f'stale rule record: {live[key]["source"]}, {record_path(key)}; unstage these files keeping working edits, refresh, inspect and restage, then rerun check')
+        if require_current and key in live and not any(r['sha256'] == live[key]['sha256'] and r['text'] == live[key]['text'] for r in record['revisions']): raise ValueError(f'stale rule record: {live[key]["source"]}, {record_path(key)}; unstage these files keeping working edits, refresh, inspect and restage, then rerun check')
         for relation in record['relations']:
             if not relation['targets'] or any(t not in records or t == key for t in relation['targets']): raise ValueError('dangling rule relation')
     if set(live) - set(records): raise ValueError('marked rule missing record')
@@ -604,9 +604,9 @@ def committed_record(root, rid):
 
 
 def check_authoring_set(records, scans):
-    # Creating one range must work while other prose is still awaiting annotation.
-    # The assembly/check gate separately requires complete exclusion coverage.
-    validate_rule_set(records, {f: dict(s, uncovered=[]) for f, s in scans.items()}, {})
+    # Incremental authoring leaves other prose awaiting annotation or refresh.
+    # Delivery separately requires complete coverage and current revisions.
+    validate_rule_set(records, {f: dict(s, uncovered=[]) for f, s in scans.items()}, {}, require_current=False)
 
 
 def add_rule(root, args):

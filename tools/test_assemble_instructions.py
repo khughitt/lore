@@ -1302,6 +1302,61 @@ def test_refresh_explicit_selector(world):
     with pytest.raises(ValueError): module.refresh_rule(old, changed, {CLAUSE_A: {'retire': False}})
 
 
+@pytest.mark.parametrize('explicit_selector', [False, True])
+def test_targeted_refresh_leaves_other_stale_rules_untouched(world, explicit_selector):
+    module = load_assembler(world)
+    paths, scans = module.local_scans(world.root)
+    rid = scans['core']['rules'][0]['id']
+    old = clause_record(module); old['id'] = rid
+    record_path = world.root / module.record_path(rid)
+    record_path.write_bytes(module.manifest_bytes(old))
+    changed = b'- Use clear commits.\n' if explicit_selector else b'- Always use conventional commits.\n'
+    source = world.root / paths['core']
+    source.write_bytes(marked(rid, changed))
+    other = world.root / paths['git']
+    other.write_bytes(other.read_bytes().replace(b'conventional', b'clear'))
+    before = {p: p.read_bytes() for p in (world.root / 'instructions/rules').glob('*.json')}
+    args = ['refresh', rid]
+    if explicit_selector:
+        selectors = world.root / 'selectors.json'
+        selectors.write_text(json.dumps({CLAUSE_A: {'text': 'clear commits', 'offset': 6}}))
+        args += ['--selectors', str(selectors)]
+    result = invoke(world, *args)
+    assert result.returncode == 0, result.stderr
+    assert [p for p, data in before.items() if p.read_bytes() != data] == [record_path]
+    updated = module.read_rule_set(world.root)[rid]
+    assert updated['revisions'][:-1] == old['revisions']
+    assert updated['revisions'][-1]['text'] == changed.decode()
+    assert source.read_bytes() == marked(rid, changed)
+    result = build(world, 'check')
+    assert result.returncode == 1 and b'stale rule record' in result.stderr and b'git.md' in result.stderr
+
+
+def test_add_rule_leaves_other_stale_rules_untouched(world):
+    module = load_assembler(world)
+    source = world.root / 'instructions/fragments/core.md'
+    source.write_bytes(source.read_bytes().replace(b'Composition', b'Compose'))
+    line = len(source.read_bytes().splitlines()) + 1
+    source.write_bytes(source.read_bytes() + b'- New obligation.\n')
+    before = {p: p.read_bytes() for p in (world.root / 'instructions/rules').glob('*.json')}
+    result = invoke(world, 'add-rule', 'core', '--start-line', str(line), '--end-line', str(line), '--title', 'New')
+    assert result.returncode == 0, result.stderr
+    rid = re.search(rb'rule:[0-9a-f]{32}', result.stdout)[0].decode()
+    assert module.read_rule_set(world.root)[rid]['revisions'][0]['text'] == '- New obligation.\n'
+    assert all(p.read_bytes() == data for p, data in before.items())
+    result = build(world, 'check')
+    assert result.returncode == 1 and b'stale rule record' in result.stderr and b'core.md' in result.stderr
+
+
+def test_authoring_stale_rule_still_rejects_dangling_relations(world):
+    module = load_assembler(world)
+    record = module.new_rule_record(RULE_A, 'Intent', b'- Old intent.\n')
+    record['relations'] = [{'kind': 'split_from', 'targets': [RULE_B]}]
+    scan = module.scan_rules(marked(RULE_A, b'- New intent.\n'))
+    with pytest.raises(ValueError, match='dangling rule relation'):
+        module.check_authoring_set({RULE_A: record}, {'core': scan})
+
+
 def test_add_rule_staged_source_and_symlink(world):
     path = authoring_world(world)
     module = load_assembler(world)

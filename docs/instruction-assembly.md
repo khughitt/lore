@@ -141,6 +141,12 @@ clause ID to `{"text": "new exact quote", "offset": 10}` (UTF-8 byte offset) or
 Retained revisions and claims stay intact; a rerun completes interrupted record
 writes without duplicating revisions, including when selectors were supplied.
 
+Targeted `refresh` writes only the named rules' records. Both authoring commands
+permit other rules to remain stale; `add-rule` leaves their records untouched.
+Assembly, `check` and `provenance` still require every live rule to have a revision
+matching its current source. Other record, state and reference checks apply during
+authoring too.
+
 Both commands refuse staged changes to affected files, symlink outputs and invalid
 records. Unstage the named files **keeping working edits**, refresh, inspect,
 restage and rerun check. After authoring, record available proposal and approval

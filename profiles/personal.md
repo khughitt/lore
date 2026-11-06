@@ -20,3 +20,7 @@ named per command: `GH_TOKEN=$(gh auth token --user khughitt) gh …` touches no
 global state. The fallback is `gh auth switch --user khughitt` when `gh auth status`
 shows another account, but the active account is global state, often the other
 one, and a concurrent session can switch it back before the write.
+
+The top-level `archive/` in a personal checkout holds private reference material.
+Respect its ignore rule: never commit or force-add it, move its private contents
+into tracked paths, or cite those contents from tracked files.

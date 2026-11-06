@@ -111,6 +111,10 @@
   frozen artifact or amendment, keep the frozen revision in the linked record or
   change summary rather than as raw hashes in the message, and for an amendment state
   the change and its consequences with the full document linked (Communication).
+  For any commit-based review, including implementation review, finish the
+  commit, read its actual full SHA from Git in the target repository, then
+  dispatch against that SHA. Never guess the SHA or dispatch in the same parallel
+  batch as the commit that creates it; a nonexistent SHA is not a frozen target.
 <!-- rule:f431707097c0418c9822d67074875c51 end -->
 <!-- rule:2c5785f136ca4ee590e1c69406276623 begin -->
 - A question, when asked, is one question, not a series, and carries your

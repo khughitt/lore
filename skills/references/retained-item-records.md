@@ -410,6 +410,16 @@ intent. Do not use them to bypass a pending lifecycle reservation or a validatio
 publication failure: resolve that failure through the owning contract, recovering
 or reconciling a published operation first.
 
+For multiple new or changed objects on the same task, use
+`tasks note <id> --stdin --stamp`, one complete `retained: {…}` note per line.
+The transfer procedure below defines input-order validation and one-save/commit
+behavior; each identity and its history remain independent. `--stamp` stamps every
+note. Notes share a whole-second timestamp, which is not a unique note identifier:
+use their ordinal in the exact committed basis. Do not re-append unchanged objects.
+Publish the changed-object batch and verify its committed basis before appending
+the checkpoint that cites it; never batch that checkpoint with the object writes
+whose resulting commit it must name.
+
 Manual checkpoint order: inspect; preserve changed evidence/manifest versions; write
 changed item objects; commit and check the basis; append the checkpoint; then
 park/done. With `[git] commit = true`, use the successful auto-commit of the last

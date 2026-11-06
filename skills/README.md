@@ -21,6 +21,10 @@ dropped or added. Keep new skills at this depth.
   `docs/project-guides.md` and `docs/operations.md`), shaped like `curate`.
   Served by a `lore:skills/curate-docs` declaration in hq's `links.toml` for each home
   surface.
+- `distillation-review/` — read-only code and test-architecture distillation with
+  provenance checks, controller verification and an independent critic before
+  owner acceptance. Harness delivery requires `lore:skills/distillation-review`
+  declarations on both home surfaces in hq's `links.toml`.
 - `tasks`, `curate`, `scope`, `quick-add` — served from the tasks and ops checkouts by
   declarations in hq's `links.toml`, so the skills those repositories ship are always
   the checked-out version. A new skill is a declaration there for each home surface;

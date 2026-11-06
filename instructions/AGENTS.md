@@ -957,6 +957,7 @@ to read one of them from anywhere.
 - `ns` — natural-systems (natural-systems-v2) — Research on structure across representation, observation, scale, and coupling
 - `obs` — obs — Cross-project execution evidence, observability, and historical analysis
 - `ops` — ops — The hub for work spanning projects, and the shared tooling
+- `pressure` — noctalia-resource-alert — Noctalia v5 plugin for memory, sustained CPU, and disk-space pressure alerts
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
 - `quarry` — quarry — One CLI and skills over scientific resources, with domains as lenses
 - `refs` — refs — Vocabulary identifiers pinned to releases: the reference layer above nodes

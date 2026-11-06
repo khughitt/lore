@@ -830,6 +830,10 @@ output itself.
   incomplete: fetch the omitted range in smaller calls before acting on the skill. A
   heading search or `head` locates content but does not replace reading it. A complete
   read already in context stands until truncation or context loss removes part of it.
+- An empty or suspiciously small recursive search under a home directory assembled
+  from symlinks (such as `~/.agents/skills`) is not evidence of absence. Rerun
+  following links (`rg -L`, `fd -L`, `find -L`), or resolve the entry with
+  `readlink -f <entry>` and search its owner checkout.
 
 ## Task notes for outcome measures
 

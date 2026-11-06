@@ -28,3 +28,9 @@
   heading search or `head` locates content but does not replace reading it. A complete
   read already in context stands until truncation or context loss removes part of it.
 <!-- rule:0472de81465f41dcb870eec7f86bfa47 end -->
+<!-- rule:57a265755a39447d85cf71bbb5ba1b44 begin -->
+- An empty or suspiciously small recursive search under a home directory assembled
+  from symlinks (such as `~/.agents/skills`) is not evidence of absence. Rerun
+  following links (`rg -L`, `fd -L`, `find -L`), or resolve the entry with
+  `readlink -f <entry>` and search its owner checkout.
+<!-- rule:57a265755a39447d85cf71bbb5ba1b44 end -->

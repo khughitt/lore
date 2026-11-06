@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:57a265755a39447d85cf71bbb5ba1b44",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "94582ebe513f1808d5131403f12bd7577410209697999b0be4eb6ef52418da2b",
+      "text": "- An empty or suspiciously small recursive search under a home directory assembled\n  from symlinks (such as `~/.agents/skills`) is not evidence of absence. Rerun\n  following links (`rg -L`, `fd -L`, `find -L`), or resolve the entry with\n  `readlink -f <entry>` and search its owner checkout.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Search linked skill directories"
+}

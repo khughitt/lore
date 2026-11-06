@@ -861,6 +861,9 @@ Two note shapes are read by obs's outcome measures; write them as plain
   handed review findings (resumed or freshly dispatched) checks that the round's note
   exists and writes none; if it is missing, the worker says so in its report for the
   controller to add.
+  This shape measures only spec, plan and implementation reviews; record a review
+  of any other artifact (a scope brief or research note) as a plain task note that
+  does not begin with `review:`.
 - When you file a task because work closed as `done` fell short, changed, or grew,
   note it on the new task at filing: `concerns: <task-id> <defect|change|extension> — <one line>`.
   `defect`: the closed work did not do what its task asked or broke something that

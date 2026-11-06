@@ -938,8 +938,8 @@ to read one of them from anywhere.
 
 - `atoms` — atoms — A recoverable filesystem effect engine: the crash-safe substrate
 - `autonomy` — autonomy — The envelope and orchestrator of verifiably: what may run unattended
+- `band` — band — Single-agent and multi-agent orchestration across harnesses and domains
 - `beliefs` — beliefs — The epistemic kernel of verifiably: recording scientific belief
-- `crew` — crew — Single-agent and multi-agent orchestration across harnesses and domains
 - `dots` — dotfiles — The dotfiles: shell, editor, desktop, and terminal configuration
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them

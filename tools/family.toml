@@ -15,7 +15,7 @@ overview = "https://github.com/khughitt/ops#readme"
 
 # Members in nav order: hub and tracker, then the agent layer, then the working tools,
 # then companions, then views. `name` is the member's identity.toml name; `prefix` its
-# tasks prefix; `label` the hover text of its nav link. crew, transponder and forge v2
+# tasks prefix; `label` the hover text of its nav link. band, transponder and forge v2
 # have no repository yet: their URLs are the names their publication tasks create.
 [[members]]
 name = "ops"
@@ -60,9 +60,9 @@ url = "https://github.com/khughitt/obs"
 label = "Execution evidence and historical analysis"
 
 [[members]]
-name = "crew"
-prefix = "crew"
-url = "https://github.com/khughitt/crew"
+name = "band"
+prefix = "band"
+url = "https://github.com/khughitt/band"
 label = "Single- and multi-agent orchestration across harnesses"
 
 [[members]]

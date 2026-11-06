@@ -10,9 +10,10 @@ a consumer validates its exact basis. Read this when creating, refreshing or
 releasing records. Existing process/service, Git removal, privacy and publication
 rules still apply. No history rewrite, bulk backfill or migration is authorized.
 
-Tasks owns the command, request and receipt contracts: read its README's Retained
-state, Retained checkpoints, Retained transfers and Retained reconciliation
-sections and the installed tasks skill's Retained-state queries section. Resolve
+Tasks owns the command, request and receipt contracts: read `docs/retention.md`
+(Query state; Requests and checkpoints; Transfers and reconciliation; Phase and
+checkpoint envelopes; Failure, retry and result interpretation), linked from its
+README, and the installed tasks skill's Retained-state queries section. Resolve
 the owning checkout through `tasks projects`. This reference owns retention
 semantics and the manual/recovery obligations below; it is not a second CLI spec.
 
@@ -245,8 +246,10 @@ Keep manifests for as long as their checkpoint evidence is needed. A mutable
 
 ### Multipart manifests
 
-Tasks owns the command and admission contract (README, Multipart text attachments
-and Export and recovery). Attach one whole UTF-8 source with
+Tasks owns the command and admission contract: read `docs/attachments.md`
+(Multipart text and catalog version 1; Publication, reservations and removal;
+Export and current validation; Multipart validators), linked from its README.
+Attach one whole UTF-8 source with
 `tasks attach <id> <path> --multipart`, or stream it into
 `tasks attach <id> - --name <name>.json --multipart`. Use a new logical name for a
 changed version. The installed route preserves exact bytes as bounded parts plus a

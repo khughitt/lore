@@ -169,9 +169,10 @@ Inspect those sources read-only; do not execute the governed tool. Unavailable
 sources leave existence uncertain, not evidence of retirement or a lapsed purpose.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
-manifest, the module list. The pass runs nothing the judged documents describe: no
-example, no test, no tool of the project beyond the mechanical checks in §1 and
-the tracker and acknowledgment commands in §5.
+manifest, the module list. During the review phase, through the review note in §5,
+the pass runs nothing the judged documents describe: no example, no test, no tool
+of the project beyond the mechanical checks in §1 and the tracker commands in §5.
+Permitted edits follow in the separate edit phase (§4).
 
 ## 3. The rubric
 
@@ -383,16 +384,23 @@ declares `[documents]`:**
 
 ## 4. Edits
 
-`refined` edits happen only when the pass runs in the project's own checkout, on the
-branch the session works on, and land as one `docs:` commit through the project's own
-gates. From another project (`--project`), the edit is recorded as `proposed` and
-resolved like a `stale` finding (§5): the owning project edits its own tree. An edit
-shortens or corrects; it never adds a section, reorders, or deletes a rule, except
-text criterion 4 finds restated from the global layer. A version clause, a related
-link or a type's missing content is an addition and so a proposal; a marker is
-mechanical (§1). A
-README some test reads as input (grep `tests/` for its name) gets that test run
-before the commit.
+After the review note in §5, permitted `refined` edits enter a separate edit phase.
+When running in the project's own checkout, create or reuse an editing worktree
+under `.worktrees/` under the global Git rule, hydrate it and satisfy that rule's
+policy-appropriate baseline before editing. Make the edits there, run the project's
+gates and any test that reads an edited README as input (search the project's test
+sources for its name), and land one `docs:` commit, integrated as the profile allows.
+The review-phase execution bound does not restrict these setup and verification
+commands. When the route is unavailable (a required setup or test route is undeclared,
+or setup, baseline or gates fail), record each unlanded edit as `proposed` with the
+reason in the review record and resolve it through §5. From another project
+(`--project`), record edits as `proposed` the same way: the owning project edits its
+own tree.
+
+An edit shortens or corrects; it never adds a section, reorders, or deletes a rule,
+except text criterion 4 finds restated from the global layer. A version clause, a
+related link or a type's missing content is an addition and so a proposal; a marker
+is mechanical (§1).
 
 ## 5. The review task and its notes
 
@@ -502,8 +510,10 @@ Nothing else. A pass with nothing in those groups says so in one line.
 
 - The review creates one task at most, the review task. Findings become tasks in the
   resolution step, after the review note, one per finding.
-- Execute only §1's mechanical checks and §5's tracker/acknowledgment commands;
-  nothing from the judged documents is executed.
+- During the review phase, execute only §1's mechanical checks and §5's tracker
+  commands; nothing from the judged documents is executed. After the review note,
+  §4's edit phase permits the required setup, baseline and gates; §5's acknowledgment
+  commands follow the notes and finding-owner handoffs.
 - Only covered documents are judged; a defect noticed in a decision record or a
   vendored file is named in `excluded:`, not judged. Three exceptions: an authority
   document under criterion 2 alone, an unread reference document under criterion

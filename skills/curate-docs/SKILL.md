@@ -169,7 +169,8 @@ Inspect those sources read-only; do not execute the governed tool. Unavailable
 sources leave existence uncertain, not evidence of retirement or a lapsed purpose.
 
 Drift is judged by reading the tree: `ls`, `git ls-files`, the justfile, the package
-manifest, the module list. During the review phase, through the review note in §5,
+manifest, the module list. During the review phase, through the pre-edit snapshot
+or final review note in §5,
 the pass runs nothing the judged documents describe: no example, no test, no tool
 of the project beyond the mechanical checks in §1 and the tracker commands in §5.
 Permitted edits follow in the separate edit phase (§4).
@@ -384,7 +385,7 @@ declares `[documents]`:**
 
 ## 4. Edits
 
-After the review note in §5, permitted `refined` edits enter a separate edit phase.
+After the pre-edit snapshot in §5, permitted corrections enter a separate edit phase.
 When running in the project's own checkout, create or reuse an editing worktree
 under `.worktrees/` under the global Git rule, hydrate it and satisfy that rule's
 policy-appropriate baseline before editing. Make the edits there, run the project's
@@ -393,7 +394,8 @@ sources for its name), and land one `docs:` commit, integrated as the profile al
 The review-phase execution bound does not restrict these setup and verification
 commands. When the route is unavailable (a required setup or test route is undeclared,
 or setup, baseline or gates fail), record each unlanded edit as `proposed` with the
-reason in the review record and resolve it through §5. From another project
+reason in the final review note and resolve it through §5. Finalize that note only
+after the edit outcomes are known. From another project
 (`--project`), record edits as `proposed` the same way: the owning project edits its
 own tree.
 
@@ -420,8 +422,17 @@ It is the only task the review creates. Record the pass without claiming it. If 
 pass started it, run `tasks -C <checkout> edit <review-id> --status todo` before
 closeout, and check `tasks -C <checkout> show <review-id>` confirms the claim was
 released. Never take over another session's claim. Leave its priority and body to
-ops, which owns its lifecycle. Then exactly one review note, one line, segments in
-this order. An empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
+ops, which owns its lifecycle. Write exactly one final review note, one line,
+segments in this order. When attempting an edit phase, first preserve a snapshot
+using the same template with the prefix `curate-docs: snapshot; rubric v8` instead
+of `curate-docs: rubric v8`. List pending edits as `proposed`, counted in
+`unresolved`, never as already `refined`. This snapshot ends judging and permits
+§4's edit phase; it is not the final review note. After edit outcomes are known,
+write the final review note with the original judged commit and coverage, landed
+edits as `refined`, unlanded edits as `proposed` with their reasons, and the actual
+unresolved count. Without an edit phase, write the final review note directly.
+Only the final review note feeds resolution and acknowledgment.
+An empty segment is omitted. `keep:` lists the criteria whose verdict was `keep` on every
 document they judged; a criterion with mixed verdicts appears only under the others,
 except criterion 5's `no incident recorded` list. When that list follows, omit 5
 from the preceding criterion numbers, even when every rule was kept; write 5 once.
@@ -430,8 +441,8 @@ the human and are not counted.
 
     tasks -C <checkout> note <review-id> "curate-docs: rubric v8; standard: document types <N>|not adopted; commit <sha>[ dirty: <covered paths|none covered>]; mechanical: ops-docs <rc>, ops-check <rc>[: <finding>, …]; covered: <path>[ (undeclared|authority|typed <N|none>|type set, typed <N|none>)][ sections: <headings and line ranges>], …; excluded: <dir>: <reason>, …[, unread: <paths>]; provenance: <subject IDs/hashes, evidence/search refs reused, access or binding gaps, additional search scope>; keep: <criterion numbers, omitting 5 when its list follows>[ 5 (no incident recorded, origin <value>: <names> | …)]; not judged: <criterion>: <why>, …; refined: <doc>: <what>, …; proposed: <doc>: <edit>, …; stale: <doc>: <what>, …; decision: <doc>: <proposal>, …; unresolved: <n>"
 
-Review completion and finding resolution are separate states, so a pass writes two
-notes: the review note above, then the resolution note below. After the review note,
+Review completion and finding resolution are separate states: after the final review
+note above, write the resolution note below. After the final review note,
 for each `stale`, `proposed` and mechanical finding: reuse the open task that owns it
 (`tasks -C <checkout> search "<literal path or distinctive phrase>"`, `tasks -C <checkout> list --tag
 docs`; avoid broad terms such as `AGENTS.md` alone), adding one note on it
@@ -511,7 +522,7 @@ Nothing else. A pass with nothing in those groups says so in one line.
 - The review creates one task at most, the review task. Findings become tasks in the
   resolution step, after the review note, one per finding.
 - During the review phase, execute only §1's mechanical checks and §5's tracker
-  commands; nothing from the judged documents is executed. After the review note,
+  commands; nothing from the judged documents is executed. After the pre-edit snapshot,
   §4's edit phase permits the required setup, baseline and gates; §5's acknowledgment
   commands follow the notes and finding-owner handoffs.
 - Only covered documents are judged; a defect noticed in a decision record or a

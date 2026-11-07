@@ -7,13 +7,15 @@ Two note shapes are read by obs's outcome measures; write them as plain
 
 <!-- rule:96745a06cd69497b8ffe0511c66bda2f begin -->
 - When a review of your spec, plan, or implementation arrives, before acting on
-  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | human>`
+  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | harness | human>`
   (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
   Use the actual reviewer's exact model identity when supplied by the reviewer or
   verified dispatch/runtime metadata. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
-  reviews labelled `human`. A Codex session that performed a review reads its own
+  reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never
+  placeholders such as `unknown`, `unverified` or `unrecorded`, as a reviewer value.
+  A Codex session that performed a review reads its own
   identity (never on another session's behalf), in the turn that performed it with a
   fresh command (never a terminal left from an earlier turn):
   `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when
@@ -26,6 +28,9 @@ Two note shapes are read by obs's outcome measures; write them as plain
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a
   disposition record, not a round.
+  Brainstorming's builder check counts as a `review: spec` round: use `revise`
+  when it raises questions to answer in the document or bring to the user, and
+  `accept` when it raises none. Record its reviewer identity by the same rule above.
   One agent writes each round's note, once, before handing the findings on: the
   controller when there is one, otherwise the agent the review arrives to. A worker
   handed review findings (resumed or freshly dispatched) checks that the round's note

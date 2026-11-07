@@ -266,6 +266,12 @@ provenance_date = "2026-10-05"
 rationale = "Keep the note formats consumed by outcome measures."
 [[fragments.evidence]]
 owner = "lore:records"
+path = "tasks/lore-fe7c07.md"
+revision = "d83f512e11e135b23d944f8cbca1c6fb27615817"
+location = "Task body and scope note: reviewer identities, non-artifact reviews and builder checks"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore:records"
 path = "docs/instruction-provenance.md"
 revision = "443589a95fa15faf0532542de527e1a6702eb56d"
 location = "none recorded"

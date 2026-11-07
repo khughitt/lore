@@ -22,7 +22,7 @@ checkout), generated there by `just projects`. Never hand-edit either output.
 
 | Command | Effect |
 | --- | --- |
-| `just assemble` | `bin/assemble-instructions write`: render both files and replace them atomically. Refuses a symlinked or non-regular output. |
+| `just assemble` | `bin/assemble-instructions write`: render both files and replace each file atomically; the pair is not one transaction. Refuses a symlinked or non-regular output. |
 | `bin/assemble-instructions render` | Print the artifact; `render --manifest` prints the manifest. Writes nothing. |
 | `bin/assemble-instructions check` | Read-only verification; `just check` runs it. |
 | `check --working-tree` | The same check against files on disk, whatever is staged. |
@@ -39,9 +39,11 @@ After an ops change to project identity: run `just projects` in ops, then
 ## Owner roots
 
 `lore` is always the checkout running the assembler. Every other owner a fragment
-or evidence pointer names, `lore:records` included, is looked up in the tasks
-registry. An `--owner-root` override must name an external owner the catalog
-declares, once; `lore` cannot be overridden. For `write` and `check` the override
+or concrete evidence pointer names, `lore:records` included, is looked up in the
+tasks registry. Sentinel evidence pointers (`none recorded` or `n/a` for both path
+and revision) do not add an owner to that lookup. An `--owner-root` override must
+name an external owner the catalog declares, once; `lore` cannot be overridden.
+For `write` and `check` the override
 must be a checkout of the registered repository (same Git common directory), and
 `check` announces each override on standard error. Repository-local Git variables
 a hook exports are stripped before reading any other owner's repository.

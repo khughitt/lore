@@ -5,8 +5,12 @@ plans, briefs and handoffs go where the session line's `design docs:` clause say
 Under the records root, write them in the `docs/` directory that clause names
 (`specs/`, `plans/`, and `notes/` for briefs and handoffs) and commit them in place
 on the records repository's one branch: it keeps no worktrees. `--spec` and `--plan`
-take the path relative to the project's records directory (`docs/specs/<name>.md`);
-a review request names the records repository and the path from its top
+take the path relative to the project's records directory (`docs/specs/<name>.md`).
+Commit with `tasks commit <path>... -m "<msg>"` from the project's checkout, giving
+those same records-relative paths, never a raw `git add` and `git commit` in the
+records repository: it commits under the lock `tasks` record writes take, so it
+serializes with other sessions' writes to that shared repository. A review request
+names the records repository and the path from its top
 (`<prefix>/docs/specs/<name>.md`). While a project's records are still in the tree,
 or the value is `commit`, commit them in the code repository under the convention it
 documents (`docs/specs/`, `docs/plans/` and `docs/notes/` unless its own instructions

@@ -507,6 +507,17 @@ Nothing else. A pass with nothing in those groups says so in one line.
 
 ## Rubric history
 
+Review the rubric in lore when a traced case has an explicit disposition (a ruled-away
+finding or human correction), or a newly uncovered reader need: compare the case with
+the rule and a correctly handled control, then record the outcome as application error,
+workflow fix, criterion change, or insufficient evidence. The trigger starts a bounded
+investigation, not an automatic edit; duplicate reports, preference rulings and
+misapplied rules do not establish a criterion defect or a numeric review threshold.
+Keep controller rulings distinct from recovered human intent. Before tuning a criterion
+change, reserve a separate validation case (synthetic if no natural case exists),
+disclose any absence of natural-case validation, and version the change here with its
+rationale.
+
 - **v1** (2026-10-23): criteria 1–7 from private ops records
   `ops/docs/specs/2026-09-22-project-guides-design.md` §8 at archive
   `a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3`; 8–11 added for completeness by

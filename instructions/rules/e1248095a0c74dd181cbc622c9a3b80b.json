@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:e1248095a0c74dd181cbc622c9a3b80b",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "78a603dfbde23185bd35177743fa9c4ac83fd397d3e9256cfe8459dea8ac283b",
+      "text": "- For tracked tasks, file cited documents as explicit task references and declare\n  expected outputs, following the tasks skill. On pickup, read the inventory's\n  required entries in their listed order before starting. The task's spec and plan\n  fields name its governing documents; ordinary references do not acquire those\n  workflow roles, and source remains provenance rather than a reading obligation.\n  A reference locates current content; reviews and evidence still pin exact revisions.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Declare and read task references"
+}

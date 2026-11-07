@@ -9,3 +9,12 @@
 <!-- rule:fea3f0aa833045f6a40ab83e4932bb6f begin -->
 - Verify document status against the code before relying on it; update it and related docs when work lands.
 <!-- rule:fea3f0aa833045f6a40ab83e4932bb6f end -->
+
+<!-- rule:e1248095a0c74dd181cbc622c9a3b80b begin -->
+- For tracked tasks, file cited documents as explicit task references and declare
+  expected outputs, following the tasks skill. On pickup, read the inventory's
+  required entries in their listed order before starting. The task's spec and plan
+  fields name its governing documents; ordinary references do not acquire those
+  workflow roles, and source remains provenance rather than a reading obligation.
+  A reference locates current content; reviews and evidence still pin exact revisions.
+<!-- rule:e1248095a0c74dd181cbc622c9a3b80b end -->

@@ -90,6 +90,12 @@ provenance_date = "2026-10-05"
 rationale = "Keep document authority and review conventions."
 [[fragments.evidence]]
 owner = "lore:records"
+path = "tasks/lore-8bf796.md"
+revision = "b8e67d4a95b367fe8b905a3ed5041d1a6d60f530"
+location = "Task body and scope check: explicit references, required reading and governing documents"
+status = "recorded"
+[[fragments.evidence]]
+owner = "lore:records"
 path = "docs/instruction-provenance.md"
 revision = "443589a95fa15faf0532542de527e1a6702eb56d"
 location = "A13–A16"

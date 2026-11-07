@@ -41,7 +41,14 @@ outcome-measure note.
    working tree.
 3. **Mechanical first.** Run the project's vendored `python3 tools/ops-docs check`
    (ops itself: `python3 bin/ops-docs check`) and `python3 tools/ops-check`. Record
-   each exit status and, when non-zero, one phrase per finding. A mechanical finding is
+   each exit status and, when non-zero, one phrase per finding. Do not run an absent
+   checker: record `mechanical: <checker> absent: guide contract not adopted`,
+   combining checker results in the note's one `mechanical:` segment. Missing guide
+   contract files count as one mechanical finding per project, however many are
+   absent, included once in `unresolved`; continue the prose review. When
+   `identity.toml` is absent, criteria 1, 2 and 11 record
+   `not judged: no identity.toml`. Route the adoption finding through §5.
+   A mechanical finding is
    not a rubric finding: it is fixed by `just docs` or by editing `identity.toml`,
    named in the note's `mechanical:` segment, and never hand-edited by the pass.
    `ops-docs` v5's document-type findings (the `[documents]` declaration, marker
@@ -429,6 +436,9 @@ note is the `concerns:` line the global instructions define. One task per findin
 review task:
 
     tasks -C <checkout> note <review-id> "curate-docs: resolution; <doc>: <what> -> <task-id> (reused|filed); …; decision: <n> awaiting the human"
+
+For missing guide-contract tooling, reuse the project's open guide-contract adoption
+task, or file one when none exists, rather than a separate task for each absent file.
 
 A `decision` finding is filed as a task only after the human rules on it; until then
 it lives in the review note.

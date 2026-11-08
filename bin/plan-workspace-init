@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Bind a plan identity into its external workspace before Setup writes anything there.
+set -euo pipefail
+fail() { echo "plan-workspace-init: $*" >&2; exit 2; }
+[[ $# == 2 ]] || fail 'usage: plan-workspace-init WORKSPACE PLAN'
+[[ -d $1 && -f $2 ]] || fail 'workspace and plan must already exist'
+workspace=$(cd -- "$1" && pwd -P)
+plan=$(cd -- "$(dirname -- "$2")" && printf '%s/%s' "$(pwd -P)" "$(basename -- "$2")")
+root=$(git rev-parse --show-toplevel)
+[[ $workspace != "$root" && $workspace != "$root/"* ]] || fail 'workspace must be outside the code worktree'
+[[ $workspace != *$'\n'* && $plan != *$'\n'* && $plan != *$'\r'* ]] || fail 'multiline paths cannot identify a ledger'
+identity="# SDD ledger — plan: $plan"
+if [[ -e $workspace/plan-path ]]; then
+    [[ -f $workspace/plan-path ]] || fail "workspace plan-path is not a regular file: $workspace/plan-path"
+    recorded_plan=$(cat "$workspace/plan-path")
+    [[ $recorded_plan == "$plan" ]] || fail "workspace belongs to another plan (recorded in $workspace/plan-path: $recorded_plan; supplied PLAN: $plan); pass the recorded plan path from $workspace/plan-path when resuming the same execution from another checkout after verifying the plan bytes match, or use the workspace for the supplied plan when they are distinct plans"
+else
+    [[ -z $(find "$workspace" -mindepth 1 -maxdepth 1 -print -quit) ]] || fail "refusing an occupied workspace without a plan identity ($workspace/plan-path is missing); Setup runs plan-workspace-init on the empty workspace before writing its ledger, baseline logs or other records there. When the contents are this plan's own Setup records, move them out, run plan-workspace-init, then restore them below the ledger header"
+    (set -o noclobber; printf '%s\n' "$plan" > "$workspace/plan-path")
+fi
+ledger=$workspace/progress.md
+if [[ -e $ledger ]]; then
+    [[ $(head -n 1 "$ledger") == "$identity" ]] || fail 'ledger belongs to another plan'
+else
+    (set -o noclobber; printf '%s\n' "$identity" > "$ledger")
+fi
+printf '%s\n' "$workspace"

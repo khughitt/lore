@@ -29,6 +29,12 @@
   (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;
   an id inside a command shown as code stays in that command.
 <!-- rule:2c1ea3727a7447348cb807cfae1c735e end -->
+<!-- rule:41b38a6426b946db94eee97bc7f044db begin -->
+- Write a conversation or session UUID in replies and reports shortened to its first
+  8 hex characters, as git shortens commit ids (`conversation://0653876d`, not the
+  full UUID). Task notes, ledgers, reports to controllers and any command the user
+  must run keep the full id.
+<!-- rule:41b38a6426b946db94eee97bc7f044db end -->
 <!-- rule:fb8d914a2eb44a64acc7e086970328a0 begin -->
 - Supporting detail leaves the message for the task record: findings and landed
   changes with their conditions and scope, verification and its limits (routine

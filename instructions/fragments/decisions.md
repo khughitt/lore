@@ -353,7 +353,7 @@
   consequence for the person, records each decision as a ledger `Ruling:` line, and
   admits confirmed proposals to corrective rounds as Important; rejected proposals
   stay `minor (deferred)` in the ledger, named in a task note that the final message
-  links. A fix subagent makes the fixes
+  links, and owned by an open task before close as Processes says. A fix subagent makes the fixes
   under subagent-driven execution; inline,
   you make them yourself, each still proven RED→GREEN with policy-appropriate checks
   under Tests: a green suite when policy is enabled, focused evidence and mandatory

@@ -103,6 +103,18 @@
   under the reference's fallback until the executing checker accepts shipped support;
   design completion alone never retires that fallback or authorizes raw deletion.
 <!-- rule:3b44ce6a0e9b4816853b1c3b2beedb77 end -->
+<!-- rule:019b1ebc42524f6689c223c58ca6cadf begin -->
+- Before `tasks done`, every deferred finding of the closing task (a `minor (deferred)`
+  ledger line, a deferred finding in a `verified` gate note, or a deferral the closing
+  note names) has an open owner. Either file one follow-up task for all of the closing
+  task's deferred findings, with `--source <closing-task-id>` and each finding and its
+  suggested fix in its body, or note each finding and the closing task's id on an
+  existing open task that covers them. A `verified` gate names that owner first in each
+  deferred finding (`minor deferred <owner-id> <text>`, which `flow-state check`
+  enforces), and the done note names the owning id. A park needs no owner, since the
+  parked task stays open. The follow-up carries no `concerns:` note: a deferral is a
+  review finding before close, not a shortfall found after it.
+<!-- rule:019b1ebc42524f6689c223c58ca6cadf end -->
 <!-- rule:45c689924ee64a9c93e94a71f332a1d3 begin -->
 - A task that spans sessions keeps its inputs where a reboot cannot take them. Its
   scratch lives in a per-task directory on persistent host-local storage off the synced

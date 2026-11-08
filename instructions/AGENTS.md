@@ -132,7 +132,8 @@ this repository's own instructions, then the user in the session.
   than inventing one), deferred minors, and the closing disclosures (pushes, this
   session's surviving processes, others' work, worktree state, and each branch left
   unmerged with its location and what integrates it: who approves, which command).
-  Rulings and deferred minors stay in the plan ledger, with one task note naming them;
+  Rulings and deferred minors stay in the plan ledger, with one task note naming them,
+  and each deferred minor has an open owner before close (Processes);
   verification, deviations and disclosures (including routine non-actions such as
   "nothing pushed", no surviving process, a merged branch or a cleaned-up worktree)
   go in the done or park note. What the user must act on stays in the message: the
@@ -507,7 +508,7 @@ it this way:
   consequence for the person, records each decision as a ledger `Ruling:` line, and
   admits confirmed proposals to corrective rounds as Important; rejected proposals
   stay `minor (deferred)` in the ledger, named in a task note that the final message
-  links. A fix subagent makes the fixes
+  links, and owned by an open task before close as Processes says. A fix subagent makes the fixes
   under subagent-driven execution; inline,
   you make them yourself, each still proven RED→GREEN with policy-appropriate checks
   under Tests: a green suite when policy is enabled, focused evidence and mandatory
@@ -684,6 +685,16 @@ it this way:
   For layout refusal, keep hashed raw bytes and attach a labelled portable derivative
   under the reference's fallback until the executing checker accepts shipped support;
   design completion alone never retires that fallback or authorizes raw deletion.
+- Before `tasks done`, every deferred finding of the closing task (a `minor (deferred)`
+  ledger line, a deferred finding in a `verified` gate note, or a deferral the closing
+  note names) has an open owner. Either file one follow-up task for all of the closing
+  task's deferred findings, with `--source <closing-task-id>` and each finding and its
+  suggested fix in its body, or note each finding and the closing task's id on an
+  existing open task that covers them. A `verified` gate names that owner first in each
+  deferred finding (`minor deferred <owner-id> <text>`, which `flow-state check`
+  enforces), and the done note names the owning id. A park needs no owner, since the
+  parked task stays open. The follow-up carries no `concerns:` note: a deferral is a
+  review finding before close, not a shortfall found after it.
 - A task that spans sessions keeps its inputs where a reboot cannot take them. Its
   scratch lives in a per-task directory on persistent host-local storage off the synced
   tree, `$WORK_ROOT/<project>/<task-id>/` (on a host without `WORK_ROOT`, ask the user

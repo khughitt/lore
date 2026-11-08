@@ -106,6 +106,10 @@ this repository's own instructions, then the user in the session.
 - Write task ids in replies and reports bare in their canonical form
   (`<prefix>-<6 hex>`), outside backticks and links, so a harness can colour them;
   an id inside a command shown as code stays in that command.
+- Write a conversation or session UUID in replies and reports shortened to its first
+  8 hex characters, as git shortens commit ids (`conversation://0653876d`, not the
+  full UUID). Task notes, ledgers, reports to controllers and any command the user
+  must run keep the full id.
 - Supporting detail leaves the message for the task record: findings and landed
   changes with their conditions and scope, verification and its limits (routine
   passing checks, results, test counts), routine cleanup and non-actions ("nothing

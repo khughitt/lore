@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:41b38a6426b946db94eee97bc7f044db",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "de5a83aa7158b8aa0159d44065053fede4d9d7ff134feb7ffa23ddaf4341ad53",
+      "text": "- Write a conversation or session UUID in replies and reports shortened to its first\n  8 hex characters, as git shortens commit ids (`conversation://0653876d`, not the\n  full UUID). Task notes, ledgers, reports to controllers and any command the user\n  must run keep the full id.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Short conversation ids"
+}

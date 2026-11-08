@@ -969,6 +969,7 @@ to read one of them from anywhere.
 - `forge` — familiar-forge — Generative art CAS behind familiar's pet themes
 - `forge2` — forge v2 — Make familiar pet themes by picking images; the forgemaster fills in the rest
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
+- `hostkit` — hostkit — Generic host primitives: storage links, process budgets, load, and link sync
 - `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene
 - `lit` — lit — Science literature as a world model, a personal corpus, and a walk over both
 - `look` — lookout — A read-only glance at live agents, task state and obs signals in a niri dropdown

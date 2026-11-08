@@ -981,7 +981,7 @@ to read one of them from anywhere.
 - `dots` — dotfiles — The dotfiles: shell, editor, desktop, and terminal configuration
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them
-- `forge2` — forge v2 — Make familiar pet themes by picking images; the forgemaster fills in the rest
+- `forge2` — forge — Make familiar pet themes by picking images; the forgemaster fills in the rest
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
 - `hostkit` — hostkit — Generic host primitives: storage links, process budgets, load, and link sync
 - `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene

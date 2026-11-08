@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "6f3d13e6e96e157007d459c25443f07345d44a8158564709354384388ea810c9"
+    "sha256": "0d69c1e61a5c96311687e6a6b9b82715d6d1685ee459a74bf9de5f88d0ac1980"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -1920,15 +1920,15 @@
         }
       ],
       "id": "projects",
-      "length": 4862,
+      "length": 4859,
       "offset": 80631,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",
-      "rendered_sha256": "dc73ecef5ec88c85717ab594d6dd6f865f32c32f1e4069ea738d385d7a30c254",
-      "revision": "f41ebaa3cacf078e1b6cd6a200b006948d8094f7",
+      "rendered_sha256": "d889823682239dab2925f44167f94ccdfc9eb9f247606aafd75c0671ca4e9079",
+      "revision": "517d940e520ec859f74a0a8346d871dff50e3a15",
       "rules": [],
-      "sha256": "dc73ecef5ec88c85717ab594d6dd6f865f32c32f1e4069ea738d385d7a30c254",
+      "sha256": "d889823682239dab2925f44167f94ccdfc9eb9f247606aafd75c0671ca4e9079",
       "source": "instructions/fragments/projects.md"
     }
   ],

@@ -58,7 +58,8 @@
   than inventing one), deferred minors, and the closing disclosures (pushes, this
   session's surviving processes, others' work, worktree state, and each branch left
   unmerged with its location and what integrates it: who approves, which command).
-  Rulings and deferred minors stay in the plan ledger, with one task note naming them;
+  Rulings and deferred minors stay in the plan ledger, with one task note naming them,
+  and each deferred minor has an open owner before close (Processes);
   verification, deviations and disclosures (including routine non-actions such as
   "nothing pushed", no surviving process, a merged branch or a cleaned-up worktree)
   go in the done or park note. What the user must act on stays in the message: the

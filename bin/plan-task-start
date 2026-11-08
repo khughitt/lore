@@ -3,28 +3,10 @@
 set -euo pipefail
 fail() { echo "plan-task-start: $*" >&2; exit 2; }
 [[ $# == 3 && $3 =~ ^[1-9][0-9]*$ ]] || fail 'usage: plan-task-start WORKSPACE PLAN N'
-[[ -d $1 && -f $2 ]] || fail 'workspace and plan must already exist'
-workspace=$(cd -- "$1" && pwd -P)
-plan=$(cd -- "$(dirname -- "$2")" && printf '%s/%s' "$(pwd -P)" "$(basename -- "$2")")
+workspace=$(bash "$(dirname -- "$0")/plan-workspace-init" "$1" "$2")
+plan=$(cat "$workspace/plan-path")
 n=$3
-root=$(git rev-parse --show-toplevel)
-[[ $workspace != "$root" && $workspace != "$root/"* ]] || fail 'workspace must be outside the code worktree'
-[[ $workspace != *$'\n'* && $plan != *$'\n'* && $plan != *$'\r'* ]] || fail 'multiline paths cannot identify a ledger'
-identity="# SDD ledger — plan: $plan"
-if [[ -e $workspace/plan-path ]]; then
-    [[ -f $workspace/plan-path ]] || fail "workspace plan-path is not a regular file: $workspace/plan-path"
-    recorded_plan=$(cat "$workspace/plan-path")
-    [[ $recorded_plan == "$plan" ]] || fail "workspace belongs to another plan (recorded in $workspace/plan-path: $recorded_plan; supplied PLAN: $plan); pass the recorded plan path from $workspace/plan-path when resuming the same execution from another checkout after verifying the plan bytes match, or use the workspace for the supplied plan when they are distinct plans"
-else
-    [[ -z $(find "$workspace" -mindepth 1 -maxdepth 1 -print -quit) ]] || fail 'refusing an occupied workspace without a plan identity'
-    (set -o noclobber; printf '%s\n' "$plan" > "$workspace/plan-path")
-fi
 ledger=$workspace/progress.md
-if [[ -e $ledger ]]; then
-    [[ $(head -n 1 "$ledger") == "$identity" ]] || fail 'ledger belongs to another plan'
-else
-    (set -o noclobber; printf '%s\n' "$identity" > "$ledger")
-fi
 basefile=$workspace/task-$n-base
 if [[ ! -e $basefile ]]; then
     base=$(git rev-parse HEAD)

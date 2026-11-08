@@ -48,6 +48,10 @@ def start(w):
     return invoke(w, 'plan-task-start', w.workspace, w.plan, 1)
 
 
+def init(w):
+    return invoke(w, 'plan-workspace-init', w.workspace, w.plan)
+
+
 def done(w, code, base=None):
     return invoke(w, 'plan-task-done', w.workspace, w.plan, 1, base or w.base,
                   '--', sys.executable, '-c', code)
@@ -110,8 +114,36 @@ def test_completion_preserves_failed_attempts_and_records_once(world):
     assert not (w.repo / '.superpowers').exists()
 
 
+def test_setup_binds_identity_before_writing_then_start_keeps_setup_records(world):
+    w = world
+    bound = init(w); assert bound.returncode == 0, bound.stderr
+    assert bound.stdout.strip() == str(w.workspace)
+    assert (w.workspace / 'plan-path').read_text() == f'{w.plan}\n'
+    ledger = w.workspace / 'progress.md'
+    assert ledger.read_text() == f'# SDD ledger — plan: {w.plan}\n'
+    with ledger.open('a') as f:
+        f.write('Setup: baseline 12 passed\nPre-flight: no shared interfaces\n')
+    (w.workspace / 'baseline-tests.log').write_text('12 passed\n')
+    again = init(w); assert again.returncode == 0, again.stderr
+    started = start(w); assert started.returncode == 0, started.stderr
+    lines = ledger.read_text().splitlines()
+    assert lines[:3] == [f'# SDD ledger — plan: {w.plan}', 'Setup: baseline 12 passed',
+                         'Pre-flight: no shared interfaces']
+    assert lines[3] == f'Task 1: BASE {w.base}'
+    assert (w.workspace / 'baseline-tests.log').read_text() == '12 passed\n'
+
+
+def test_start_refusal_of_unmarked_workspace_names_setup_entry_point(world):
+    w = world
+    (w.workspace / 'baseline-tests.log').write_text('12 passed\n')
+    result = start(w)
+    assert result.returncode == 2
+    assert 'plan-workspace-init' in result.stderr
+
+
+@pytest.mark.parametrize('entry', [start, init])
 @pytest.mark.parametrize('failure', ['collision', 'unmarked', 'missing', 'inside', 'ledger'])
-def test_refuses_other_plan_or_unusable_workspace(world, failure):
+def test_refuses_other_plan_or_unusable_workspace(world, failure, entry):
     w = world
     if failure in ('collision', 'ledger'):
         assert start(w).returncode == 0
@@ -127,7 +159,7 @@ def test_refuses_other_plan_or_unusable_workspace(world, failure):
     else:
         (w.workspace / 'progress.md').write_text('# another ledger\n')
     before = {p: p.read_bytes() for p in w.workspace.glob('*') if p.is_file()}
-    result = start(w)
+    result = entry(w)
     assert result.returncode != 0
     if failure == 'collision':
         assert result.returncode == 2

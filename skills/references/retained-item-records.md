@@ -745,10 +745,13 @@ as scratch, in which case its complete-manifest duties and nonrecursive metadata
 placement still apply. Keep the owner open across review and activation gates.
 
 Resolve lore's registered checkout once through `tasks projects`; use its explicit
-`bin/plan-task-start` and `bin/plan-task-done` paths. They are lore-owned scripts,
-not installed plugin modifications. Call from the implementing code worktree:
+`bin/plan-workspace-init`, `bin/plan-task-start` and `bin/plan-task-done` paths.
+They are lore-owned scripts, not installed plugin modifications. Call from the
+implementing code worktree:
 
 ```sh
+"$LORE_ROOT/bin/plan-workspace-init" "$WORKSPACE" "$PLAN"
+# Setup: baseline logs, pre-flight rows and other ledger lines go in after this.
 "$LORE_ROOT/bin/plan-task-start" "$WORKSPACE" "$PLAN" "$N"
 # Read the printed brief and preserve the printed BASE before changing code.
 "$LORE_ROOT/bin/plan-task-done" "$WORKSPACE" "$PLAN" "$N" "$BASE" -- just test-one <focused arguments>
@@ -756,8 +759,11 @@ not installed plugin modifications. Call from the implementing code worktree:
 
 Here LORE_ROOT is the resolved checkout, WORKSPACE is the exact recorded per-plan
 directory, PLAN is the frozen plan file, and N is its positive task number. Create
-and record the empty workspace before starting. Start binds the canonical `PLAN`
-path in `$WORKSPACE/plan-path` and the ledger header, checks ledger identity,
+and record the empty workspace, then run `plan-workspace-init` as Setup's first
+write there, before any baseline log, pre-flight row or other ledger line. It binds
+the canonical `PLAN` path in `$WORKSPACE/plan-path` and writes the ledger header,
+which is the execution skills' "create the ledger" step; rerunning it for the same
+plan changes nothing. Start runs the same binding and identity checks, then
 captures BASE once and extracts a digest-named brief via the pinned `task-brief`
 script's explicit OUTFILE. `PLAN` remains bound to that canonical path recorded at
 start: when resuming or calling `plan-task-done` from another checkout (such as
@@ -766,8 +772,9 @@ plan path), verify the plan bytes match and pass the recorded `$WORKSPACE/plan-p
 value rather than a relative path that resolves to the new checkout. Resume reuses
 BASE and preserves old briefs when a reviewed plan revision changes. Read the new
 brief; a hash-shaped name is not permission to skip frozen-input verification.
-Start fails for an unmarked occupied directory, another plan's ledger, or BASE
-outside HEAD ancestry.
+Init and start fail for an unmarked occupied directory (one holding files but no
+`plan-path`) or another plan's ledger; start also fails for BASE outside HEAD
+ancestry.
 
 Completion runs the required command in the implementing worktree and preserves
 its actual status and full output in a new attempt log. Failure appends an attempt,

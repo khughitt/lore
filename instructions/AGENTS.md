@@ -981,7 +981,7 @@ to read one of them from anywhere.
 - `dots` — dotfiles — The dotfiles: shell, editor, desktop, and terminal configuration
 - `fam` — familiar — Agent pets and the session hook bus
 - `flows` — flows — Agent flows: task states, gates, evidence, and the tools that judge them
-- `forge2` — forge — Make familiar pet themes by picking images; the forgemaster fills in the rest
+- `forge` — forge — Make familiar pet themes by picking images; the forgemaster fills in the rest
 - `glean` — glean — Finds and retrieves the Google Photos a local photo collection is missing
 - `hostkit` — hostkit — Generic host primitives: storage links, process budgets, load, and link sync
 - `hq` — harness-quarters — Harness homes, declared links, settings, and session-state hygiene
@@ -1008,7 +1008,7 @@ to read one of them from anywhere.
 - `vdocs` — docs (verifiably-docs) — The verifiably ecosystem's front door: its goal, overview, and repository map
 - `wali` — wali — Wallpaper switcher with per-image ratings and the Noctalia wali panel
 
-Retired: `forge` (familiar-forge, 2026-11-08) → `forge2`; `mind3` (mindful v3, 2026-10-04) → `mind6`.
+Retired: `forge1` (familiar-forge, 2026-11-08) → `forge`; `mind3` (mindful v3, 2026-10-04) → `mind6`.
 
 ### Feedback owners
 

@@ -1,6 +1,62 @@
 {
   "assessments": [],
-  "events": [],
+  "events": [
+    {
+      "claim": {
+        "adoption": {
+          "actor": "user",
+          "covers_clauses": false,
+          "evidence": [
+            "permission-design",
+            "permission-plan-approval"
+          ],
+          "status": "authorized-scope",
+          "target": {
+            "binding": "scope",
+            "reference": "task:lore-c86656",
+            "revision": "c3504fff50a3587dbc4b66d9bde891d7b7333952",
+            "scope": "Implement six targeted Decisions changes from the approved design and plan within net300 words; preserve protected limits and strict grant expiry; no push or live-global activation. New exact instruction texts remain unapproved."
+          }
+        },
+        "authorship": {
+          "actor": "unknown",
+          "basis": "unknown",
+          "original_author": null,
+          "reason": "Existing policy wording and historical contributions remain distinct from this amendment.",
+          "role": "wording",
+          "statement": "The agent implements the reviewed design; this scope approval does not establish authorship of the whole retained rule.",
+          "supplier": "user"
+        },
+        "evidence_quality": [
+          {
+            "quality": "originating-request/proposal",
+            "source": "permission-design"
+          },
+          {
+            "quality": "later-restatement",
+            "source": "permission-plan-approval"
+          }
+        ]
+      },
+      "evidence": [
+        "permission-design",
+        "permission-plan-approval"
+      ],
+      "id": "permission-plan-scope",
+      "kind": "adoption",
+      "occurred_at": null,
+      "predecessors": [],
+      "recorded_at": "2026-11-11T20:37:41.839428+00:00",
+      "recorder": "codex",
+      "searches": [],
+      "subject": {
+        "binding": "revision",
+        "id": "rule:052f6da8885c4d2f81b11c0602eb6e92",
+        "sha256": "3f7a9c2b209809aa587988548fb22986405355fac591bc88b9347e90ec60ae65"
+      },
+      "time_uncertainty": "Approval occurred in the current session before implementation; exact human-message timestamp was not captured in this record."
+    }
+  ],
   "id": "rule:052f6da8885c4d2f81b11c0602eb6e92",
   "impact": {
     "categories": [],
@@ -20,11 +76,66 @@
       "locator": null,
       "sha256": "eca5f1bf4de9ddab2dfda80eafd232368702d323a82a5a0b38235278cb80e4d9",
       "text": "- A live or external operation (a download, an acquisition, a deploy, a remote job; not\n  a local test or build, which debugging covers) that has failed twice with no\n  established cause is the user's decision, not a reason to gather more evidence: stop\n  and ask whether to retry, change approach or defer, recommending one. The question\n  names what each attempt cost (wall time, holds on the host, quota or rate limit spent)\n  and what is known and unknown about the cause. A cause is established when evidence\n  shows it (an error that names it, a reproduction), not when a hypothesis fits. A new\n  diagnosis, build, review or re-scope aimed at the same operation does not reset the\n  count, and neither does a fix for a cause that was guessed. Retries inside a limit the\n  user approved and the record holds (a plan's \"up to three attempts\") go on without\n  asking; this rule applies once that limit is spent. Unattended, park the task\n  `--waiting-on user --reason decision` with that question as its next step.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "3f7a9c2b209809aa587988548fb22986405355fac591bc88b9347e90ec60ae65",
+      "text": "- A live or external operation (a download, an acquisition, a deploy, a remote job; not\n  a local test or build, which debugging covers) that has failed twice with no\n  established cause is the user's decision, not a reason to gather more evidence: stop\n  and ask whether to retry, change approach or defer, recommending one. The question\n  names what each attempt cost (wall time, holds on the host, quota or rate limit spent)\n  and what is known and unknown about the cause. A cause is established when evidence\n  shows it (an error that names it, a reproduction), not when a hypothesis fits. A new\n  diagnosis, build, review or re-scope aimed at the same operation does not reset the\n  count, and neither does a fix for a cause that was guessed.\n  Retries inside an explicit user allowance (including a user-approved plan's Binding\n  allowance with source and purpose) continue without asking; otherwise stop after\n  the second unexplained failure. Rulings may lower or remove incidental caps, never\n  enlarge unexplained-failure authority or relax human or protective limits.\n  Unattended, park the task `--waiting-on user --reason decision` with that question\n  as its next step.\n"
     }
   ],
   "schema": 1,
   "searches": [],
-  "sources": [],
+  "sources": [
+    {
+      "access": "available",
+      "id": "permission-design",
+      "inspected_at": "2026-11-11T20:37:41.839428+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-11-permission-carry-through-design.md",
+        "reference": "Agent-authored proposal approved by the user for planning; design scope, not exact instruction wording.",
+        "revision": "52968a8e78b691ac3b84795e102287ffe185d280"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/specs/2026-11-11-permission-carry-through-design.md",
+        "reference": "Agent-authored proposal approved by the user for planning; design scope, not exact instruction wording.",
+        "revision": "52968a8e78b691ac3b84795e102287ffe185d280"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "184e3b46478ec6a5a21ad4243eada2eadbae77366c0e88b5c8765f4c30655bf7",
+      "source_time": null,
+      "transformation": null
+    },
+    {
+      "access": "available",
+      "id": "permission-plan-approval",
+      "inspected_at": "2026-11-11T20:37:41.839428+00:00",
+      "locator": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-11-permission-plan-r2-report.md",
+        "reference": "Controller-preserved relayed plan review and separate human \"Keith: approved.\" from codex:01a1cbfd-d807-7090-8c4d-122564fcbc73; scope approval for branch implementation, not live activation or adoption of new policy hashes.",
+        "revision": "68617c0d82b40bf4e03e4cb20a2ed764194b7160"
+      },
+      "preservation": {
+        "kind": "git",
+        "owner": "lore:records",
+        "path": "docs/notes/2026-11-11-permission-plan-r2-report.md",
+        "reference": "Controller-preserved relayed plan review and separate human \"Keith: approved.\" from codex:01a1cbfd-d807-7090-8c4d-122564fcbc73; scope approval for branch implementation, not live activation or adoption of new policy hashes.",
+        "revision": "68617c0d82b40bf4e03e4cb20a2ed764194b7160"
+      },
+      "raw_sha256": null,
+      "representation": "raw",
+      "sha256": "2ca07fe333056d1e3defbe13117f2010c14f2c857488e3dce7bafaae56655f23",
+      "source_time": null,
+      "transformation": null
+    }
+  ],
   "state": "active",
   "title": "Repeated live failure goes to the user"
 }

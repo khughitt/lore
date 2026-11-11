@@ -204,9 +204,17 @@ it this way:
   judge (a sheet, a screenshot, a rendered page), a choice of taste, scope, or priority
   that is the user's to make (your recommendation informs it but cannot settle it, and
   the question carries your recommendation, or the guess that stands in for one, as the
-  question rule below says), money to spend, an action outside the repository, a live
-  operation that has failed twice with no established cause (the next rule), or a turn
-  that has run past its range (the turn-pause rule below).
+  question rule below says), money to spend, an action outside the repository without
+  an explicit applicable grant, a live operation that has failed twice with no
+  established cause (the next rule), or a turn that has run past its range (the
+  turn-pause rule below).
+  An explicit task grant, recorded in a task note quoting the user's words and
+  session, carries through stages, fixes and handoffs within its action scope,
+  repository, destination/ref and limits; recover that note and accepted revisions.
+  Checkpoints or new commit IDs do not expire it. Closure, revocation or retargeting
+  does; reopening does not revive it. General “proceed” or plan approval alone grants no
+  external authority. Check all outgoing commits for unrelated or unreviewed changes;
+  separate those changes or seek new authority.
 - A live or external operation (a download, an acquisition, a deploy, a remote job; not
   a local test or build, which debugging covers) that has failed twice with no
   established cause is the user's decision, not a reason to gather more evidence: stop
@@ -215,10 +223,13 @@ it this way:
   and what is known and unknown about the cause. A cause is established when evidence
   shows it (an error that names it, a reproduction), not when a hypothesis fits. A new
   diagnosis, build, review or re-scope aimed at the same operation does not reset the
-  count, and neither does a fix for a cause that was guessed. Retries inside a limit the
-  user approved and the record holds (a plan's "up to three attempts") go on without
-  asking; this rule applies once that limit is spent. Unattended, park the task
-  `--waiting-on user --reason decision` with that question as its next step.
+  count, and neither does a fix for a cause that was guessed.
+  Retries inside an explicit user allowance (including a user-approved plan's Binding
+  allowance with source and purpose) continue without asking; otherwise stop after
+  the second unexplained failure. Rulings may lower or remove incidental caps, never
+  enlarge unexplained-failure authority or relax human or protective limits.
+  Unattended, park the task `--waiting-on user --reason decision` with that question
+  as its next step.
 - A turn is the work since the user's last message, your subagents' work included; a
   session you launch from the shell (`claude -p`, `codex exec`, a dispatched worker or
   reviewer) is a subagent here, so check before launching one and count it as spawned
@@ -281,6 +292,18 @@ it this way:
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not
   individually approved.
+  A material amendment changes accepted goals, scope, behavior or outputs,
+  constraints, required evidence, cost or risk bounds or authority; judge cumulative
+  effects. Review changed specs before affected plans, with exact revisions and
+  consequences; keep active inputs frozen. Stop dependent work; unaffected authorized
+  work may continue. Adjustments preserving commitments use existing rulings; purely
+  mechanical flag or path repairs restoring the intended operation need none; target,
+  behavior or risk changes are not mechanical. Record named acceptance, clear stale
+  waits, and carry it into handoffs. New plans label proposed stops or caps Binding
+  with source and purpose; approval adopts them, never retroactively added labels. Reviewers challenge unnecessary binding stops before acceptance.
+  Unlabelled agent checkpoints or caps stay adjustable; human, policy and protective
+  limits bind regardless. For older plans use recorded intent; clarify consequential
+  conflicts.
 - A request to review a spec or plan names the frozen revision under review: the
   repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`
   rather than the working file. Where the profile keeps the document out of the tree,
@@ -373,10 +396,15 @@ it this way:
   Authors and reviewers check these requirements against recorded human intent,
   rejecting unjustified expansion or a missing control dependency before dedicated
   machinery is implemented; internal consistency or a late spend checkpoint alone
-  is insufficient. Ordinary interactive use under the current harness arrangement
-  and local no-charge analysis create no experiment-accounting obligation merely
-  because the assistant uses a model. A tool that launches a metered experimental
-  run remains within this rule.
+  is insufficient.
+  Ordinary interactive harness use, local no-charge analysis and free hosted CI
+  require no experiment accounting, spend allowance, invocation pool or controller.
+  Public visibility plus a resolved standard GitHub-hosted `runs-on` establishes free
+  runner execution: no billing check. Private hosted jobs, larger runners and paid
+  services retain spending controls; self-hosted execution needs host and resource
+  authority. Free CI retains bounded timeouts, backoff and unexplained-failure stops;
+  paid options stay gated. A tool that launches a metered experimental run remains
+  within this rule.
 - In assessments and reviews, distinguish tree-verified current capability from
   recorded intended direction. Before characterising intended scope, read the relevant
   goals, authority and task/source records. Code establishes current behaviour, not
@@ -414,8 +442,8 @@ it this way:
   example, "Reviewed branches may be merged locally into main without asking."). Never
   infer that permission from the account, the path, the profile's name or assumed
   ownership. A push, a PR, or a merge that changes a live global surface (these global
-  instructions, hooks, services) stays an action outside the repository under every
-  profile and authorization.
+  instructions, hooks, services) is external under every profile; use the recorded-grant
+  exception above, otherwise ask.
 - Reviewers do not modify reviewed code, input evidence, task records or the ledger.
   When a plan workspace already exists, the dispatch names one unique
   `<slug>-report.md` there, outside the reviewed code and inputs; the reviewer may

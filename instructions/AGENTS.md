@@ -295,8 +295,10 @@ it this way:
   A material amendment changes accepted goals, scope, behavior or outputs,
   constraints, required evidence, cost or risk bounds or authority; judge cumulative
   effects. Review changed specs before affected plans, with exact revisions and
-  consequences; keep active inputs frozen. Stop dependent work; unaffected authorized
-  work may continue. Adjustments preserving commitments use existing rulings; purely
+  consequences; keep active inputs frozen. Explicitly close or supersede the old
+  round in its record before submitting a frozen replacement. Stop dependent work;
+  unaffected authorized work may continue.
+  Adjustments preserving commitments use existing rulings; purely
   mechanical flag or path repairs restoring the intended operation need none; target,
   behavior or risk changes are not mechanical. Record named acceptance, clear stale
   waits, and carry it into handoffs. New plans label proposed stops or caps Binding
@@ -403,8 +405,8 @@ it this way:
   runner execution: no billing check. Private hosted jobs, larger runners and paid
   services retain spending controls; self-hosted execution needs host and resource
   authority. Free CI retains bounded timeouts, backoff and unexplained-failure stops;
-  paid options stay gated. A tool that launches a metered experimental run remains
-  within this rule.
+  avoid redundant overlapping retries. Paid options stay gated. A tool that launches
+  a metered experimental run remains within this rule.
 - In assessments and reviews, distinguish tree-verified current capability from
   recorded intended direction. Before characterising intended scope, read the relevant
   goals, authority and task/source records. Code establishes current behaviour, not

@@ -17,7 +17,8 @@ Run the stable installed flows helper
 require exit 0 and parse its JSON. With `status: assigned`, set its `assigned`
 medium/high through the native child setting before launch: Codex's explicit `model`
 and `reasoning_effort` with an isolated fork, or Claude Code Agent's per-child
-`effort` on a supporting interface. Prompt wording and shared host settings do not
+`effort` on a supporting non-fork interface (Claude forks ignore it).
+Prompt wording and shared host settings do not
 deliver the assignment. Keep other routing, rubrics and review-count rules.
 `inactive`, `excluded` and `unsupported` retain the ordinary review policy;
 exit 1 or 2, a missing helper or invalid JSON is an error to resolve, never permission

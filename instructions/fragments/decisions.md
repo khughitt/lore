@@ -124,6 +124,23 @@
   limits bind regardless. For older plans use recorded intent; clarify consequential
   conflicts.
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 end -->
+<!-- rule:002637bfc1e64da0bc4aca44f559d5f9 begin -->
+- In plan writing and execution, inline or subagent-driven, the frozen spec is the
+  authority for normative formulas, schemas and interface definitions. When a plan
+  needs to repeat one, quote it verbatim with its spec clause reference; avoid copying
+  the whole spec. The plan author's self-review compares every repeated definition,
+  including those in task steps, tests and Interfaces blocks, against that clause.
+  The controller's preflight compares those definitions against the applicable
+  binding spec clauses, and each implementer handoff includes its applicable clauses
+  and the frozen spec and plan identities. Implementers surface any mismatch; the
+  controller resolves it through an explicit recorded `Ruling:` with the spec as
+  authority, never by silently adding aliases, extra columns or a second interface.
+  A material spec or plan change keeps the existing human amendment-review gate
+  before dependent work resumes. The existing final whole-branch reviewer receives
+  both frozen spec and plan identities and checks the implemented normative clauses
+  directly against the spec and its accepted amendments and recorded rulings. This
+  supplements the existing review; it adds no reviewer or dispatch.
+<!-- rule:002637bfc1e64da0bc4aca44f559d5f9 end -->
 <!-- rule:f431707097c0418c9822d67074875c51 begin -->
 - A request to review a spec or plan names the frozen revision under review: the
   repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`

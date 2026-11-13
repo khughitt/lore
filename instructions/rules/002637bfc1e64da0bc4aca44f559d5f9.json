@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:002637bfc1e64da0bc4aca44f559d5f9",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4da54262b61953eea941bfac9e548975a95e4fd319325d3e4f134d476e50a96e",
+      "text": "- In plan writing and execution, inline or subagent-driven, the frozen spec is the\n  authority for normative formulas, schemas and interface definitions. When a plan\n  needs to repeat one, quote it verbatim with its spec clause reference; avoid copying\n  the whole spec. The plan author's self-review compares every repeated definition,\n  including those in task steps, tests and Interfaces blocks, against that clause.\n  The controller's preflight compares those definitions against the applicable\n  binding spec clauses, and each implementer handoff includes its applicable clauses\n  and the frozen spec and plan identities. Implementers surface any mismatch; the\n  controller resolves it through an explicit recorded `Ruling:` with the spec as\n  authority, never by silently adding aliases, extra columns or a second interface.\n  A material spec or plan change keeps the existing human amendment-review gate\n  before dependent work resumes. The existing final whole-branch reviewer receives\n  both frozen spec and plan identities and checks the implemented normative clauses\n  directly against the spec and its accepted amendments and recorded rulings. This\n  supplements the existing review; it adds no reviewer or dispatch.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Preserve normative spec definitions through planning and execution"
+}

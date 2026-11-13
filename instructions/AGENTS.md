@@ -903,7 +903,10 @@ Two note shapes are read by obs's outcome measures; write them as plain
   verified dispatch/runtime metadata. Request the reviewer's own observed effort
   from a supported runtime source; retain `@effort` only when observed. Missing
   effort stays unknown, with the reason in the review report; never copy assigned
-  or requested effort into observed identity. Do not substitute the controller's model,
+  or requested effort into observed identity. For Claude children, observe sent
+  effort from the child transcript's `api-request` `params.output_config.effort`,
+  corroborated by its metadata; a model's self-report is not evidence. This records
+  what the harness sent, not model-internal compliance. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
   reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never

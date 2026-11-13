@@ -1405,6 +1405,85 @@
       "locator": null,
       "sha256": "dd9182e135400e2762d50914e4f447fcb37216f489c5232ac8fbc6d7ec0b2975",
       "text": "- When a review of your spec, plan, or implementation arrives, before acting on\n  it, note it on the task: `review: <spec|plan|impl> round <n> \u2014 verdict: <revise|accept>; findings: <label> <count>, \u2026 | none; reviewer: <harness/model@effort | harness/model | harness | human>`\n  (`review: plan round 2 \u2014 verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).\n  Use the actual reviewer's exact model identity when supplied by the reviewer or\n  verified dispatch/runtime metadata. Request the reviewer's own observed effort\n  from a supported runtime source; retain `@effort` only when observed. Missing\n  effort stays unknown, with the reason in the review report; never copy assigned\n  or requested effort into observed identity. Do not substitute the controller's model,\n  a generic model family, or a configuration default. When the reviewer's model\n  cannot be verified, record the harness alone without guessing; keep human\n  reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never\n  placeholders such as `unknown`, `unverified` or `unrecorded`, as a reviewer value.\n  A Codex session that performed a review reads its own\n  identity (never on another session's behalf), in the turn that performed it with a\n  fresh command (never a terminal left from an earlier turn):\n  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when\n  verified and `codex` otherwise. Copy the printed value; when the command exits\n  non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the\n  stderr reason or the exit status in the review, or for a self-review in a separate\n  task note, never in the `review:` note. A reviewer writes no note: it states that\n  value in its review for the note writer to record.\n  Only a session noting its own self-review records it directly.\n  `n` counts from 1 per task and artifact; a re-review after a revision is the next\n  round; a short acceptance is still a round. The flow `verified` gate stays a\n  disposition record, not a round.\n  Brainstorming's builder check counts as a `review: spec` round: use `revise`\n  when it raises questions to answer in the document or bring to the user, and\n  `accept` when it raises none. Record its reviewer identity by the same rule above.\n  One agent writes each round's note, once, before handing the findings on: the\n  controller when there is one, otherwise the agent the review arrives to. A worker\n  handed review findings (resumed or freshly dispatched) checks that the round's note\n  exists and writes none; if it is missing, the worker says so in its report for the\n  controller to add.\n  This shape measures only spec, plan and implementation reviews; record a review\n  of any other artifact (a scope brief or research note) as a plain task note that\n  does not begin with `review:`.\n"
+    },
+    {
+      "clauses": [
+        {
+          "id": "clause:9379ea0e68104f34a097b0b064e0d87b",
+          "offset": 0,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "258b9393e09ebb762ac1db2946b753252e33551fad3c8e531a6a1625b0fb14c2",
+          "text": "- When a review of your spec, plan, or implementation arrives, before acting on\n  it, note it on the task: `review: <spec|plan|impl> round <n> \u2014 verdict: <revise|accept>; findings: <label> <count>, \u2026 | none; reviewer: <harness/model@effort | harness/model | harness | human>`\n"
+        },
+        {
+          "id": "clause:4e20590799f94d18a2705ab08bd487dc",
+          "offset": 280,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "e61b3802bb10674d4beec0f18dfa6cfe80720a73f813f244b4e84f6230aa46de",
+          "text": "  (`review: plan round 2 \u2014 verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).\n  Use the actual reviewer's exact model identity when supplied by the reviewer or\n  verified dispatch/runtime metadata. Request the reviewer's own observed effort\n  from a supported runtime source; retain `@effort` only when observed. Missing\n  effort stays unknown, with the reason in the review report; never copy assigned\n  or requested effort into observed identity. For Claude children, observe sent\n  effort from the child transcript's `api-request` `params.output_config.effort`,\n  corroborated by its metadata; a model's self-report is not evidence. This records\n  what the harness sent, not model-internal compliance. Do not substitute the controller's model,\n  a generic model family, or a configuration default. When the reviewer's model\n  cannot be verified, record the harness alone without guessing; keep human\n  reviews labelled `human`. "
+        },
+        {
+          "id": "clause:e1f7905c547d410aa591c5f413cfcb66",
+          "offset": 1370,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "13e8fb490d845f762f5dcc91d236d5d47ab98d77bce4463cbb55e6d49a4ed42b",
+          "text": "A Codex session that performed a review "
+        },
+        {
+          "id": "clause:0b804c0312ae420bb804b9e2844041e2",
+          "offset": 1410,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "a070bd730468074aaba6f7fc3365800d7a0f416ecbba8f35e1c26f70fb0aac89",
+          "text": "reads its own\n  identity (never on another session's behalf)"
+        },
+        {
+          "id": "clause:efa1337975f9497da1c5e3adad6762ad",
+          "offset": 1470,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "af5003ef02fef859cb99a253916f5af660f3fb98171f2776ced8e51f44247224",
+          "text": ", in the turn that performed it with a\n  fresh command (never a terminal left from an earlier turn):\n  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when\n  verified and `codex` otherwise. Copy the printed value; when the command exits\n  non-zero or times out, the value is `codex`. "
+        },
+        {
+          "id": "clause:9d4f6f2acbef4361a42fd64b21df95af",
+          "offset": 1778,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "9aa7acfeccee6ad7ff733f60bbc4a00344cbf9f389d6652baa2e78a157b6ce18",
+          "text": "Whenever it is bare `codex`, name the\n  stderr reason or the exit status in the review, or for a self-review in a separate\n  task note, never in the `review:` note. "
+        },
+        {
+          "id": "clause:8114d1e7a1cb462a85cfbc2d47799be3",
+          "offset": 1943,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "d2b3d8923d9de7660895147ec345a4f5f280436a51a135ee981d9fe468d495b9",
+          "text": "A reviewer writes no note: it states that\n  value in its review for the note writer to record.\n  Only a session noting its own self-review records it directly.\n"
+        },
+        {
+          "id": "clause:eef56d33090e4ee6a73669af8a5e6bc2",
+          "offset": 2103,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "f6afc4e64e9eec568d53bcbf1f72c02dabb1ab08d9f96e3b865f43d544d06ed7",
+          "text": "  `n` counts from 1 per task and artifact; a re-review after a revision is the next\n  round; a short acceptance is still a round. The flow `verified` gate stays a\n  disposition record, not a round.\n"
+        },
+        {
+          "id": "clause:fbbc6de9edf049f9b74d53ead3757fbb",
+          "offset": 2544,
+          "overlaps": [],
+          "parent_sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+          "sha256": "444534610ea2457746cb443b3550415caa64aa9a5b6272d257f2de41b6dddfef",
+          "text": "  One agent writes each round's note, once, before handing the findings on: the\n  controller when there is one, otherwise the agent the review arrives to. A worker\n  handed review findings (resumed or freshly dispatched) checks that the round's note\n  exists and writes none; if it is missing, the worker says so in its report for the\n  controller to add.\n"
+        }
+      ],
+      "locator": null,
+      "sha256": "f24a65082ff76f56d1e9f0a99d6d262c6a45d495b6e319430b40ba21786b99ca",
+      "text": "- When a review of your spec, plan, or implementation arrives, before acting on\n  it, note it on the task: `review: <spec|plan|impl> round <n> \u2014 verdict: <revise|accept>; findings: <label> <count>, \u2026 | none; reviewer: <harness/model@effort | harness/model | harness | human>`\n  (`review: plan round 2 \u2014 verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).\n  Use the actual reviewer's exact model identity when supplied by the reviewer or\n  verified dispatch/runtime metadata. Request the reviewer's own observed effort\n  from a supported runtime source; retain `@effort` only when observed. Missing\n  effort stays unknown, with the reason in the review report; never copy assigned\n  or requested effort into observed identity. For Claude children, observe sent\n  effort from the child transcript's `api-request` `params.output_config.effort`,\n  corroborated by its metadata; a model's self-report is not evidence. This records\n  what the harness sent, not model-internal compliance. Do not substitute the controller's model,\n  a generic model family, or a configuration default. When the reviewer's model\n  cannot be verified, record the harness alone without guessing; keep human\n  reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never\n  placeholders such as `unknown`, `unverified` or `unrecorded`, as a reviewer value.\n  A Codex session that performed a review reads its own\n  identity (never on another session's behalf), in the turn that performed it with a\n  fresh command (never a terminal left from an earlier turn):\n  `timeout 2 relay model --harness codex --pretty` prints `codex/<model>` when\n  verified and `codex` otherwise. Copy the printed value; when the command exits\n  non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the\n  stderr reason or the exit status in the review, or for a self-review in a separate\n  task note, never in the `review:` note. A reviewer writes no note: it states that\n  value in its review for the note writer to record.\n  Only a session noting its own self-review records it directly.\n  `n` counts from 1 per task and artifact; a re-review after a revision is the next\n  round; a short acceptance is still a round. The flow `verified` gate stays a\n  disposition record, not a round.\n  Brainstorming's builder check counts as a `review: spec` round: use `revise`\n  when it raises questions to answer in the document or bring to the user, and\n  `accept` when it raises none. Record its reviewer identity by the same rule above.\n  One agent writes each round's note, once, before handing the findings on: the\n  controller when there is one, otherwise the agent the review arrives to. A worker\n  handed review findings (resumed or freshly dispatched) checks that the round's note\n  exists and writes none; if it is missing, the worker says so in its report for the\n  controller to add.\n  This shape measures only spec, plan and implementation reviews; record a review\n  of any other artifact (a scope brief or research note) as a plain task note that\n  does not begin with `review:`.\n"
     }
   ],
   "schema": 1,

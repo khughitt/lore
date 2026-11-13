@@ -7,10 +7,13 @@ Two note shapes are read by obs's outcome measures; write them as plain
 
 <!-- rule:96745a06cd69497b8ffe0511c66bda2f begin -->
 - When a review of your spec, plan, or implementation arrives, before acting on
-  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | harness | human>`
+  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model@effort | harness/model | harness | human>`
   (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
   Use the actual reviewer's exact model identity when supplied by the reviewer or
-  verified dispatch/runtime metadata. Do not substitute the controller's model,
+  verified dispatch/runtime metadata. Request the reviewer's own observed effort
+  from a supported runtime source; retain `@effort` only when observed. Missing
+  effort stays unknown, with the reason in the review report; never copy assigned
+  or requested effort into observed identity. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
   reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never

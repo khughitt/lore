@@ -897,10 +897,13 @@ Two note shapes are read by obs's outcome measures; write them as plain
 `tasks note` lines, exactly in this form.
 
 - When a review of your spec, plan, or implementation arrives, before acting on
-  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model | harness | human>`
+  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model@effort | harness/model | harness | human>`
   (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
   Use the actual reviewer's exact model identity when supplied by the reviewer or
-  verified dispatch/runtime metadata. Do not substitute the controller's model,
+  verified dispatch/runtime metadata. Request the reviewer's own observed effort
+  from a supported runtime source; retain `@effort` only when observed. Missing
+  effort stays unknown, with the reason in the review report; never copy assigned
+  or requested effort into observed identity. Do not substitute the controller's model,
   a generic model family, or a configuration default. When the reviewer's model
   cannot be verified, record the harness alone without guessing; keep human
   reviews labelled `human`. Use the harness id (`codex`, `claude-code`), never
@@ -944,6 +947,33 @@ whatever else would choose it; `not enrolled` changes nothing. Every task in a u
 has the unit's arm, and the task's `process` is unchanged in both arms. Only the user
 overrides an arm: record it with `tasks note <id> "arm: <trial> — override: <why>"`.
 If it exits non-zero, show the user its error and do not choose flow on or off until they answer.
+
+Reviewer effort is a separate policy, applied equally to flow-on and flow-off work.
+For an independent model review, choose the harness/model and rubric before drawing.
+Run the stable installed flows helper
+`~/.agents/bin/review-effort <task-id> --harness H --model M` for the reviewed task,
+require exit 0 and parse its JSON. With `status: assigned`, set its `assigned`
+medium/high through the native child setting before launch: Codex's explicit `model`
+and `reasoning_effort` with an isolated fork, or Claude Code Agent's per-child
+`effort` on a supporting interface. Prompt wording and shared host settings do not
+deliver the assignment. Keep other routing, rubrics and review-count rules.
+`inactive`, `excluded` and `unsupported` retain the ordinary review policy;
+exit 1 or 2, a missing helper or invalid JSON is an error to resolve, never permission
+to choose an arm. Human, human-relayed and builder checks are not randomized.
+
+Keep the original task assignment across spec, plan, implementation and corrective
+reviews, retries and reopening, including moves/renames; never overwrite its note.
+Only exceptions or overrides need an ordinary explanatory note identifying the
+affected review and reason. Ask for the reviewer's own observed identity/effort;
+missing observation stays unknown and does not by itself exclude supported delivery.
+
+obs identifies eligible supported reviews independently of assignment-note compliance,
+applies the same exclusion for any `review:` note timestamped before activation,
+and recomputes arms with `~/.agents/bin/review-effort compute <original-task-id>`.
+Matching assignment duplicates count once; contradictory identity/hash/history is
+an error. A late synchronized earlier review note excludes without deleting the
+old assignment; a note timestamped after activation does not prove a later dispatch.
+Controllers need no dispatch-timestamp archaeology.
 
 ## Feedback
 

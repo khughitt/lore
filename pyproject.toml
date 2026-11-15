@@ -1,5 +1,5 @@
-# The locked test environment. lore is not a package: its tools run on the system
-# python3 and import only the standard library. This declares the test runner alone,
+# The locked test environment. The uninstalled src/lore package and tools run on
+# system python3 and import only the standard library. This declares the test runner alone,
 # pinned in uv.lock and installed into .venv by `just setup`.
 [project]
 name = "lore"

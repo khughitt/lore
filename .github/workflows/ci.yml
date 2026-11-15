@@ -15,9 +15,8 @@ jobs:
     env:
       # Broad targets run only when forced; the wrapper refuses a hosted skip without this.
       TT_FORCE: '1'
-      # ops is private: the profile-hook tests skip here with a stated reason and run
-      # locally in `just test-live`.
-      LORE_TEST_LIVE_OPS: unavailable
+      # Installed-tasks integration runs locally through test-live; never silently skip.
+      LORE_TEST_LIVE_TASKS: unavailable
       GIT_CONFIG_NOSYSTEM: '1'
     steps:
       - name: Isolate Git configuration

@@ -188,7 +188,19 @@
       "clauses": [],
       "locator": null,
       "sha256": "2bd1095e5b99f68829cb291ae80b2432ad03fb8dc667673089d5087204f3ce76",
-      "text": "Every checkout has a profile — `personal`, `work`, `external`, or one the user\ndefined — that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `ops-profile session` and read\nits output before any other work — the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
+      "text": "Every checkout has a profile \u2014 `personal`, `work`, `external`, or one the user\ndefined \u2014 that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `ops-profile session` and read\nits output before any other work \u2014 the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "038f8ab5a72bf43c9421f3d5502a078ba15d1a986c7fe6325cc93ff5a852eeaf",
+      "text": "Every checkout has a profile \u2014 `personal`, `work`, `external`, or one the user\ndefined \u2014 that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `tasks resolve lore --json`, check\nthat its single result resolved successfully, and read `results[0].root`. Run that\nroot's `bin/lore profile session` by explicit path, safely quoting the executable\npath, and read its output before any other work. If resolution fails or the root\nis missing, report that error rather than guessing a launcher \u2014 the profile says what to read and do\nbefore touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "506db8616a9e1579f00238df68eb7880c58f4e33f68cd4b711ff776f65fc0493",
+      "text": "Every checkout has a profile \u2014 `personal`, `work`, `external`, or one the user\ndefined \u2014 that carries the instructions and settings that differ between\nkinds of project. Your session starts with a `profile:` line followed by the\nprofile's instructions; if it did not, run `tasks resolve lore --json`, check\nthat its single result resolved successfully, and read `results[0].root`. Run that\nroot's `bin/lore profile session` by explicit path, safely quoting the executable\npath, and read its output before any other work. If resolution fails or the root\nis missing, report that error rather than guessing a launcher. The profile says\nwhat to read and do before touching a repository. Later layers win: core, then the profile, then\nthis repository's own instructions, then the user in the session.\n"
     }
   ],
   "schema": 1,

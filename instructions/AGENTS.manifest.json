@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "2d5973a3474c7cdb6c35efdf00a483c443c31ab8ac888cda346d451dc5b801fe"
+    "sha256": "f6be5b2d14dc8546227176fd34129e72cde33b4cf24ad2663a848e5622fd131a"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -392,24 +392,24 @@
         }
       ],
       "id": "profiles",
-      "length": 537,
+      "length": 813,
       "offset": 10303,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve profile and layer precedence.",
-      "rendered_sha256": "68d93b1a394889415ce2219c6a90394360ed3a3b03d64f948922f2170cfaa499",
-      "revision": "8f9d42faa7e8aa60215c016f90616c81e0af0625",
+      "rendered_sha256": "389779b4c8b1a71e2ec09a657068a3a4a9b2d72b2728f134c3ad0ff8f4cc4c6e",
+      "revision": "92b705881e28a0f44c262a23e97dfa222aa0b65d",
       "rules": [
         {
           "clauses": [],
           "id": "rule:1d70a6a4c5e842579156e56e9be27f5f",
-          "length": 524,
+          "length": 800,
           "offset": 10316,
           "record": "instructions/rules/1d70a6a4c5e842579156e56e9be27f5f.json",
-          "sha256": "2bd1095e5b99f68829cb291ae80b2432ad03fb8dc667673089d5087204f3ce76"
+          "sha256": "506db8616a9e1579f00238df68eb7880c58f4e33f68cd4b711ff776f65fc0493"
         }
       ],
-      "sha256": "8b87a38ff17c591657d1e28aa987e56e5ad9b32eb8da739d0473da6bc4919f92",
+      "sha256": "a64f7faad6789d116cbb670b132a8e0265e6d81dd8dafb366b0553348f855dde",
       "source": "instructions/fragments/profiles.md"
     },
     {
@@ -446,7 +446,7 @@
       ],
       "id": "design-docs",
       "length": 1435,
-      "offset": 10841,
+      "offset": 11117,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep document authority and review conventions.",
@@ -457,7 +457,7 @@
           "clauses": [],
           "id": "rule:ba23ff2fa67041158b9e1df90e9c9440",
           "length": 313,
-          "offset": 10864,
+          "offset": 11140,
           "record": "instructions/rules/ba23ff2fa67041158b9e1df90e9c9440.json",
           "sha256": "904de6ff022b9e1d23966afe66d8115c49c53e587b5d852cb53e3fc3a9e279b1"
         },
@@ -466,19 +466,19 @@
             {
               "id": "clause:1bea3184967c457e8ccf44941064e555",
               "length": 331,
-              "offset": 11177,
+              "offset": 11453,
               "sha256": "2332561557a0adef60514a323477e7ac1ba1e820a00157d4bb338995462c62b9"
             },
             {
               "id": "clause:5611195760e84a2ca62cfbc6520d38fb",
               "length": 166,
-              "offset": 11508,
+              "offset": 11784,
               "sha256": "f8ddd76857bb82af0dd58db196b1629f0d7cd03a11a2c7b5fdcff6f3bd9da33e"
             }
           ],
           "id": "rule:30ba737331374ada84282fe41f0faebb",
           "length": 497,
-          "offset": 11177,
+          "offset": 11453,
           "record": "instructions/rules/30ba737331374ada84282fe41f0faebb.json",
           "sha256": "e35180ebff3d3e1b244bb53d970b06ad59b182d09d62389548bb2b5a38de101b"
         },
@@ -486,7 +486,7 @@
           "clauses": [],
           "id": "rule:fea3f0aa833045f6a40ab83e4932bb6f",
           "length": 108,
-          "offset": 11674,
+          "offset": 11950,
           "record": "instructions/rules/fea3f0aa833045f6a40ab83e4932bb6f.json",
           "sha256": "2f6648a26f5a299ecdefb348f379399e060a99708374a872f809000274e33368"
         },
@@ -494,7 +494,7 @@
           "clauses": [],
           "id": "rule:e1248095a0c74dd181cbc622c9a3b80b",
           "length": 493,
-          "offset": 11783,
+          "offset": 12059,
           "record": "instructions/rules/e1248095a0c74dd181cbc622c9a3b80b.json",
           "sha256": "78a603dfbde23185bd35177743fa9c4ac83fd397d3e9256cfe8459dea8ac283b"
         }
@@ -522,7 +522,7 @@
       ],
       "id": "communication",
       "length": 6605,
-      "offset": 12277,
+      "offset": 12553,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep paths, routing and review sheets intelligible to the user.",
@@ -533,7 +533,7 @@
           "clauses": [],
           "id": "rule:016ceef1ef2547f8aa157cb7eb3157cc",
           "length": 106,
-          "offset": 12295,
+          "offset": 12571,
           "record": "instructions/rules/016ceef1ef2547f8aa157cb7eb3157cc.json",
           "sha256": "f78e64c8e6794b5954ea54c987c298364cbbb1c9979788d7f84a92716541d770"
         },
@@ -541,7 +541,7 @@
           "clauses": [],
           "id": "rule:de5f1d0582294f77b597b1a5b42c9d76",
           "length": 1557,
-          "offset": 12401,
+          "offset": 12677,
           "record": "instructions/rules/de5f1d0582294f77b597b1a5b42c9d76.json",
           "sha256": "e9c749a2dedfa0d2861a05eb97d51f2550a0c8a68bba5290bd59305b695c3679"
         },
@@ -549,7 +549,7 @@
           "clauses": [],
           "id": "rule:2c1ea3727a7447348cb807cfae1c735e",
           "length": 214,
-          "offset": 13958,
+          "offset": 14234,
           "record": "instructions/rules/2c1ea3727a7447348cb807cfae1c735e.json",
           "sha256": "cdf7b5e29bd85b630ba6c32d2e5d7e0862430d3e1b5ea0a403d820b653cb6461"
         },
@@ -557,7 +557,7 @@
           "clauses": [],
           "id": "rule:41b38a6426b946db94eee97bc7f044db",
           "length": 280,
-          "offset": 14172,
+          "offset": 14448,
           "record": "instructions/rules/41b38a6426b946db94eee97bc7f044db.json",
           "sha256": "de5a83aa7158b8aa0159d44065053fede4d9d7ff134feb7ffa23ddaf4341ad53"
         },
@@ -565,7 +565,7 @@
           "clauses": [],
           "id": "rule:fb8d914a2eb44a64acc7e086970328a0",
           "length": 1645,
-          "offset": 14452,
+          "offset": 14728,
           "record": "instructions/rules/fb8d914a2eb44a64acc7e086970328a0.json",
           "sha256": "6a4f165bf831d9a52aa03b8663845df7959b330092f81427a4a0aa5a154fdd2f"
         },
@@ -574,19 +574,19 @@
             {
               "id": "clause:6c567f224a4e4834bbe13e18769195a2",
               "length": 498,
-              "offset": 16097,
+              "offset": 16373,
               "sha256": "8e92e8470849fb33887f29a3fe94407b1af10397123f64364451218f8703cc10"
             },
             {
               "id": "clause:84b2196069a448c08a86a42f79cdc08c",
               "length": 969,
-              "offset": 16595,
+              "offset": 16871,
               "sha256": "42c7e33147c3d160eae11d607145d769ab7eadc2fba70b615d338b2504f747a5"
             }
           ],
           "id": "rule:19c566200a204b339abf808f84984c7d",
           "length": 1467,
-          "offset": 16097,
+          "offset": 16373,
           "record": "instructions/rules/19c566200a204b339abf808f84984c7d.json",
           "sha256": "51427f1d9c170fbe161cf040da68f0b539efd85ce8b10a99e72fcc1d4d54b16d"
         },
@@ -594,7 +594,7 @@
           "clauses": [],
           "id": "rule:f002b1ef713f42709b9de6b6b3701dc3",
           "length": 260,
-          "offset": 17564,
+          "offset": 17840,
           "record": "instructions/rules/f002b1ef713f42709b9de6b6b3701dc3.json",
           "sha256": "35f8e2130b57c0c8264ce0a2ea30441eb17f12b7fc7e7262a269803531c03485"
         },
@@ -602,7 +602,7 @@
           "clauses": [],
           "id": "rule:718e79f5b3fa40249cb178139c26b28f",
           "length": 392,
-          "offset": 17824,
+          "offset": 18100,
           "record": "instructions/rules/718e79f5b3fa40249cb178139c26b28f.json",
           "sha256": "2dd74124cd72aa8bf869d60bf8d25bacc9f89cc7932ca0e32c8850894b7812ae"
         },
@@ -610,7 +610,7 @@
           "clauses": [],
           "id": "rule:65fcb49d5d7344d9a052800af708b9ee",
           "length": 666,
-          "offset": 18216,
+          "offset": 18492,
           "record": "instructions/rules/65fcb49d5d7344d9a052800af708b9ee.json",
           "sha256": "6febfe6df38f60c74cca50235a65c11bd5c55b4db8712ca0920d768525dd8759"
         }
@@ -638,7 +638,7 @@
       ],
       "id": "notation",
       "length": 1376,
-      "offset": 18883,
+      "offset": 19159,
       "owner": "lore",
       "provenance_date": "2026-10-10",
       "rationale": "Let agents read the user's shorthand in prompts, thoughts and task text.",
@@ -650,13 +650,13 @@
             {
               "id": "clause:adf33d1b80d04213845041c035444fda",
               "length": 63,
-              "offset": 18896,
+              "offset": 19172,
               "sha256": "eaea501d5bf24edb86cd3455bc40fb636abeb3d0abc675002e8a1bf0229c43ad"
             }
           ],
           "id": "rule:33e4d6f672464d2d9e3d6bc971c4265d",
           "length": 188,
-          "offset": 18896,
+          "offset": 19172,
           "record": "instructions/rules/33e4d6f672464d2d9e3d6bc971c4265d.json",
           "sha256": "96a7b45a2a51797593c9f5155ef58ddc894a9d38aa2091cdfcc73264b375763a"
         },
@@ -664,7 +664,7 @@
           "clauses": [],
           "id": "rule:e12c22eedc4b43abbe27f56d4b260260",
           "length": 60,
-          "offset": 19085,
+          "offset": 19361,
           "record": "instructions/rules/e12c22eedc4b43abbe27f56d4b260260.json",
           "sha256": "0a9e1e6ad422017def034013dcaa48449cf337a6ea7efd20a5e5e911a803717a"
         },
@@ -673,13 +673,13 @@
             {
               "id": "clause:50ecadf28ce04854b8d88be3c6bf841e",
               "length": 175,
-              "offset": 19145,
+              "offset": 19421,
               "sha256": "0fe90bbe47a3eb4c3a3e078404bc46f87798986bc6cb433fb5e43c5fe1161c2a"
             }
           ],
           "id": "rule:2eaccf07c06b4bf2845e4cebe5416bd0",
           "length": 223,
-          "offset": 19145,
+          "offset": 19421,
           "record": "instructions/rules/2eaccf07c06b4bf2845e4cebe5416bd0.json",
           "sha256": "8c606245771e4d39e0581cb9761ca113c3aa5f38684b3b1e685d185b379736f3"
         },
@@ -688,13 +688,13 @@
             {
               "id": "clause:ce2dd38b2ba94da298469841d325e9cf",
               "length": 189,
-              "offset": 19368,
+              "offset": 19644,
               "sha256": "75658dbdaa21e04517378c56e68fdf07201c03a2e5edc203611dce1b73cb68c9"
             }
           ],
           "id": "rule:49c8e7d67a964e5a8cc83a035b764cf4",
           "length": 238,
-          "offset": 19368,
+          "offset": 19644,
           "record": "instructions/rules/49c8e7d67a964e5a8cc83a035b764cf4.json",
           "sha256": "1c8b59ae1b3a8fdb13e467f9428db743532b218475b305a326e4dcf620d20ab3"
         },
@@ -702,7 +702,7 @@
           "clauses": [],
           "id": "rule:59880fab97854d5a81284bcb4e755951",
           "length": 65,
-          "offset": 19606,
+          "offset": 19882,
           "record": "instructions/rules/59880fab97854d5a81284bcb4e755951.json",
           "sha256": "cc49fc9453f6f9b5e63c0592fc371d3628d3d68b0accee5bdf8e3ba668938dab"
         },
@@ -710,7 +710,7 @@
           "clauses": [],
           "id": "rule:9a8826ecfa854e6b9d44c3217dba5c36",
           "length": 39,
-          "offset": 19671,
+          "offset": 19947,
           "record": "instructions/rules/9a8826ecfa854e6b9d44c3217dba5c36.json",
           "sha256": "6f2eccd8073b374f5b6d9fccd487ed36a433a72a46dbb4c08512512a2ca7fada"
         },
@@ -718,7 +718,7 @@
           "clauses": [],
           "id": "rule:a0a2d0134f884220ab2a11332e521a2d",
           "length": 96,
-          "offset": 19710,
+          "offset": 19986,
           "record": "instructions/rules/a0a2d0134f884220ab2a11332e521a2d.json",
           "sha256": "2fd6fd1834d45c8d3d5fcbc9dbcd728e23bd5256b951f34c8e56eceb2e142a02"
         },
@@ -727,13 +727,13 @@
             {
               "id": "clause:9c7113960d354a7db76db703e5409cd3",
               "length": 56,
-              "offset": 19806,
+              "offset": 20082,
               "sha256": "a7a18aec203155b19139e66d6e12c782cda56e430c293140ac491a1603e203d8"
             }
           ],
           "id": "rule:848c2777bfdb42418a2682636b04c12a",
           "length": 87,
-          "offset": 19806,
+          "offset": 20082,
           "record": "instructions/rules/848c2777bfdb42418a2682636b04c12a.json",
           "sha256": "17bc66f9eeb4080bc8d9b7d202837c0cd23ffd805e82990a0b7a75b00f48f586"
         },
@@ -741,7 +741,7 @@
           "clauses": [],
           "id": "rule:c4e3b9ac7e954a53b1cddbe603a27c4f",
           "length": 80,
-          "offset": 19893,
+          "offset": 20169,
           "record": "instructions/rules/c4e3b9ac7e954a53b1cddbe603a27c4f.json",
           "sha256": "a9e55a0bdde471435ef777f34121407671293b84c0bccd97a3be107bb4bfeb56"
         },
@@ -749,7 +749,7 @@
           "clauses": [],
           "id": "rule:3feb258dfeda4699b0966a649a7e28f4",
           "length": 202,
-          "offset": 19973,
+          "offset": 20249,
           "record": "instructions/rules/3feb258dfeda4699b0966a649a7e28f4.json",
           "sha256": "78970ad50da5c2fbaccd4a72e32d4412292e8adc3b4ee4267665ca2b935362f8"
         },
@@ -757,7 +757,7 @@
           "clauses": [],
           "id": "rule:a25baf1210bc4f81b621a073ff68b8c6",
           "length": 84,
-          "offset": 20175,
+          "offset": 20451,
           "record": "instructions/rules/a25baf1210bc4f81b621a073ff68b8c6.json",
           "sha256": "e14e38192d82a8599cead3006c0023e167d60a3214f8e2e7973c86128d63428d"
         }
@@ -806,7 +806,7 @@
       ],
       "id": "decisions",
       "length": 36483,
-      "offset": 20260,
+      "offset": 20536,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve approval and handoff limits.",
@@ -817,7 +817,7 @@
           "clauses": [],
           "id": "rule:fdd377a3c264435296d1792c8f74c68b",
           "length": 658,
-          "offset": 20274,
+          "offset": 20550,
           "record": "instructions/rules/fdd377a3c264435296d1792c8f74c68b.json",
           "sha256": "30289cd82eecb133df2ad05106296e842fd71e7fea39dc43a542314aadb67687"
         },
@@ -825,7 +825,7 @@
           "clauses": [],
           "id": "rule:8d52bc64e99b42d78f4219f73c3b375c",
           "length": 1174,
-          "offset": 20932,
+          "offset": 21208,
           "record": "instructions/rules/8d52bc64e99b42d78f4219f73c3b375c.json",
           "sha256": "601bb2b05cd818b2b03d1fe888b4433cd66d8b1e1e00e00e0fb3f3838636dd0d"
         },
@@ -833,7 +833,7 @@
           "clauses": [],
           "id": "rule:052f6da8885c4d2f81b11c0602eb6e92",
           "length": 1185,
-          "offset": 22106,
+          "offset": 22382,
           "record": "instructions/rules/052f6da8885c4d2f81b11c0602eb6e92.json",
           "sha256": "3f7a9c2b209809aa587988548fb22986405355fac591bc88b9347e90ec60ae65"
         },
@@ -841,7 +841,7 @@
           "clauses": [],
           "id": "rule:1f37e3afebdd433a9ccaa2970cde7289",
           "length": 4850,
-          "offset": 23291,
+          "offset": 23567,
           "record": "instructions/rules/1f37e3afebdd433a9ccaa2970cde7289.json",
           "sha256": "978d30110d4ec7b8382f98cd3c4a91d47497577f120cfb3d09146114088e15cf"
         },
@@ -849,7 +849,7 @@
           "clauses": [],
           "id": "rule:db275842f3af447dbe84d8b1dfc68051",
           "length": 1288,
-          "offset": 28141,
+          "offset": 28417,
           "record": "instructions/rules/db275842f3af447dbe84d8b1dfc68051.json",
           "sha256": "19d376bc285d75e341f07b4a1f5d5740bbec0b2cbd0891339d3cdb60ade61baa"
         },
@@ -857,7 +857,7 @@
           "clauses": [],
           "id": "rule:002637bfc1e64da0bc4aca44f559d5f9",
           "length": 1229,
-          "offset": 29429,
+          "offset": 29705,
           "record": "instructions/rules/002637bfc1e64da0bc4aca44f559d5f9.json",
           "sha256": "4da54262b61953eea941bfac9e548975a95e4fd319325d3e4f134d476e50a96e"
         },
@@ -866,25 +866,25 @@
             {
               "id": "clause:340c80c5c94447988769c4719bd75d1f",
               "length": 200,
-              "offset": 30658,
+              "offset": 30934,
               "sha256": "9dce14fd12130cdfd0f0a52a8017243f672e5b9a897233026acbdda01fb906ad"
             },
             {
               "id": "clause:797be969084b47f8a07a3c2d8348994e",
               "length": 147,
-              "offset": 30858,
+              "offset": 31134,
               "sha256": "c795fbf64719b2525b1e05cad74d99ea8f9c79a2b9cdd157654b8d36111d15cf"
             },
             {
               "id": "clause:3a52659cfd474d7dbf664309348819d4",
               "length": 24,
-              "offset": 31006,
+              "offset": 31282,
               "sha256": "7b1c434f27d84805041ac446b8f877ba7a6b2f6c4429871fbc8883c2af0e12f4"
             }
           ],
           "id": "rule:f431707097c0418c9822d67074875c51",
           "length": 1237,
-          "offset": 30658,
+          "offset": 30934,
           "record": "instructions/rules/f431707097c0418c9822d67074875c51.json",
           "sha256": "7776655609100852b1a17339bd1ebfd966f5939663681282d21575bc5245d566"
         },
@@ -893,13 +893,13 @@
             {
               "id": "clause:88b1fbab585c4fd6881e34cd496163f6",
               "length": 324,
-              "offset": 32964,
+              "offset": 33240,
               "sha256": "ec9f4f4d51990f6c39a247f6b8cf8feb33a7e83992ff2444068fa9e467c8f24b"
             }
           ],
           "id": "rule:2c5785f136ca4ee590e1c69406276623",
           "length": 1393,
-          "offset": 31895,
+          "offset": 32171,
           "record": "instructions/rules/2c5785f136ca4ee590e1c69406276623.json",
           "sha256": "84fa24acfd1d9e6dfd2d6a4f8d2f8fcd2aae031866d06b1d396f3eaff246c210"
         },
@@ -907,7 +907,7 @@
           "clauses": [],
           "id": "rule:c165eee5aa0a4b819061b34386c78c23",
           "length": 2564,
-          "offset": 33288,
+          "offset": 33564,
           "record": "instructions/rules/c165eee5aa0a4b819061b34386c78c23.json",
           "sha256": "9d6a0df0966a3138318a78f3fe23b805484e9da93370e2544e695a0e7c628c06"
         },
@@ -915,7 +915,7 @@
           "clauses": [],
           "id": "rule:fbbd81a9cc8642cb9f54ef949154cfc0",
           "length": 2745,
-          "offset": 35852,
+          "offset": 36128,
           "record": "instructions/rules/fbbd81a9cc8642cb9f54ef949154cfc0.json",
           "sha256": "8be830a56a5bde31a123ca58e56c3cc29d77f9fda019e812a5cbb8ab4d450d97"
         },
@@ -923,7 +923,7 @@
           "clauses": [],
           "id": "rule:96e7765f238045f4af07742ea0783816",
           "length": 604,
-          "offset": 38597,
+          "offset": 38873,
           "record": "instructions/rules/96e7765f238045f4af07742ea0783816.json",
           "sha256": "273d9411827d975b7639050538d610fc8337b25fc63548578938c14c3fdcfcbb"
         },
@@ -931,7 +931,7 @@
           "clauses": [],
           "id": "rule:4fd096e0dfb040c7b5f77277569bbabd",
           "length": 1512,
-          "offset": 39201,
+          "offset": 39477,
           "record": "instructions/rules/4fd096e0dfb040c7b5f77277569bbabd.json",
           "sha256": "25b6b0b95593d9ec6c5dd9855ba98b5fd40994aa17ffda87dfbe03b42415bae6"
         },
@@ -939,7 +939,7 @@
           "clauses": [],
           "id": "rule:717a50b29e794e72b327bf60820479bf",
           "length": 231,
-          "offset": 40713,
+          "offset": 40989,
           "record": "instructions/rules/717a50b29e794e72b327bf60820479bf.json",
           "sha256": "0ce9b420aadff6b41da5bc2d65905a7ad87647251cda59231cdb7e93f67cb7b2"
         },
@@ -948,19 +948,19 @@
             {
               "id": "clause:36f7f9bbc4ba47979ff0c3289bf21d32",
               "length": 116,
-              "offset": 40944,
+              "offset": 41220,
               "sha256": "ab5b2c3c89c79f3a0aa7a2a5ad5c4b0c27c59fab48a4490694c47bad82b0903e"
             },
             {
               "id": "clause:8fb2ebd679614f34b979fb3d5c968694",
               "length": 325,
-              "offset": 41221,
+              "offset": 41497,
               "sha256": "61c8f3cbc534cd22cb5250b6bab4c265130c9b0a387126ed652c0511d4fd747c"
             }
           ],
           "id": "rule:5a5808d0572f49e49afe103d7569231e",
           "length": 800,
-          "offset": 40944,
+          "offset": 41220,
           "record": "instructions/rules/5a5808d0572f49e49afe103d7569231e.json",
           "sha256": "d1a9938f2e4eb5688878c7a8dfd60d7deea84bbb88402402fd8c9b913a8a852c"
         },
@@ -969,13 +969,13 @@
             {
               "id": "clause:e7d20ae52fc34b46bded00efad5aea60",
               "length": 2148,
-              "offset": 41744,
+              "offset": 42020,
               "sha256": "43800ab1b428b1d61542d162c43956833f5666dfb29f372c8cc83fdb366bbaaa"
             }
           ],
           "id": "rule:046dfb8c365f454a86390b6b4167e487",
           "length": 2148,
-          "offset": 41744,
+          "offset": 42020,
           "record": "instructions/rules/046dfb8c365f454a86390b6b4167e487.json",
           "sha256": "43800ab1b428b1d61542d162c43956833f5666dfb29f372c8cc83fdb366bbaaa"
         },
@@ -983,7 +983,7 @@
           "clauses": [],
           "id": "rule:6a846b1f53ee406d9b48c7434364a2cf",
           "length": 834,
-          "offset": 43892,
+          "offset": 44168,
           "record": "instructions/rules/6a846b1f53ee406d9b48c7434364a2cf.json",
           "sha256": "026c2b2ad8f25af509df98f1debdc1cbb3944fa1c6586cc946c6258ce731e254"
         },
@@ -991,7 +991,7 @@
           "clauses": [],
           "id": "rule:3a86283b2dfe4f4daf96bf612fcca2af",
           "length": 3858,
-          "offset": 44726,
+          "offset": 45002,
           "record": "instructions/rules/3a86283b2dfe4f4daf96bf612fcca2af.json",
           "sha256": "73873ec10a8061cf1e9bb06c4d2361b089543fe72b53bc588a92ad525d94b3e7"
         },
@@ -1000,31 +1000,31 @@
             {
               "id": "clause:853cf3ff745d42b9865ee5791e5bf7b4",
               "length": 344,
-              "offset": 48786,
+              "offset": 49062,
               "sha256": "cbb18f17b44bf17757d74049d9de55a315c656a38cf0c865e47f14d6d2cb1b83"
             },
             {
               "id": "clause:3b0364d9e6d44e4f92835bf319d01627",
               "length": 103,
-              "offset": 48584,
+              "offset": 48860,
               "sha256": "d57e5a6c0c96f77d91ae7716e8e07e084396ce4d4cff0e37518e8422f027f8c7"
             },
             {
               "id": "clause:39ee97ce06f7465e9f5c6be6c942439f",
               "length": 476,
-              "offset": 49418,
+              "offset": 49694,
               "sha256": "45862170ab04addb8eb075565ec8e62927d4a2c17d7c656ecf124948a3f44ac2"
             },
             {
               "id": "clause:014874825b0247e1b8cca9c21bc7cb0f",
               "length": 235,
-              "offset": 49971,
+              "offset": 50247,
               "sha256": "1ade75c83aa310f73147710a2caa2b4e5c7596fa3d5976383769ea60cbad3565"
             }
           ],
           "id": "rule:d21e7a02223e4d00adbb602627e441a6",
           "length": 2103,
-          "offset": 48584,
+          "offset": 48860,
           "record": "instructions/rules/d21e7a02223e4d00adbb602627e441a6.json",
           "sha256": "1391ef19ada08308f09b6f755d1ba592fca2b8a5f63ccd3c61f3d3de489b2afa"
         },
@@ -1032,7 +1032,7 @@
           "clauses": [],
           "id": "rule:e5201d5768794401bf9d88a39b1ee445",
           "length": 562,
-          "offset": 50687,
+          "offset": 50963,
           "record": "instructions/rules/e5201d5768794401bf9d88a39b1ee445.json",
           "sha256": "9ce030598b9fcf8b9d373c93eb72cf694b9fd601611f00c71e5d9f0e2b67fc9a"
         },
@@ -1040,7 +1040,7 @@
           "clauses": [],
           "id": "rule:4411cf3f68ce4834a40a5379234ddc3b",
           "length": 2710,
-          "offset": 51249,
+          "offset": 51525,
           "record": "instructions/rules/4411cf3f68ce4834a40a5379234ddc3b.json",
           "sha256": "5b2e7931a1084db9c1e3bf18656961f28ce2bee0aac6c42d52dcac67f56bc6c5"
         },
@@ -1048,7 +1048,7 @@
           "clauses": [],
           "id": "rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27",
           "length": 2784,
-          "offset": 53959,
+          "offset": 54235,
           "record": "instructions/rules/6c0a22eb29eb4e1db82c7e7e9fc6ae27.json",
           "sha256": "ce270e0f4350aca1ecde9bd7a496ebe6761c61dcde1f6f94f889171366631647"
         }
@@ -1097,7 +1097,7 @@
       ],
       "id": "processes",
       "length": 10827,
-      "offset": 56744,
+      "offset": 57020,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep cleanup, tracked waiting and host-use policy.",
@@ -1108,7 +1108,7 @@
           "clauses": [],
           "id": "rule:12e31cf7fafe40db95ec74909738b868",
           "length": 918,
-          "offset": 56758,
+          "offset": 57034,
           "record": "instructions/rules/12e31cf7fafe40db95ec74909738b868.json",
           "sha256": "4af1ae11f5a7875f58d948888995bb75a15f190b5d792f62e92a819277cc602c"
         },
@@ -1116,7 +1116,7 @@
           "clauses": [],
           "id": "rule:ba000efb53984b8f900cba2bef168728",
           "length": 338,
-          "offset": 57676,
+          "offset": 57952,
           "record": "instructions/rules/ba000efb53984b8f900cba2bef168728.json",
           "sha256": "2414256015586fa85b15e2c0cbf2257c6db0e1a3406ce808fa1d5104f9cf17de"
         },
@@ -1125,43 +1125,43 @@
             {
               "id": "clause:562857a6b5de44cba4adeaaf9ad09508",
               "length": 168,
-              "offset": 58014,
+              "offset": 58290,
               "sha256": "0823bdcc1c8ddb581e0d48829fdc1d5acda49f6b06d4f543a0d7bacbcb823892"
             },
             {
               "id": "clause:bb8d8d4452b54f4db90fa7911bc9939b",
               "length": 262,
-              "offset": 58182,
+              "offset": 58458,
               "sha256": "3d70774deb42f40deb80c9aedc09c946a38067cc64a48a8810879663bf38aaf4"
             },
             {
               "id": "clause:9432642395a94804bbd4e87ff4132a53",
               "length": 97,
-              "offset": 58444,
+              "offset": 58720,
               "sha256": "609521dfd2fd1cd7d68f4a16d34269f5911b8c2eb090b5c0cce2017158a7efca"
             },
             {
               "id": "clause:34641865228b4d7fa91055291b04e4ba",
               "length": 205,
-              "offset": 58541,
+              "offset": 58817,
               "sha256": "2b354881a685b1bd78905e39240a9a7589b064df3ba2d8dd62a7e5ce5e3d44bd"
             },
             {
               "id": "clause:21f507f65bbd4a81b4b53f1fbd14fff5",
               "length": 220,
-              "offset": 58746,
+              "offset": 59022,
               "sha256": "6ff60635920146954bac97a1893d0c9c111b2aaa65471ba15b299eb98d4adb48"
             },
             {
               "id": "clause:f7040a6c7d7b43b8a50eb13e27c92607",
               "length": 90,
-              "offset": 58966,
+              "offset": 59242,
               "sha256": "f165d9ecb60a1affa96087203208b49d35257a03b497bcd3f4702310a8365bf1"
             }
           ],
           "id": "rule:c7901a4e3f4f4928be74629fa3ac5f1c",
           "length": 1042,
-          "offset": 58014,
+          "offset": 58290,
           "record": "instructions/rules/c7901a4e3f4f4928be74629fa3ac5f1c.json",
           "sha256": "1bacaca09a4daf948f29753f2bb7def2385eab4410ffbc112122b35782720c23"
         },
@@ -1170,25 +1170,25 @@
             {
               "id": "clause:bee6d1421827427dabebc1bdaedb3481",
               "length": 352,
-              "offset": 59339,
+              "offset": 59615,
               "sha256": "301118aa3d660427f5c3be3c867522514223cc1cf9f35988fe20851c9a69ecaf"
             },
             {
               "id": "clause:ace1732dae4d490ba2c7e56dc7f408a3",
               "length": 209,
-              "offset": 59986,
+              "offset": 60262,
               "sha256": "cf2ee02b8a30746a7eefd4665d4e540dd7032ce3c4a3cb1b18f86728d97d631b"
             },
             {
               "id": "clause:efddd63353604374933b867f261c4475",
               "length": 369,
-              "offset": 60195,
+              "offset": 60471,
               "sha256": "b058ed5f140be01ff68459548f997864cf8924b2645179fcc2f25b57428cd834"
             }
           ],
           "id": "rule:369c00284c7e47028337d6e8c06e41e7",
           "length": 1890,
-          "offset": 59056,
+          "offset": 59332,
           "record": "instructions/rules/369c00284c7e47028337d6e8c06e41e7.json",
           "sha256": "9ecb581d2511718b22024e0f22918c175793d3c5cfa0e5e5c6f4b51e9ef0ca92"
         },
@@ -1197,13 +1197,13 @@
             {
               "id": "clause:42955d8f19624c6fb3e3899c83c70bfb",
               "length": 311,
-              "offset": 60946,
+              "offset": 61222,
               "sha256": "218b894e48562b67909de1602f1643a7bce6792f4a0ac5358b2053dd6445eb37"
             }
           ],
           "id": "rule:558c97f11b5d4a9ea13f1637c10bf95f",
           "length": 578,
-          "offset": 60946,
+          "offset": 61222,
           "record": "instructions/rules/558c97f11b5d4a9ea13f1637c10bf95f.json",
           "sha256": "0ab0b2fe7ece9b08ce7ff042dbd49a1e26d1b97d1ff6e0d64c68798f1a8523da"
         },
@@ -1212,13 +1212,13 @@
             {
               "id": "clause:ebf1a6300dc046a78a27e30651a1c0b1",
               "length": 315,
-              "offset": 61524,
+              "offset": 61800,
               "sha256": "fb170d6b37ed3850350ef398112954f2a3196f2f33499d06e7e836d782cbe182"
             }
           ],
           "id": "rule:fd94c4f5761740cfaef4497c38d1a6ae",
           "length": 558,
-          "offset": 61524,
+          "offset": 61800,
           "record": "instructions/rules/fd94c4f5761740cfaef4497c38d1a6ae.json",
           "sha256": "cb683cf533b2d92d7fd55140eaa7e00e8b803c5608d4ba3c065d0e8b0961ed4d"
         },
@@ -1227,25 +1227,25 @@
             {
               "id": "clause:4c106ff39eb3436d96b1f48af5fb6564",
               "length": 167,
-              "offset": 62082,
+              "offset": 62358,
               "sha256": "c5e01dba5035a90155948c2b9f9962c72861dfe06a0816b46bc7e2af0b823e5b"
             },
             {
               "id": "clause:18ad92d779304a2bb4b8bc3e20cc961b",
               "length": 1345,
-              "offset": 62249,
+              "offset": 62525,
               "sha256": "219682be6c61bcb56e1b1d895fbb230c94c207981891a645b3e7bb72932a3df1"
             },
             {
               "id": "clause:e22f51621be04bb482f887ca0453e67c",
               "length": 667,
-              "offset": 63594,
+              "offset": 63870,
               "sha256": "88aa7b721e3d340c392da73a3e09db67f388472a43014c17a9a2fddfc65b95d6"
             }
           ],
           "id": "rule:3b44ce6a0e9b4816853b1c3b2beedb77",
           "length": 2179,
-          "offset": 62082,
+          "offset": 62358,
           "record": "instructions/rules/3b44ce6a0e9b4816853b1c3b2beedb77.json",
           "sha256": "beff0adc06f618f7de134fa94a69a20051b88032e9d9527cf1f8a0674aa87553"
         },
@@ -1253,7 +1253,7 @@
           "clauses": [],
           "id": "rule:019b1ebc42524f6689c223c58ca6cadf",
           "length": 833,
-          "offset": 64261,
+          "offset": 64537,
           "record": "instructions/rules/019b1ebc42524f6689c223c58ca6cadf.json",
           "sha256": "64c8b6416fa84c9c230c66ea35473055ee488dc6d5f4fb8dd112b9c8a415d6e8"
         },
@@ -1262,25 +1262,25 @@
             {
               "id": "clause:b42903ada76a46d09ee57916c2dd4772",
               "length": 402,
-              "offset": 65094,
+              "offset": 65370,
               "sha256": "f7acd7af7849edaaa69e2f9cc6f05bbc30cc4a9efa5a46d106a8212ee91b4116"
             },
             {
               "id": "clause:23b986ea4b5c426fa18bb225ac1b1e31",
               "length": 227,
-              "offset": 65496,
+              "offset": 65772,
               "sha256": "3a92f231357d0d26cefb1b2c973bcc4a1000b760c69f5cb5d4d86c0ae2311541"
             },
             {
               "id": "clause:8e6d0438a4864e1ea6cb2a39fecefdf8",
               "length": 259,
-              "offset": 65723,
+              "offset": 65999,
               "sha256": "828d0334f78ae1c6cabe27473c0554f4a9117384cdbddd4a1955adde9ccc476a"
             }
           ],
           "id": "rule:45c689924ee64a9c93e94a71f332a1d3",
           "length": 888,
-          "offset": 65094,
+          "offset": 65370,
           "record": "instructions/rules/45c689924ee64a9c93e94a71f332a1d3.json",
           "sha256": "90a7828c094520fb77e5921f04d88521d06964ceea78cade31b6c6b5aa7f4dfd"
         },
@@ -1288,7 +1288,7 @@
           "clauses": [],
           "id": "rule:0c5fc9cf30154db6b11fb7f73662249a",
           "length": 437,
-          "offset": 65982,
+          "offset": 66258,
           "record": "instructions/rules/0c5fc9cf30154db6b11fb7f73662249a.json",
           "sha256": "f09e481c0dd86607437fb063cb720b15091998e874258f741178b8eef8805388"
         },
@@ -1297,31 +1297,31 @@
             {
               "id": "clause:7dfef4a41bc44c71a7e4a0b0f6c37601",
               "length": 142,
-              "offset": 66419,
+              "offset": 66695,
               "sha256": "1db69b3bb98ca05fbd90589c1246db9444e3ff86125664d28de093a7bd0e688e"
             },
             {
               "id": "clause:6fd12fa56d284a2496ff2368002169ca",
               "length": 141,
-              "offset": 66561,
+              "offset": 66837,
               "sha256": "25fa8c883df044ad318cd2d60f77d89a60a66a095b88573fcbf57fea4cc56401"
             },
             {
               "id": "clause:acda73ec0b1645698cd15b9c7cfd44e0",
               "length": 189,
-              "offset": 66702,
+              "offset": 66978,
               "sha256": "0d29bf2f0094814ef806968406eaf8a957ea1b5e8e87076f5ab42250264629a8"
             },
             {
               "id": "clause:1489fd27df4b44ed89bb624d313718fc",
               "length": 80,
-              "offset": 66891,
+              "offset": 67167,
               "sha256": "f8ff82ab1bb1f1f7997f551cf995d7f4257f1e17d3e3331e16f19f6f9bb12d1f"
             }
           ],
           "id": "rule:a941cf1e2d044f1b9eb509074ad01504",
           "length": 552,
-          "offset": 66419,
+          "offset": 66695,
           "record": "instructions/rules/a941cf1e2d044f1b9eb509074ad01504.json",
           "sha256": "0d5173d0f79ac6b0d265e3369542a70ae7a4b80e0dd00456d8184bb407a4a114"
         },
@@ -1329,7 +1329,7 @@
           "clauses": [],
           "id": "rule:a633687fc016417da6efd42470071ab5",
           "length": 599,
-          "offset": 66972,
+          "offset": 67248,
           "record": "instructions/rules/a633687fc016417da6efd42470071ab5.json",
           "sha256": "d89ddd38ab334caa8335dbdac8a5f9235fc8f683e18521b440e9108ee8f7b034"
         }
@@ -1357,7 +1357,7 @@
       ],
       "id": "tests",
       "length": 7402,
-      "offset": 67572,
+      "offset": 67848,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve project test entry points and incident closeout.",
@@ -1369,25 +1369,25 @@
             {
               "id": "clause:dc5ca47ea95745bb9e1073a2951c9e74",
               "length": 2300,
-              "offset": 67582,
+              "offset": 67858,
               "sha256": "737ff5121cb1d93ca73dacf8df321d33ec2fa686a582bdd8d248a6f20c165173"
             },
             {
               "id": "clause:425667e720af45b4b8fa7e1f3b3a93f1",
               "length": 33,
-              "offset": 69882,
+              "offset": 70158,
               "sha256": "8c476a5ad141583c4980a1208c8faf6ae9418e7ab1463c5bdedc795a0d8f7525"
             },
             {
               "id": "clause:da72f634814148e386d39e8da646320c",
               "length": 825,
-              "offset": 69915,
+              "offset": 70191,
               "sha256": "e4aa9ad985f71370d912f2d26cba2fd78aeb7e68df51486267c47ae92c560e8a"
             }
           ],
           "id": "rule:c6567204f9e443b68cb95a08c8264b3f",
           "length": 3158,
-          "offset": 67582,
+          "offset": 67858,
           "record": "instructions/rules/c6567204f9e443b68cb95a08c8264b3f.json",
           "sha256": "4bca183865c445a964b30b88a7eb2cf2f1a657a23c8161380e2c69d5e0891498"
         },
@@ -1396,31 +1396,31 @@
             {
               "id": "clause:6774fc9e27b640bf89798d54017e988f",
               "length": 33,
-              "offset": 70740,
+              "offset": 71016,
               "sha256": "8c476a5ad141583c4980a1208c8faf6ae9418e7ab1463c5bdedc795a0d8f7525"
             },
             {
               "id": "clause:9b7eaca57722450884003a37f28ae30f",
               "length": 97,
-              "offset": 70773,
+              "offset": 71049,
               "sha256": "959f50a2a9bdf36b9d3f14fbaaf2a1495fd4b25360c3e148827b1c4ead4b9f13"
             },
             {
               "id": "clause:77fec2c13fd14a33a98e272dd967a1ca",
               "length": 228,
-              "offset": 70870,
+              "offset": 71146,
               "sha256": "73afca2714bdf7d7e065ebe55bbf9051cb31421ecf030e30912e6bcb87b95f1c"
             },
             {
               "id": "clause:1a041d81828d45eabffaf775bbf5eb55",
               "length": 162,
-              "offset": 71098,
+              "offset": 71374,
               "sha256": "af2c2a90c21b85d2c0c7046b9388012c5fa1fc5a52e77bacc6b26b7edb96271f"
             }
           ],
           "id": "rule:48ef50fb32d24e7fa13b92a69affc29b",
           "length": 520,
-          "offset": 70740,
+          "offset": 71016,
           "record": "instructions/rules/48ef50fb32d24e7fa13b92a69affc29b.json",
           "sha256": "e5dc21120124df80d753095d1f9bcfda6976538b9f0b7e10f103b0fa7df9dc88"
         },
@@ -1428,7 +1428,7 @@
           "clauses": [],
           "id": "rule:da431a1b3ac14c21800cb5488031d7e8",
           "length": 147,
-          "offset": 71260,
+          "offset": 71536,
           "record": "instructions/rules/da431a1b3ac14c21800cb5488031d7e8.json",
           "sha256": "84c400f1f675a17cd529a87a5c5c80b051ef6b8e6f63f9eb61319ea26da289b6"
         },
@@ -1437,25 +1437,25 @@
             {
               "id": "clause:bb475a33f606492d91dd0fa384fbcffc",
               "length": 388,
-              "offset": 71407,
+              "offset": 71683,
               "sha256": "908eb00d17ab1eb41e47d43a0cc85664435f919b708ee29d577764a89a40a4f8"
             },
             {
               "id": "clause:280f0c53d42540fcb95df05454e3afd8",
               "length": 125,
-              "offset": 71795,
+              "offset": 72071,
               "sha256": "404d33d7adf89b89b1edddde283b20e82a5ab0bb98f7bf92cc1a3e4044b16d52"
             },
             {
               "id": "clause:ded4242a11b64c0c80014784d9f3522e",
               "length": 135,
-              "offset": 71920,
+              "offset": 72196,
               "sha256": "b865911c057cb532bc5aebac5c348281be03b0eda842ec25fd907a5091280e58"
             }
           ],
           "id": "rule:ca536e7c8ef24f09a49bd0c598972ef5",
           "length": 648,
-          "offset": 71407,
+          "offset": 71683,
           "record": "instructions/rules/ca536e7c8ef24f09a49bd0c598972ef5.json",
           "sha256": "e3bea5bb62e53a6fbd8bab674199f7ba53dbf3baa008936998f59739543200f0"
         },
@@ -1463,7 +1463,7 @@
           "clauses": [],
           "id": "rule:4402e5c1ec654514a43ca011c2800ba6",
           "length": 81,
-          "offset": 72055,
+          "offset": 72331,
           "record": "instructions/rules/4402e5c1ec654514a43ca011c2800ba6.json",
           "sha256": "5b5fe45de2ef010f24d13133cbed05523533e3940139db3f9a00bd885b81c74f"
         },
@@ -1471,7 +1471,7 @@
           "clauses": [],
           "id": "rule:13f54add0c144229bf870b4b39835acf",
           "length": 825,
-          "offset": 72137,
+          "offset": 72413,
           "record": "instructions/rules/13f54add0c144229bf870b4b39835acf.json",
           "sha256": "8189eca3643a099a91dac1f7fafe9362931b6fb765ba644b3153131be03c6335"
         },
@@ -1480,19 +1480,19 @@
             {
               "id": "clause:87806f6d11bf442fbafd84b680bd55ce",
               "length": 894,
-              "offset": 72963,
+              "offset": 73239,
               "sha256": "7c8b2f25551d30847a55da0fc5add3b461b87e4a8a85acb4b6cbd489a5b2b287"
             },
             {
               "id": "clause:97900973dff74106b6351b14f94ac243",
               "length": 1117,
-              "offset": 73857,
+              "offset": 74133,
               "sha256": "3d8f0050d314108fbe5bd630076cac978d14bd4caa105dd84898650c5af3521e"
             }
           ],
           "id": "rule:b6576b5590d4430da697c160e083b10c",
           "length": 2011,
-          "offset": 72963,
+          "offset": 73239,
           "record": "instructions/rules/b6576b5590d4430da697c160e083b10c.json",
           "sha256": "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30"
         }
@@ -1513,7 +1513,7 @@
       ],
       "id": "shell",
       "length": 1959,
-      "offset": 74975,
+      "offset": 75251,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve shell and platform conventions.",
@@ -1524,7 +1524,7 @@
           "clauses": [],
           "id": "rule:5b1c2e9a734c498fb8285b1eb1cba9cf",
           "length": 312,
-          "offset": 74985,
+          "offset": 75261,
           "record": "instructions/rules/5b1c2e9a734c498fb8285b1eb1cba9cf.json",
           "sha256": "d920966d471bc5e38df5578a41ef495d895dda669d94b082aa786607ce075d7c"
         },
@@ -1532,7 +1532,7 @@
           "clauses": [],
           "id": "rule:14ca161849ea4f398d3ce84106c6cfa2",
           "length": 491,
-          "offset": 75297,
+          "offset": 75573,
           "record": "instructions/rules/14ca161849ea4f398d3ce84106c6cfa2.json",
           "sha256": "ac621b02502ef5e4fb0e35511a2650afa5edf6317319ea6ea229ad7470dde102"
         },
@@ -1540,7 +1540,7 @@
           "clauses": [],
           "id": "rule:b94c3ae8c7ca4e1db9a4c1502357ebe0",
           "length": 172,
-          "offset": 75788,
+          "offset": 76064,
           "record": "instructions/rules/b94c3ae8c7ca4e1db9a4c1502357ebe0.json",
           "sha256": "6545ca27c6494d45739add569c468873e7818862b58dc0db3e805250dd511810"
         },
@@ -1548,7 +1548,7 @@
           "clauses": [],
           "id": "rule:0472de81465f41dcb870eec7f86bfa47",
           "length": 682,
-          "offset": 75960,
+          "offset": 76236,
           "record": "instructions/rules/0472de81465f41dcb870eec7f86bfa47.json",
           "sha256": "338361491033fa50eebd496e47b5d675c812b64ae704f7348ae9d84f8e5e2c4b"
         },
@@ -1556,7 +1556,7 @@
           "clauses": [],
           "id": "rule:57a265755a39447d85cf71bbb5ba1b44",
           "length": 292,
-          "offset": 76642,
+          "offset": 76918,
           "record": "instructions/rules/57a265755a39447d85cf71bbb5ba1b44.json",
           "sha256": "94582ebe513f1808d5131403f12bd7577410209697999b0be4eb6ef52418da2b"
         }
@@ -1584,7 +1584,7 @@
       ],
       "id": "outcome-notes",
       "length": 4444,
-      "offset": 76935,
+      "offset": 77211,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Keep the note formats consumed by outcome measures.",
@@ -1595,7 +1595,7 @@
           "clauses": [],
           "id": "rule:986dd690d14b42a1a7ca315e475ff7c2",
           "length": 114,
-          "offset": 76971,
+          "offset": 77247,
           "record": "instructions/rules/986dd690d14b42a1a7ca315e475ff7c2.json",
           "sha256": "c25bb56ecb88cf1b207a3e53352e0b29e84c63dfae7452ca167fdf5c8a3b8951"
         },
@@ -1604,61 +1604,61 @@
             {
               "id": "clause:9379ea0e68104f34a097b0b064e0d87b",
               "length": 277,
-              "offset": 77086,
+              "offset": 77362,
               "sha256": "63688530d2ca4f1200a2abc333243eb12658227e70f8f6dece4ba070a1f780a9"
             },
             {
               "id": "clause:4e20590799f94d18a2705ab08bd487dc",
               "length": 1090,
-              "offset": 77363,
+              "offset": 77639,
               "sha256": "b3ba0f60131aad01af88940a290faef9cb6a4bdea26c7ea0c30be3f3b2ee1144"
             },
             {
               "id": "clause:e1f7905c547d410aa591c5f413cfcb66",
               "length": 40,
-              "offset": 78591,
+              "offset": 78867,
               "sha256": "13e8fb490d845f762f5dcc91d236d5d47ab98d77bce4463cbb55e6d49a4ed42b"
             },
             {
               "id": "clause:0b804c0312ae420bb804b9e2844041e2",
               "length": 60,
-              "offset": 78631,
+              "offset": 78907,
               "sha256": "a070bd730468074aaba6f7fc3365800d7a0f416ecbba8f35e1c26f70fb0aac89"
             },
             {
               "id": "clause:efa1337975f9497da1c5e3adad6762ad",
               "length": 308,
-              "offset": 78691,
+              "offset": 78967,
               "sha256": "af5003ef02fef859cb99a253916f5af660f3fb98171f2776ced8e51f44247224"
             },
             {
               "id": "clause:9d4f6f2acbef4361a42fd64b21df95af",
               "length": 165,
-              "offset": 78999,
+              "offset": 79275,
               "sha256": "9aa7acfeccee6ad7ff733f60bbc4a00344cbf9f389d6652baa2e78a157b6ce18"
             },
             {
               "id": "clause:8114d1e7a1cb462a85cfbc2d47799be3",
               "length": 94,
-              "offset": 79164,
+              "offset": 79440,
               "sha256": "0c83919ec242c182c7e604878818178e0b1f9f50d3611d4b869f841924d43567"
             },
             {
               "id": "clause:eef56d33090e4ee6a73669af8a5e6bc2",
               "length": 198,
-              "offset": 79258,
+              "offset": 79534,
               "sha256": "f6afc4e64e9eec568d53bcbf1f72c02dabb1ab08d9f96e3b865f43d544d06ed7"
             },
             {
               "id": "clause:fbbc6de9edf049f9b74d53ead3757fbb",
               "length": 1035,
-              "offset": 79699,
+              "offset": 79975,
               "sha256": "117031f597959415a6e8c9580d870172aeaa96a85e11a4159edb8561762c91a2"
             }
           ],
           "id": "rule:96745a06cd69497b8ffe0511c66bda2f",
           "length": 3846,
-          "offset": 77086,
+          "offset": 77362,
           "record": "instructions/rules/96745a06cd69497b8ffe0511c66bda2f.json",
           "sha256": "890bc1445ed42e8af396bae33d462cdee64f0df3b761d1324ac89393a77dc078"
         },
@@ -1666,7 +1666,7 @@
           "clauses": [],
           "id": "rule:86172e9df3bc47369bde0a298b8a292a",
           "length": 447,
-          "offset": 80932,
+          "offset": 81208,
           "record": "instructions/rules/86172e9df3bc47369bde0a298b8a292a.json",
           "sha256": "1372732082081c85558485b6ce6f5dbfd96caa9d2008e94a4e38601ec234ac0e"
         }
@@ -1694,7 +1694,7 @@
       ],
       "id": "trials",
       "length": 2461,
-      "offset": 81380,
+      "offset": 81656,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve explicit trial assignment and override rules.",
@@ -1706,25 +1706,25 @@
             {
               "id": "clause:451bf8813ba44bdfae7281e9ee907e42",
               "length": 318,
-              "offset": 81391,
+              "offset": 81667,
               "sha256": "5172e3e18ed20068103e0d0ad21a977da376ac6706c83a49f573d30c75335457"
             },
             {
               "id": "clause:efd40cef1cb5463dac6eeb0312a05f98",
               "length": 101,
-              "offset": 81709,
+              "offset": 81985,
               "sha256": "116e1e1707032e2e5567b01930dbbf0ba7cf95c31243d18929cad698d35a25a2"
             },
             {
               "id": "clause:7cafe6d6f24d43628143458b09205fc1",
               "length": 98,
-              "offset": 81810,
+              "offset": 82086,
               "sha256": "9298eb97b22054746c50b6ef2d50452891b2d5f1fec9ed7ec19c45b04b4db348"
             }
           ],
           "id": "rule:b2d5d7b434c74989a11e2b7a88dcd829",
           "length": 517,
-          "offset": 81391,
+          "offset": 81667,
           "record": "instructions/rules/b2d5d7b434c74989a11e2b7a88dcd829.json",
           "sha256": "8b278d29640abdeef040b6272c02b3c9935cf2eec9a12c8ad5691c6cdc5509f9"
         },
@@ -1732,7 +1732,7 @@
           "clauses": [],
           "id": "rule:00bc708d91bf4a1b80ce498d206479e4",
           "length": 1932,
-          "offset": 81909,
+          "offset": 82185,
           "record": "instructions/rules/00bc708d91bf4a1b80ce498d206479e4.json",
           "sha256": "71ef391cee22f02915ffdeeacadb4743e5cea36219e7b36168686ccc11f0230d"
         }
@@ -1781,7 +1781,7 @@
       ],
       "id": "feedback",
       "length": 3771,
-      "offset": 83842,
+      "offset": 84118,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve immediate redacted feedback routing.",
@@ -1793,13 +1793,13 @@
             {
               "id": "clause:ffb53fd6e0914415af30b11d1dcf18c3",
               "length": 98,
-              "offset": 83855,
+              "offset": 84131,
               "sha256": "904e4bd50edf26e63121700fe84c48318581056ef18265e44029a598846b8045"
             }
           ],
           "id": "rule:09d96981ac844d2fbfcb375c3bd77994",
           "length": 390,
-          "offset": 83855,
+          "offset": 84131,
           "record": "instructions/rules/09d96981ac844d2fbfcb375c3bd77994.json",
           "sha256": "1ce3670322c87c3079d5cdcb9df7b6bf8f27bc28219384ec1152d1d0312d12e9"
         },
@@ -1808,13 +1808,13 @@
             {
               "id": "clause:6b4b8fc1589d479bb71fa26829e0a09d",
               "length": 50,
-              "offset": 84722,
+              "offset": 84998,
               "sha256": "2810faa8e7ee4909c0a0949f6b786873a8c9afc86d4964178d7c7b3d1c57a28d"
             }
           ],
           "id": "rule:7bea58c0548e40e38d39247aa236a76d",
           "length": 642,
-          "offset": 84245,
+          "offset": 84521,
           "record": "instructions/rules/7bea58c0548e40e38d39247aa236a76d.json",
           "sha256": "7a5b7de86855b1fbb40a540d1d82b0acbcfd61c1523d23a8434244c9d0b3924a"
         },
@@ -1822,7 +1822,7 @@
           "clauses": [],
           "id": "rule:3626fd73a87c4d438ac6a0b6c3ffbf27",
           "length": 548,
-          "offset": 84887,
+          "offset": 85163,
           "record": "instructions/rules/3626fd73a87c4d438ac6a0b6c3ffbf27.json",
           "sha256": "205c2488d87522c9438bc3f39a4237d49e6da542ab2973afe763339da05fbd0a"
         },
@@ -1830,7 +1830,7 @@
           "clauses": [],
           "id": "rule:406df98201e14fe9b3a736887d7010b2",
           "length": 422,
-          "offset": 85435,
+          "offset": 85711,
           "record": "instructions/rules/406df98201e14fe9b3a736887d7010b2.json",
           "sha256": "fc86ef066af165d26278556711e2a8bb5e4d3d476dc16c76662993920e7e79ee"
         },
@@ -1838,7 +1838,7 @@
           "clauses": [],
           "id": "rule:a5554bc873f348648268c912ee06b92a",
           "length": 187,
-          "offset": 85857,
+          "offset": 86133,
           "record": "instructions/rules/a5554bc873f348648268c912ee06b92a.json",
           "sha256": "632fc9610a54d1733619928268e9f91970581eb8e5723a1cc7d127697278eddd"
         },
@@ -1847,31 +1847,31 @@
             {
               "id": "clause:54fba52a1dea4929be2ac3f6ca6d5593",
               "length": 29,
-              "offset": 86044,
+              "offset": 86320,
               "sha256": "a3b3174eedeb538371ea7fb1e99b9043f07ef980687067db9828d13ca48e1976"
             },
             {
               "id": "clause:4c12bb3fedd34f6c9ed29bc3259fe322",
               "length": 140,
-              "offset": 86073,
+              "offset": 86349,
               "sha256": "d8628dfe27c4aa81f8d3931d08447462860f240cd539cb5f0717fa571f84b1f2"
             },
             {
               "id": "clause:802676e4beba4c1199ddb706b914f1f0",
               "length": 178,
-              "offset": 86213,
+              "offset": 86489,
               "sha256": "6ad5d6b927c4ffd636a24ef8de2371fbc52526fdded1542a09e353032d3ec179"
             },
             {
               "id": "clause:725271de6beb455ba2e1666cf879e304",
               "length": 157,
-              "offset": 86391,
+              "offset": 86667,
               "sha256": "f2148327007251895eaf31bea7442ee4cf837019e3af6f71afd07fadf610e2a4"
             }
           ],
           "id": "rule:92d0731cd46d4f88913d0e99ac92ec52",
           "length": 504,
-          "offset": 86044,
+          "offset": 86320,
           "record": "instructions/rules/92d0731cd46d4f88913d0e99ac92ec52.json",
           "sha256": "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399"
         },
@@ -1880,13 +1880,13 @@
             {
               "id": "clause:66d48b23511f4e5383f003b2969ef3ab",
               "length": 14,
-              "offset": 86748,
+              "offset": 87024,
               "sha256": "d27f2cf8b1a0045036f9d3c3a8cf4208d3a82c204ef99984764c9a2c930dfcde"
             }
           ],
           "id": "rule:bd35453d8e704d1c8905187a28adc47f",
           "length": 390,
-          "offset": 86548,
+          "offset": 86824,
           "record": "instructions/rules/bd35453d8e704d1c8905187a28adc47f.json",
           "sha256": "7f2b2b1a0ad70dd0d474dacb61aef8240aea3e2a8486735fb20a4aeb45fd8e9c"
         },
@@ -1895,13 +1895,13 @@
             {
               "id": "clause:c62c65f5359c4a5a9d5ee035d02428cb",
               "length": 26,
-              "offset": 87156,
+              "offset": 87432,
               "sha256": "dfede53a514c268465ca70bae8ffc33100fe66227c164d6520364cfc622ade25"
             }
           ],
           "id": "rule:10ed8d349aee4d89b942d408f1e43176",
           "length": 336,
-          "offset": 86938,
+          "offset": 87214,
           "record": "instructions/rules/10ed8d349aee4d89b942d408f1e43176.json",
           "sha256": "d4520122fc9a0296dd18f6a9eda5eafe71a96ba318dd9f72e64d84b946b1eccb"
         },
@@ -1910,13 +1910,13 @@
             {
               "id": "clause:70653632e57b429680dd121d82cceefd",
               "length": 23,
-              "offset": 87294,
+              "offset": 87570,
               "sha256": "25b2e13217bda21628bd33502ea4e76d3c4a2d786a138606e377baf8133acf9c"
             }
           ],
           "id": "rule:5478cf24c27543bfb7d7f9186b9e6199",
           "length": 339,
-          "offset": 87274,
+          "offset": 87550,
           "record": "instructions/rules/5478cf24c27543bfb7d7f9186b9e6199.json",
           "sha256": "c917a530d6ff62973996ac1246a7b1eb1d310b22c33f36bdcb793984a1fef41e"
         }
@@ -1937,7 +1937,7 @@
       ],
       "id": "projects",
       "length": 4907,
-      "offset": 87614,
+      "offset": 87890,
       "owner": "ops",
       "provenance_date": "2026-10-05",
       "rationale": "Preserve ops-owned project identity and feedback vocabulary.",

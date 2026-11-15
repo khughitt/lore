@@ -2470,3 +2470,19 @@ def test_correction_warning_output(world):
     low = conflicts()
     assert 'rule:' not in module.warning_summary(low, dict(before, findings=[]), set())
     assert 'rule:' in module.warning_summary(low, low, set(records))
+
+
+def test_profile_fallback_names_resolver_root(world):
+    """Delivered current policy must identify the usable CLI without relying on PATH."""
+    module = load_assembler(world)
+    content = module.scan_rules((ROOT / 'instructions/fragments/profiles.md').read_bytes())['rendered']
+    rule = 'rule:' + hashlib.md5(b'profiles').hexdigest()
+    (world.root / 'instructions/fragments/profiles.md').write_bytes(marked(rule, content))
+    record = module.new_rule_record(rule, 'profiles', content)
+    (world.root / 'instructions/rules' / (rule[5:] + '.json')).write_bytes(module.manifest_bytes(record))
+    result = build(world, 'render')
+    assert result.returncode == 0, result.stderr
+    text = result.stdout.decode()
+    assert 'results[0].root' in text, 'fallback must identify the resolver root field'
+    assert 'bin/lore profile session' in text, 'fallback must name the explicit launcher'
+    assert 'ops-profile session' not in text

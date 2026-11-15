@@ -30,15 +30,15 @@ venv_guard := "{ .venv/bin/python -c \"import pytest, xdist\" >/dev/null 2>&1 ||
 # never drift from the gate it is supposed to be. Avoid single quotes inside them.
 # With no affected-only mechanism, set fast_cmd to the same command as test_cmd and say
 # so here; the target must always exist and the report shows the gap as equal durations.
-# Fast and full run the same tools directory; there is no affected-only selection.
+# Fast and full run the same tools and tests directories; there is no affected-only selection.
 # Both run it on 4 pytest-xdist workers from the locked environment. Pilot on a 32-CPU host,
 # 2026-10-31, 396 tests: serial 149 s, -n 4 34.5 s, -n 8 19.6 s (load 7-8); 4 is the
 # smallest count under the 45 s target. Not -n auto: that starts one worker per CPU (32
 # there), each building its own fixture template, on a host shared with other sessions.
 # Temporary JUnit reports let tt record each run's five slowest tests.
-fast_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-test_cmd := venv_guard + " && .venv/bin/python -m pytest -n 4 tools -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile"
+fast_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+test_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile bin/lore scripts/profile-parity.py && python3 -m compileall -q src/lore"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
@@ -60,19 +60,16 @@ ci_suite_refs := "refs/heads/*"
 # takes the full gate.
 ci_remote := "origin"
 
-# The profile-hook tests against the live ops checkout the host registry names. ops is
-# private, so no hosted runner has it: the workflow sets LORE_TEST_LIVE_OPS=unavailable and
-# those tests skip there with a stated reason. Both pre-push recipes run this target, which
-# is not broad, so they stay routinely checked on the hosts that have ops (about 2 s).
-# It drops an inherited marker, so test-live always means live: on a host without ops it
-# fails rather than passing with every test skipped.
-live_cmd := venv_guard + " && env -u LORE_TEST_LIVE_OPS .venv/bin/python -m pytest tools/test_claude_profile.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+# Installed-tasks integration uses temporary records/registry fixtures. Hosted suites
+# declare LORE_TEST_LIVE_TASKS=unavailable and print its skip reason; this local route
+# unsets it and fails if tasks is missing. Self-contained delivery runs in normal suites.
+live_cmd := venv_guard + " && { command -v tasks >/dev/null 2>&1 || { echo installed tasks missing >&2; exit 1; }; } && env -u LORE_TEST_LIVE_TASKS PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest tests/test_profile_tasks_live.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which
 # forms work is the runner's business (pytest: a path, path::name, -k expr; vitest: a
 # filename filter, -t "<name>"); name them in AGENTS.md under Gates.
-one_cmd := venv_guard + " && .venv/bin/python -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+one_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # What a fresh checkout or worktree needs before the suite can run: dependency installs
 # (npm ci, uv sync) and any gitignored inputs the tests read, hydrated from the main
@@ -116,7 +113,7 @@ test:
 test-full:
     TT_FORCE=1 just test
 
-# The live-ops profile tests (see live_cmd). Not broad: runs under every policy.
+# The installed-tasks integration tests (see live_cmd). Not broad: runs under every policy.
 test-live:
     {{tt}} test-live -- sh -c '{{live_cmd}}'
 

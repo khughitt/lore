@@ -32,8 +32,8 @@ Checks use Python 3.11+, uv, Git and just. The corpus, profiles and skills are p
 files and read on their own. Live delivery, the `SessionStart` hook (`hooks/claude-profile`),
 and the repository gates (`just check` and `bin/assemble-instructions check`) require
 [tasks](https://github.com/khughitt/tasks) (with `lore` and `ops` registered in the
-host registry), [ops](https://github.com/khughitt/ops) (for `ops-profile` and the
-generated Projects fragment), and [harness-quarters](https://github.com/khughitt/harness-quarters)
+host registry), lore's private profile values in its records directory,
+[ops](https://github.com/khughitt/ops) (for the generated Projects fragment), and [harness-quarters](https://github.com/khughitt/harness-quarters)
 (which links lore's outputs and hook into each harness home). Run `just check` and
 `just test-full` to verify the corpus and its assembly outputs; routine `just test`
 runs on GitHub Actions at push (see [AGENTS.md](AGENTS.md), Gates).
@@ -80,11 +80,13 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
   skills from `vendor/superpowers` and `vendor/agent-skills` under `~/.agents/skills/`
   and `~/.claude/skills/`, and wires `hooks/claude-profile` into Claude Code and Codex
   `SessionStart` hooks.
-- **Profile selection ([ops](https://github.com/khughitt/ops)):** `hooks/claude-profile`
-  reads `$XDG_CONFIG_HOME/tasks/projects.toml` (or `~/.config/tasks/projects.toml`) to
-  locate `ops`, then invokes `ops-profile session` to resolve a checkout's profile
-  fragment (`profiles/personal.md`, `profiles/work.md`, or `profiles/external.md`) from
-  ops's profiles.toml and identity-mirror.toml ([profile delivery](docs/profile-delivery.md)).
+- **Profile selection (lore):** `hooks/claude-profile` uses this tree's standard-library
+  package and `tasks resolve` for assignment and placement. Public definitions live
+  in `profiles/profiles.toml`; accounts, identities and private path rules live in
+  lore's records `profiles.toml`. From this checkout run `./bin/lore profile session`
+  or `./bin/lore profile explain`. From elsewhere, obtain `results[0].root` from
+  `tasks resolve lore --json` and safely invoke that root's launcher by explicit path;
+  no `lore` PATH install is assumed ([profile delivery](docs/profile-delivery.md)).
 - **Assembly catalog (`instructions/assembly.toml`):** declares the ordered fragments
   and owner checkouts (`lore` and `ops`) that `bin/assemble-instructions` composes into
   `instructions/AGENTS.md` and `instructions/AGENTS.manifest.json`

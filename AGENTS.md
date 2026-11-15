@@ -58,7 +58,7 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   Root `AGENTS.md` is this repository's guide.
 - `instructions/assembly.toml` and `instructions/fragments/`: editable catalog and
   policy sources. Ops owns the external Projects fragment.
-- `profiles/`: the personal, work and external fragments resolved by ops-profile.
+- `profiles/`: public definitions and profile/store prose resolved by lore; private values stay in records.
 - `skills/`: the `curate-docs` skill, `skills/references/` (lore-authored retention
   guidance and schemas) and the skill README.
 - `vendor/superpowers` and `vendor/agent-skills`: the pinned submodules; `just setup`
@@ -76,7 +76,7 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   lore-72153d (to its rewritten commit, its records-archive commit, or both), then
   through the lore-1be62d map. `tasks show <task>` prints each attachment's path.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
-  wired from hq's hook files; it reaches ops's resolver through the tasks registry.
+  wired from hq's hook files; it loads lore's package and reads assignments through tasks.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.
   `tools/`: assembly tests, pinned proof driver and vendored tooling;
   task records live in the records root.

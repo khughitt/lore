@@ -1,83 +1,123 @@
 # Profile delivery
 
-Type: protocol; document types 1. Currently unversioned. It describes how the
-SessionStart hook `hooks/claude-profile` puts a checkout's profile layer in front of
-a Claude Code or Codex session, on top of the core layer that
-[instruction-assembly.md](instruction-assembly.md) builds. Changing what it reads,
-prints or writes changes this protocol for every harness at once.
+Type: protocol; document types 1. Currently unversioned. The SessionStart hook
+`hooks/claude-profile` delivers the checkout's profile layer to Claude Code or Codex.
+Changing its inputs, text or export changes this protocol on both surfaces.
 
-## Layers and owners
+## Ownership and invocation
 
-A session's instructions stack in this order, later layers winning:
+Instructions apply in order: assembled core, profile, repository instructions,
+then the user. Lore owns the resolver in `src/lore/`, the thin `bin/lore` launcher,
+the hook and the prose in `profiles/`. Tasks owns assignment/placement metadata and
+its resolver. hq owns hook wiring and continues invoking main's hook; a worktree's
+hook is used only by explicit path during preparation.
 
-1. Core: the assembled global instructions, `instructions/AGENTS.md` (see
-   [instruction-assembly.md](instruction-assembly.md)).
-2. Profile: the text this protocol delivers.
-3. The repository's own instructions (`AGENTS.md`, `CLAUDE.md`).
-4. The user in the session.
+There is no PATH install. From this checkout, use `./bin/lore profile` with one of:
 
-| Part | Owner |
+| Subcommand | Result |
 | --- | --- |
-| Profile fragment text, `profiles/<name>.md` | lore |
-| The hook, `hooks/claude-profile` | lore |
-| Profile selection, keys and homes (`profiles.toml`, `identity-mirror.toml`) and the resolver `bin/ops-profile` | ops |
-| Hook wiring in each harness home (Claude Code `settings.json`, Codex `hooks.json`) | hq |
-| The registry, `$XDG_CONFIG_HOME/tasks/projects.toml` | tasks |
+| `resolve [PATH] [--json]` | Effective values and sources, optionally JSON |
+| `explain [PATH]` | Human-readable values with provenance |
+| `session [PATH]` | Complete delivered profile text |
+| `check` | Configuration/catalogue diagnostics; nonzero for problems |
+| `audit [PATH]` | Existing design documents hidden by excludes or retained in code |
 
-hq declares the hook as a `SessionStart` command (Claude Code matches `startup` and
-`resume`) and runs it through the main lore checkout's path, so a worktree's hook or
-fragments are never delivered.
+From elsewhere, run `tasks resolve lore --json`, require a successful single result,
+and read `results[0].root`. Invoke that root's `bin/lore` by explicit path, safely
+quoting the executable path. Delivered explain/recovery advice prints the actual
+quoted launcher from the executing source tree. Missing or invalid resolution is
+an error, not a reason to guess an installation path.
+
+## Configuration and selection
+
+`profiles/profiles.toml` is public. The private file is `profiles.toml` under the
+lore records directory returned as `entry.records` by `tasks resolve lore --json`.
+The production resolver never reads ops's profile config or identity mirror.
+
+| TOML section | Content |
+| --- | --- |
+| `[profile.<name>]` | `fragment`, `home`, `design_docs`, `pr_draft`, `private`; private-only `gh_account`, `git_identity`, `overlay` |
+| `[home.<name>]` | `claude`, `codex`, `agy` paths; home detection is advisory |
+| `[[family]]` | Absolute or home-relative `path`, nonempty `profiles` list; longest real prefix wins |
+| `[default]` | Nonempty `profiles` list, declared by exactly one file |
+
+Private values include accounts, commit identities, overlays and employer-specific
+path rules. Public and private files may extend profiles/homes with disjoint keys;
+a duplicate scalar is an error. Path arrays concatenate but duplicate real prefixes
+are errors. Unknown fields/names, invalid types, missing files and ambiguous
+ownership fail explicitly. Names use lowercase letters, digits, underscores and
+hyphens, starting with a letter. Each selected typed key has exactly one owner;
+composable profiles may contribute disjoint keys and prose.
+
+Selection is clone `agent.profile` (comma-separated names), records `entry.profile`
+(one name), longest path default, then default profiles. Missing assignment advances
+through that declared order; broken metadata or unknown assignments do not. Worktrees
+classify through their main checkout, while repository placement overrides are read
+from the invoking worktree. Existing `ops.designDocs=commit` and explicit instruction
+references to docs/superpowers subdirectories remain supported.
 
 ## Exchange
 
-Inputs:
+Inputs are the JSON hook payload (`cwd`, `transcript_path`), process cwd, and the
+caller's environment. Non-object/invalid JSON means no payload. A transcript path
+identifies its configured harness home before environment hints. The hook reads
+`CLAUDE_ENV_FILE` for the optional selected-name export.
 
-- Standard input: the harness's hook payload, a JSON object. The hook reads `cwd`;
-  the resolver reads `transcript_path` to tell which harness home is running. Input
-  that is not JSON, or not an object, is treated as no payload.
-- Environment: `XDG_CONFIG_HOME` (else `~/.config`) locates the registry; the
-  hook reads `CLAUDE_ENV_FILE`; the resolver reads harness variables such as
-  `CLAUDE_CONFIG_DIR` and `CODEX_HOME`.
-- Working directory: used as the checkout path when the payload has no `cwd`.
+1. Load the executing tree's package without writing bytecode.
+2. Resolve configuration and checkout through bounded config-only tasks queries.
+   No task-body scan, freshness repair, registry parsing, lock acquisition or write.
+3. Construct the complete session text before exporting or printing success.
+4. If `CLAUDE_ENV_FILE` is set, append `export AGENT_PROFILE=<comma-joined names>`.
+5. Print the prepared text only after both rendering and export succeed.
 
-Sequence:
+The package exposes `resolve(path, env, payload=None)` and `session_text(result)`,
+plus `ProfileError`. Ordinary results retain checkout/path/worktree/project, records,
+layout, notes, profiles, home, keys, fragments, private_projects and warnings.
+`kind` is `checkout` or `records-store`; `records_store` is the store root or null.
+Each effective key has a value and source. JSON omits internal otherwise explanations.
 
-1. Read the registry's `[projects] ops` entry and load that checkout's
-   `bin/ops-profile` as a module.
-2. Call its `resolve(path, env, payload)`. Selection, layout and warnings are the
-   resolver's; `ops-profile explain` shows each value's source.
-3. Compose `session_text(result)` in memory.
-4. If `CLAUDE_ENV_FILE` is set, append `export AGENT_PROFILE=<names>` to it, the
-   selected profile names joined by commas.
-5. Write the composed text to standard output after both steps succeed.
+Ordinary stdout starts with one `profile:` line naming profile, source, home,
+design-document destination, account and PR policy. Warnings, selected corpus
+fragments, linked notes and private project listings follow as applicable. A
+missing fragment remains a visible warning; an unreadable selected fragment fails
+rendering without a successful export.
 
-Standard output, in order:
+## Records store
 
-- One session line: `profile: <names> (<source>); home: <home|unknown>; design docs:
-  <clause>; gh: <account>; PRs: <policy> — <precedence note>`.
-- `records: …` when the checkout is linked to an overlay project.
-- One `warning: …` line per resolver warning (an unexpected home, a missing
-  fragment file, lore not registered).
-- Each selected profile's fragment, read from the registered lore checkout's
-  `profiles/`, after a blank line.
-- The linked overlay's notes and any `### Projects under this profile` list, when
-  the resolver supplies them.
+Canonicalize to the main Git checkout first. Only `status: unregistered` with
+`records_store` equal to that canonical root identifies the shared records store.
+This also handles store subdirectories and linked Git worktrees. A distinct nested
+code repository with a parent-store marker, or ordinary in-tree tracker, keeps
+checkout behavior; no extra `tasks where` classification query is needed.
 
-## Failure behaviour
+Store results have null project and design_docs value `not-applicable`, sourced
+from `tasks records store`; this sentinel cannot be configured on a profile.
+Account/identity and selected-name export still come from ordinary profile selection.
+Store sessions begin `profile: records-store` and load `profiles/records-store.md`,
+including core attribution/task-id rules and the one-branch/no-worktrees/locked
+`tasks commit` rule. Code-placement prose, linked notes and private listings are
+not delivered there. Policy enforcement remains a separate consumer's responsibility.
 
-The hook must never block a session. Its exit status is always 0 and is not
-evidence of success; verify a change by the text a fresh session shows.
+## Failures and verification
 
-| Failure | Output |
-| --- | --- |
-| Registry missing, unparsable, or without an `ops` string entry; resolver fails to load | `profile: unresolved — <reason>; register or repair the ops checkout, then run ops-profile session` |
-| Resolution, text composition, environment-file append, or hook input/cwd read raises an exception | `profile: unresolved — <reason>; run ops-profile session after fixing it` |
+CLI errors are nonzero. Every handled hook failure is exactly one flattened
+`profile: unresolved` line with explicit-path recovery advice, and exit 0.
+Rendering/export failures emit no successful profile text. Exit 0 therefore proves
+nothing: activation requires comparing a fresh session's actual profile, home,
+account, PR policy, placement prose and launcher advice against recorded expectations.
+The existing exception boundary does not catch SystemExit or KeyboardInterrupt.
 
-Every handled failure produces exactly one `profile: unresolved` line, with line
-breaks in the reason replaced by spaces. Rendering and environment-file failures
-emit no success text. A rendering failure writes no environment export; a failed
-append reports failure rather than claiming the export succeeded.
+Self-contained tests run on CI without private ops. `just test-live` runs
+`tests/test_profile_tasks_live.py` against installed tasks and fails if it is absent;
+its temporary registry, records and Git config are isolated. Hosted suites declare
+`LORE_TEST_LIVE_TASKS=unavailable`, printing the explicit integration skip reason;
+any other marker value errors, and test-live unsets it.
 
-Known gap: the handlers catch `Exception`, not `SystemExit` or `KeyboardInterrupt`.
-If resolver code raises either, the hook exits with that status and prints nothing,
-so a session that shows no profile line at all is this case.
+The explicit local acceptance command is `scripts/profile-parity.py --ops-root PATH`,
+where PATH is the registered ops root. It checks every registered checkout present
+on the host, lists unavailable ones, rejects present-resolution failures and
+unexplained differences, and compares effective definitions. Ops and lore's private
+copies can diverge after acceptance until program piece 1.5 retires the old copy;
+check does not promise synchronization. Live hook/global-instruction activation and
+bounded rollback require a separate concrete user grant. See the task's frozen plan
+and activation packet for exact revision/rollback evidence.

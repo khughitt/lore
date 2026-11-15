@@ -1,77 +1,47 @@
 #!/usr/bin/env python3
-"""SessionStart: add the checkout profile layer to the agent's context. Claude and
-Codex both run it and send the same payload shape; its transcript_path is what names
-the harness home (see ops-profile home_of). The hook lives in lore and reaches ops's
-resolver through the tasks registry; every failure is one `profile: unresolved` line
-and exit 0, never silence, so the session starts and says what is wrong."""
-import importlib.machinery
-import importlib.util
+"""SessionStart profile delivery; failures are visible text, never a blocked session."""
 import json
 import os
 import pathlib
+import shlex
 import sys
-import tomllib
+
+sys.dont_write_bytecode = True
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'src'))
 
 
-def _load(path):
-    loader = importlib.machinery.SourceFileLoader(path.name.replace("-", "_"), str(path))
-    spec = importlib.util.spec_from_loader(loader.name, loader)
-    module = importlib.util.module_from_spec(spec)
-    loader.exec_module(module)
-    return module
-
-
-def ops_root(env):
-    """The registered ops checkout, from the tasks registry; LookupError names the registry
-    path and the reason (missing file, no [projects] table, no string ops entry, or a parse error)."""
-    config = pathlib.Path(env.get("XDG_CONFIG_HOME") or pathlib.Path.home() / ".config")
-    registry = config / "tasks" / "projects.toml"
-    if not registry.is_file():
-        raise LookupError(f"{registry} is missing; the tasks registry locates the ops checkout")
-    try:
-        roots = tomllib.loads(registry.read_text()).get("projects")
-    except tomllib.TOMLDecodeError as error:
-        raise LookupError(f"{registry} is not valid TOML: {error}") from None
-    root = roots.get("ops") if isinstance(roots, dict) else None
-    if not isinstance(root, str):
-        raise LookupError(f"{registry} has no [projects] ops = \"<path>\" entry; run tasks init in the ops checkout")
-    return pathlib.Path(os.path.expanduser(root))
-
-
-def unresolved(error, advice="run ops-profile session after fixing it"):
-    reason = " ".join(str(error).splitlines())
-    sys.stdout.write(f"profile: unresolved — {reason}; {advice}\n")
+def unresolved(error):
+    reason = ' '.join(str(error).splitlines())
+    recovery = shlex.join([str(ROOT / 'bin/lore'), 'profile', 'session'])
+    sys.stdout.write(f'profile: unresolved — {reason}; repair the lore checkout, then run {recovery}\n')
     return 0
 
 
 def main(text, env, fallback_cwd):
     try:
-        payload = json.loads(text or "null")
+        payload = json.loads(text or 'null')
     except json.JSONDecodeError:
         payload = None
-    if not isinstance(payload, dict):
-        payload = None
-    cwd = payload.get("cwd") if payload else None
+    if not isinstance(payload, dict): payload = None
     try:
-        profiles = _load(ops_root(env) / "bin" / "ops-profile")
-    except Exception as error:  # every failure before the resolver loads is one visible line
-        return unresolved(error, "register or repair the ops checkout, then run ops-profile session")
-    try:
-        res = profiles.resolve(cwd or fallback_cwd, env, payload)
-        session_text = profiles.session_text(res)
-        if env_file := env.get("CLAUDE_ENV_FILE"):
-            with open(env_file, "a") as handle:
-                names = ",".join(item["name"] for item in res["profiles"])
-                handle.write(f"export AGENT_PROFILE={names}\n")
+        from lore import resolve, session_text
+        cwd = payload.get('cwd') if payload else None
+        result = resolve(cwd or fallback_cwd, env, payload)
+        output = session_text(result)
+        if env.get('CLAUDE_ENV_FILE'):
+            with open(env['CLAUDE_ENV_FILE'], 'a') as handle:
+                names = ','.join(p['name'] for p in result['profiles'])
+                handle.write(f'export AGENT_PROFILE={names}\n')
     except Exception as error:
         return unresolved(error)
-    sys.stdout.write(session_text)
+    sys.stdout.write(output)
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
-        code = main(sys.stdin.read(), os.environ, os.getcwd())
+        status = main(sys.stdin.read(), os.environ, os.getcwd())
     except Exception as error:
-        code = unresolved(error)
-    sys.exit(code)
+        status = unresolved(error)
+    sys.exit(status)

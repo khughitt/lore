@@ -66,7 +66,7 @@ ci_remote := "origin"
 # is not broad, so they stay routinely checked on the hosts that have ops (about 2 s).
 # It drops an inherited marker, so test-live always means live: on a host without ops it
 # fails rather than passing with every test skipped.
-live_cmd := venv_guard + " && { command -v tasks >/dev/null 2>&1 || { echo installed tasks missing >&2; exit 1; }; } && env -u LORE_TEST_LIVE_OPS -u LORE_TEST_LIVE_TASKS PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest tools/test_claude_profile.py tests/test_profile_tasks_live.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
+live_cmd := venv_guard + " && { command -v tasks >/dev/null 2>&1 || { echo installed tasks missing >&2; exit 1; }; } && env -u LORE_TEST_LIVE_TASKS PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest tests/test_profile_tasks_live.py -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 
 # The runner with no selection of its own: `test-one` appends the caller's arguments,
 # each one intact, and nothing else; do not end it with `2>&1` (the recipe does). Which

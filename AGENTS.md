@@ -22,7 +22,7 @@ a staged check.
 
 Use `just test-one tools/test_assemble_instructions.py -k staged` for staged cases.
 `just test-one` runs serially. `just test-fast` and `just test` both cover all tests in
-`tools/` on 4 pytest-xdist workers; there is no affected-only selection. Tests run in
+`tools/` and `tests/` on 4 pytest-xdist workers; there is no affected-only selection. Tests run in
 the locked environment `pyproject.toml` and `uv.lock` declare: `just setup` installs it
 into `.venv` on the system interpreter, and the test recipes refuse, naming
 `just setup`, while it is missing. Rerun `just setup` after a system Python upgrade or
@@ -32,12 +32,12 @@ a lock change.
 record a skip instead of running. `just test-full` (`TT_FORCE=1 just test`) is the
 deliberate local full run. `.github/workflows/ci.yml` runs `just setup` and the full
 suite with `TT_FORCE=1` on every branch push to `origin`. `just test-live` runs
-`tools/test_claude_profile.py` against the live ops checkout the host registry names
-under every policy. ops is private, so the hosted run sets `LORE_TEST_LIVE_OPS=unavailable`,
-which makes the suite routes (`test`, `test-fast`) skip those 12 tests with a stated
-reason; any other value fails collection, and `test-live` ignores the marker. Both
-pre-push recipes run hygiene (timed as the hook), then `test-live`, then `test`
-(full route) or `test-fast` (when every pushed ref is covered by CI, the fast route).
+`tests/test_profile_tasks_live.py` against installed tasks with an isolated fixture
+registry. It fails when tasks is missing and unsets `LORE_TEST_LIVE_TASKS`.
+Hosted CI declares `LORE_TEST_LIVE_TASKS=unavailable`: suite routes skip only those
+integration cases with a stated reason; other supplied marker values fail collection.
+Self-contained profile delivery tests run in ordinary suite routes without private ops.
+Both pre-push recipes run hygiene, then `test-live`, then `test` or `test-fast`.
 Since that split, hook timings cover hygiene only and are not comparable with earlier
 ones. Historical proof commands are acceptance checks outside the recurring gates.
 

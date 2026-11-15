@@ -83,7 +83,9 @@ def test_linked_notes_and_private_retirement(profile_world):
     w.row['entry']['kind']='linked';w.row['entry']['profile']='work'
     (w.records/'demo').mkdir();(w.records/'demo/AGENTS.md').write_text('Overlay notes')
     w.data['resolve --all --json']['results'].append({'status':'resolved','prefix':'ret',
-        'entry':{'profile':'work','retired':{'date':'2026-01-01','reason':'replacement'},'name':'Retired fixture','purpose':'retired'}})
+        'root':str(w.checkout.parent/'retired'),
+        'entry':{'config':str(w.records/'ret/tasks/.config.toml'),'records':str(w.records/'ret'),
+                 'checkout':str(w.checkout.parent/'retired'),'kind':'detached','profile':'work','retired':{'date':'2026-01-01','reason':'replacement'},'name':'Retired fixture','purpose':'retired'}})
     w.save()
     r=resolve(w.checkout,w.env)
     assert r['notes']==str(w.records/'demo/AGENTS.md')
@@ -141,9 +143,59 @@ def test_private_listing_preserves_aliases_and_retired_successor(profile_world):
     w=profile_world
     w.row['entry'].update(profile='work',aliases=['alias'])
     w.data['resolve --all --json']['results'].append({'status':'resolved','prefix':'ret',
-        'entry':{'profile':'work','name':'Old','purpose':'old',
+        'root':str(w.checkout.parent/'retired'),
+        'entry':{'config':str(w.records/'ret/tasks/.config.toml'),'records':str(w.records/'ret'),
+                 'checkout':str(w.checkout.parent/'retired'),'kind':'detached','profile':'work','name':'Old','purpose':'old',
                  'retired':{'date':'2026-01-01','successor':'demo','reason':'replacement'}}})
     w.save();git(w.checkout,w.env,'config','agent.profile','work')
     lines=resolve(w.checkout,w.env)['private_projects']
     assert '- `demo` — demo (alias) — A fixture' in lines
     assert 'Retired: `ret` (Old, 2026-01-01) → `demo`.' in lines
+
+
+@pytest.mark.parametrize('override',[False,True])
+@pytest.mark.parametrize('damage',['entry','kind','records','checkout','config','invalid_kind','relative_records','bad_checkout','blank_config'])
+def test_required_resolved_metadata_cannot_change_policy(profile_world,override,damage):
+    w=profile_world
+    if override:git(w.checkout,w.env,'config','agent.profile','personal')
+    if damage=='entry':w.row.pop('entry')
+    elif damage in ('kind','records','checkout','config'):w.row['entry'].pop(damage)
+    elif damage=='invalid_kind':w.row['entry']['kind']='other'
+    elif damage=='relative_records':w.row['entry']['records']='relative'
+    elif damage=='bad_checkout':w.row['entry']['checkout']=42
+    else:w.row['entry']['config']=''
+    w.save()
+    with pytest.raises(ProfileError):resolve(w.checkout,w.env)
+
+
+def test_unrelated_catalogue_warning_does_not_disable_session(profile_world):
+    from lore._profiles import check
+    w=profile_world;warning='other: /records/other: configuration unreadable'
+    for key in ('resolve lore --json',f'resolve {w.checkout} --json','resolve --all --json'):
+        w.data[key]['warnings']=[warning]
+    w.save()
+    assert resolve(w.checkout,w.env)['profiles'][0]['name']=='personal'
+    with pytest.raises(ProfileError,match='other.*configuration unreadable'):check(w.env)
+    git(w.checkout,w.env,'config','agent.profile','work')
+    with pytest.raises(ProfileError,match='other'):resolve(w.checkout,w.env)
+
+
+def test_relevant_warning_keeps_its_diagnostic(profile_world):
+    w=profile_world
+    w.data[f'resolve {w.checkout} --json']['warnings']=['demo: /records/demo: incomplete identity']
+    w.save()
+    with pytest.raises(ProfileError,match='demo.*incomplete identity'):resolve(w.checkout,w.env)
+
+
+def test_legitimate_unregistered_checkout_can_use_default(profile_world):
+    w=profile_world;w.data[f'resolve {w.checkout} --json']={'results':[{'status':'unregistered'}],'warnings':[]};w.save()
+    assert resolve(w.checkout,w.env)['profiles'][0]['name']=='external'
+
+
+@pytest.mark.parametrize('field',['kind','status'])
+def test_container_in_scalar_metadata_is_profile_error(profile_world,field):
+    w=profile_world
+    if field=='kind':w.row['entry']['kind']=[]
+    else:w.row['status']=[]
+    w.save()
+    with pytest.raises(ProfileError):resolve(w.checkout,w.env)

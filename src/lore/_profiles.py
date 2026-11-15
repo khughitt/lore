@@ -109,7 +109,8 @@ def resolve(path, env, payload=None):
         if (top / ".git").exists():
             keys.update(repository_layer(top, env))
         if keys["design_docs"]["value"] == "records":
-            layout = {"kind": entry.get("kind", "in-tree"), "records": entry.get("records", str(top))}
+            layout = ({"kind": entry["kind"], "records": entry["records"]} if entry else
+                      {"kind": "in-tree", "records": str(top)})
     home = home_of(env, config, payload)
     warnings = []
     expected = sorted({config['profile'][n].get('home') for n in names} - {None})

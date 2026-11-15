@@ -100,7 +100,8 @@ print(json.dumps(replies[key]))
            'root': str(checkout), 'records': str(records / 'demo'), 'entry': entry}
     lore = {'input': 'lore', 'kind': 'prefix', 'status': 'resolved', 'prefix': 'lore',
             'root': str(corpus), 'records': str(records / 'lore'),
-            'entry': {'records': str(records / 'lore'), 'checkout': str(corpus), 'profile': 'personal'}}
+            'entry': {'config': str(records/'lore/tasks/.config.toml'), 'records': str(records / 'lore'),
+                      'checkout': str(corpus), 'kind':'detached', 'profile': 'personal'}}
     data = {'resolve lore --json': {'results': [lore], 'warnings': []},
             f'resolve {checkout} --json': {'results': [row], 'warnings': []},
             'resolve --all --json': {'results': [row, lore], 'warnings': []}}

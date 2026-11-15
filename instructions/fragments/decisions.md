@@ -298,18 +298,21 @@
   exception above, otherwise ask.
 <!-- rule:5a5808d0572f49e49afe103d7569231e end -->
 <!-- rule:046dfb8c365f454a86390b6b4167e487 begin -->
-- Reviewers do not modify reviewed code, input evidence, task records or the ledger.
+- Reviewers do not modify reviewed code, input evidence, task records or the ledger,
+  except that a reviewer whose request names a task appends that round's single
+  `review:` note to it (Task notes for outcome measures).
   When a plan workspace already exists, the dispatch names one unique
   `<slug>-report.md` there, outside the reviewed code and inputs; the reviewer may
   write only that report. It saves the full review, reviewed revision and verified
   reviewer identity, checks the write succeeded and the file has nonzero size,
   then returns a concise handoff: verdict, reviewed revision, verified reviewer
   identity, every actionable finding with severity and location, report path, byte
-  size and write outcome. The saved report is the
-  authoritative full review; never overwrite a previous round's report.
-  The controller checks the write result and file existence/size, records the review
-  round before acting, and reads the finding rationale and context needed for its
-  decisions. It does not rewrite the report or hash it merely to prove persistence;
+  size, write outcome, and the `review:` note it wrote or why it wrote none. The
+  saved report is the authoritative full review; never overwrite a previous round's
+  report. The controller checks the write result and file existence/size, checks
+  that the round's `review:` note exists (writing it only when the reviewer could
+  not), records the round in the ledger before acting, and reads the finding
+  rationale and context needed for its decisions. It does not rewrite the report or hash it merely to prove persistence;
   separate frozen-input, attachment and retained-evidence checks still apply.
   Inconsistent findings block acceptance until reconciled. If the designated write
   fails or is refused, the report cannot be verified as present and nonempty, or no

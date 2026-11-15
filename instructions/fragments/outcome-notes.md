@@ -6,14 +6,16 @@ Two note shapes are read by obs's outcome measures; write them as plain
 <!-- rule:986dd690d14b42a1a7ca315e475ff7c2 end -->
 
 <!-- rule:96745a06cd69497b8ffe0511c66bda2f begin -->
-- When a review of your spec, plan, or implementation arrives, before acting on
-  it, note it on the task: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model@effort | harness/model | harness | human>`
+- Each review of a spec, plan, or implementation is noted on its task once, before
+  anyone acts on it: `review: <spec|plan|impl> round <n> — verdict: <revise|accept>; findings: <label> <count>, … | none; reviewer: <harness/model@effort | harness/model | harness | human>`
   (`review: plan round 2 — verdict: revise; findings: P1 1, P2 3; reviewer: codex/gpt-6.1-sol`).
   Use the actual reviewer's exact model identity when supplied by the reviewer or
   verified dispatch/runtime metadata. Request the reviewer's own observed effort
   from a supported runtime source; retain `@effort` only when observed. Missing
   effort stays unknown, with the reason in the review report; never copy assigned
-  or requested effort into observed identity. For Claude children, observe sent
+  or requested effort into observed identity. A Claude reviewer writing its own
+  note has no supported source for its own sent effort, so it omits `@effort`.
+  A controller writing a Claude child's note observes sent
   effort from the child transcript's `api-request` `params.output_config.effort`,
   corroborated by its metadata; a model's self-report is not evidence. This records
   what the harness sent, not model-internal compliance. Do not substitute the controller's model,
@@ -28,20 +30,27 @@ Two note shapes are read by obs's outcome measures; write them as plain
   verified and `codex` otherwise. Copy the printed value; when the command exits
   non-zero or times out, the value is `codex`. Whenever it is bare `codex`, name the
   stderr reason or the exit status in the review, or for a self-review in a separate
-  task note, never in the `review:` note. A reviewer writes no note: it states that
-  value in its review for the note writer to record.
-  Only a session noting its own self-review records it directly.
+  task note, never in the `review:` note. A reviewer copies that value into the
+  `review:` note it writes and states it in its review.
   `n` counts from 1 per task and artifact; a re-review after a revision is the next
   round; a short acceptance is still a round. The flow `verified` gate stays a
   disposition record, not a round.
   Brainstorming's builder check counts as a `review: spec` round: use `revise`
   when it raises questions to answer in the document or bring to the user, and
   `accept` when it raises none. Record its reviewer identity by the same rule above.
-  One agent writes each round's note, once, before handing the findings on: the
-  controller when there is one, otherwise the agent the review arrives to. A worker
-  handed review findings (resumed or freshly dispatched) checks that the round's note
-  exists and writes none; if it is missing, the worker says so in its report for the
-  controller to add.
+  The reviewer writes the round's note. A reviewer whose request names a task id
+  appends that round's single `review:` note to that task itself
+  (`tasks note <id> "<note>"`) as its last step before returning its review,
+  computing `n` from the task's existing `review:` notes for that artifact, and
+  changes nothing else on the task: no other note, status, claim or field. Its
+  review states the note it wrote, or why it wrote none (no task id named, the
+  write refused). The agent the review arrives to (controller, author or worker)
+  checks that the round's note exists and writes no second one. Only when the
+  reviewer could not write it does that agent write the note, before acting on the
+  findings, and say why in its report: the controller when there is one, otherwise
+  the agent the review arrives to. A worker handed review findings (resumed or
+  freshly dispatched) writes none; if the note is missing, it says so in its report
+  for the controller to add. A session noting its own self-review writes it directly.
   This shape measures only spec, plan and implementation reviews; record a review
   of any other artifact (a scope brief or research note) as a plain task note that
   does not begin with `review:`.

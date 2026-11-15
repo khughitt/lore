@@ -199,3 +199,39 @@ def test_container_in_scalar_metadata_is_profile_error(profile_world,field):
     else:w.row['status']=[]
     w.save()
     with pytest.raises(ProfileError):resolve(w.checkout,w.env)
+
+
+REAL_WARNING_ARRAYS=[
+    ['other: its checkout is not matched and its color is not reported (cannot read config)',
+     'other: /records/other: configuration unreadable'],
+    ['other: cannot read /checkout/other/.worktrees (Permission denied); using its storage record'],
+    ['other: multiple records entries: /records/a/other, /records/b/other',
+     'other: other: multiple records entries: /records/a/other, /records/b/other'],
+]
+
+
+@pytest.mark.parametrize('warnings',REAL_WARNING_ARRAYS)
+def test_complete_unrelated_warning_arrays_preserve_ordinary_delivery(profile_world,warnings):
+    from lore._profiles import check
+    w=profile_world
+    for key in ('resolve lore --json',f'resolve {w.checkout} --json','resolve --all --json'):
+        w.data[key]['warnings']=warnings
+    w.save()
+    assert resolve(w.checkout,w.env)['profiles'][0]['name']=='personal'
+    with pytest.raises(ProfileError,match='other'):check(w.env)
+    git(w.checkout,w.env,'config','agent.profile','work')
+    with pytest.raises(ProfileError,match='other'):resolve(w.checkout,w.env)
+
+
+@pytest.mark.parametrize('warnings',REAL_WARNING_ARRAYS)
+def test_complete_required_warning_arrays_stay_fatal(profile_world,warnings):
+    w=profile_world
+    w.data[f'resolve {w.checkout} --json']['warnings']=[s.replace('other:','demo:') for s in warnings]
+    w.save()
+    with pytest.raises(ProfileError,match='demo'):resolve(w.checkout,w.env)
+
+
+@pytest.mark.parametrize('warning',['unknown global failure','catalogue: directory unavailable'])
+def test_unknown_global_warnings_are_not_other_projects(profile_world,warning):
+    w=profile_world;w.data[f'resolve {w.checkout} --json']['warnings']=[warning];w.save()
+    with pytest.raises(ProfileError,match=warning):resolve(w.checkout,w.env)

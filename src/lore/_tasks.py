@@ -42,10 +42,16 @@ def _unrelated(warning, row, args):
         return False
     if first == 'entry_conflict':
         prefix = rest.partition(':')[0].strip()
-    elif rest.lstrip().startswith(('/', 'multiple records entries:')):
-        prefix = first
     else:
-        return False
+        prefix = first
+        detail = rest.lstrip()
+        # Discovery's already-prefixed error is prefixed again by resolve.
+        if detail.startswith(prefix + ':'):
+            detail = detail[len(prefix) + 1:].lstrip()
+        if not detail.startswith(('/', 'multiple records entries:',
+                                  'its checkout is not matched and its color is not reported (',
+                                  'cannot read ')):
+            return False
     required = {row.get('prefix'), args[1] if len(args) > 1 else None}
     return PREFIX.fullmatch(prefix) is not None and prefix not in required
 

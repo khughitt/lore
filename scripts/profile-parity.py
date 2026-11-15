@@ -56,7 +56,7 @@ def compare_all(rows, old_resolve, new_resolve):
         if row['status'] == 'unregistered':
             continue
         prefix = row['prefix']
-        path = Path(row['root'])
+        path = Path(row['entry']['checkout'])
         if not path.is_dir():
             report['unavailable'].append(prefix)
             continue

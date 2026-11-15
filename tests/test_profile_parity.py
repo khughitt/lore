@@ -43,8 +43,8 @@ def test_only_documented_differences_normalize(tmp_path):
 
 def test_present_failure_is_not_unavailable(tmp_path):
     mod=comparator();path=tmp_path/'code';path.mkdir()
-    rows=[{'status':'resolved','prefix':'demo','root':str(path)},
-          {'status':'resolved','prefix':'gone','root':str(tmp_path/'missing')},
+    rows=[{'status':'resolved','prefix':'demo','root':str(path),'entry':{'checkout':str(path)}},
+          {'status':'resolved','prefix':'gone','root':str(tmp_path/'missing'),'entry':{'checkout':str(tmp_path/'missing')}},
           {'status':'unregistered','prefix':'record-only'}]
     def broken(path):raise RuntimeError('broken resolver')
     report=mod.compare_all(rows,broken,broken)
@@ -59,3 +59,27 @@ def test_unused_definition_drift_fails():
     assert mod.compare_definitions(old,new,{})==[]
     new['profile']['unused']['pr_draft']='by-permission'
     assert mod.compare_definitions(old,new,{})
+
+
+@pytest.mark.parametrize('state',['present','missing','broken'])
+def test_linked_parity_uses_code_checkout(tmp_path,state):
+    mod=comparator();records=tmp_path/'records';records.mkdir()
+    checkout=tmp_path/'code'
+    if state!='missing':checkout.mkdir()
+    rows=[{'status':'resolved','prefix':'linked','root':str(records),
+           'entry':{'kind':'linked','checkout':str(checkout),'records':str(records)}}]
+    seen=[]
+    def old(path):
+        seen.append(path)
+        if state=='broken':raise RuntimeError('broken code resolution')
+        return result(tmp_path)
+    def new(path):
+        seen.append(path);return result(tmp_path)|{'kind':'checkout'}
+    report=mod.compare_all(rows,old,new)
+    if state=='missing':
+        assert report['unavailable']==['linked'] and report['present']==[] and seen==[]
+    else:
+        assert report['present']==['linked'] and report['unavailable']==[]
+        assert all(path==checkout for path in seen)
+        if state=='broken':assert 'linked' in report['differences']
+        else:assert report['matched']==['linked']

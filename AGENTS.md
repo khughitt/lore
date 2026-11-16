@@ -16,7 +16,8 @@ Code follows `tools/code-organization.md`.
 `just check` (the `check-hygiene` target) runs `ops-check`, `ops-docs check`,
 `tasks check`, assembly validation and Python compilation; the pre-commit hook runs it.
 `python3 bin/assemble-instructions check` compares the selected artifact and manifest
-with the catalog and the live ops renderer. Relevant staged changes select the entire
+with the catalog, and the generated Projects fragment with a fresh render from
+`tasks resolve`. Relevant staged changes select the entire
 index; otherwise it checks disk. The executing assembler must equal its index bytes in
 a staged check.
 

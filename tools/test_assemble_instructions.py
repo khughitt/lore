@@ -63,7 +63,10 @@ def resolver_rows(base):
         resolver_row(base, 'mind6', name='mindful v6', aliases=['mindful'], purpose='Thought store'),
         resolver_row(base, 'mind3', name='mindful v3', purpose='Old store',
                      retired={'date': '2026-10-04', 'successor': 'mind6', 'reason': 'replaced'}),
-        resolver_row(base, 'secret', profile='work', name='secret', purpose='Hidden work project')]
+        resolver_row(base, 'secret', profile='work', name='secret', purpose='Hidden work project',
+                     feedback='Secret work tooling.'),
+        resolver_row(base, 'oldwork', profile='work', name='oldwork', purpose='Retired work project',
+                     retired={'date': '2026-01-01', 'successor': 'secret', 'reason': 'replaced'})]
 
 
 def write_resolver(base, rows):
@@ -495,7 +498,7 @@ def test_write_generates_the_projects_fragment_from_the_resolver(world):
     assert '- `mind6` — mindful v6 (mindful) — Thought store' in text
     assert 'Retired: `mind3` (mindful v3, 2026-10-04) → `mind6`.' in text
     assert '- `ops` — Shared tooling in bin/.' in text.partition('### Feedback owners')[2]
-    assert '`secret`' not in text
+    assert '`secret`' not in text and 'Secret work tooling' not in text and '`oldwork`' not in text
     manifest = json.loads(outputs(world)[1])
     record = next(f for f in manifest['fragments'] if f['id'] == 'projects')
     assert record['generated'] == 'tasks-resolve' and record['owner'] == 'lore' and record['rules'] == []
@@ -968,10 +971,23 @@ def test_resolver_drift_and_failure_are_reported_and_skip_is_narrow(world):
     assert b'unexpected tasks query' in result.stderr and b'Traceback' not in result.stderr
 
 
+def test_entry_without_identity_renders_a_placeholder_naming_the_repair(world):
+    rows = read_rows(world)
+    del rows[2]['entry']['name'], rows[2]['entry']['purpose']
+    del rows[3]['entry']['name'], rows[3]['entry']['purpose']
+    write_resolver(world.root.parent, rows)
+    assert build(world).returncode == 0
+    text = (world.root / 'instructions/fragments/projects.md').read_text()
+    assert ('- `mind6` — (no identity recorded — run `tasks identity refresh mind6`, or seed it with'
+            ' `tasks identity refresh mind6 --from <file>`)') in text
+    assert 'Retired: `mind3` (no identity recorded, 2026-10-04) → `mind6`.' in text
+    assert build(world, 'check').returncode == 0
+
+
 @pytest.mark.parametrize('damage', ['identity', 'warning', 'unknown-profile'])
 def test_resolver_entries_that_cannot_render_fail_with_the_repair(world, damage):
     rows = read_rows(world)
-    if damage == 'identity': del rows[2]['entry']['purpose']
+    if damage == 'identity': rows[2]['entry']['purpose'] = ''
     elif damage == 'unknown-profile': rows[2]['entry']['profile'] = 'nonesuch'
     write_resolver(world.root.parent, rows)
     if damage == 'warning':
@@ -981,7 +997,7 @@ def test_resolver_entries_that_cannot_render_fail_with_the_repair(world, damage)
         path.write_text(json.dumps(replies))
     result = build(world)
     assert result.returncode == 1 and b'Traceback' not in result.stderr
-    assert {'identity': b'tasks identity refresh mind6', 'warning': b'cannot read its config',
+    assert {'identity': b'mind6: records entry has an invalid identity purpose', 'warning': b'cannot read its config',
             'unknown-profile': b'unknown or invalid profile'}[damage] in result.stderr
     assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
 
@@ -1164,14 +1180,24 @@ def test_registry_errors_are_clear_validation_failures(world, change):
 def test_projects_fragment_structure_and_resolver_failures_are_guarded(world, change, skip):
     commit_pair(world)
     projects = world.root / 'instructions/fragments/projects.md'
+    env = world.env
     if change == 'missing':
         if skip: projects.unlink()
-        else: (world.config / '../bin/tasks').unlink()
+        else:
+            # Only the fixture tasks and the interpreter are reachable, so no host tasks answers.
+            bare = world.root.parent / 'bare-bin'; bare.mkdir()
+            (bare / 'git').symlink_to(shutil.which('git'))
+            env = {**world.env, 'PATH': str(bare)}
     elif change == 'old-marker': projects.write_bytes(projects.read_bytes().replace(_projects.START.encode(), b'<!-- ops:projects start -->'))
     else: projects.write_bytes(projects.read_bytes() + b'<!-- ops:projects end -->\n')
-    result = build(world, 'check', *(['--skip-projects-render'] if skip else []))
+    args = ['check', *(['--skip-projects-render'] if skip else [])]
+    result = subprocess.run([sys.executable, str(world.root / 'bin/assemble-instructions'), *args],
+                            cwd=world.root, env=env, capture_output=True)
     assert result.returncode == 1 and b'Traceback' not in result.stderr
-    assert b'projects' in result.stderr.lower()
+    expected = {('missing', False): b'rendering from tasks resolve failed',
+                ('missing', True): b'instructions/fragments/projects.md'}.get(
+        (change, skip), b'Projects fragment requires exactly the current marked block')
+    assert expected in result.stderr, result.stderr
 
 
 def test_deployed_recipes_ignore_stale_preparation_environment(world):

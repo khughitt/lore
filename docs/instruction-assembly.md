@@ -108,14 +108,16 @@ ops repository.
 | --- | --- |
 | `artifact Projects block stale: …` | The generated Projects fragment changed without a reassembly. Run `just assemble`. |
 | `instructions/fragments/projects.md differs from tasks resolve …` | A project was registered, renamed or retired, or its identity snapshot was refreshed. Run `just assemble`. |
-| `projects: rendering from tasks resolve failed: …` | `tasks` is missing, the resolver reported a catalogue warning, or a records entry cannot render (no identity snapshot: `tasks identity refresh <prefix>`, or `--from` to seed one; an unknown profile). Fix what the message names. |
+| `projects: rendering from tasks resolve failed: …` | `tasks` is missing, the resolver reported a catalogue warning, or a records entry cannot render (malformed identity fields, an unknown profile). Fix what the message names. A records entry with no identity snapshot renders as a placeholder line naming `tasks identity refresh`. |
 | `artifact stale; …` / `manifest stale; …` | A lore source, the catalog or the assembler changed. Run `just assemble`. |
 | `executing assembler differs from index; …` | Stage the intended assembler or restore the index copy. |
 | `missing or downgraded committed mandatory fragments: …` | A mandatory fragment was removed or made adaptable; restore it. |
 | `invalid evidence OWNER REVISION:PATH: …` | The pointer's commit or blob cannot be read, or its revision is not a full commit id. Fix the pointer, or fetch the owner's history. |
 | `X is not registered in the tasks registry` | Register the owner (`tasks init` in it). `--owner-root` works around it only for `render`; `write` and `check` require every owner, overridden or not, to be registered. |
 
-The SessionStart notice from ops also runs this check.
+The SessionStart notice from ops also runs this check, but adds
+`--skip-projects-render` whenever ops's own `ops-projects check` passes, so it does not
+compare the Projects fragment with the resolver then.
 
 ## Creating and refreshing rule records
 

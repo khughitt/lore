@@ -53,14 +53,23 @@ def private_profiles(config):
 
 
 def _identity(prefix, entry):
+    """(name, aliases, purpose), or None when the entry has no identity snapshot yet. A
+    missing snapshot renders as a placeholder rather than refusing, so `just assemble` in
+    lore always succeeds and the block shows its own gap where a reader will see it."""
+    if 'name' not in entry and 'purpose' not in entry:
+        return None
     for key in ('name', 'purpose'):
         if not isinstance(entry.get(key), str) or not entry[key]:
-            raise ProfileError(f'{prefix}: records entry has no identity {key}; '
-                               f'run `tasks identity refresh {prefix}` (or seed it with --from)')
+            raise ProfileError(f'{prefix}: records entry has an invalid identity {key}')
     aliases = entry.get('aliases', [])
     if not isinstance(aliases, list) or any(not isinstance(a, str) for a in aliases):
         raise ProfileError(f'{prefix}: records entry has invalid aliases')
     return entry['name'], aliases, entry['purpose']
+
+
+def _placeholder(prefix):
+    return (f'(no identity recorded — run `tasks identity refresh {prefix}`, or seed it with'
+            f' `tasks identity refresh {prefix} --from <file>`)')
 
 
 def retirement(prefix, entry):
@@ -75,7 +84,10 @@ def retirement(prefix, entry):
 
 
 def project_line(prefix, entry):
-    name, aliases, purpose = _identity(prefix, entry)
+    identity = _identity(prefix, entry)
+    if identity is None:
+        return f'- `{prefix}` — {_placeholder(prefix)}'
+    name, aliases, purpose = identity
     named = name + (f" ({', '.join(aliases)})" if aliases else '')
     return f'- `{prefix}` — {named} — {purpose}'
 
@@ -87,7 +99,9 @@ def retired_line(entries):
     for prefix, entry in entries.items():
         retired = retirement(prefix, entry)
         arrow = f" → `{retired['successor']}`" if retired.get('successor') else ''
-        clauses.append(f"`{prefix}` ({_identity(prefix, entry)[0]}, {retired['date']}){arrow}")
+        identity = _identity(prefix, entry)
+        name = identity[0] if identity else 'no identity recorded'
+        clauses.append(f"`{prefix}` ({name}, {retired['date']}){arrow}")
     return 'Retired: ' + '; '.join(clauses) + '.' if clauses else None
 
 

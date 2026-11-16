@@ -1,7 +1,7 @@
 # skills
 
 hq's `links.toml` declares `~/.agents/skills` as a real directory of individual links
-into this repository, into the tasks, ops, flows, hq and quarry checkouts, and into
+into this repository, into the tasks, mind6, flows, hq and quarry checkouts, and into
 the superpowers submodule here;
 it is the skill directory for every harness other
 than Claude Code, which reads skills from `~/.claude/skills` and plugins from its own
@@ -25,10 +25,14 @@ dropped or added. Keep new skills at this depth.
   provenance checks, controller verification and an independent critic before
   owner acceptance. Harness delivery requires `lore:skills/distillation-review`
   declarations on both home surfaces in hq's `links.toml`.
-- `tasks`, `curate`, `scope`, `quick-add` — served from the tasks and ops checkouts by
-  declarations in hq's `links.toml`, so the skills those repositories ship are always
-  the checked-out version. A new skill is a declaration there for each home surface;
+- `tasks`, `curate`, `scope` — served from the tasks checkout by declarations in
+  hq's `links.toml`. A new skill is a declaration there for each home surface;
   `just link --apply` creates the links.
+- `quick-add` — served from the mind6 checkout's `skills/quick-add`. Linking needs
+  no active release; invocation first checks the installed native CLI with the
+  store-free `mindful --json help op` capability probe. A mismatched runtime stops
+  before capture. Mindful ships the vocabulary; routing preferences are private
+  host configuration.
 - `flow` and `session-logs` — served from the flows and hq checkouts, declared the same way.
 - `quarry` and `quarry-biology` — served from the quarry checkout's `skills/`, declared
   the same way.

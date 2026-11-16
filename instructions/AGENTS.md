@@ -689,10 +689,15 @@ it this way:
   the harness is known to start its next turn when the child finishes (Claude Code: yes;
   Codex: no — probed 2026-09-24 and recorded in ops `hooks/claim-guard`'s
   `CHILD_WAKES`), and otherwise waits with the harness's bounded wait, at its longest
-  (Codex: `wait_agent` with `timeout_ms: 3600000`, an empty `write_stdin` with
-  `yield_time_ms: 300000`; both return as soon as the child or command finishes), never
-  a loop of shorter waits. Before each such wait, post one line naming what you await,
-  how long it should take and the wait's limit; when it returns, post one status line.
+  (Codex: `wait_agent` with `timeout_ms: 3600000`; for its own command, an empty
+  `write_stdin` with `yield_time_ms: 3600000` in an exec cell whose first line is
+  `// @exec: {"yield_time_ms": 3600000}`, capped by the `background_terminal_max_timeout`
+  setting; each returns as soon as the child or command finishes), never a loop of
+  shorter waits. A Codex `write_stdin` that returns after 300 s with the command still
+  running means that setting is at its 300000 default: hand the rest of the wait to a
+  fresh small-context child that watches the command, and wait on the child. Before each
+  such wait, post one line naming what you await, how long it should take and the wait's
+  limit; when it returns, post one status line.
   This outranks a harness's own shorter guidance: Codex's base instructions' 60-second
   cap on blocking waits and on gaps between updates, and the vendored superpowers
   `codex-tools` reference's 5–10 minute stretches. A worker's turn end is its final

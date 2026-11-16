@@ -8,22 +8,6 @@ import sys
 
 import pytest
 
-ROOT=Path(__file__).resolve().parents[1]
-
-
-@pytest.fixture
-def delivery(profile_world):
-    w=profile_world
-    shutil.copytree(ROOT/'src',w.corpus/'src',ignore=shutil.ignore_patterns('__pycache__'))
-    for name in ('hooks/claude-profile','bin/lore'):
-        target=w.corpus/name;target.parent.mkdir(exist_ok=True)
-        if (ROOT/name).exists(): shutil.copy2(ROOT/name,target)
-    # Store prose is corpus data, copied independently of production rendering logic.
-    if (ROOT/'profiles/records-store.md').exists():
-        shutil.copy2(ROOT/'profiles/records-store.md',w.corpus/'profiles/records-store.md')
-    return w
-
-
 def hook(w,payload=None,extra=None,root=None):
     root=root or w.corpus
     env=w.env | {'CLAUDE_ENV_FILE':str(w.records.parent/'export.sh')}

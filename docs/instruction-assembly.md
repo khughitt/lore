@@ -115,9 +115,16 @@ ops repository.
 | `invalid evidence OWNER REVISION:PATH: …` | The pointer's commit or blob cannot be read, or its revision is not a full commit id. Fix the pointer, or fetch the owner's history. |
 | `X is not registered in the tasks registry` | Register the owner (`tasks init` in it). `--owner-root` works around it only for `render`; `write` and `check` require every owner, overridden or not, to be registered. |
 
-The SessionStart notice from ops also runs this check, but adds
-`--skip-projects-render` whenever ops's own `ops-projects check` passes, so it does not
-compare the Projects fragment with the resolver then.
+The SessionStart stale-instructions notice runs this check. lore's relay subscriber
+`lore hook stale-notice` ([profile delivery](profile-delivery.md#relay-subscribers))
+runs the executing tree's `bin/assemble-instructions check --working-tree` with that
+tree as cwd, about 2 s including the Projects render from `tasks resolve`. Exit 0
+adds nothing; exit 1 becomes its stderr (or `assemble-instructions: validation
+failed`) flattened to one context line. An invalid envelope, a 10 s timeout, a spawn
+failure or any other exit is a nonzero exit with one bounded stderr line, which
+relay reports as `NOTICE_FAILED`; the check's own output never reaches relay. Until
+the relay cutover, ops's native SessionStart hook also runs the check, adding
+`--skip-projects-render` whenever ops's own `ops-projects check` passes.
 
 ## Creating and refreshing rule records
 

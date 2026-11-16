@@ -99,6 +99,9 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 - `bin/skill-sizes.py`: the skill inventory utility.
 - `hooks/claude-profile`: the `SessionStart` hook that puts a checkout's profile text in
   front of every Claude Code and Codex session ([profile delivery](docs/profile-delivery.md)).
+- `bin/lore`: the launcher for `lore profile …` and the relay notice subscribers
+  `lore hook profile-notice` and `lore hook stale-notice`, which carry the profile text
+  and the stale-instructions notice through relay once hq wires them.
 - `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
   task records live in the records root (`tasks where` names it). The archived documents'
   history is in the records repository's lore directory; [AGENTS.md](AGENTS.md) says where

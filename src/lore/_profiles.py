@@ -170,7 +170,8 @@ def home_of(env, config, payload=None):
     """Which harness home the session runs in. A hook payload's transcript_path is the
     reliable witness: Claude writes it under CLAUDE_CONFIG_DIR/projects/, Codex under
     CODEX_HOME/sessions/, agy under ~/.gemini/antigravity-cli/brain/ (hq's agy wrapper
-    maps transcriptPath to transcript_path), and Codex adds nothing to a SessionStart
+    maps transcriptPath to transcript_path, as the relay subscriber maps its
+    transcriptPath fact), and Codex adds nothing to a SessionStart
     hook's environment (a Codex launched inside a Claude session even inherits
     CLAUDECODE=1). Without a payload, or with one whose transcript lies outside every
     configured home, the harness's own variable decides. A path that several homes

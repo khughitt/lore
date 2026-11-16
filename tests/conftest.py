@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
+ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = '''
 [profile.personal]
 fragment="personal"
@@ -111,6 +112,21 @@ print(json.dumps(replies[key]))
     monkeypatch.setattr(_profiles, 'CORPUS', corpus)
     return SimpleNamespace(env=env, corpus=corpus, records=records, checkout=checkout,
                            private=private, data=data, row=row, save=save, calls=commands)
+
+
+@pytest.fixture
+def delivery(profile_world):
+    """profile_world plus a copy of this checkout's executable tree, run in fresh processes."""
+    import shutil
+    w = profile_world
+    shutil.copytree(ROOT / 'src', w.corpus / 'src', ignore=shutil.ignore_patterns('__pycache__'))
+    for name in ('hooks/claude-profile', 'bin/lore'):
+        target = w.corpus / name; target.parent.mkdir(exist_ok=True)
+        if (ROOT / name).exists(): shutil.copy2(ROOT / name, target)
+    # Store prose is corpus data, copied independently of production rendering logic.
+    if (ROOT / 'profiles/records-store.md').exists():
+        shutil.copy2(ROOT / 'profiles/records-store.md', w.corpus / 'profiles/records-store.md')
+    return w
 
 
 def live_tasks_unavailable(env):

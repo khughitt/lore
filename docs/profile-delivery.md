@@ -1,8 +1,10 @@
 # Profile delivery
 
 Type: protocol; document types 1. Currently unversioned. The SessionStart hook
-`hooks/claude-profile` delivers the checkout's profile layer to Claude Code or Codex.
-Changing its inputs, text or export changes this protocol on both surfaces.
+`hooks/claude-profile` delivers the checkout's profile layer to Claude Code or Codex,
+and the relay notice subscriber `lore hook profile-notice` delivers the same text
+through relay. Changing its inputs, text or export changes this protocol on every
+surface.
 
 ## Ownership and invocation
 
@@ -21,6 +23,9 @@ There is no PATH install. From this checkout, use `./bin/lore profile` with one 
 | `session [PATH]` | Complete delivered profile text |
 | `check` | Configuration/catalogue diagnostics; nonzero for problems |
 | `audit [PATH]` | Existing design documents hidden by excludes or retained in code |
+
+`./bin/lore hook profile-notice` and `./bin/lore hook stale-notice` are relay notice
+subscribers ([Relay subscribers](#relay-subscribers)), not commands for people.
 
 From elsewhere, run `tasks resolve lore --json`, require a successful single result,
 and read `results[0].root`. Invoke that root's `bin/lore` by explicit path, safely
@@ -97,6 +102,31 @@ Store sessions begin `profile: records-store` and load `profiles/records-store.m
 including core attribution/task-id rules and the one-branch/no-worktrees/locked
 `tasks commit` rule. Code-placement prose, linked notes and private listings are
 not delivered there. Policy enforcement remains a separate consumer's responsibility.
+
+## Relay subscribers
+
+Relay's notice role (relay `docs/adapters.md`, Notice protocol) runs a subscriber
+named by a command basename on `PATH`; relay owns native decoding and reply encoding.
+lore provides two SessionStart notices through its launcher, with argv
+`["lore", "hook", "profile-notice"]` and `["lore", "hook", "stale-notice"]`. Each
+reads one relay schema-2 `SubscriberEnvelope` on stdin (strict UTF-8 JSON object, at
+most 4 MiB, no duplicate keys, `type: "event"`, a schema-2 `session-start` event with
+an absolute `cwd`) and writes exactly `{}` or `{"context": TEXT}`. The launcher
+resolves its own tree, so a host symlink to a checkout's `bin/lore` runs that checkout.
+Installing `lore` on `PATH` and listing the subscribers in relay's configuration are
+host and harness-settings changes: hq generates the settings, and each activation
+needs the user's go-ahead at that moment.
+
+| Command | Input used | Reply |
+| --- | --- | --- |
+| `profile-notice` | `event.cwd`, the valid `event.private.transcriptPath` fact, the environment | the hook's stdout above as `context`, byte for byte, with the same export |
+| `stale-notice` | none beyond validation | `{}`, or the stale-instructions report as one line ([instruction assembly](instruction-assembly.md#diagnosis)) |
+
+The profile notice maps `transcriptPath` to the hook's `transcript_path`; a missing
+or invalid fact means no transcript. It never exits nonzero: an invalid envelope, a
+resolution or export failure, a package that cannot load, and text over relay's
+10,000 UTF-16-unit context limit each become one `profile: unresolved` context line,
+so the session sees the failure instead of a dropped notice.
 
 ## Failures and verification
 

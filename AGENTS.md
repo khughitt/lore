@@ -78,6 +78,8 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   through the lore-1be62d map. `tasks show <task>` prints each attachment's path.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from hq's hook files; it loads lore's package and reads assignments through tasks.
+- `bin/lore hook profile-notice|stale-notice`: relay notice subscribers (one schema-2
+  envelope in, `{}` or `{"context"}` out), not yet wired; `docs/profile-delivery.md`.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.
   `tools/`: assembly tests, pinned proof driver and vendored tooling;
   task records live in the records root.
@@ -85,8 +87,10 @@ is a warning, while broken bindings or uncovered obligations are fatal.
 ## Rules
 
 - `hooks/claude-profile` never exits non-zero and never blocks a session; every failure is
-  one `profile: unresolved` line. A change to it is verified by the text a fresh session
-  shows, never by its exit status, which proves nothing.
+  one `profile: unresolved` line. `lore hook profile-notice` keeps that guarantee as a
+  relay notice: exit 0, with every failure (invalid envelopes included) as that line in
+  `context`. A change to either is verified by the text a fresh session shows, never by
+  its exit status, which proves nothing.
 
 - The linked global artifact and manifest are generated; do not edit either by
   hand. Edit `instructions/fragments/…`, then run `just assemble`.

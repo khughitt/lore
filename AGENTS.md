@@ -57,7 +57,7 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   `./links.toml`; `instructions/AGENTS.manifest.json`: generated provenance.
   Root `AGENTS.md` is this repository's guide.
 - `instructions/assembly.toml` and `instructions/fragments/`: editable catalog and
-  policy sources. Ops owns the external Projects fragment.
+  policy sources; `projects.md` is generated from `tasks resolve`.
 - `profiles/`: public definitions and profile/store prose resolved by lore; private values stay in records.
 - `skills/`: the `curate-docs` skill, `skills/references/` (lore-authored retention
   guidance and schemas) and the skill README.
@@ -93,9 +93,10 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   edit to the assembler stales it even when the rendered instructions are unchanged.
   Run `just assemble` and stage the manifest in the same commit; only its assembler
   entry may change.
-- Ops owns the Projects/Feedback-owners source. Edit identity declarations there,
-  run just projects in ops, then `just assemble` here. Assembly is the only writer
-  of delivered instructions and provenance; both checks must pass.
+- The Projects/Feedback-owners fragment is generated from `tasks resolve`: each
+  project's identity and records entry own its line. After a registration, rename,
+  retirement or identity refresh, run `just assemble` here. Assembly is the only
+  writer of delivered instructions and provenance; both checks must pass.
 - Deployed gates always use registered owner roots. Preparation environment
   values cannot redirect them; explicit CLI source overrides announce their
   input and require the registered repository identity.

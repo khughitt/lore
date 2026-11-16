@@ -1,16 +1,16 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "f6be5b2d14dc8546227176fd34129e72cde33b4cf24ad2663a848e5622fd131a"
+    "sha256": "3c7c60e519bd915742e6a7862bce7c5f7720c50932238d4e04d23a6fd93a102f"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
-    "revision": "f8c8586ae464993c6579f29a75b612403533c0a5",
-    "sha256": "6450f2626de42ea92ad30e294b2290704959acfd68363cc25f61fae7c0b3abc5"
+    "revision": "3ee930baffcd7d35714be28d5d53260074492d9e",
+    "sha256": "f847f468c6fa4e80b8e7211872015ec869d5fce8a7d5fac447497bfa9f8bd977"
   },
   "catalog": {
     "path": "instructions/assembly.toml",
-    "sha256": "1d432fb38cf7c54561bcb7cf6f9ee8ab66af5862d6c3b18e7a2666399bf14d2d"
+    "sha256": "941c37186feebd468a5c6c986db6b7a7fb9262fa774b0d13216b68425d03e618"
   },
   "fragments": [
     {
@@ -1933,18 +1933,26 @@
           "path": "docs/specs/2026-09-07-project-identity-design.md",
           "revision": "a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3",
           "status": "n/a"
+        },
+        {
+          "location": "\u00a75.1 derived views and the config-only resolver; \u00a76 stage 1 (lore renders the Projects and Feedback-owners fragments).",
+          "owner": "ops:records",
+          "path": "docs/specs/2026-11-09-boundary-revision-5-design.md",
+          "revision": "36457b8d80e87cae336605f8e9e7145cfa33a120",
+          "status": "recorded"
         }
       ],
+      "generated": "tasks-resolve",
       "id": "projects",
-      "length": 4907,
+      "length": 4944,
       "offset": 87890,
-      "owner": "ops",
+      "owner": "lore",
       "provenance_date": "2026-10-05",
-      "rationale": "Preserve ops-owned project identity and feedback vocabulary.",
-      "rendered_sha256": "13ff6b07814b49d52780e7d0da2a55eb5d6c84a16ebfb2442b560f099efd7141",
-      "revision": "d9bf02bacb7bb9c2649797bcb2fa5ef251461a48",
+      "rationale": "Name every project and feedback owner from its records entry, through the tasks resolver.",
+      "rendered_sha256": "8e97e708f9c73c72dca250b98f6ab4e2f09a935235ca26dc3b60c6db464321e1",
+      "revision": "1ab072dfbb1fe93e56129ccf8ae19843693395d6",
       "rules": [],
-      "sha256": "13ff6b07814b49d52780e7d0da2a55eb5d6c84a16ebfb2442b560f099efd7141",
+      "sha256": "8e97e708f9c73c72dca250b98f6ab4e2f09a935235ca26dc3b60c6db464321e1",
       "source": "instructions/fragments/projects.md"
     }
   ],

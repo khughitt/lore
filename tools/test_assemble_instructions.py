@@ -16,6 +16,8 @@ from types import SimpleNamespace
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src'))
+from lore import _projects  # noqa: E402
 IDS = ['core', 'refactoring', 'git', 'profiles', 'design-docs', 'communication',
        'decisions', 'processes', 'tests', 'shell', 'outcome-notes', 'trials', 'feedback', 'projects']
 CATALOG_IDS = IDS[:6] + ['notation'] + IDS[6:]
@@ -30,6 +32,54 @@ def isolated_env(home, **extra):
 
 
 GIT_ENV: dict[str, str]  # bound per test by `home`; unbound outside a test
+
+# The fixture `tasks` answers resolver queries from the world's reply file and accepts `check`.
+FAKE_TASKS = f'''#!{sys.executable}
+import json, os, sys
+if sys.argv[1:2] == ['check']: sys.exit(0)
+key = ' '.join(sys.argv[1:])
+replies = json.load(open(os.environ['LORE_FIXTURE_RESOLVER']))
+if key not in replies:
+    sys.stderr.write('unexpected tasks query: ' + key + chr(10)); sys.exit(4)
+print(json.dumps(replies[key]))
+'''
+
+
+def resolver_row(base, prefix, profile='personal', checkout=None, **identity):
+    store = base / 'records'
+    checkout = str(checkout or base / prefix)
+    return {'input': prefix, 'kind': 'prefix', 'status': 'resolved', 'prefix': prefix, 'root': checkout,
+            'records': str(store / prefix),
+            'entry': {'config': str(store / prefix / 'tasks/.config.toml'), 'records': str(store / prefix),
+                      'checkout': checkout, 'kind': 'detached', 'profile': profile, 'aliases': [], **identity}}
+
+
+def resolver_rows(base):
+    """The world's records entries: lore and ops with feedback scopes, an aliased project,
+    a retired one with a successor, and a private one the global block leaves out."""
+    return [
+        resolver_row(base, 'lore', name='lore', purpose='Agent context', feedback='The global instructions.'),
+        resolver_row(base, 'ops', name='ops', purpose='Shared tooling', feedback='Shared tooling in bin/.'),
+        resolver_row(base, 'mind6', name='mindful v6', aliases=['mindful'], purpose='Thought store'),
+        resolver_row(base, 'mind3', name='mindful v3', purpose='Old store',
+                     retired={'date': '2026-10-04', 'successor': 'mind6', 'reason': 'replaced'}),
+        resolver_row(base, 'secret', profile='work', name='secret', purpose='Hidden work project')]
+
+
+def write_resolver(base, rows):
+    lore = next(r for r in rows if r['prefix'] == 'lore')
+    replies = {'resolve lore --json': {'results': [lore], 'warnings': []},
+               'resolve --all --json': {'results': rows, 'warnings': []}}
+    (base / 'config/resolver.json').write_text(json.dumps(replies))
+
+
+def read_rows(world):
+    return json.loads((world.config.parent / 'resolver.json').read_text())['resolve --all --json']['results']
+
+
+def world_block(rows):
+    """The Projects block the world's resolver renders: every non-work entry."""
+    return _projects.render({r['prefix']: r['entry'] for r in rows if r['entry']['profile'] != 'work'})
 
 
 @pytest.fixture(autouse=True)
@@ -65,7 +115,7 @@ def invoke(world, *args):
 
 
 def build(world, command='write', *args):
-    return invoke(world, command, '--owner-root', f'ops={world.ops}', *args)
+    return invoke(world, command, *args)
 
 
 def build_world(base, home):
@@ -88,7 +138,7 @@ def build_world(base, home):
         block for block in blocks if tomllib.loads('[[fragments]]\n' + block)['fragments'][0]['id'] in IDS]))
     catalog = tomllib.loads(path.read_text())
     for fragment in catalog['fragments']:
-        if fragment['owner'] == 'lore':
+        if fragment['owner'] == 'lore' and 'generated' not in fragment:
             (root / fragment['source']).write_bytes(historical[fragment['id']])
     shutil.copytree(ROOT / 'tools/fixtures/instruction-assembly', root / 'tools/fixtures/instruction-assembly')
     (root / 'bin').mkdir()
@@ -100,7 +150,7 @@ def build_world(base, home):
     module = load_assembler(SimpleNamespace(root=root))
     directory = root / 'instructions/rules'; directory.mkdir()
     for fragment in catalog['fragments']:
-        if fragment['owner'] != 'lore': continue
+        if fragment['owner'] != 'lore' or 'generated' in fragment: continue
         source = root / fragment['source']; original = source.read_bytes()
         rid = 'rule:' + hashlib.md5(fragment['id'].encode()).hexdigest()
         source.write_bytes(marked(rid, original))
@@ -108,13 +158,23 @@ def build_world(base, home):
         (directory / (rid[5:] + '.json')).write_bytes(module.manifest_bytes(record))
     initial = (root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes()
     projects = initial[initial.index(b'<!-- ops:projects start'):]
+    # The version-one Projects input stays in ops for the historical proofs.
     (ops / 'instructions/fragments').mkdir(parents=True)
     (ops / 'instructions/fragments/projects.md').write_bytes(projects)
-    (ops / 'bin').mkdir()
-    (ops / 'bin/ops-projects').write_text('import sys\nassert sys.argv[1:] == ["render"]\n'
-                                         f'sys.stdout.buffer.write({projects!r})\n')
+    # The current Projects fragment is lore's, generated from the resolver.
+    shutil.copytree(ROOT / 'src/lore', root / 'src/lore', ignore=shutil.ignore_patterns('__pycache__'))
+    (root / 'profiles').mkdir()
+    shutil.copy(ROOT / 'profiles/profiles.toml', root / 'profiles/profiles.toml')
     config = base / 'config/tasks'
     config.mkdir(parents=True)
+    (base / 'config/bin').mkdir()
+    (base / 'config/bin/tasks').write_text(FAKE_TASKS)
+    (base / 'config/bin/tasks').chmod(0o755)
+    rows = resolver_rows(base)
+    write_resolver(base, rows)
+    block = world_block(rows)
+    (root / 'instructions/fragments/projects.md').write_bytes(block)
+    initial = initial[:initial.index(b'<!-- ops:projects start')] + block
     # Evidence owned by lore:records or ops:records lives in a records directory inside a records repository.
     (config / 'projects.toml').write_text('[projects]\nops = ' + json.dumps(str(ops)) +
                                           '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
@@ -130,6 +190,7 @@ def build_world(base, home):
             file.parent.mkdir(parents=True, exist_ok=True)
             file.write_text('Disposable historical evidence.\n')
     (store / 'lore/.keep').touch()
+    (store / 'lore/profiles.toml').write_text('')
     for repo in (root, ops, store):
         commit_all(repo, git_env)
     heads = {'lore': git(root, 'rev-parse', 'HEAD', env=git_env).decode().strip(),
@@ -145,8 +206,13 @@ def build_world(base, home):
                                 'revision = ' + json.dumps(heads[evidence['owner']]))
     path.write_text(text)
     return SimpleNamespace(root=root, ops=ops, store=store, config=config,
-                           env=isolated_env(home, XDG_CONFIG_HOME=str(config.parent)),
-                           initial=initial)
+                           env=world_env(base, home), initial=initial)
+
+
+def world_env(base, home):
+    return isolated_env(home, XDG_CONFIG_HOME=str(base / 'config'),
+                        PATH=str(base / 'config/bin') + os.pathsep + os.environ['PATH'],
+                        LORE_FIXTURE_RESOLVER=str(base / 'config/resolver.json'))
 
 
 @pytest.fixture(scope='session')
@@ -174,14 +240,14 @@ def copy_world(template, base, home):
         '\nlore = ' + json.dumps(str(base / 'wrong-lore')) +
         '\n[records]\nlore = ' + json.dumps(str(store / 'lore')) +
         '\nops = ' + json.dumps(str(store / 'ops')) + '\n')
+    write_resolver(base, resolver_rows(base))
     stale = os.fsencode(source)
     for part in WORLD_PARTS:
         for path in sorted((base / part).rglob('*')):
             if path.is_file() and not path.is_symlink() and stale in path.read_bytes():
                 raise AssertionError(f'world copy still names its template: {path.relative_to(base)}')
     return SimpleNamespace(root=base / 'lore', ops=base / 'ops', store=store, config=config,
-                           env=isolated_env(home, XDG_CONFIG_HOME=str(base / 'config')),
-                           initial=template.initial)
+                           env=world_env(base, home), initial=template.initial)
 
 
 @pytest.fixture
@@ -378,7 +444,7 @@ def test_historical_reference_fixtures_match_independent_git_blobs():
 
 def test_fixture_subprocesses_receive_no_inherited_environment(world, tmp_path, monkeypatch):
     monkeypatch.setenv('LORE_TEST_CANARY', 'fake-credential')
-    assert set(world.env) == {'PATH', 'HOME', *HERMETIC_GIT, 'XDG_CONFIG_HOME'}
+    assert set(world.env) == {'PATH', 'HOME', *HERMETIC_GIT, 'XDG_CONFIG_HOME', 'LORE_FIXTURE_RESOLVER'}
     assert world.env['HOME'] == str(tmp_path / 'home')
     shown = git(world.root, '-c', 'alias.show-env=!env', 'show-env').decode()
     assert 'LORE_TEST_CANARY' not in shown
@@ -406,20 +472,34 @@ def test_render_manifest_previews_the_pair_write_produces_without_writing(world)
     assert outputs(world) == (plain.stdout, preview.stdout)
 
 
-def test_render_manifest_reads_the_owner_root_override(world):
-    prepared = world.root.parent / 'prepared-ops'
-    git(world.ops, 'worktree', 'add', '-q', '--detach', str(prepared), 'HEAD')
-    projects = added_projects(world)
-    (prepared / 'instructions/fragments/projects.md').write_bytes(projects)
-    override = ('--owner-root', f'ops={prepared}')
+def test_render_reads_the_resolver_and_writes_nothing(world):
+    add_projects(world)
+    projects = world_block(read_rows(world))
     before = files(world.root.parent)
-    plain, preview = invoke(world, 'render', *override), invoke(world, 'render', '--manifest', *override)
+    plain, preview = invoke(world, 'render'), invoke(world, 'render', '--manifest')
     assert files(world.root.parent) == before
     assert plain.returncode == 0 and preview.returncode == 0, preview.stderr
     assert plain.stderr == preview.stderr == b''
     assert plain.stdout.endswith(projects)
-    assert invoke(world, 'write', *override).returncode == 0
+    assert b'zz00' in projects and b'secret' not in plain.stdout
+    assert invoke(world, 'write').returncode == 0
     assert outputs(world) == (plain.stdout, preview.stdout)
+
+
+def test_write_generates_the_projects_fragment_from_the_resolver(world):
+    add_projects(world)
+    assert build(world).returncode == 0
+    fragment = (world.root / 'instructions/fragments/projects.md').read_bytes()
+    assert fragment == world_block(read_rows(world))
+    text = fragment.decode()
+    assert '- `mind6` — mindful v6 (mindful) — Thought store' in text
+    assert 'Retired: `mind3` (mindful v3, 2026-10-04) → `mind6`.' in text
+    assert '- `ops` — Shared tooling in bin/.' in text.partition('### Feedback owners')[2]
+    assert '`secret`' not in text
+    manifest = json.loads(outputs(world)[1])
+    record = next(f for f in manifest['fragments'] if f['id'] == 'projects')
+    assert record['generated'] == 'tasks-resolve' and record['owner'] == 'lore' and record['rules'] == []
+    assert build(world, 'check').returncode == 0
 
 
 @pytest.mark.parametrize('args', [(), ('--manifest',)])
@@ -533,19 +613,19 @@ def test_failed_git_is_not_bootstrap(world, kind):
 
 
 @pytest.mark.parametrize('command', ['write', 'check'])
-def test_override_requires_registered_ops_repository(world, command):
+def test_override_requires_registered_records_repository(world, command):
     alien = world.root.parent / 'alien'
-    git(world.root.parent, 'clone', '-q', str(world.ops), str(alien))
-    result = invoke(world, command, '--owner-root', f'ops={alien}')
-    assert result.returncode == 1 and b'registered ops' in result.stderr
+    git(world.root.parent, 'clone', '-q', str(world.store), str(alien))
+    result = invoke(world, command, '--owner-root', f'ops:records={alien / "ops"}')
+    assert result.returncode == 1 and b'registered ops:records' in result.stderr
 
 
-def test_ops_worktree_override_is_announced_and_valid(world):
-    worktree = world.root.parent / 'ops-worktree'
-    git(world.ops, 'worktree', 'add', '-q', '--detach', str(worktree), 'HEAD')
-    result = invoke(world, 'write', '--owner-root', f'ops={worktree}')
+def test_records_worktree_override_is_announced_and_valid(world):
+    worktree = world.root.parent / 'records-worktree'
+    git(world.store, 'worktree', 'add', '-q', '--detach', str(worktree), 'HEAD')
+    result = invoke(world, 'write', '--owner-root', f'ops:records={worktree / "ops"}')
     assert result.returncode == 0, result.stderr
-    result = invoke(world, 'check', '--owner-root', f'ops={worktree}')
+    result = invoke(world, 'check', '--owner-root', f'ops:records={worktree / "ops"}')
     assert result.returncode == 0
     assert result.stderr.count(b'owner-root override') == 1
     assert str(worktree).encode() in result.stderr
@@ -613,7 +693,7 @@ def test_interrupted_pair_is_detected_and_repaired(world, monkeypatch):
     with monkeypatch.context() as patch:
         patch.setattr(module.os, 'replace', stop_after_artifact)
         with pytest.raises(OSError, match='interrupted pair'):
-            module.write_pair(world.root, artifact, manifest)
+            module.write_outputs(world.root, artifact, manifest, {})
     assert build(world, 'check').returncode == 1
     assert not list((world.root / 'instructions').glob('.AGENTS*'))
     assert build(world).returncode == 0
@@ -875,40 +955,68 @@ def test_unrelated_staging_keeps_working_tree_check(world):
     assert build(world, 'check').returncode == 1
 
 
-def test_renderer_drift_and_failure_are_reported_and_skip_is_narrow(world):
+def test_resolver_drift_and_failure_are_reported_and_skip_is_narrow(world):
     commit_pair(world)
-    renderer = world.ops / 'bin/ops-projects'
-    renderer.write_text('import sys\nsys.stdout.write("drift\\n")\n')
+    add_projects(world)
     assert build(world, 'check').returncode == 1
     assert build(world, 'check', '--skip-projects-render').returncode == 0
     (world.root / 'instructions/AGENTS.md').write_text('stale artifact\n')
     assert build(world, 'check', '--skip-projects-render').returncode == 1
-    renderer.write_text('import sys\nsys.stderr.write("bad renderer\\n")\nsys.exit(1)\n')
+    (world.config.parent / 'resolver.json').write_text('{}')
     result = build(world, 'check')
-    assert result.returncode == 1 and b'render failed' in result.stderr and b'bad renderer' in result.stderr
+    assert result.returncode == 1 and b'rendering from tasks resolve failed' in result.stderr
+    assert b'unexpected tasks query' in result.stderr and b'Traceback' not in result.stderr
+
+
+@pytest.mark.parametrize('damage', ['identity', 'warning', 'unknown-profile'])
+def test_resolver_entries_that_cannot_render_fail_with_the_repair(world, damage):
+    rows = read_rows(world)
+    if damage == 'identity': del rows[2]['entry']['purpose']
+    elif damage == 'unknown-profile': rows[2]['entry']['profile'] = 'nonesuch'
+    write_resolver(world.root.parent, rows)
+    if damage == 'warning':
+        path = world.config.parent / 'resolver.json'
+        replies = json.loads(path.read_text())
+        replies['resolve --all --json']['warnings'] = ['mind6: cannot read its config']
+        path.write_text(json.dumps(replies))
+    result = build(world)
+    assert result.returncode == 1 and b'Traceback' not in result.stderr
+    assert {'identity': b'tasks identity refresh mind6', 'warning': b'cannot read its config',
+            'unknown-profile': b'unknown or invalid profile'}[damage] in result.stderr
+    assert not (world.root / 'instructions/AGENTS.manifest.json').exists()
+
+
+def test_private_profile_by_path_rule_leaves_the_global_block(world):
+    rows = read_rows(world)
+    hidden = world.root.parent / 'work-tree'
+    rows.append(resolver_row(world.root.parent, 'pathwork', checkout=hidden / 'pathwork', name='pathwork', purpose='By path'))
+    del rows[-1]['entry']['profile']
+    write_resolver(world.root.parent, rows)
+    (world.store / 'lore/profiles.toml').write_text(f'[[family]]\npath = {json.dumps(str(hidden))}\nprofiles = ["work"]\n')
+    result = invoke(world, 'render')
+    assert result.returncode == 0, result.stderr
+    assert b'pathwork' not in result.stdout and b'`mind6`' in result.stdout
 
 
 END_MARKER = b'<!-- ops:projects end -->\n'
 
 
-def added_projects(world, count=1):
-    """Projects bytes with `count` new entries, as a host registration would render them."""
-    current = (world.ops / 'instructions/fragments/projects.md').read_bytes()
-    entries = b''.join(b'- `zz%02d` -- fixture %02d -- A newly registered project\n' % (n, n) for n in range(count))
-    return current.replace(END_MARKER, entries + END_MARKER)
+def add_projects(world, count=1):
+    """Register `count` new projects with the world's resolver, as a host registration would."""
+    rows = read_rows(world)
+    rows += [resolver_row(world.root.parent, 'zz%02d' % n, name='fixture %02d' % n, purpose='A newly registered project')
+             for n in range(count)]
+    write_resolver(world.root.parent, rows)
 
 
-def set_renderer(world, data):
-    (world.ops / 'bin/ops-projects').write_text(f'import sys\nsys.stdout.buffer.write({data!r})\n')
-
-
-def refresh_ops(world, data):
-    (world.ops / 'instructions/fragments/projects.md').write_bytes(data)
-    set_renderer(world, data)
+def refresh_projects(world, count=1):
+    """Register new projects and regenerate the Projects fragment without reassembling."""
+    add_projects(world, count)
+    (world.root / 'instructions/fragments/projects.md').write_bytes(world_block(read_rows(world)))
 
 
 def snapshot(world):
-    return outputs(world) + ((world.ops / 'instructions/fragments/projects.md').read_bytes(),)
+    return outputs(world) + ((world.root / 'instructions/fragments/projects.md').read_bytes(),)
 
 
 def check_without_writes(world, *args):
@@ -920,29 +1028,29 @@ def check_without_writes(world, *args):
     return result.stderr.decode()
 
 
-def test_renderer_drift_names_the_registry_owner_and_both_repairs(world):
+def test_resolver_drift_names_the_fragment_and_the_repair(world):
     commit_pair(world)
-    set_renderer(world, added_projects(world))
+    add_projects(world)
     err = check_without_writes(world)
-    assert 'Projects input differs from this host' in err
-    assert 'owner ops' in err
-    assert 'just projects in ops, then just assemble in lore' in err
-    assert '+ - `zz00` -- fixture 00' in err
+    assert 'instructions/fragments/projects.md differs from tasks resolve' in err
+    assert 'run just assemble in lore' in err
+    assert 'just projects' not in err
+    assert '+ - `zz00` — fixture 00' in err
 
 
 def test_refreshed_projects_input_with_stale_artifact_is_projects_only(world):
     commit_pair(world)
-    refresh_ops(world, added_projects(world))
+    refresh_projects(world)
     err = check_without_writes(world)
     assert 'artifact Projects block stale' in err
     assert 'just assemble in lore' in err
     assert 'just projects' not in err and 'instructions/fragments/' not in err
-    assert '+ - `zz00` -- fixture 00' in err
+    assert '+ - `zz00` — fixture 00' in err
 
 
 def test_projects_evidence_is_bounded(world):
     commit_pair(world)
-    refresh_ops(world, added_projects(world, 40))
+    refresh_projects(world, 40)
     err = check_without_writes(world)
     changed = [line for line in err.splitlines() if line.lstrip().startswith(('+ ', '- '))]
     assert 0 < len(changed) < 40
@@ -955,7 +1063,7 @@ def test_local_or_mixed_artifact_drift_keeps_the_fragment_hint(world, drift):
     core = world.root / 'instructions/fragments/core.md'
     core.write_bytes(core.read_bytes() + b'- Unassembled policy.\n')
     add_last_fixture_rule(world, core)
-    if drift == 'mixed': refresh_ops(world, added_projects(world))
+    if drift == 'mixed': refresh_projects(world)
     err = check_without_writes(world)
     assert 'artifact stale; edit instructions/fragments/' in err
     assert 'Projects block' not in err
@@ -964,7 +1072,7 @@ def test_local_or_mixed_artifact_drift_keeps_the_fragment_hint(world, drift):
 @pytest.mark.parametrize('damage', ['missing', 'duplicated'])
 def test_unrecognised_markers_keep_the_general_failure(world, damage):
     commit_pair(world)
-    refresh_ops(world, added_projects(world))
+    refresh_projects(world)
     artifact = world.root / 'instructions/AGENTS.md'
     data = artifact.read_bytes()
     artifact.write_bytes(data.replace(END_MARKER, b'') if damage == 'missing' else data + END_MARKER)
@@ -980,18 +1088,21 @@ def test_projects_only_classification_reads_the_staged_artifact(world):
     add_last_fixture_rule(world, core)
     assert build(world).returncode == 0
     git(world.root, 'add', '.')
-    refresh_ops(world, added_projects(world))
+    add_projects(world)
     assert build(world).returncode == 0
     err = check_without_writes(world)
-    assert 'artifact Projects block stale' in err
+    assert 'instructions/fragments/projects.md differs from tasks resolve' in err
     assert build(world, 'check', '--working-tree').returncode == 0
+    git(world.root, 'add', 'instructions/fragments/projects.md')
+    err = check_without_writes(world)
+    assert 'artifact Projects block stale' in err
 
 
 def test_unrelated_staging_classifies_the_working_tree_artifact(world):
     commit_pair(world)
     (world.root / 'other.md').write_text('unrelated\n')
     git(world.root, 'add', 'other.md')
-    refresh_ops(world, added_projects(world))
+    refresh_projects(world)
     err = check_without_writes(world)
     assert 'artifact Projects block stale' in err
     assert build(world).returncode == 0
@@ -1019,7 +1130,7 @@ def test_pinned_proofs_survive_current_policy_renderer_and_internal_api_change(w
     script.write_text(changed)
     change_evidence(world, revision='0' * 40)
     (world.root / 'tools/instruction-assembly-proof-driver.py').write_text('raise RuntimeError("current driver must not run")\n')
-    (world.ops / 'bin/ops-projects').write_text('raise RuntimeError("live renderer must not run")\n')
+    (world.config.parent / 'resolver.json').write_text('{}')  # the live resolver must not be read
     assert invoke(world, 'verify-baseline', *args).returncode == 0
     assert invoke(world, 'verify-initial', *args, '--projects-revision', ops_rev).returncode == 0
 
@@ -1049,15 +1160,18 @@ def test_registry_errors_are_clear_validation_failures(world, change):
 
 
 @pytest.mark.parametrize('change', ['missing', 'old-marker', 'duplicate-marker'])
-def test_projects_input_structure_and_renderer_failures_are_guarded(world, change):
+@pytest.mark.parametrize('skip', [False, True])
+def test_projects_fragment_structure_and_resolver_failures_are_guarded(world, change, skip):
     commit_pair(world)
-    projects = world.ops / 'instructions/fragments/projects.md'
-    if change == 'missing': (world.ops / 'bin/ops-projects').unlink()
-    elif change == 'old-marker': projects.write_bytes(projects.read_bytes().replace(b'edit identity.toml in the project, or identity-mirror.toml in ops', b'edit identity-mirror.toml in ops'))
+    projects = world.root / 'instructions/fragments/projects.md'
+    if change == 'missing':
+        if skip: projects.unlink()
+        else: (world.config / '../bin/tasks').unlink()
+    elif change == 'old-marker': projects.write_bytes(projects.read_bytes().replace(_projects.START.encode(), b'<!-- ops:projects start -->'))
     else: projects.write_bytes(projects.read_bytes() + b'<!-- ops:projects end -->\n')
-    result = build(world, 'check')
-    assert result.returncode == 1
-    assert b'Projects' in result.stderr or b'render failed' in result.stderr
+    result = build(world, 'check', *(['--skip-projects-render'] if skip else []))
+    assert result.returncode == 1 and b'Traceback' not in result.stderr
+    assert b'projects' in result.stderr.lower()
 
 
 def test_deployed_recipes_ignore_stale_preparation_environment(world):
@@ -1068,14 +1182,14 @@ def test_deployed_recipes_ignore_stale_preparation_environment(world):
     for name in ('ops-check', 'ops-docs'):
         (world.root / 'tools' / name).write_text('import sys\n')
     (world.root / 'tools/tt').write_text('import subprocess, sys\nsys.exit(subprocess.run(sys.argv[sys.argv.index("--") + 1:]).returncode)\n')
-    task_stub = world.root / 'bin/tasks'
-    task_stub.write_text('#!/bin/sh\nexit 0\n')
-    task_stub.chmod(0o755)
+    shutil.copy(ROOT / 'bin/lore', world.root / 'bin/lore')  # check_cmd compiles these too
+    (world.root / 'scripts').mkdir(exist_ok=True)
+    shutil.copy(ROOT / 'scripts/profile-parity.py', world.root / 'scripts/profile-parity.py')
     commit_pair(world)
     stale = world.root.parent / 'old-ops-worktree'
     git(world.ops, 'worktree', 'add', '-q', '--detach', str(stale), 'HEAD')
     (stale / 'instructions/fragments/projects.md').write_text('stale source\n')
-    env = {**world.env, 'PATH': str(world.root / 'bin') + os.pathsep + world.env['PATH']}
+    env = dict(world.env)
     for value in (None, str(stale), 'stale path with spaces'):
         selected = dict(env)
         if value is not None: selected['LORE_ASSEMBLY_OPS_ROOT'] = value
@@ -1103,7 +1217,8 @@ def test_later_policy_bytes_are_rendered_without_changing_historical_fixtures(wo
     assert result.returncode == 0 and result.stdout == expected
     assert build(world).returncode == 0
     assert outputs(world)[0] == expected
-    assert (world.root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes() == world.initial
+    assert (world.root / 'tools/fixtures/instruction-assembly/initial.md').read_bytes() == \
+        (ROOT / 'tools/fixtures/instruction-assembly/initial.md').read_bytes()
 
 # Rule provenance: byte boundaries, honest unknowns and immutable subject bindings.
 RULE_A = 'rule:' + 'a' * 32
@@ -1954,13 +2069,22 @@ def add_last_fixture_rule(world, source):
     assert result.returncode == 0, result.stderr
 
 
+GENERATED_PROJECTS = 'owner = "lore"\nsource = "instructions/fragments/projects.md"\ngenerated = "tasks-resolve"\n'
+VERSION_ONE_PROJECTS = 'owner = "ops"\nsource = "instructions/fragments/projects.md"\n'
+
+
 def historical_pair(world):
+    """Commit a version-one pair: the pinned assembler, unmarked sources, and the catalog
+    with the Projects input still owned by ops."""
     module = load_assembler(world)
-    paths = [world.root / 'bin/assemble-instructions'] + list((world.root / 'instructions/fragments').glob('*.md'))
+    catalog = world.root / 'instructions/assembly.toml'
+    paths = [world.root / 'bin/assemble-instructions', catalog] + list((world.root / 'instructions/fragments').glob('*.md'))
     saved = {p: p.read_bytes() for p in paths}
-    for path in paths[1:]:
+    for path in paths[2:]:
         if b'<!-- rule:' in saved[path]: path.write_bytes(module.scan_rules(saved[path])['rendered'])
     paths[0].write_bytes(git(ROOT, 'show', 'e73938cf41ca425c45dfb132947041dddfea4fd5:bin/assemble-instructions'))
+    assert catalog.read_text().count(GENERATED_PROJECTS) == 1
+    catalog.write_text(catalog.read_text().replace(GENERATED_PROJECTS, VERSION_ONE_PROJECTS))
     commit_pair(world)
     revision = git(world.root, 'rev-parse', 'HEAD').decode().strip()
     for path, data in saved.items(): path.write_bytes(data)

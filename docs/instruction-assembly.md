@@ -14,27 +14,31 @@ in [instruction-formats.md](instruction-formats.md); this guide does not repeat 
   hashes and the evidence behind each fragment. Provenance stays out of the
   delivered text.
 
-Lore owns the policy fragments in `instructions/fragments/`. Ops owns the
-Projects/Feedback-owners fragment (`instructions/fragments/projects.md` in the ops
-checkout), generated there by `just projects`. Never hand-edit either output.
+Lore owns the policy fragments in `instructions/fragments/`. The Projects and
+Feedback-owners fragment, `instructions/fragments/projects.md`, is generated: `write`
+renders it from `tasks resolve --all --json` (each project's records entry) and lore's
+profile definitions. A project whose resolved profile is private is left out; a session
+under that profile lists it instead. Never hand-edit the artifact, the manifest or a
+generated fragment.
 
 ## Commands
 
 | Command | Effect |
 | --- | --- |
-| `just assemble` | `bin/assemble-instructions write`: render both files and replace each file atomically; the pair is not one transaction. Refuses a symlinked or non-regular output. |
-| `bin/assemble-instructions render` | Print the artifact; `render --manifest` prints the manifest. Writes nothing. |
+| `just assemble` | `bin/assemble-instructions write`: render the generated fragments, the artifact and the manifest, and replace each file atomically; the set is not one transaction. Refuses a symlinked or non-regular output. |
+| `bin/assemble-instructions render` | Print the artifact `write` would produce, generated fragments rendered from the resolver; `render --manifest` prints the manifest. Writes nothing. |
 | `bin/assemble-instructions check` | Read-only verification; `just check` runs it. |
 | `check --working-tree` | The same check against files on disk, whatever is staged. |
-| `--owner-root PREFIX=PATH` | Read one external owner from another checkout, such as a prepared ops worktree. |
+| `--owner-root PREFIX=PATH` | Read one external owner, such as an evidence owner's records directory, from another checkout. |
 
 Typical change: edit a fragment or the catalog, run `just assemble`, then stage the
 artifact, the manifest and the source change together. An edit to the assembler
 itself also changes the manifest's `assembler` entry, so assemble and stage the
 manifest in the same commit.
 
-After an ops change to project identity: run `just projects` in ops, then
-`just assemble` here.
+After a project is registered, renamed or retired, or its identity snapshot is
+refreshed (`tasks identity refresh`), run `just assemble` here. `write`, `render` and
+the default `check` need `tasks` on `PATH` and lore's private profile values.
 
 ## Owner roots
 
@@ -52,9 +56,9 @@ a hook exports are stripped before reading any other owner's repository.
 
 In order: the catalog's format; every evidence pointer resolves at its full commit
 to a file blob; every source reads; the committed mandatory set is preserved and
-each source has the required shape; the ops Projects input equals what `ops-projects render`
-prints on this host (skip with `--skip-projects-render`); the selected artifact and
-manifest equal a fresh rendering.
+each source has the required shape; each generated fragment equals a fresh render from
+`tasks resolve` on this host (skip with `--skip-projects-render`); the selected artifact
+and manifest equal a fresh rendering.
 
 Which view is checked: when the staged changes include the catalog, artifact,
 manifest, assembler, anything under `instructions/fragments/`, or a lore-owned
@@ -102,16 +106,16 @@ ops repository.
 
 | Message | Cause and action |
 | --- | --- |
-| `artifact Projects block stale: …` | Ops's Projects input changed since the last assembly. Run `just assemble`. |
-| `Projects input differs from this host's current project rendering …` | A project was registered, renamed or retired. Run `just projects` in ops, then `just assemble`. |
+| `artifact Projects block stale: …` | The generated Projects fragment changed without a reassembly. Run `just assemble`. |
+| `instructions/fragments/projects.md differs from tasks resolve …` | A project was registered, renamed or retired, or its identity snapshot was refreshed. Run `just assemble`. |
+| `projects: rendering from tasks resolve failed: …` | `tasks` is missing, the resolver reported a catalogue warning, or a records entry cannot render (no identity snapshot: `tasks identity refresh <prefix>`, or `--from` to seed one; an unknown profile). Fix what the message names. |
 | `artifact stale; …` / `manifest stale; …` | A lore source, the catalog or the assembler changed. Run `just assemble`. |
 | `executing assembler differs from index; …` | Stage the intended assembler or restore the index copy. |
 | `missing or downgraded committed mandatory fragments: …` | A mandatory fragment was removed or made adaptable; restore it. |
 | `invalid evidence OWNER REVISION:PATH: …` | The pointer's commit or blob cannot be read, or its revision is not a full commit id. Fix the pointer, or fetch the owner's history. |
 | `X is not registered in the tasks registry` | Register the owner (`tasks init` in it). `--owner-root` works around it only for `render`; `write` and `check` require every owner, overridden or not, to be registered. |
 
-The SessionStart notice from ops also reports a forgotten assembly after an ops
-refresh.
+The SessionStart notice from ops also runs this check.
 
 ## Creating and refreshing rule records
 

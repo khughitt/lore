@@ -235,3 +235,14 @@ def test_complete_required_warning_arrays_stay_fatal(profile_world,warnings):
 def test_unknown_global_warnings_are_not_other_projects(profile_world,warning):
     w=profile_world;w.data[f'resolve {w.checkout} --json']['warnings']=[warning];w.save()
     with pytest.raises(ProfileError,match=warning):resolve(w.checkout,w.env)
+
+
+def test_private_listing_follows_path_rules_for_unassigned_entries(profile_world):
+    w=profile_world
+    area=w.checkout.parent/'workarea'
+    with w.private.open('a') as f: f.write(f'\n[[family]]\npath="{area}"\nprofiles=["work"]\n')
+    w.data['resolve --all --json']['results'].append({'status':'resolved','prefix':'pw','root':str(area/'pw'),
+        'entry':{'config':str(w.records/'pw/tasks/.config.toml'),'records':str(w.records/'pw'),
+                 'checkout':str(area/'pw'),'kind':'detached','name':'pw','purpose':'by path'}})
+    w.save();git(w.checkout,w.env,'config','agent.profile','work')
+    assert '- `pw` — pw — by path' in resolve(w.checkout,w.env)['private_projects']

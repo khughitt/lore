@@ -343,14 +343,21 @@ status = "none recorded"
 
 [[fragments]]
 id = "projects"
-owner = "ops"
+owner = "lore"
 source = "instructions/fragments/projects.md"
+generated = "tasks-resolve"
 classification = "mandatory"
 provenance_date = "2026-10-05"
-rationale = "Preserve ops-owned project identity and feedback vocabulary."
+rationale = "Name every project and feedback owner from its records entry, through the tasks resolver."
 [[fragments.evidence]]
 owner = "ops:records"
 path = "docs/specs/2026-09-07-project-identity-design.md"
 revision = "a83536d369734fcf0cb2ad6b8c876e8f7d5dadb3"
 location = "Assembly amendment and original identity contract."
 status = "n/a"
+[[fragments.evidence]]
+owner = "ops:records"
+path = "docs/specs/2026-11-09-boundary-revision-5-design.md"
+revision = "36457b8d80e87cae336605f8e9e7145cfa33a120"
+location = "§5.1 derived views and the config-only resolver; §6 stage 1 (lore renders the Projects and Feedback-owners fragments)."
+status = "recorded"

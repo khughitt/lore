@@ -32,8 +32,8 @@ Checks use Python 3.11+, uv, Git and just. The corpus, profiles and skills are p
 files and read on their own. Live delivery, the `SessionStart` hook (`hooks/claude-profile`),
 and the repository gates (`just check` and `bin/assemble-instructions check`) require
 [tasks](https://github.com/khughitt/tasks) (with `lore` and `ops` registered in the
-host registry), lore's private profile values in its records directory,
-[ops](https://github.com/khughitt/ops) (for the generated Projects fragment), and [harness-quarters](https://github.com/khughitt/harness-quarters)
+host registry; its resolver supplies the generated Projects fragment), lore's private
+profile values in its records directory, and [harness-quarters](https://github.com/khughitt/harness-quarters)
 (which links lore's outputs and hook into each harness home). Run `just check` and
 `just test-full` to verify the corpus and its assembly outputs; routine `just test`
 runs on GitHub Actions at push (see [AGENTS.md](AGENTS.md), Gates).
@@ -48,21 +48,20 @@ stays out of the delivered text.
 
 ```sh
 just assemble                                   # writes instructions/AGENTS.md and instructions/AGENTS.manifest.json
-python3 bin/assemble-instructions check         # verifies catalog, sources, manifest, artifact, and live ops renderer
+python3 bin/assemble-instructions check         # verifies catalog, sources, manifest, artifact, and the Projects render
 python3 bin/assemble-instructions provenance    # reports all rule claims and coverage warnings
 python3 bin/skill-sizes.py                      # prints the skill token/byte inventory
 ```
 
 To preview an activation without writing the delivered pair, run
 `bin/assemble-instructions render` for the artifact and `render --manifest` for its
-manifest, adding `--owner-root ops=<prepared ops worktree>` when the Projects input is
-not yet merged. The manifest's artifact hash ties the two outputs together.
+manifest. The manifest's artifact hash ties the two outputs together.
 
-Ops owns instructions/fragments/projects.md in its checkout. Refresh that source
-with just projects in ops, then assemble here. The assembler's read-only check
-validates the catalog, sources, manifest, artifact and live Projects renderer;
-relevant staged files select the whole prospective index. The session-start notice
-still detects a forgotten assembly step after an ops refresh.
+`instructions/fragments/projects.md` is generated from `tasks resolve`: after a
+project is registered, renamed or retired, or its identity snapshot is refreshed, run
+`just assemble`. The assembler's read-only check validates the catalog, sources,
+manifest, artifact and that fragment against a fresh render; relevant staged files
+select the whole prospective index.
 
 Evidence pointers name an owner and a full commit: a project prefix reads that project's
 checkout, and `lore:records` reads lore's records directory, which lives in a separate
@@ -88,7 +87,7 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
   `tasks resolve lore --json` and safely invoke that root's launcher by explicit path;
   no `lore` PATH install is assumed ([profile delivery](docs/profile-delivery.md)).
 - **Assembly catalog (`instructions/assembly.toml`):** declares the ordered fragments
-  and owner checkouts (`lore` and `ops`) that `bin/assemble-instructions` composes into
+  and their owners (lore's policy and the Projects fragment it generates) that `bin/assemble-instructions` composes into
   `instructions/AGENTS.md` and `instructions/AGENTS.manifest.json`
   ([instruction formats](docs/instruction-formats.md)).
 

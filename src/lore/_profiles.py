@@ -6,6 +6,7 @@ import shlex
 import subprocess
 from ._configuration import ProfileError, load, compose, expand, HARNESS, KEYS
 from ._tasks import query
+from ._projects import private_listing
 
 CORPUS = pathlib.Path(__file__).resolve().parents[2]
 OVERRIDE = "agent.profile"
@@ -128,31 +129,7 @@ def resolve(path, env, payload=None):
             file = CORPUS / 'profiles' / f'{fragment}.md'
             if not file.is_file(): warnings.append(f"fragment {fragment}: {file} does not exist")
             else: fragments.append(str(file))
-    private = []
-    private_names = {n for n in names if config['profile'][n].get('private')}
-    if private_names and not store:
-        rows = query(['resolve','--all','--json'],env)['results']
-        retired = []
-        for item in sorted(rows, key=lambda r: r.get('prefix', '')):
-            data = item.get('entry', {})
-            if data.get('profile') not in private_names:
-                continue
-            prefix = item['prefix']
-            if not isinstance(data.get('name'), str) or not isinstance(data.get('purpose'), str):
-                raise ProfileError(f"{prefix}: private project identity missing")
-            if 'retired' in data:
-                retirement = data['retired']
-                if not isinstance(retirement, dict) or not isinstance(retirement.get('date'), str):
-                    raise ProfileError(f"{prefix}: invalid retirement metadata")
-                successor = retirement.get('successor')
-                arrow = f" → `{successor}`" if successor else ""
-                retired.append(f"`{prefix}` ({data['name']}, {retirement['date']}){arrow}")
-                continue
-            aliases = data.get('aliases', [])
-            named = data['name'] + (f" ({', '.join(aliases)})" if aliases else "")
-            private.append(f"- `{prefix}` — {named} — {data['purpose']}")
-        if retired:
-            private.append('Retired: ' + '; '.join(retired) + '.')
+    private = [] if store else private_listing(names, config, env)
     notes = pathlib.Path(entry['records']) / 'AGENTS.md' if linked and entry.get('records') else None
     result = {'kind':'records-store' if store else 'checkout', 'records_store':str(canonical) if store else None,
               'checkout':str(canonical),'path':str(pathlib.Path(path).resolve()),'worktree':top!=canonical,

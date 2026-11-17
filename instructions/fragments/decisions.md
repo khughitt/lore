@@ -105,6 +105,29 @@
   or limits, split work across turns or controllers, or start a fresh session to stay
   under a limit.
 <!-- rule:1f37e3afebdd433a9ccaa2970cde7289 end -->
+<!-- rule:9cd0cd1f8ae0476da9a53ca58af12b91 begin -->
+- A spend signal says an agent tree's token spend is far outside its harness's normal
+  range: obs's live producer detects it, alerts the user on the desktop, and hq
+  turn-pause delivers it to the tree as a `spend` pause. Received mid-turn, through a
+  turn-pause refusal or any other route (a notice, an alert the user pastes), handle it
+  as a crossed limit under the turn-pause rule above: stop, park the task `--waiting-on
+  user --reason decision` with the signal (value, threshold, episode) in the park note,
+  report it, and end the turn; a subagent stops as that rule says. Investigation starts
+  in the next turn. Received at the user's prompt (turn-pause injects it as context
+  when the episode opened while the root was idle), do not park or end the turn: report
+  the signal first and investigate in this turn, before any of the original task's work
+  resumes. Investigation finds the cause and records it on the task (obs's growth
+  report on the tree, the polling pattern behind it), unless the user's reply waives
+  it. The original work resumes only with a verified fix or a mitigation that removes
+  the spending cause from the work being resumed (the long wait handed to a
+  small-context child, the controller restarted fresh per stage); filing a follow-up
+  task alone is neither. Without one, the work stays parked `--waiting-on user --reason
+  decision`, naming the cause and the options. Only the user's explicit instruction
+  resumes work whose spending pattern is unchanged: a waived investigation is not that
+  instruction, and neither is the reply that ends the pause. This outranks the
+  turn-pause rule's continuation after that reply. Never write obs's spend state to
+  clear or acknowledge a signal.
+<!-- rule:9cd0cd1f8ae0476da9a53ca58af12b91 end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not

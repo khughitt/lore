@@ -1172,7 +1172,7 @@ the Feedback section above says when.
 - `hq` — Harness homes and the declared links that install the agent surface, harness settings and hook wiring, turn-pause enforcement and hq pause diagnostics, capability facts, state hygiene, the session archive, and the session-logs skill with its tools.
 - `lore` — The global instructions and profile fragments, the skill corpus, instruction assembly, and the profile hook.
 - `obs` — Execution evidence: session and task indexing, joins, baselines, and their reports.
-- `ops` — Shared tooling in bin/ (including the vendored tt, ops-check, ops-docs), the Claude Code hooks (pretooluse, claim-guard, relay-guard, provenance), profiles, gates, and the quick-add skill.
+- `ops` — Shared tooling in bin/ (including the vendored tt, ops-check, ops-docs), the Claude Code hooks (pretooluse, claim-guard, relay-guard, provenance), profiles and gates.
 - `relay` — Harness adapters, hook dispatch to non-Claude harnesses, the live-agent registry, and relay identity.
 - `tasks` — The tasks CLI and its tasks, curate, and scope skills.
 <!-- ops:projects end -->

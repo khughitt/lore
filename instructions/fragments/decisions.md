@@ -105,6 +105,29 @@
   or limits, split work across turns or controllers, or start a fresh session to stay
   under a limit.
 <!-- rule:1f37e3afebdd433a9ccaa2970cde7289 end -->
+<!-- rule:9cd0cd1f8ae0476da9a53ca58af12b91 begin -->
+- A spend signal says an agent tree's token spend is far outside its harness's normal
+  range: obs's live producer detects it, alerts the user on the desktop, and hq
+  turn-pause delivers it to the tree as a `spend` pause. Received mid-turn, through a
+  turn-pause refusal or any other route (a notice, an alert the user pastes), handle it
+  as a crossed limit under the turn-pause rule above: stop, park the task `--waiting-on
+  user --reason decision` with the signal (value, threshold, episode) in the park note,
+  report it, and end the turn; a subagent stops as that rule says. Investigation starts
+  in the next turn. Received at the user's prompt (turn-pause injects it as context
+  when the episode opened while the root was idle), do not park or end the turn: report
+  the signal first and investigate in this turn, before any of the original task's work
+  resumes. Investigation finds the cause and records it on the task (obs's growth
+  report on the tree, the polling pattern behind it), unless the user's reply waives
+  it. The original work resumes only with a verified fix or a mitigation that removes
+  the spending cause from the work being resumed (the long wait handed to a
+  small-context child, the controller restarted fresh per stage); filing a follow-up
+  task alone is neither. Without one, the work stays parked `--waiting-on user --reason
+  decision`, naming the cause and the options. Only the user's explicit instruction
+  resumes work whose spending pattern is unchanged: a waived investigation is not that
+  instruction, and neither is the reply that ends the pause. This outranks the
+  turn-pause rule's continuation after that reply. Never write obs's spend state to
+  clear or acknowledge a signal.
+<!-- rule:9cd0cd1f8ae0476da9a53ca58af12b91 end -->
 <!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
 - Two written artifacts keep their gate: a design spec and an implementation plan are
   reviewed before the next phase starts. Within writing them, sections are not
@@ -495,3 +518,37 @@
   treating old reports as fresh filesystem observations or rerunning completed reviews
   merely because the controller changed.
 <!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 end -->
+<!-- rule:b7fe2b6f29a046a283cd91afb240c723 begin -->
+- When a target or reviewed repository's root `AGENTS.md` cites a code guide
+  (``Code follows `docs/code-organization.md`.`` or
+  ``Code follows `tools/code-organization.md`.`` in its `ops:identity` or
+  `ops:family` region, including any family note on that line, or
+  `docs/code-organization.md` in `Authority:`; a mention only in `Layout` is not
+  adoption), apply that guide's `Checklist` to work that adds, moves or modifies
+  code, scripts, tests or module layout. Because `ops`'s identity region lists
+  `docs/code-organization.md` in `Authority:` as well as `Code follows`, inspect the
+  `Code follows` line too when present so any family note on it is preserved. Every
+  implementation brief or worker dispatch (task scope briefs, subagent-driven task
+  dispatches, fresh corrective fix dispatches and delegated direct-task workers, with
+  resumed fixers keeping the check; for a frozen plan, in the controller's dispatch
+  handoff rather than by editing the frozen plan or extracted task brief) names the
+  cited guide path, any family note from `Code follows`, any deviations recorded in
+  `AGENTS.md` `Layout` or `.ops-check.toml` (`root_sources_allowed`), and any open
+  conformance task covering existing paths the work touches, and requires reading the
+  guide and checking its `Checklist` during implementation and self-review before
+  committing without reorganizing pre-existing layout owned by another open
+  conformance task; inline implementers (`direct` or `executing-plans`) do the same
+  directly. Every code-review brief or dispatch (per-task code reviews, scoped
+  corrective re-reviews, final whole-branch reviews, direct or flow implementation
+  reviews, and self-review fallbacks) passes that guide path, family note, recorded
+  deviations and any applicable open conformance task, authorizing the reviewer to
+  read the cited guide (and `AGENTS.md` or `.ops-check.toml` when checking
+  deviations) at the reviewed revision without broader codebase crawling, and
+  requires checking the diff against the guide's `Checklist` under its `What binds
+  existing code` and `Deviations` sections: layout rules bind paths added, moved or
+  touched by the diff unless covered by a recorded deviation or another open
+  conformance task the brief cites, and in-module rules bind new and touched code
+  only; untouched files are never flagged. Documentation-only, task-record-only and
+  operational-run steps are unaffected; this supplements existing dispatches,
+  self-reviews and code reviews and adds no extra reviewer or review round.
+<!-- rule:b7fe2b6f29a046a283cd91afb240c723 end -->

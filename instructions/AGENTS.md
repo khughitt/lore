@@ -669,6 +669,34 @@ it this way:
   reconciles any state change, and resumes the first unfinished action without
   treating old reports as fresh filesystem observations or rerunning completed reviews
   merely because the controller changed.
+- When a target or reviewed repository's root `AGENTS.md` cites a code guide
+  (``Code follows `docs/code-organization.md`.`` or
+  ``Code follows `tools/code-organization.md`.`` in its `ops:identity` or
+  `ops:family` region, including any family note on that line, or
+  `docs/code-organization.md` in `Authority:`; a mention only in `Layout` is not
+  adoption), apply that guide's `Checklist` to work that adds, moves or modifies
+  code, scripts, tests or module layout. Because `ops`'s identity region lists
+  `docs/code-organization.md` in `Authority:` as well as `Code follows`, inspect the
+  `Code follows` line too when present so any family note on it is preserved. Every
+  implementation brief or worker dispatch (task scope briefs, subagent-driven task
+  dispatches, fresh corrective fix dispatches and delegated direct-task workers, with
+  resumed fixers keeping the check; for a frozen plan, in the controller's dispatch
+  handoff rather than by editing the frozen plan or extracted task brief) names the
+  cited guide path, any family note from `Code follows`, and any deviations recorded
+  in `AGENTS.md` `Layout` or `.ops-check.toml` (`root_sources_allowed`), and requires
+  reading the guide and checking its `Checklist` during implementation and
+  self-review before committing; inline implementers (`direct` or `executing-plans`)
+  do the same directly. Every code-review brief or dispatch (per-task code reviews,
+  scoped corrective re-reviews, final whole-branch reviews, direct or flow
+  implementation reviews, and self-review fallbacks) passes those same paths, family
+  note and recorded deviations, authorizing the reviewer to read them at the reviewed
+  revision without broader codebase crawling, and requires checking the diff against
+  the guide's `Checklist` under its `What binds existing code` and `Deviations`
+  sections: layout rules bind the repository unless covered by a recorded deviation
+  or a cited open conformance task, while in-module rules bind new and touched code
+  only and never flag untouched files. Documentation-only, task-record-only and
+  operational-run steps are unaffected; this supplements existing dispatches,
+  self-reviews and code reviews and adds no extra reviewer or review round.
 
 ## Processes
 

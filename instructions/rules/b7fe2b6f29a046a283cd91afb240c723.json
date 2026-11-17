@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:b7fe2b6f29a046a283cd91afb240c723",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "b7d23b1297d5a12b32f02aa03c10727e6665f754b437674140803a208c664852",
+      "text": "- When a target or reviewed repository's root `AGENTS.md` cites a code guide\n  (``Code follows `docs/code-organization.md`.`` or\n  ``Code follows `tools/code-organization.md`.`` in its `ops:identity` or\n  `ops:family` region, including any family note on that line, or\n  `docs/code-organization.md` in `Authority:`; a mention only in `Layout` is not\n  adoption), apply that guide's `Checklist` to work that adds, moves or modifies\n  code, scripts, tests or module layout. Because `ops`'s identity region lists\n  `docs/code-organization.md` in `Authority:` as well as `Code follows`, inspect the\n  `Code follows` line too when present so any family note on it is preserved. Every\n  implementation brief or worker dispatch (task scope briefs, subagent-driven task\n  dispatches, fresh corrective fix dispatches and delegated direct-task workers, with\n  resumed fixers keeping the check; for a frozen plan, in the controller's dispatch\n  handoff rather than by editing the frozen plan or extracted task brief) names the\n  cited guide path, any family note from `Code follows`, and any deviations recorded\n  in `AGENTS.md` `Layout` or `.ops-check.toml` (`root_sources_allowed`), and requires\n  reading the guide and checking its `Checklist` during implementation and\n  self-review before committing; inline implementers (`direct` or `executing-plans`)\n  do the same directly. Every code-review brief or dispatch (per-task code reviews,\n  scoped corrective re-reviews, final whole-branch reviews, direct or flow\n  implementation reviews, and self-review fallbacks) passes those same paths, family\n  note and recorded deviations, authorizing the reviewer to read them at the reviewed\n  revision without broader codebase crawling, and requires checking the diff against\n  the guide's `Checklist` under its `What binds existing code` and `Deviations`\n  sections: layout rules bind the repository unless covered by a recorded deviation\n  or a cited open conformance task, while in-module rules bind new and touched code\n  only and never flag untouched files. Documentation-only, task-record-only and\n  operational-run steps are unaffected; this supplements existing dispatches,\n  self-reviews and code reviews and adds no extra reviewer or review round.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Apply the code organization checklist in implementation and review briefs"
+}

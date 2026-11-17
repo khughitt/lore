@@ -682,19 +682,23 @@ it this way:
   dispatches, fresh corrective fix dispatches and delegated direct-task workers, with
   resumed fixers keeping the check; for a frozen plan, in the controller's dispatch
   handoff rather than by editing the frozen plan or extracted task brief) names the
-  cited guide path, any family note from `Code follows`, and any deviations recorded
-  in `AGENTS.md` `Layout` or `.ops-check.toml` (`root_sources_allowed`), and requires
-  reading the guide and checking its `Checklist` during implementation and
-  self-review before committing; inline implementers (`direct` or `executing-plans`)
-  do the same directly. Every code-review brief or dispatch (per-task code reviews,
-  scoped corrective re-reviews, final whole-branch reviews, direct or flow
-  implementation reviews, and self-review fallbacks) passes those same paths, family
-  note and recorded deviations, authorizing the reviewer to read them at the reviewed
-  revision without broader codebase crawling, and requires checking the diff against
-  the guide's `Checklist` under its `What binds existing code` and `Deviations`
-  sections: layout rules bind the repository unless covered by a recorded deviation
-  or a cited open conformance task, while in-module rules bind new and touched code
-  only and never flag untouched files. Documentation-only, task-record-only and
+  cited guide path, any family note from `Code follows`, any deviations recorded in
+  `AGENTS.md` `Layout` or `.ops-check.toml` (`root_sources_allowed`), and any open
+  conformance task covering existing paths the work touches, and requires reading the
+  guide and checking its `Checklist` during implementation and self-review before
+  committing without reorganizing pre-existing layout owned by another open
+  conformance task; inline implementers (`direct` or `executing-plans`) do the same
+  directly. Every code-review brief or dispatch (per-task code reviews, scoped
+  corrective re-reviews, final whole-branch reviews, direct or flow implementation
+  reviews, and self-review fallbacks) passes that guide path, family note, recorded
+  deviations and any applicable open conformance task, authorizing the reviewer to
+  read the cited guide (and `AGENTS.md` or `.ops-check.toml` when checking
+  deviations) at the reviewed revision without broader codebase crawling, and
+  requires checking the diff against the guide's `Checklist` under its `What binds
+  existing code` and `Deviations` sections: layout rules bind paths added, moved or
+  touched by the diff unless covered by a recorded deviation or another open
+  conformance task the brief cites, and in-module rules bind new and touched code
+  only; untouched files are never flagged. Documentation-only, task-record-only and
   operational-run steps are unaffected; this supplements existing dispatches,
   self-reviews and code reviews and adds no extra reviewer or review round.
 

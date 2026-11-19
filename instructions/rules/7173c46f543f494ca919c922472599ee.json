@@ -1,0 +1,36 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:7173c46f543f494ca919c922472599ee",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4f52199a10a150f73942d561c1761e9651147a1b618d1374a1d697cef8a30c2c",
+      "text": "- Restating never strengthens a modality. Your summary, decomposition or plan of what\n  the user wants is expected or claimed, never intended; approval adopts an artifact\n  without making its assumptions the user's words. An estimate, a plan or your own\n  statement authorizes nothing. A note that a check passed is claimed and the check's\n  output is observed; a value assigned or requested is expected and the value that ran\n  is observed. An inference names its method and what it could not cover.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "976f5aadadd8c1edf9a4a60fc0710254690b2dccfa622ee6e6fb26ccdc1cf062",
+      "text": "- Carry what the user wants or permits forward by exact quote with its source, and label\n  a paraphrase or an interpretation as yours. A later instruction supersedes an earlier\n  one only as far as it contradicts or explicitly replaces it. Approval adopts an\n  artifact and grants only what its own words grant. A ceiling such as a provider quota\n  says what can be consumed, never what the user authorized.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Carry intent and grants forward by quote; a ceiling is not a grant"
+}

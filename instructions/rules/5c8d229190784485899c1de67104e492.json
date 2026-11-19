@@ -1,0 +1,36 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:5c8d229190784485899c1de67104e492",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "57a9fa4532abdb47ea9f47f4cea1d9f50cfcefd55939f8643bf6cb77a3a651b1",
+      "text": "- When you report a figure or a state, name its scope and modality wherever a reader\n  could mistake them, and show statements that differ in either one side by side or as\n  an explicit comparison, never merged into one value. This names what the other rules\n  here already require; it adds no gate, checkpoint or stop.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "39ba5a3f97a247e1f9d6000f9accbee47c51bce7e7b72b98216401b320cfc827",
+      "text": "- When you report or combine figures, state the scope, units and basis wherever a reader\n  could mistake them: what was counted, over what, and how you know. This names what\n  the other rules here already require; it adds no gate, checkpoint or stop.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "State scope, units and basis when reporting or combining figures"
+}

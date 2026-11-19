@@ -1,0 +1,36 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:dd68d1dda463423fb4279240c6ad7d21",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "0c29b21678cb253f3510a96476d3600cec366224c3cdd9ba0def247663b5ded7",
+      "text": "- A statement about work has a scope and a modality; ops's\n  `docs/statement-vocabulary.md` is the standard. Scopes: an item (a task or goal), a\n  run (a controller session and the sessions it spawned), a turn, a phase (between two\n  gates), a revision, an account window (one provider account in one quota window), a\n  host. Three modalities direct: `intended` (what a person wants, in their own recorded\n  words), `authorized` (what may be done or spent, by a grant or limit from whoever\n  holds the authority) and `expected` (what should happen under a rule, a plan or a\n  baseline a rule adopts). Three describe: `claimed` (what someone recorded as so),\n  `observed` (what a source shows, read at a stated time) and `inferred` (what a named\n  method derives from other statements).\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "d85c33a48d0d40cb000fe37879cc8fc9d1ba13b2e5bcbcf659c69bac58cb66d7",
+      "text": "- ops's `docs/statement-vocabulary.md` gives the words for a statement about work. Three\n  say what it asks of the work: `intended` (what a person wants), `authorized` (what may\n  be done or spent, by a grant from whoever holds the authority) and `expected` (what\n  should happen under a rule, a plan or a baseline a rule adopts). Three say how it is\n  known: `observed` (what a source shows, read at a stated time), `claimed` (what\n  someone recorded as so) and `inferred` (what a named method derives). Both can apply\n  at once: the user's message \"push this revision\" is observed evidence of\n  authorization, and your later note that they approved the push is a claim about it.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Directive and basis words for a statement about work"
+}

@@ -1,28 +1,24 @@
 ## Statements about work
 
 <!-- rule:dd68d1dda463423fb4279240c6ad7d21 begin -->
-- A statement about work has a scope and a modality; ops's
-  `docs/statement-vocabulary.md` is the standard. Scopes: an item (a task or goal), a
-  run (a controller session and the sessions it spawned), a turn, a phase (between two
-  gates), a revision, an account window (one provider account in one quota window), a
-  host. Three modalities direct: `intended` (what a person wants, in their own recorded
-  words), `authorized` (what may be done or spent, by a grant or limit from whoever
-  holds the authority) and `expected` (what should happen under a rule, a plan or a
-  baseline a rule adopts). Three describe: `claimed` (what someone recorded as so),
-  `observed` (what a source shows, read at a stated time) and `inferred` (what a named
-  method derives from other statements).
+- ops's `docs/statement-vocabulary.md` gives the words for a statement about work. Three
+  say what it asks of the work: `intended` (what a person wants), `authorized` (what may
+  be done or spent, by a grant from whoever holds the authority) and `expected` (what
+  should happen under a rule, a plan or a baseline a rule adopts). Three say how it is
+  known: `observed` (what a source shows, read at a stated time), `claimed` (what
+  someone recorded as so) and `inferred` (what a named method derives). Both can apply
+  at once: the user's message "push this revision" is observed evidence of
+  authorization, and your later note that they approved the push is a claim about it.
 <!-- rule:dd68d1dda463423fb4279240c6ad7d21 end -->
 <!-- rule:7173c46f543f494ca919c922472599ee begin -->
-- Restating never strengthens a modality. Your summary, decomposition or plan of what
-  the user wants is expected or claimed, never intended; approval adopts an artifact
-  without making its assumptions the user's words. An estimate, a plan or your own
-  statement authorizes nothing. A note that a check passed is claimed and the check's
-  output is observed; a value assigned or requested is expected and the value that ran
-  is observed. An inference names its method and what it could not cover.
+- Carry what the user wants or permits forward by exact quote with its source, and label
+  a paraphrase or an interpretation as yours. A later instruction supersedes an earlier
+  one only as far as it contradicts or explicitly replaces it. Approval adopts an
+  artifact and grants only what its own words grant. A ceiling such as a provider quota
+  says what can be consumed, never what the user authorized.
 <!-- rule:7173c46f543f494ca919c922472599ee end -->
 <!-- rule:5c8d229190784485899c1de67104e492 begin -->
-- When you report a figure or a state, name its scope and modality wherever a reader
-  could mistake them, and show statements that differ in either one side by side or as
-  an explicit comparison, never merged into one value. This names what the other rules
-  here already require; it adds no gate, checkpoint or stop.
+- When you report or combine figures, state the scope, units and basis wherever a reader
+  could mistake them: what was counted, over what, and how you know. This names what
+  the other rules here already require; it adds no gate, checkpoint or stop.
 <!-- rule:5c8d229190784485899c1de67104e492 end -->

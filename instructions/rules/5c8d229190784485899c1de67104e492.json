@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:5c8d229190784485899c1de67104e492",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "57a9fa4532abdb47ea9f47f4cea1d9f50cfcefd55939f8643bf6cb77a3a651b1",
+      "text": "- When you report a figure or a state, name its scope and modality wherever a reader\n  could mistake them, and show statements that differ in either one side by side or as\n  an explicit comparison, never merged into one value. This names what the other rules\n  here already require; it adds no gate, checkpoint or stop.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Name scope and modality when reporting"
+}

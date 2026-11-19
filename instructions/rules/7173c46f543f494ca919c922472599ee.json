@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:7173c46f543f494ca919c922472599ee",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "4f52199a10a150f73942d561c1761e9651147a1b618d1374a1d697cef8a30c2c",
+      "text": "- Restating never strengthens a modality. Your summary, decomposition or plan of what\n  the user wants is expected or claimed, never intended; approval adopts an artifact\n  without making its assumptions the user's words. An estimate, a plan or your own\n  statement authorizes nothing. A note that a check passed is claimed and the check's\n  output is observed; a value assigned or requested is expected and the value that ran\n  is observed. An inference names its method and what it could not cover.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Restating never strengthens a modality"
+}

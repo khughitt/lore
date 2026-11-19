@@ -154,6 +154,20 @@ location = "alignment with the capture vocabulary the user confirmed on 2026-10-
 status = "recorded"
 
 [[fragments]]
+id = "statements"
+owner = "lore"
+source = "instructions/fragments/statements.md"
+classification = "adaptable"
+provenance_date = "2026-11-18"
+rationale = "Give agents one vocabulary for the scope and modality of a statement about work, so intent, authority and evidence are not restated into one another."
+[[fragments.evidence]]
+owner = "lore:records"
+path = "tasks/lore-5c2c97.md"
+revision = "cf5ab612423afa0905511ed5f4e1bf82d62facbc"
+location = "scoped body: the user's request on 2026-11-18 to create the vocabulary and wire it into the global instructions, and the limit taken from their words on lore-3916a4"
+status = "recorded"
+
+[[fragments]]
 id = "decisions"
 owner = "lore"
 source = "instructions/fragments/decisions.md"

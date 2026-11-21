@@ -3,12 +3,15 @@
 <!-- rule:c6567204f9e443b68cb95a08c8264b3f begin -->
 - Test execution policy comes from `.tt.toml` at the invoking code checkout's Git
   top level, validated by that project's `tt` wrapper; detached records and sibling
-  checkouts never supply it. One Git root means one shared policy. A missing file
-  or `automatic_broad = true` retains the suite requirements below. Invalid or
-  unreadable policy is an error, never an exemption. Do not infer policy-off from
-  absent timing samples or a generic CI environment variable.
-- With a valid `automatic_broad = false`, run fresh focused tests for the changed
-  behavior and always-run hygiene. Preserve focused RED→GREEN during implementation
+  checkouts never supply it. One Git root means one shared policy. A valid
+  explicit file wins. Without it, experimental and pre-release skip
+  automatic local `test`, `test-fast` and `check-code`, and supported retains
+  the suite requirements below. A registered active project needs a valid
+  stage for that automatic decision. Invalid or unreadable policy is an error,
+  never an exemption. Do not infer policy-off from absent timing samples or
+  a generic CI environment variable.
+- When the effective policy disables routine broad runs, run fresh focused
+  tests for the changed behavior and always-run hygiene. Preserve focused RED→GREEN during implementation
   and every corrective review round. Do not rerun a broad suite solely for a commit,
   plan step, end-of-task gate or branch completion. This explicitly overrides generic
   whole-suite/green-suite requirements in executing-plans, subagent-driven-development,
@@ -30,7 +33,7 @@
   selector misses it. Routine broad verification runs remotely on the declared push
   refs. Hosted jobs set `TT_FORCE=1` explicitly; a refused hosted skip is a configuration
   failure to fix, not permission to remove the refusal.
-- With policy enabled or absent, while changing code run the test you are working on,
+- Under effective broad policy, while changing code run the test you are working on,
   then a fast check before
   committing, by the first route the project defines:
   - A justfile with `test-fast` (the test front door): `just test-one <runner args>`;
@@ -44,7 +47,7 @@
     add recipes to the project to fill the gap.
 <!-- rule:c6567204f9e443b68cb95a08c8264b3f end -->
 <!-- rule:48ef50fb32d24e7fa13b92a69affc29b begin -->
-- With policy enabled or absent, the full suite runs in CI where CI is configured for
+- Under effective broad policy, the full suite runs in CI where CI is configured for
   it, and otherwise in the pre-push
   hook. Run it yourself (`just test`, or the guide's documented full-suite command where
   there is no recipe) only when the hooks are not installed, when the fast check does

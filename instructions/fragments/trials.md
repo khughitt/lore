@@ -38,3 +38,40 @@ an error. A late synchronized earlier review note excludes without deleting the
 old assignment; a note timestamped after activation does not prove a later dispatch.
 Controllers need no dispatch-timestamp archaeology.
 <!-- rule:00bc708d91bf4a1b80ce498d206479e4 end -->
+
+### Review briefs and regime
+
+<!-- rule:6e47fe41e61e4fa4a39e084d05e7a8a1 begin -->
+Every brief includes the affected projects' stages, the effective process,
+the applicable safeguards and the named consumer obligations. Confirm the
+review is needed and choose the rubric before the effort draw. A cross-project
+review grades each affected part using that project's obligations.
+
+- `rubric: early-1`. Grade a defect or a missed explicit obligation. In
+  experimental work, missing compatibility code, a speculative migration or
+  broad tests alone do not count as findings. A missing named consumer update
+  can be Important for pre-release. Updating the consumers together fulfills
+  their compatibility obligation.
+- `rubric: supported-1`. Use the supported grading criteria and existing evidence
+  and review workflow. Use this marker for a retained flow-trial unit or a
+  combined review that includes supported work. Name the
+  user-facing consequence of each finding and check the applicable explicit
+  contracts.
+
+Copy the marker from the applicable grading text into the brief. Bump its
+number only when the corresponding grading criteria change.
+
+If these rubrics are active before the reviewer-effort trial begins on
+2026-11-30 UTC, apply them starting with the first eligible review. If activated
+after the trial begins, keep the same rubric in both arms, preserve assignments,
+and record one matching companion beside each applicable review note:
+
+```text
+review regime: <spec|plan|impl> round <n> — stages: <prefix>=<stage>[,<prefix>=<stage>...]; process: <direct|planned>; rubric: <early|supported>-<positive revision>
+```
+
+Use the effective process and the marker copied into the brief. List distinct
+prefixes in sorted order. Match the task, artifact and round of the existing
+`review:` note. Apply the paired write and controller fallback under Task notes
+for outcome measures. Preserve original eligibility, assignments and review counts.
+<!-- rule:6e47fe41e61e4fa4a39e084d05e7a8a1 end -->

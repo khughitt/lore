@@ -115,3 +115,29 @@ def test_deleted_cwd_is_reported(delivery):
        str(deleted),str(w.corpus/'hooks/claude-profile')],env=w.env,input='{}',capture_output=True,text=True,timeout=10)
     assert r.returncode==0 and r.stdout.startswith('profile: unresolved')
     assert len(r.stdout.splitlines())==1
+
+
+def test_action_safeguards_and_reviewer_rubric_are_delivered(delivery):
+    w = delivery
+    w.row["entry"]["stage"] = "experimental"
+    w.save()
+    assert "stage: experimental" in hook(w).stdout
+    root = Path(__file__).resolve().parents[1]
+    core = (root / "instructions/AGENTS.md").read_text()
+    reference = (root / "skills/references/supported-workflow.md").read_text()
+    for trigger in ("Writes to irreplaceable persistent data", "Activation of a live global surface",
+                    "External publication"):
+        assert trigger in core and f"### {trigger}" in reference
+    for check in ("Back up", "round trip", "both installed versions", "read-only report",
+                  "rollback command", "earlier installed version", "where today's rules require it",
+                  "smoke-test", "exact material", "branch pushes for hosted CI"):
+        assert check in " ".join(reference.split())
+    for term in ("effective process", "applicable safeguards", "named consumer obligations",
+                 "missing compatibility", "broad tests alone", "can be Important",
+                 "rubric: early-1", "rubric: supported-1", "enrolled flow-trial",
+                 "skip the skills' per-task implementer/reviewer", "A spend signal says",
+                 "## Communication", "review: <spec|plan|impl> round <n>",
+                 "exactly one matching", "tasks note --stdin"):
+        assert term in core
+    assert "Across the life of any numbered plan" not in core
+    assert "Across the life of any numbered plan" in reference

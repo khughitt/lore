@@ -38,18 +38,18 @@ Two note shapes are read by obs's outcome measures; write them as plain
   Brainstorming's builder check counts as a `review: spec` round: use `revise`
   when it raises questions to answer in the document or bring to the user, and
   `accept` when it raises none. Record its reviewer identity by the same rule above.
-  The reviewer writes the round's note. A reviewer whose request names a task id
-  appends that round's single `review:` note to that task itself
-  (`tasks note <id> "<note>"`) as its last step before returning its review,
-  computing `n` from the task's existing `review:` notes for that artifact, and
-  changes nothing else on the task: no other note, status, claim or field. Its
-  review states the note it wrote, or why it wrote none (no task id named, the
-  write refused). The agent the review arrives to (controller, author or worker)
-  checks that the round's note exists and writes no second one. Only when the
-  reviewer could not write it does that agent write the note, before acting on the
-  findings, and say why in its report: the controller when there is one, otherwise
-  the agent the review arrives to. A worker handed review findings (resumed or
-  freshly dispatched) writes none; if the note is missing, it says so in its report
+  The reviewer writes the round's note on the task named in the request as its
+  last step, computing `n` from that artifact's existing `review:` notes. Where the
+  regime-recording rule applies, append exactly one matching `review regime:` note
+  in the same `tasks note <id> --stdin` write, one note per line. Otherwise append
+  only the `review:` note. These are the only authorized task edits for the
+  reviewer. State which notes landed or why the write was omitted or refused.
+  The receiving controller, author or worker checks what landed. When the
+  reviewer could not write, the controller (or recipient if there is no
+  controller) uses the same write before acting on findings and records why.
+  If the review note already exists, preserve it. Resolve a missing companion
+  separately using the original brief. A worker handed review findings (resumed
+  or freshly dispatched) writes none; if the note is missing, it says so in its report
   for the controller to add. A session noting its own self-review writes it directly.
   This shape measures only spec, plan and implementation reviews; record a review
   of any other artifact (a scope brief or research note) as a plain task note that

@@ -25,6 +25,6 @@
   "schema": 1,
   "searches": [],
   "sources": [],
-  "state": "active",
+  "state": "retired",
   "title": "Assign each custody check to one acting owner and rely on revision-bound results"
 }

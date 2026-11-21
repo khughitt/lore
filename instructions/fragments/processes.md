@@ -80,34 +80,6 @@
   An obligation a tool measures per host, such as a `test-latency` verify, is not a
   rollout check and stays per host.
 <!-- rule:fd94c4f5761740cfaef4497c38d1a6ae end -->
-<!-- rule:3b44ce6a0e9b4816853b1c3b2beedb77 begin -->
-- At park and before `tasks done`, inspect and account on the task for the complete
-  retained set on the current host: worktrees, task scratch and off-tree evidence.
-  Read `~/.agents/skills/references/retained-item-records.md` when creating,
-  refreshing or releasing records; follow its changed-item and exact host-checkpoint
-  procedure. For a changing plan workspace or task scratch/evidence directory, content
-  additions or edits (reports, ledger appends, ordinary handoffs) do not trigger a
-  complete manifest or checkpoint per edit: generate complete manifests and checkpoints
-  at real `park`, `done` or disposal boundaries, while recording immediate creation
-  notes and changes of owner, purpose, disposition or uncertainty when they occur and
-  keeping frozen-input, replacement-preservation, attachment, recovery and integrity
-  checks at their own boundaries. A child task's `done` accounts for the child's own
-  retained set and does not automatically checkpoint a container that remains owned by
-  an open parent; ownership must be real and recorded, never transferred to avoid a
-  checkpoint. Between checkpoints an earlier checkpoint on a mutating container is
-  historical, not current proof; at `park`, `done` or disposal the acting owner
-  inspects the complete known local retained set (naming the observer when an
-  explicitly delegated check supplied evidence, never calling another actor's
-  observation its own recheck). Accounting does not require restating unchanged
-  inventories. Keep uncertainty explicit and refresh resource/wait descriptions from
-  observations. An open task owns items across activation review; only a closing
-  session disposing of them in the same turn may temporarily own integration. Anything
-  kept longer needs an open follow-up or agreed user handoff. A trigger, merge or done
-  grants no deletion permission; preserve unfinished work and the only needed raw copy.
-  For layout refusal, keep hashed raw bytes and attach a labelled portable derivative
-  under the reference's fallback until the executing checker accepts shipped support;
-  design completion alone never retires that fallback or authorizes raw deletion.
-<!-- rule:3b44ce6a0e9b4816853b1c3b2beedb77 end -->
 <!-- rule:019b1ebc42524f6689c223c58ca6cadf begin -->
 - Before `tasks done`, every deferred finding of the closing task (a `minor (deferred)`
   ledger line, a deferred finding in a `verified` gate note, or a deferral the closing
@@ -150,14 +122,3 @@
   then lands in the subagent's final message instead of the file. hq's
   `subagent-write-refused` capability fact records the rule and its probe.
 <!-- rule:a941cf1e2d044f1b9eb509074ad01504 end -->
-
-<!-- rule:a633687fc016417da6efd42470071ab5 begin -->
-- New plan executions keep their workspace at
-  `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/`, owned by the open
-  controller task. Follow the retained-item reference's execution-workspace section
-  for creation, explicit-path helpers, resume, review packages and cleanup; it
-  overrides the execution skills' worktree-local workspace instructions. Children
-  cite the parent's workspace without duplicating its identity. Keep existing
-  workspaces in place until a separately reviewed migration; unavailable declared
-  storage fails visibly, with no guessed worktree or tmpfs fallback.
-<!-- rule:a633687fc016417da6efd42470071ab5 end -->

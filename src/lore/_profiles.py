@@ -13,6 +13,7 @@ OVERRIDE = "agent.profile"
 DESIGN_DOCS_CONFIG = "ops.designDocs"
 INSTRUCTION_FILES = ("AGENTS.md", "CLAUDE.md")
 DOCS_INSTRUCTION_FILES = ("docs/AGENTS.md", "docs/CLAUDE.md")
+PROJECT_STAGES = ("experimental", "pre-release", "supported")
 DESIGN_DOCS_NAMED = re.compile(r"docs/superpowers/[A-Za-z0-9_.-]+")
 DESIGN_DOCS_NAMED_IN_DOCS = re.compile(r"(?<![\w/.-])(?:docs/)?superpowers/[{A-Za-z0-9_.-][{},A-Za-z0-9_.-]*")
 RECORDS_DOC_DIRS = ("docs/specs", "docs/plans", "docs/superpowers", "docs/designs", "docs/reports")
@@ -114,6 +115,16 @@ def resolve(path, env, payload=None):
                       {"kind": "in-tree", "records": str(top)})
     home = home_of(env, config, payload)
     warnings = []
+    stage = {"value": None, "source": "unregistered checkout"}
+    if row["status"] == "resolved":
+        stage["source"] = entry["config"]
+        declared = entry.get("stage")
+        if error := entry.get("stage_error"):
+            warnings.append(str(error))
+        elif declared in PROJECT_STAGES:
+            stage["value"] = declared
+        elif declared is not None:
+            warnings.append(f"{entry['config']}: invalid project stage")
     expected = sorted({config['profile'][n].get('home') for n in names} - {None})
     if home['name'] and expected and home['name'] not in expected:
         warnings.append(f"profile {', '.join(names)} expects home {', '.join(expected)}; running in {home['name']}")
@@ -134,6 +145,7 @@ def resolve(path, env, payload=None):
     result = {'kind':'records-store' if store else 'checkout', 'records_store':str(canonical) if store else None,
               'checkout':str(canonical),'path':str(pathlib.Path(path).resolve()),'worktree':top!=canonical,
               'project':None if store else row.get('prefix'),
+              'stage':stage,
               'records':{'prefix':row['prefix'],'root':entry['records'],'linked':True} if linked and not store else None,
               'layout':layout,'notes':str(notes) if notes and notes.is_file() and not store else None,
               'profiles':[{'name':n,'source':source} for n in names], 'home':home,'keys':keys,

@@ -61,6 +61,12 @@ classify through their main checkout, while repository placement overrides are r
 from the invoking worktree. Existing `ops.designDocs=commit` and explicit instruction
 references to docs/superpowers subdirectories remain supported.
 
+Profile output also shows the starting checkout's stage and its records source.
+Absent or invalid stages remain unresolved. Dispatchers resolve the projects
+whose files will change and put those stages in the review brief. A session
+reads the supported workflow reference on demand according to its target stage,
+trial assignment and scoped safeguards.
+
 ## Exchange
 
 Inputs are the JSON hook payload (`cwd`, `transcript_path`), process cwd, and the

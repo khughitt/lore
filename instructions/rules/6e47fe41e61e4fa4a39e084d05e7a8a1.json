@@ -1,0 +1,36 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:6e47fe41e61e4fa4a39e084d05e7a8a1",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "859462924cfb3b4be91203023acf54ed518da5e0ac53603affd3c2ac6c10d810",
+      "text": "Every brief includes the affected projects' stages, the effective process,\nthe applicable safeguards and the named consumer obligations. Confirm the\nreview is needed and choose the rubric before the effort draw. A cross-project\nreview grades each affected part using that project's obligations.\n\n- `rubric: early-1`. Grade a defect or a missed explicit obligation. In\n  experimental work, Missing compatibility code, a speculative migration or\n  broad tests alone do not count as findings. A missing named consumer update\n  can be Important for pre-release. Updating the consumers together fulfills\n  their compatibility obligation.\n- `rubric: supported-1`. Use the supported grading criteria and existing evidence\n  and review workflow, including for a retained flow-trial unit. Name the\n  user-facing consequence of each finding and check the applicable explicit\n  contracts.\n\nCopy the marker from the applicable grading text into the brief. Bump its\nnumber only when the corresponding grading criteria change.\n\nIf these rubrics are active before the reviewer-effort trial begins on\n2026-11-30 UTC, apply them starting with the first eligible review. If activated\nafter the trial begins, keep the same rubric in both arms, preserve assignments,\nand record one matching companion beside each applicable review note:\n\n```text\nreview regime: <spec|plan|impl> round <n> \u2014 stages: <prefix>=<stage>[,<prefix>=<stage>...]; process: <direct|planned>; rubric: <early|supported>-<positive revision>\n```\n\nUse the effective process and the marker copied into the brief. List distinct\nprefixes in sorted order. Match the task, artifact and round of the existing\n`review:` note. Apply the paired write and controller fallback under Task notes\nfor outcome measures. Preserve original eligibility, assignments and review counts.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "eede5669b6d03e8b73dcf2154297cf1ff29d8e45da67c9fcdb7411d74e1be9cf",
+      "text": "Every brief includes the affected projects' stages, the effective process,\nthe applicable safeguards and the named consumer obligations. Confirm the\nreview is needed and choose the rubric before the effort draw. A cross-project\nreview grades each affected part using that project's obligations.\n\n- `rubric: early-1`. Grade a defect or a missed explicit obligation. In\n  experimental work, missing compatibility code, a speculative migration or\n  broad tests alone do not count as findings. A missing named consumer update\n  can be Important for pre-release. Updating the consumers together fulfills\n  their compatibility obligation.\n- `rubric: supported-1`. Use the supported grading criteria and existing evidence\n  and review workflow. Use this marker for a retained flow-trial unit or a\n  combined review that includes supported work. Name the\n  user-facing consequence of each finding and check the applicable explicit\n  contracts.\n\nCopy the marker from the applicable grading text into the brief. Bump its\nnumber only when the corresponding grading criteria change.\n\nIf these rubrics are active before the reviewer-effort trial begins on\n2026-11-30 UTC, apply them starting with the first eligible review. If activated\nafter the trial begins, keep the same rubric in both arms, preserve assignments,\nand record one matching companion beside each applicable review note:\n\n```text\nreview regime: <spec|plan|impl> round <n> \u2014 stages: <prefix>=<stage>[,<prefix>=<stage>...]; process: <direct|planned>; rubric: <early|supported>-<positive revision>\n```\n\nUse the effective process and the marker copied into the brief. List distinct\nprefixes in sorted order. Match the task, artifact and round of the existing\n`review:` note. Apply the paired write and controller fallback under Task notes\nfor outcome measures. Preserve original eligibility, assignments and review counts.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Brief reviewers and record rubric regimes"
+}

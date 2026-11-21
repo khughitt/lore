@@ -1,5 +1,57 @@
 ## Decisions
 
+### Project maturity
+
+<!-- rule:7f9ad06128c04030bb3c6b0a3d51d320 begin -->
+- At scoping and pickup, use `tasks where <path>` to select the stage of each
+  affected checkout. Require `project.registered`. Use `tasks resolve <prefix>`
+  for an explicitly named project. Apply each declared stage to its part of
+  the work. A path resolution can describe an enclosing project. Use the Git
+  boundary checked by `tasks where` for file targets.
+  The session profile describes the starting checkout. Review briefs name
+  each affected stage. Re-evaluate the recorded process, including automatically
+  scoped backlog values. Preserve an explicit user process choice or an approved
+  in-flight plan and record its source. A user-origin task alone does not
+  establish a process choice. Check the trial arm before changing a process.
+- Resolve the applicable workflow from
+  `~/.agents/skills/references/supported-workflow.md`. Supported work and
+  enrolled flow-trial units that retain their assigned rules through readout
+  read the entire reference. Resolve a missing or invalid declaration before
+  using early defaults. For a project outside stage policy, use the existing
+  workflow in the reference. At scoping or activation, read the named safeguard
+  section that matches the action. Each safeguard adds only its own checks.
+  - **Writes to irreplaceable persistent data** applies when changed behavior
+    can alter stored bytes. Display-only or report-only reads follow the stage.
+  - **Activation of a live global surface** applies when shared instructions,
+    hooks, services or binaries that agent sessions use are put live.
+  - **External publication** applies to material published externally.
+    Ordinary development branch pushes for hosted CI keep existing approval and
+    remote checks.
+- Experimental and pre-release default to direct. For direct work, skip the
+  skills' brainstorming, plan-writing and plan-execution steps. For experimental
+  work, use a smoke check or focused reproduction when useful, replace
+  provisional interfaces directly and rebuild recoverable data or use a one-shot
+  migration. For a pre-release change to a consumed contract, list the named
+  consumers and the boundary check in the task. Update those consumers in the
+  same change and get one independent combined review. The consumer checklist
+  needs no separate human approval.
+- Use an early-stage plan when the user chooses one or coordination requires
+  it. Keep human review of each design spec or plan that governs implementation.
+  Its accepted spec governs the plan, and material changes to an approved artifact
+  go back to the user before affected work starts. For early planned work,
+  skip the skills' per-task implementer/reviewer pairs, repeated corrective
+  review rounds and mandatory plan-workspace ledger.
+  Use one final independent combined review and focused verification of fixes.
+  Instructions about ledgers and routine retention manifests and checkpoints
+  apply when the workflow calls for those records. Preserve needed evidence,
+  exact handoff inputs and unfinished work, and record where the next owner
+  can find them. Preserve the only needed raw copy. For a refused attachment,
+  follow the raw and portable fallback in the retained-item reference. The
+  common protective and authorization rules still apply.
+<!-- rule:7f9ad06128c04030bb3c6b0a3d51d320 end -->
+
+### Common decisions
+
 <!-- rule:fdd377a3c264435296d1792c8f74c68b begin -->
 - When you hold a recommendation for a bounded decision, state it with one clause of
   reason and act on it; the alternative you rejected goes to the task record, as
@@ -128,59 +180,6 @@
   turn-pause rule's continuation after that reply. Never write obs's spend state to
   clear or acknowledge a signal.
 <!-- rule:9cd0cd1f8ae0476da9a53ca58af12b91 end -->
-<!-- rule:db275842f3af447dbe84d8b1dfc68051 begin -->
-- Two written artifacts keep their gate: a design spec and an implementation plan are
-  reviewed before the next phase starts. Within writing them, sections are not
-  individually approved.
-  A material amendment changes accepted goals, scope, behavior or outputs,
-  constraints, required evidence, cost or risk bounds or authority; judge cumulative
-  effects. Review changed specs before affected plans, with exact revisions and
-  consequences; keep active inputs frozen. Explicitly close or supersede the old
-  round in its record before submitting a frozen replacement. Stop dependent work;
-  unaffected authorized work may continue.
-  Adjustments preserving commitments use existing rulings; purely
-  mechanical flag or path repairs restoring the intended operation need none; target,
-  behavior or risk changes are not mechanical. Record named acceptance, clear stale
-  waits, and carry it into handoffs. New plans label proposed stops or caps Binding
-  with source and purpose; approval adopts them, never retroactively added labels. Reviewers challenge unnecessary binding stops before acceptance.
-  Unlabelled agent checkpoints or caps stay adjustable; human, policy and protective
-  limits bind regardless. For older plans use recorded intent; clarify consequential
-  conflicts.
-<!-- rule:db275842f3af447dbe84d8b1dfc68051 end -->
-<!-- rule:002637bfc1e64da0bc4aca44f559d5f9 begin -->
-- In plan writing and execution, inline or subagent-driven, the frozen spec is the
-  authority for normative formulas, schemas and interface definitions. When a plan
-  needs to repeat one, quote it verbatim with its spec clause reference; avoid copying
-  the whole spec. The plan author's self-review compares every repeated definition,
-  including those in task steps, tests and Interfaces blocks, against that clause.
-  The controller's preflight compares those definitions against the applicable
-  binding spec clauses, and each implementer handoff includes its applicable clauses
-  and the frozen spec and plan identities. Implementers surface any mismatch; the
-  controller resolves it through an explicit recorded `Ruling:` with the spec as
-  authority, never by silently adding aliases, extra columns or a second interface.
-  A material spec or plan change keeps the existing human amendment-review gate
-  before dependent work resumes. The existing final whole-branch reviewer receives
-  both frozen spec and plan identities and checks the implemented normative clauses
-  directly against the spec and its accepted amendments and recorded rulings. This
-  supplements the existing review; it adds no reviewer or dispatch.
-<!-- rule:002637bfc1e64da0bc4aca44f559d5f9 end -->
-<!-- rule:f431707097c0418c9822d67074875c51 begin -->
-- A request to review a spec or plan names the frozen revision under review: the
-  repository, commit and path, so the reviewer reads `git -C <repo> show <sha>:<path>`
-  rather than the working file. Where the profile keeps the document out of the tree,
-  the request names its path and sha256, and the reviewer checks that sha256 before
-  reading and stops on a mismatch. While that review is open, never amend or rebase
-  the commit, and leave an out-of-tree file unedited. A later draft reaches review only
-  as a new frozen revision, named in the next round's request, and each finding is
-  judged against the revision its request named. When asking the user to approve a
-  frozen artifact or amendment, keep the frozen revision in the linked record or
-  change summary rather than as raw hashes in the message, and for an amendment state
-  the change and its consequences with the full document linked (Communication).
-  For any commit-based review, including implementation review, finish the
-  commit, read its actual full SHA from Git in the target repository, then
-  dispatch against that SHA. Never guess the SHA or dispatch in the same parallel
-  batch as the commit that creates it; a nonexistent SHA is not a frozen target.
-<!-- rule:f431707097c0418c9822d67074875c51 end -->
 <!-- rule:2c5785f136ca4ee590e1c69406276623 begin -->
 - A question, when asked, is one question, not a series, and carries your
   recommendation: in a harness's multiple-choice question tool, as the first option;
@@ -323,7 +322,9 @@
 <!-- rule:046dfb8c365f454a86390b6b4167e487 begin -->
 - Reviewers do not modify reviewed code, input evidence, task records or the ledger,
   except that a reviewer whose request names a task appends that round's single
-  `review:` note to it (Task notes for outcome measures).
+  `review:` note and, where the regime-recording rule applies, exactly one matching
+  `review regime:` note to it in the same `tasks note --stdin` write. Follow Task notes
+  for outcome measures for the write and controller fallback.
   When a plan workspace already exists, the dispatch names one unique
   `<slug>-report.md` there, outside the reviewed code and inputs; the reviewer may
   write only that report. It saves the full review, reviewed revision and verified
@@ -333,8 +334,9 @@
   size, write outcome, and the `review:` note it wrote or why it wrote none. The
   saved report is the authoritative full review; never overwrite a previous round's
   report. The controller checks the write result and file existence/size, checks
-  that the round's `review:` note exists (writing it only when the reviewer could
-  not), records the round in the ledger before acting, and reads the finding
+  that the round's required notes exist and adds them only when the reviewer could
+  not, without duplicating a recorded round. When the workflow has a ledger, record
+  the round there before acting. The controller reads the finding
   rationale and context needed for its decisions. It does not rewrite the report or hash it merely to prove persistence;
   separate frozen-input, attachment and retained-evidence checks still apply.
   Inconsistent findings block acceptance until reconciled. If the designated write
@@ -361,84 +363,6 @@
   measure, against the new merge base, so the review package covers the merge
   resolution. A measurement taken before that merge does not count toward its gate.
 <!-- rule:6a846b1f53ee406d9b48c7434364a2cf end -->
-<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af begin -->
-- In planned execution (subagent-driven and inline alike), scale review to step risk
-  and bound independent reviews per plan task. A step that changes repository code,
-  tests, build or lock files, schemas, runtime configuration, or a plan-designated
-  reviewed artifact gets independent review: under subagent-driven execution, one
-  task review of the task's `BASE..HEAD` diff and implementer report plus one scoped
-  corrective re-review per fix round on `FIX_BASE..HEAD` using the implementer's
-  saved test evidence (running a focused test only when reading the diff raises a
-  specific named doubt the saved run does not answer); inline, the task's completion
-  contract and the final whole-branch review cover it. A plan amendment or interface
-  ruling is verified by the controller against the binding spec, recorded as a ledger
-  `Ruling:` line with `Why:`, `Cost:` and revision references, and checked by the
-  affected build and final reviews; never spawn a standalone scope, authority or
-  preflight reviewer solely to bless a ruling before implementation. Operational
-  execution of already-reviewed code (a run task after an accepted build-to-run
-  barrier, a bounded live continuation slice, a `--resume-scope` invocation, or an
-  end-to-end pilot run or rerun on an accepted build commit) gets an operator or
-  controller self-check that `HEAD` is at or descendant of the accepted build commit
-  with no unreviewed runner/reader edits, the command, slice/resume arguments and
-  input hashes match the plan, ruling or pilot check, and the exit status and output
-  satisfy the task's `Expected:` contract (and Processes' smallest-run gate and
-  verdict check where applicable); never spawn a pre-invocation, scope, pilot-invariance
-  or pilot-qualification reviewer for that run, while whether an end-to-end pilot
-  must run or rerun stays governed by Processes, Tests and project requirements (if a
-  run task commits a final human-facing report the plan explicitly marks as a
-  reviewed deliverable, dispatch at most one task review at the end of the run task
-  for that deliverable). Bookkeeping, custody and task-record maintenance (task notes,
-  `retained:` declarations, container manifests, checkpoints, transfers, ledger
-  appends and workspace cleanup) get the acting owner's self-check and never an
-  independent reviewer or assessment subagent. Across the life of any numbered plan
-  task, dispatch at most six independent reviews in total (one initial task review
-  plus up to five scoped corrective re-reviews), batching all open Critical and
-  Important findings and confirmed spec gaps from a review into one fix pass and one
-  scoped re-review per round, and never dispatch a re-review for a round that changed
-  only ledger lines or task notes. Splitting a plan task into internal sub-stages or
-  reopening a build task after a downstream operational run exposes a defect
-  continues that plan task's cumulative review count and monotonic `review: impl
-  round <R>` sequence (`R = 1..6`) without resetting the counter. When a plan task's
-  fifth corrective re-review (sixth independent review) still reports a spec gap or an
-  unresolved Critical or Important finding, or when a reopened build task has already
-  spent all six reviews and needs a code fix, do not rule past the cap, split a new
-  sub-stage or start another review round: stop under the turn-pause rule above,
-  name the plan task, the six reviews spent, the open findings (with report paths) or
-  reason a seventh review would be needed, and one recommended decision in the pause
-  report, and park the task `--waiting-on user --reason decision`. This outranks
-  subagent-driven-development's "Never skip the task review", "Every round ends with
-  a scoped re-review", "Rulings, not stalls" and `references/fix-loop.md`'s breaker
-  continuation past the cap.
-<!-- rule:3a86283b2dfe4f4daf96bf612fcca2af end -->
-<!-- rule:d21e7a02223e4d00adbb602627e441a6 begin -->
-- After a final whole-branch review, in subagent-driven and inline (executing-plans)
-  execution alike, fix (or rule on, as the skills allow) its Critical and Important
-  findings in corrective rounds, up to five, under the same one-fix-pass,
-  one-scoped-re-review and saved-evidence discipline as per-task reviews above; if
-  the fifth corrective round still leaves any Critical or Important finding
-  unresolved, surface what remains by stopping and parking for the user under the
-  turn-pause rule above rather than proceeding to integration. A round is one
-  fix pass plus one scoped re-review of it, and another follows while that re-review
-  reports any Critical or Important finding, persisting or introduced by the fix. Minor
-  findings never enter a round; they go to the ledger as `minor (deferred)`, as both
-  skills say. In either execution mode, a final review's "fix before merge" call on a
-  deferred minor is a re-grade proposal: the controller confirms or rejects it by its
-  consequence for the person, records each decision as a ledger `Ruling:` line, and
-  admits confirmed proposals to corrective rounds as Important; rejected proposals
-  stay `minor (deferred)` in the ledger, named in a task note that the final message
-  links, and owned by an open task before close as Processes says. A fix subagent makes the fixes
-  under subagent-driven execution; inline,
-  you make them yourself, each still proven RED→GREEN with policy-appropriate checks
-  under Tests: a green suite when policy is enabled, focused evidence and mandatory
-  hygiene when it is off. A skipped suite is never green evidence. A fresh
-  reviewer runs the re-review whenever a subagent tool exists, inline too. This outranks
-  executing-plans' "do not dispatch a re-review" and "no second fix pass" and
-  subagent-driven-development's "exactly one scoped re-review" and "no second fix wave".
-  Without a subagent tool, the re-review is a self-review, recorded as such in the
-  ledger and the task note the final message links, as executing-plans'
-  final-review fallback does. External
-  actions stay gated.
-<!-- rule:d21e7a02223e4d00adbb602627e441a6 end -->
 <!-- rule:e5201d5768794401bf9d88a39b1ee445 begin -->
 - A review correction to a task already closed as `done`, before its branch is
   integrated, reopens that record: the agent that makes the fix (the fix subagent, or
@@ -448,76 +372,6 @@
   before reporting. Such a correction stays a review finding; a `concerns:` task is
   filed only for work that fell short after its branch landed.
 <!-- rule:e5201d5768794401bf9d88a39b1ee445 end -->
-<!-- rule:4411cf3f68ce4834a40a5379234ddc3b begin -->
-- A custody check belongs to one acting owner for a given input revision and purpose;
-  separate review seats still perform their own independent reviews. The author or
-  controller freezes a spec or plan revision once and keeps it unchanged while review
-  is open; the receiving reviewer verifies and reads the dispatched revision; the
-  implementer runs changed-behavior tests under Tests and reports the command, tested
-  revision, results/counts and limits for the controller to pass to the reviewer; the
-  reviewer persists its report under the designated-report rule above; the controller
-  advances the plan ledger once per transition; and the current item or claim owner on
-  that host observes retained items at park, done or disposal, reporting its checkpoint
-  basis before releasing its claim. When a child's report binds the relevant input
-  revision (commit and path, or path and sha256) and scope, is complete, and has no
-  conflicting evidence, the controller relies on that result for the same revision and
-  purpose without rehashing the unchanged input or rerunning the child's checks merely
-  at handoff. Do not compute routine report sha256 digests or write report hashes to
-  the ledger; use the report path and reviewed revision, while a report that is itself
-  a frozen review input, independent retained evidence or a published attachment still
-  obeys that distinct contract at its required boundary. When a review accepts with a
-  substantive concern or actionable finding, the controller reads the concern and
-  records its disposition or ruling; a short verdict never hides an actionable concern.
-  Missing inputs, an unbound verdict, an observed mismatch, changed bytes (such as
-  evidence for revision A when the input is now revision B), a failed persistence
-  operation or contradictory evidence require a targeted check or return to the
-  responsible actor; never infer success from silence, a passing attach exit status
-  alone, a notification or an omitted failure, and keep an in-flight child under
-  tracked waiting. Checks whose purpose requires a new observation stay fresh when
-  their event occurs: receiving a frozen revision, recovering after context loss,
-  current retained-item inventory at park/done/disposal, claim transfer, host-pointer
-  inspection before removal, and branch freshness before final review or base-relative
-  measurement. A previous hash never proves mutable bytes stayed unchanged, and at
-  park, done or disposal the acting owner inspects the complete known local retained
-  set; if an explicitly delegated check supplies evidence, the recording actor names
-  the observer and never describes another actor's observation as its own recheck.
-<!-- rule:4411cf3f68ce4834a40a5379234ddc3b end -->
-<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 begin -->
-- In planned execution, the controller reads the plan and binding constraints once at
-  setup, keeps the plan ledger as the recovery map (current task and phase, completed
-  ranges, pending review or corrective round, findings, rulings, deferred minors and
-  next action), and dispatches narrow task briefs with applicable constraints and
-  needed interfaces. Keep full review reports and clean supporting logs in files so
-  only concise handoffs and the finding sections needed for decisions or rulings enter
-  controller context. After compaction while enforced `hq pause limits` remain
-  uncrossed, check `hq pause status` (maintaining the enforced counts where no pause
-  hook runs) and recover inside the current turn budget by reading the current task,
-  the plan's ledger and the referenced sections needed for the next decision, and
-  verifying the named current Git state; reconcile any conflict between ledger, task
-  records and Git state before dispatch, and never replay completed task sequences,
-  respawn completed workers, reload every prior report, or ask permission to recover.
-  Compaction alone never triggers a pause; when an enforced limit crosses `hq pause
-  limits`, stop under the turn-pause rule above and, when compaction or context
-  growth is the binding cause, recommend a user-chosen fresh controller in the pause
-  decision. During the permitted pause report and park, record
-  the durable handoff in the task record and its existing ledger/report references:
-  actual status, task/plan/spec identities and frozen revisions, branch/worktree,
-  current HEAD/base and next action with its owner; completed task ranges, current
-  review round, findings, rulings, deferred minors, and evidence locations and
-  revision-bound verdicts with limits (preserving full reports); claims, running
-  processes with stop/pickup commands, host pointers, and retained items/checkpoint
-  basis, stating which accounting was not refreshed at the limit instead of starting
-  fresh inventory or cleanup work; and observed spend/counts (keeping unknown counters
-  unknown), limit reached, remaining estimate and the user's outstanding decision.
-  Never auto-launch a replacement controller, start another session, continue work
-  merely to finish a handoff, or reset budgets; a user who continues the current
-  controller receives the same normal checks. A receiving controller reads the handoff
-  and task before claiming work, verifies current claim, process and Git state and the
-  evidence it needs before reuse, refreshes stale or unrefreshed accounting first,
-  reconciles any state change, and resumes the first unfinished action without
-  treating old reports as fresh filesystem observations or rerunning completed reviews
-  merely because the controller changed.
-<!-- rule:6c0a22eb29eb4e1db82c7e7e9fc6ae27 end -->
 <!-- rule:b7fe2b6f29a046a283cd91afb240c723 begin -->
 - When a target or reviewed repository's root `AGENTS.md` cites a code guide
   (``Code follows `docs/code-organization.md`.`` or

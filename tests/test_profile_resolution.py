@@ -246,3 +246,39 @@ def test_private_listing_follows_path_rules_for_unassigned_entries(profile_world
                  'checkout':str(area/'pw'),'kind':'detached','name':'pw','purpose':'by path'}})
     w.save();git(w.checkout,w.env,'config','agent.profile','work')
     assert '- `pw` — pw — by path' in resolve(w.checkout,w.env)['private_projects']
+
+
+def test_stage_follows_the_checkout_resolved_for_the_work(profile_world):
+    w = profile_world
+    target = w.records.parent / "target"
+    init_repo(target, w.env)
+    entry = {**w.row["entry"], "config": str(w.records / "target/tasks/.config.toml"),
+             "records": str(w.records / "target"), "checkout": str(target)}
+    row = {**w.row, "input": str(target), "root": str(target), "prefix": "target", "entry": entry}
+    w.data[f"resolve {target} --json"] = {"results": [row], "warnings": []}
+    w.row["entry"]["stage"] = "supported"
+    entry["stage"] = "experimental"
+    w.save()
+    assert resolve(w.checkout, w.env)["stage"]["value"] == "supported"
+    assert resolve(target, w.env)["stage"] == {"value": "experimental", "source": entry["config"]}
+    entry["stage"] = None
+    w.save()
+    assert resolve(target, w.env)["stage"]["value"] is None
+    entry["stage_error"] = "Invalid stage in project configuration"
+    w.save()
+    invalid = resolve(target, w.env)
+    assert invalid["stage"]["value"] is None
+    assert "Invalid stage in project configuration" in invalid["warnings"]
+
+
+def test_nested_repository_does_not_inherit_enclosing_stage(profile_world):
+    w = profile_world
+    nested = w.checkout / "nested"
+    init_repo(nested, w.env)
+    w.row["entry"]["stage"] = "experimental"
+    # tasks resolve can answer an enclosing registered path. Its checkout
+    # differs from this independently initialized Git repository.
+    w.data[f"resolve {nested} --json"] = {"results": [w.row], "warnings": []}
+    w.save()
+    assert resolve(w.checkout, w.env)["stage"]["value"] == "experimental"
+    assert resolve(nested, w.env)["stage"]["value"] is None

@@ -27,6 +27,8 @@ def session_text(res):
     """The complete profile layer: the line, any warnings, then every fragment in order,
     then private linked notes and the projects a private profile lists."""
     parts = [session_line(res)]
+    if res.get("project") and (stage := res.get("stage")):
+        parts.append(f"stage: {stage['value'] or 'undeclared'} ({stage['source']})")
     if res.get("records"):
         parts.append(f"records: {res['records']['prefix']} at {res['records']['root']} (linked; this checkout is shared)")
     parts += [f"warning: {w.replace('run profile audit', 'run ' + command('audit'))}" for w in res["warnings"]]
@@ -45,6 +47,8 @@ def explain_text(res):
              f"profiles: {_names(res)}  ← {res['profiles'][0]['source']}"]
     if res.get("records"):
         lines.insert(2, f"records: {res['records']['prefix']} at {res['records']['root']} (linked)")
+    if res.get("project") and (stage := res.get("stage")):
+        lines.append(f"stage: {stage['value'] or 'undeclared'}  ← {stage['source']}")
     otherwise = res.get("_otherwise")
     if otherwise:
         if "error" in otherwise:

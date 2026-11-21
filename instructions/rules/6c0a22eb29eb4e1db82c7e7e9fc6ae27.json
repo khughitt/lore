@@ -31,6 +31,6 @@
   "schema": 1,
   "searches": [],
   "sources": [],
-  "state": "active",
+  "state": "retired",
   "title": "Bound controller context, compaction recovery and fresh-controller handoff"
 }

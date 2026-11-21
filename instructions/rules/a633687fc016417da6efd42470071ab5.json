@@ -25,6 +25,6 @@
   "schema": 1,
   "searches": [],
   "sources": [],
-  "state": "active",
+  "state": "retired",
   "title": "Keep plan execution evidence in a task-owned external workspace"
 }

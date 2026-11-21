@@ -116,7 +116,7 @@ def resolve(path, env, payload=None):
     home = home_of(env, config, payload)
     warnings = []
     stage = {"value": None, "source": "unregistered checkout"}
-    if row["status"] == "resolved":
+    if row["status"] == "resolved" and pathlib.Path(entry["checkout"]).resolve() == canonical:
         stage["source"] = entry["config"]
         declared = entry.get("stage")
         if error := entry.get("stage_error"):

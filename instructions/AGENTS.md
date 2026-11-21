@@ -216,8 +216,11 @@ it this way:
 
 ### Project maturity
 
-- At scoping and pickup, use `tasks resolve <prefix-or-path>` for each project
-  whose files will change. Apply its declared stage to its part of the work.
+- At scoping and pickup, use `tasks where <path>` to select the stage of each
+  affected checkout. Require `project.registered`. Use `tasks resolve <prefix>`
+  for an explicitly named project. Apply each declared stage to its part of
+  the work. A path resolution can describe an enclosing project. Use the Git
+  boundary checked by `tasks where` for file targets.
   The session profile describes the starting checkout. Review briefs name
   each affected stage. Re-evaluate the recorded process, including automatically
   scoped backlog values. Preserve an explicit user process choice or an approved

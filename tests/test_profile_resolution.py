@@ -269,3 +269,16 @@ def test_stage_follows_the_checkout_resolved_for_the_work(profile_world):
     invalid = resolve(target, w.env)
     assert invalid["stage"]["value"] is None
     assert "Invalid stage in project configuration" in invalid["warnings"]
+
+
+def test_nested_repository_does_not_inherit_enclosing_stage(profile_world):
+    w = profile_world
+    nested = w.checkout / "nested"
+    init_repo(nested, w.env)
+    w.row["entry"]["stage"] = "experimental"
+    # tasks resolve can answer an enclosing registered path. Its checkout
+    # differs from this independently initialized Git repository.
+    w.data[f"resolve {nested} --json"] = {"results": [w.row], "warnings": []}
+    w.save()
+    assert resolve(w.checkout, w.env)["stage"]["value"] == "experimental"
+    assert resolve(nested, w.env)["stage"]["value"] is None

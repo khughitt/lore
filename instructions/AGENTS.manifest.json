@@ -1,7 +1,7 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "de36b3789f0e774e2e45d26a6c4c94cc783b27e4ded1bfc8c51564d173064c4c"
+    "sha256": "2568e2dccfc7957cea75f2434462d878db0965f20e3ede573c45972980cf7510"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
@@ -1889,15 +1889,15 @@
       ],
       "generated": "tasks-resolve",
       "id": "projects",
-      "length": 5011,
+      "length": 5105,
       "offset": 81621,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Name every project and feedback owner from its records entry, through the tasks resolver.",
-      "rendered_sha256": "d2a0be45ece1737409ba28b59ea949fd805e182d452364b9d15ad0c15cafeedb",
-      "revision": "b2fe6f154921f4e843992c998b7f944436b4dbba",
+      "rendered_sha256": "7e9496d4a1800420c096795385dabfe54db24b6135e1b7a69c1882b0eab746aa",
+      "revision": "3b56d52aa5125294890d6c1b8ad9c14bc04b5e94",
       "rules": [],
-      "sha256": "d2a0be45ece1737409ba28b59ea949fd805e182d452364b9d15ad0c15cafeedb",
+      "sha256": "7e9496d4a1800420c096795385dabfe54db24b6135e1b7a69c1882b0eab746aa",
       "source": "instructions/fragments/projects.md"
     }
   ],

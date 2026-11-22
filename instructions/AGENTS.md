@@ -1031,6 +1031,7 @@ to read one of them from anywhere.
 - `material` — niri-material (niri) — One glass material across niri, terminals, editor, and shell
 - `mind6` — mindful v6 (mindful) — Headless thought, mindmap, and journal store; the current mindful
 - `mm` — multiple-myeloma — The multiple myeloma research program: a workspace over the verifiably stack
+- `mm30` — mm30 — The MM30 meta-analysis pipeline (v7 line) that feeds the MM30 Shiny app
 - `nodes` — nodes — A problem-agnostic knowledge substrate: typed markdown nodes
 - `ns` — natural-systems (natural-systems-v2) — Research on structure across representation, observation, scale, and coupling
 - `obs` — obs — Cross-project execution evidence, observability, and historical analysis

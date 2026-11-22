@@ -15,11 +15,11 @@ Code follows `tools/code-organization.md`.
 
 `just check` (the `check-hygiene` target) runs `ops-check`, `ops-docs check`,
 `tasks check`, assembly validation and Python compilation; the pre-commit hook runs it.
-`python3 bin/assemble-instructions check` compares the selected artifact and manifest
-with the catalog, and the generated Projects fragment with a fresh render from
-`tasks resolve`. Relevant staged changes select the entire
-index; otherwise it checks disk. The executing assembler must equal its index bytes in
-a staged check.
+`python3 bin/assemble-instructions check` verifies the selected artifact and manifest
+against the catalog and fragments. Staged assembly inputs select the entire index
+and require a fresh Projects render from `tasks resolve`. Other default checks read
+disk and use the existing fragment. `check --working-tree` selects disk and requires
+the live render. The executing assembler must equal its index bytes in a staged check.
 
 Use `just test-one tools/test_assemble_instructions.py -k staged` for staged cases.
 `just test-one` runs serially. `just test-fast` and `just test` both cover all tests in

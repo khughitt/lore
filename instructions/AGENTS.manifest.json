@@ -1,12 +1,12 @@
 {
   "artifact": {
     "path": "instructions/AGENTS.md",
-    "sha256": "1d15f5eb305f40ad813e7739fa69bbe087063f12590b64e57f7efffaef59733f"
+    "sha256": "de36b3789f0e774e2e45d26a6c4c94cc783b27e4ded1bfc8c51564d173064c4c"
   },
   "assembler": {
     "path": "bin/assemble-instructions",
-    "revision": "3ee930baffcd7d35714be28d5d53260074492d9e",
-    "sha256": "f847f468c6fa4e80b8e7211872015ec869d5fce8a7d5fac447497bfa9f8bd977"
+    "revision": "5a685ba8a2536184eed65f12c2fa20da4ac767e6",
+    "sha256": "53f26cc95d7e6f104ca7261e25ec68f002ae2a4a7ed550d8e6f18d621c76bee4"
   },
   "catalog": {
     "path": "instructions/assembly.toml",
@@ -1889,15 +1889,15 @@
       ],
       "generated": "tasks-resolve",
       "id": "projects",
-      "length": 4918,
+      "length": 5011,
       "offset": 81621,
       "owner": "lore",
       "provenance_date": "2026-10-05",
       "rationale": "Name every project and feedback owner from its records entry, through the tasks resolver.",
-      "rendered_sha256": "a8965ea56398d50233c76750b77e884959fa9686c8c890ed59a0415d0c916274",
-      "revision": "33a458bc982a71c2a46e81911df037874a61863c",
+      "rendered_sha256": "d2a0be45ece1737409ba28b59ea949fd805e182d452364b9d15ad0c15cafeedb",
+      "revision": "b2fe6f154921f4e843992c998b7f944436b4dbba",
       "rules": [],
-      "sha256": "a8965ea56398d50233c76750b77e884959fa9686c8c890ed59a0415d0c916274",
+      "sha256": "d2a0be45ece1737409ba28b59ea949fd805e182d452364b9d15ad0c15cafeedb",
       "source": "instructions/fragments/projects.md"
     }
   ],

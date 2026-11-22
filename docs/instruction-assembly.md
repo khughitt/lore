@@ -28,7 +28,7 @@ generated fragment.
 | `just assemble` | `bin/assemble-instructions write`: render the generated fragments, the artifact and the manifest, and replace each file atomically; the set is not one transaction. Refuses a symlinked or non-regular output. |
 | `bin/assemble-instructions render` | Print the artifact `write` would produce, generated fragments rendered from the resolver; `render --manifest` prints the manifest. Writes nothing. |
 | `bin/assemble-instructions check` | Read-only verification; `just check` runs it. |
-| `check --working-tree` | The same check against files on disk, whatever is staged. |
+| `check --working-tree` | Verify the files on disk and compare the Projects fragment with the live resolver, regardless of what is staged. |
 | `--owner-root PREFIX=PATH` | Read one external owner, such as an evidence owner's records directory, from another checkout. |
 
 Typical change: edit a fragment or the catalog, run `just assemble`, then stage the
@@ -37,8 +37,9 @@ itself also changes the manifest's `assembler` entry, so assemble and stage the
 manifest in the same commit.
 
 After a project is registered, renamed or retired, or its identity snapshot is
-refreshed (`tasks identity refresh`), run `just assemble` here. `write`, `render` and
-the default `check` need `tasks` on `PATH` and lore's private profile values.
+refreshed (`tasks identity refresh`), run `just assemble` here. Live Projects renders
+need `tasks` on `PATH` and lore's private profile values. All checks still resolve
+registered external owners.
 
 ## Owner roots
 
@@ -56,16 +57,22 @@ a hook exports are stripped before reading any other owner's repository.
 
 In order: the catalog's format; every evidence pointer resolves at its full commit
 to a file blob; every source reads; the committed mandatory set is preserved and
-each source has the required shape; each generated fragment equals a fresh render from
-`tasks resolve` on this host (skip with `--skip-projects-render`); the selected artifact
-and manifest equal a fresh rendering.
+each source has the required shape; the generated fragment matches the live resolver
+when that comparison applies; the selected artifact and manifest equal a fresh assembly
+from the selected sources.
 
-Which view is checked: when the staged changes include the catalog, artifact,
-manifest, assembler, anything under `instructions/fragments/`, or a lore-owned
-source the staged catalog names, the whole prospective index is checked; otherwise
-the working tree. In the index view, the executing assembler must be byte-identical
-to its staged copy, so a pre-commit check cannot pass with an unstaged assembler
-edit. External owners are always read from their checkouts.
+Staging the catalog, artifact, manifest, assembler, anything under
+`instructions/fragments/`, `instructions/rules/` or `instructions/schemas/`, or a
+lore-owned source the staged catalog names selects the whole prospective index.
+In that view, the executing assembler must be byte-identical to its staged copy.
+Other default checks read the working tree, and `--working-tree` explicitly selects
+it regardless of staged changes. External owners are always read from their checkouts.
+
+The index view and explicit `--working-tree` checks compare the Projects fragment
+with a fresh `tasks resolve` render. `--skip-projects-render` suppresses that
+comparison. Default checks with no staged assembly inputs verify assembly from the
+existing fragment without comparing it with the live registry, so registry drift
+alone allows unrelated commits and pushes.
 
 ## Historical proofs
 
@@ -122,9 +129,9 @@ tree as cwd, about 2 s including the Projects render from `tasks resolve`. Exit 
 adds nothing; exit 1 becomes its stderr (or `assemble-instructions: validation
 failed`) flattened to one context line. An invalid envelope, a 10 s timeout, a spawn
 failure or any other exit is a nonzero exit with one bounded stderr line, which
-relay reports as `NOTICE_FAILED`; the check's own output never reaches relay. Until
-the relay cutover, ops's native SessionStart hook also runs the check, adding
-`--skip-projects-render` whenever ops's own `ops-projects check` passes.
+relay reports as `NOTICE_FAILED`; the check's own output never reaches relay. The
+active native SessionStart hook in ops runs `check --working-tree` and reports its
+drift notice even when ops's identity mirror check passes.
 
 ## Creating and refreshing rule records
 

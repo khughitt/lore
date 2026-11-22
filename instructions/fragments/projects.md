@@ -35,6 +35,7 @@ to read one of them from anywhere.
 - `sci` — science — The daily surface of verifiably: the layer people and agents use
 - `sun` — sun — The heliophysics research program: a workspace over the verifiably stack
 - `tasks` — tasks — The file-based task tracker every project here uses
+- `tint` — tint — Paints task ids in their project's colour in terminal programs' output
 - `trans` — transponder — A phone browser inbox for typed questions from agents
 - `tui` — tasks-tui — A keyboard-driven terminal front end for the tasks tracker
 - `vdocs` — docs (verifiably-docs) — The verifiably ecosystem's front door: its goal, overview, and repository map

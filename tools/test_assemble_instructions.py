@@ -891,6 +891,7 @@ def test_staged_valid_evidence_ignores_an_invalid_disk_catalog(world):
 
 def test_worktree_commit_hook_uses_each_evidence_owners_repository(world):
     commit_pair(world)
+    add_projects(world)
     worktree = world.root.parent / 'lore-worktree'
     git(world.root, 'worktree', 'add', '-q', '-b', 'hook-evidence', str(worktree), 'HEAD')
     hooks = worktree / 'fixture-no-hooks'
@@ -903,6 +904,28 @@ def test_worktree_commit_hook_uses_each_evidence_owners_repository(world):
     result = subprocess.run(['git', '-C', str(worktree), 'commit', '-q', '-m', 'test: hook evidence'],
                             env=world.env, capture_output=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_default_check_skips_resolver_drift_with_a_clean_index(world):
+    commit_pair(world)
+    add_projects(world)
+    result = build(world, 'check')
+    assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize('path', ['instructions/assembly.toml', 'instructions/fragments/projects.md'])
+def test_staged_assembly_inputs_require_current_projects_render(world, path):
+    commit_pair(world)
+    source = world.root / path
+    if path.endswith('.toml'):
+        source.write_bytes(source.read_bytes() + b'\n# Stage a catalog change.\n')
+    else:
+        source.write_bytes(source.read_bytes().replace(b'Shared tooling', b'Common tooling', 1))
+    git(world.root, 'add', path)
+    add_projects(world)
+    result = build(world, 'check')
+    assert result.returncode == 1
+    assert b'instructions/fragments/projects.md differs from tasks resolve' in result.stderr
 
 
 def test_hook_environment_preserves_the_selected_local_index(world):
@@ -961,12 +984,12 @@ def test_unrelated_staging_keeps_working_tree_check(world):
 def test_resolver_drift_and_failure_are_reported_and_skip_is_narrow(world):
     commit_pair(world)
     add_projects(world)
-    assert build(world, 'check').returncode == 1
-    assert build(world, 'check', '--skip-projects-render').returncode == 0
+    assert build(world, 'check', '--working-tree').returncode == 1
+    assert build(world, 'check', '--working-tree', '--skip-projects-render').returncode == 0
     (world.root / 'instructions/AGENTS.md').write_text('stale artifact\n')
-    assert build(world, 'check', '--skip-projects-render').returncode == 1
+    assert build(world, 'check', '--working-tree', '--skip-projects-render').returncode == 1
     (world.config.parent / 'resolver.json').write_text('{}')
-    result = build(world, 'check')
+    result = build(world, 'check', '--working-tree')
     assert result.returncode == 1 and b'rendering from tasks resolve failed' in result.stderr
     assert b'unexpected tasks query' in result.stderr and b'Traceback' not in result.stderr
 
@@ -1047,7 +1070,7 @@ def check_without_writes(world, *args):
 def test_resolver_drift_names_the_fragment_and_the_repair(world):
     commit_pair(world)
     add_projects(world)
-    err = check_without_writes(world)
+    err = check_without_writes(world, '--working-tree')
     assert 'instructions/fragments/projects.md differs from tasks resolve' in err
     assert 'run just assemble in lore' in err
     assert 'just projects' not in err
@@ -1190,7 +1213,7 @@ def test_projects_fragment_structure_and_resolver_failures_are_guarded(world, ch
             env = {**world.env, 'PATH': str(bare)}
     elif change == 'old-marker': projects.write_bytes(projects.read_bytes().replace(_projects.START.encode(), b'<!-- ops:projects start -->'))
     else: projects.write_bytes(projects.read_bytes() + b'<!-- ops:projects end -->\n')
-    args = ['check', *(['--skip-projects-render'] if skip else [])]
+    args = ['check', '--working-tree', *(['--skip-projects-render'] if skip else [])]
     result = subprocess.run([sys.executable, str(world.root / 'bin/assemble-instructions'), *args],
                             cwd=world.root, env=env, capture_output=True)
     assert result.returncode == 1 and b'Traceback' not in result.stderr

@@ -48,7 +48,7 @@ stays out of the delivered text.
 
 ```sh
 just assemble                                   # writes instructions/AGENTS.md and instructions/AGENTS.manifest.json
-python3 bin/assemble-instructions check         # verifies catalog, sources, manifest, artifact, and the Projects render
+python3 bin/assemble-instructions check --working-tree  # verifies the assembly on disk and the live Projects render
 python3 bin/assemble-instructions provenance    # reports all rule claims and coverage warnings
 python3 bin/skill-sizes.py                      # prints the skill token/byte inventory
 ```

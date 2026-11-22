@@ -1445,12 +1445,13 @@ def main(argv=None):
         if args.command == 'render': sys.stdout.buffer.write(manifest_bytes(manifest) if args.manifest else artifact)
         elif args.command == 'write': write_outputs(root, artifact, manifest, {f['source']: sources[f['id']] for f in generated})
         else:
-            for fragment in generated if not args.skip_projects_render else []:
-                rendered = generate(fragment)
-                if rendered != sources[fragment['id']]:
-                    raise ValueError(f'{fragment["source"]} differs from tasks resolve (a project was registered, renamed, retired '
-                                     'or its identity refreshed); run just assemble in lore\n'
-                                     + changed_lines(sources[fragment['id']], rendered))
+            if (index or args.working_tree) and not args.skip_projects_render:
+                for fragment in generated:
+                    rendered = generate(fragment)
+                    if rendered != sources[fragment['id']]:
+                        raise ValueError(f'{fragment["source"]} differs from tasks resolve (a project was registered, renamed, retired '
+                                         'or its identity refreshed); run just assemble in lore\n'
+                                         + changed_lines(sources[fragment['id']], rendered))
             selected = read_local(root, ARTIFACT, index=index)
             if selected != artifact: raise ValueError(artifact_drift(selected, artifact))
             if read_local(root, MANIFEST, index=index) != manifest_bytes(manifest):

@@ -98,7 +98,11 @@ def _selection(canonical, row, config, env, override=True):
     return _known(config["default"]["profiles"],config), DEFAULT_SOURCE
 
 
-def resolve(path, env, payload=None):
+def select(path, env):
+    """The selection alone: the checkout, its tasks row, the selected profile names and
+    their source, the composed typed keys, and whether the checkout is the records store.
+    No repository layer, home, audit or private project listing, so a caller that needs
+    only the selection (git-identity-check) never depends on the whole catalogue."""
     config = _config(env)
     canonical, top = checkout_of(path, env)
     row = query(["resolve", str(canonical), "--json"], env)["results"][0]
@@ -108,6 +112,14 @@ def resolve(path, env, payload=None):
     store = isinstance(marker,str) and pathlib.Path(marker).resolve() == canonical
     if store and row["status"] != "unregistered":
         raise ProfileError("contradictory records-store metadata")
+    return {"config": config, "canonical": canonical, "top": top, "row": row, "names": names,
+            "source": source, "keys": keys, "store": store}
+
+
+def resolve(path, env, payload=None):
+    chosen = select(path, env)
+    config, canonical, top, row = chosen["config"], chosen["canonical"], chosen["top"], chosen["row"]
+    names, source, keys, store = chosen["names"], chosen["source"], chosen["keys"], chosen["store"]
     entry = row.get("entry", {})
     linked = entry.get("kind") == "linked"
     layout = None

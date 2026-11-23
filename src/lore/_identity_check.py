@@ -7,8 +7,9 @@ included, which inside a hook is the one being committed to; with a path, that c
 whatever repository the environment names.
 
 The expected identity is the profile key `git_identity` (`Name <email>`) that lore's
-resolver selects, never git config: a test that rewrote git config is what this exists
-to catch. A repository whose profile comes from lore's default (scratch repositories,
+resolver selects (`select`: the selection alone, without the session's private project
+listing, so an unrelated catalogue problem never blocks a commit), never git config: a
+test that rewrote git config is what this exists to catch. A repository whose profile comes from lore's default (scratch repositories,
 test fixtures, the records store) is not judged, and neither is any repository while
 the tasks registry does not register lore (a sandboxed XDG_CONFIG_HOME). The committer
 is always judged; `OPS_IDENTITY_AUTHOR=allow` lets a deliberately foreign author through.
@@ -20,7 +21,7 @@ import subprocess
 import sys
 
 from ._configuration import ProfileError
-from ._profiles import DEFAULT_SOURCE, LoreUnregistered, resolve
+from ._profiles import DEFAULT_SOURCE, LoreUnregistered, select
 
 ALLOW_AUTHOR = "OPS_IDENTITY_AUTHOR"
 ROLES = ("author", "committer")
@@ -105,15 +106,15 @@ def origin(cwd, env, role, field, value):
     return f"  {role} {field} {value!r} came from the environment ({variable}){via}", False
 
 
-def findings(cwd, env, res):
+def findings(cwd, env, chosen):
     """(findings, configured): one finding per role whose identity is not the profile's,
     and whether any wrong field came from git config."""
-    identity = res["keys"]["git_identity"]
+    identity = chosen["keys"]["git_identity"]
     expected = split_ident(identity["value"])
     allow = env.get(ALLOW_AUTHOR)
     if allow not in (None, "", "allow"):
         raise CannotJudge(f"{ALLOW_AUTHOR} must be allow or unset, not {allow!r}")
-    whose = f"{identity['source']}; selected by {res['profiles'][0]['source']}"
+    whose = f"{identity['source']}; selected by {chosen['source']}"
     found, configured = [], False
     for role in ROLES:
         if role == "author" and allow == "allow":
@@ -155,7 +156,7 @@ def verdict(cwd, env):
     profile resolves there, so it is not judged, and says so once."""
     top, checkout = written(cwd, env)
     try:
-        res = resolve(checkout, without_local(env))
+        chosen = select(checkout, without_local(env))
     except LoreUnregistered:
         where = env.get("XDG_CONFIG_HOME")
         named = f"XDG_CONFIG_HOME={where}" if where else "XDG_CONFIG_HOME unset"
@@ -164,9 +165,9 @@ def verdict(cwd, env):
         return [], False
     except (ProfileError, ValueError) as error:
         raise CannotJudge(str(error)) from error
-    if res["profiles"][0]["source"] == DEFAULT_SOURCE:
+    if chosen["source"] == DEFAULT_SOURCE:
         return [], False
-    return findings(top, env, res)
+    return findings(top, env, chosen)
 
 
 def run(path, env, cwd):

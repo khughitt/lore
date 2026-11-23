@@ -176,7 +176,7 @@ def test_an_unresolvable_profile_cannot_judge(ident):
 
 
 def test_the_resolver_never_sees_a_repository_local_variable(ident):
-    with patch.object(_identity_check, 'resolve', wraps=_identity_check.resolve) as resolve:
+    with patch.object(_identity_check, 'select', wraps=_identity_check.select) as resolve:
         assert run_check(ident, cwd=ident.checkout, GIT_DIR=str(ident.checkout / '.git'),
                          GIT_INDEX_FILE='.git/index') == (0, '')
     assert resolve.call_args.args[1].keys() & _identity_check.GIT_LOCAL_ENV == set()
@@ -215,7 +215,7 @@ def test_a_registry_tasks_cannot_read_cannot_judge_and_is_never_a_sandbox(ident,
 
 
 def test_a_resolver_failure_cannot_judge(ident):
-    with patch.object(_identity_check, 'resolve', side_effect=OSError('Permission denied')):
+    with patch.object(_identity_check, 'select', side_effect=OSError('Permission denied')):
         code, err = run_check(ident, cwd=ident.checkout)
     assert code == 2
     assert 'Permission denied' in err
@@ -541,3 +541,35 @@ def test_a_refusal_from_the_copy_on_path_never_falls_through_to_home(entry):
     assert result.returncode != 0
     assert 'committer Envy' in result.stderr
     assert count(w, w.checkout) == before
+
+
+# The identity path reads only selection: an unrelated catalogue problem never blocks a commit.
+
+NOT_HERE = ('zzz: /nowhere: zzz is registered at /nowhere, but it is not on this machine')
+
+
+def test_an_unrelated_catalogue_warning_never_blocks_a_private_profile_commit(ident):
+    w = ident
+    w.data['resolve --all --json']['warnings'].append(NOT_HERE)
+    w.save()
+    assert run_check(w, cwd=w.rad, GIT_AUTHOR_NAME='Test', GIT_AUTHOR_EMAIL='work@example.invalid',
+                     GIT_COMMITTER_NAME='Test', GIT_COMMITTER_EMAIL='work@example.invalid') == (0, '')
+    code, err = run_check(w, cwd=w.rad)
+    assert code == 1
+    assert f'  {WORK} (' in err
+
+
+def test_a_failure_in_the_identity_path_still_cannot_judge(ident):
+    w = ident
+    w.data[f'resolve {w.rad} --json']['warnings'].append('unreadable entry')
+    w.save()
+    code, err = run_check(w, cwd=w.rad, GIT_AUTHOR_NAME='Test', GIT_AUTHOR_EMAIL='work@example.invalid',
+                          GIT_COMMITTER_NAME='Test', GIT_COMMITTER_EMAIL='work@example.invalid')
+    assert code == 2
+    assert 'unreadable entry' in err
+    assert SWITCH in err
+
+
+def test_the_allowance_value_is_read_only_in_a_judged_repository(ident):
+    path = scratch(ident)
+    assert run_check(ident, cwd=path, OPS_IDENTITY_AUTHOR='yes') == (0, '')

@@ -168,8 +168,11 @@ the user's go-ahead at that moment.
 Without PATH it judges the repository git resolves from the environment, an inherited
 `GIT_DIR` included, which inside a hook is the one being committed to. With PATH it
 judges that checkout, whatever repository the environment names. It resolves the
-profile in-process through `resolve()`, never by spawning `lore`, and the resolver never
-sees a repository-local git variable. The expected identity never comes from git config.
+profile in-process through `select()`, the selection part of `resolve()` (profiles and
+their source, composed keys, the records-store test) without the private project
+listing, home or audits, so a catalogue warning about an unrelated project never blocks
+a commit. It never spawns `lore`, and the resolver never sees a repository-local git
+variable. The expected identity never comes from git config.
 
 | Exit | Meaning |
 | --- | --- |
@@ -179,10 +182,11 @@ sees a repository-local git variable. The expected identity never comes from git
 
 Git refuses the commit on 1 and 2. A repository is not judged when its profile comes
 from lore's default (`profile default`: scratch repositories, test fixtures, and the
-records store, which no path rule covers), or when `tasks resolve lore` reports lore unregistered: a sandboxed
-`XDG_CONFIG_HOME` whose registry lacks lore prints one `not judged` notice and passes.
-A registry tasks cannot read is never a sandbox. `OPS_IDENTITY_AUTHOR=allow` lets a
-deliberately foreign author through; any other non-empty value cannot judge, and the
-committer is always judged. The variable keeps its earlier name, from when ops owned the
+records store, which no path rule covers), or when `tasks resolve lore` reports lore
+unregistered: a sandboxed `XDG_CONFIG_HOME` whose registry lacks lore prints one
+`not judged` notice and passes. A registry tasks cannot read is never a sandbox.
+`OPS_IDENTITY_AUTHOR=allow` lets a deliberately foreign author through, and the
+committer is always judged. The value is read only in a judged repository: there any
+other non-empty value cannot judge, while an unjudged repository passes whatever it holds. The variable keeps its earlier name, from when ops owned the
 check, so existing runbooks and habits still apply. To commit past the guard once:
 `git -c hook.identity-check.enabled=false commit …`.

@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:6d4b70ba6bee49de980520cbdeab198e",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "fc6893129d550b7b24a709f1d2479f15376432193e4874ac6ffd8d39eea56072",
+      "text": "- Where `host-budget` is installed, run a local test or build command that fans out\n  across cores under `host-budget run -- <cmd>` when the project's route does not\n  already budget or cap its workers; it sizes a grant for host load and active audio\n  apps and exports `OPS_WORKERS` plus pytest-xdist, Cargo, Rust/nextest and Go worker\n  variables. For a runner that ignores those variables (such as `vitest`, `jest` or\n  `make`), pass its worker flag from `$OPS_WORKERS` inside a quoted shell (`host-budget\n  run -- sh -c '<cmd> --maxWorkers=\"$OPS_WORKERS\"'` or `-j \"$OPS_WORKERS\"`) unless the\n  project config already sets a tighter cap or serial execution; never set\n  `VITEST_MAX_WORKERS` as a generic cap (Vitest 5 overwrites explicit project\n  `maxWorkers` and `fileParallelism: false`).\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Cap local test and build fan-out with host-budget"
+}

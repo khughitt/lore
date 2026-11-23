@@ -262,6 +262,12 @@ path = "tasks/lore-c51b7c.md"
 revision = "01454e683316c5477e3a487ae3a55180586a86af"
 location = "reported (not reproduced locally): a worktree baseline ran a changed-files fast check that selected no tests on an unchanged tree, so its success proved nothing"
 status = "recorded"
+[[fragments.evidence]]
+owner = "lore:records"
+path = "tasks/lore-d9cca4.md"
+revision = "d3d44c46769030e908a80b44bb3433a5b42b83be"
+location = "scoped body: an unbudgeted vitest test script fanned out across cores while Bitwig was running; cap local test/build fan-out through host-budget and OPS_WORKERS without setting VITEST_MAX_WORKERS"
+status = "recorded"
 
 [[fragments]]
 id = "shell"

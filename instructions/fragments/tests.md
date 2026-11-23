@@ -59,6 +59,18 @@
 - In a project with the test front door (a justfile with `test-fast`), never call a test
   runner directly: the recipe is how the run is recorded.
 <!-- rule:da431a1b3ac14c21800cb5488031d7e8 end -->
+<!-- rule:6d4b70ba6bee49de980520cbdeab198e begin -->
+- Where `host-budget` is installed, run a local test or build command that fans out
+  across cores under `host-budget run -- <cmd>` when the project's route does not
+  already budget or cap its workers; it sizes a grant for host load and active audio
+  apps and exports `OPS_WORKERS` plus pytest-xdist, Cargo, Rust/nextest and Go worker
+  variables. For a runner that ignores those variables (such as `vitest`, `jest` or
+  `make`), pass its worker flag from `$OPS_WORKERS` inside a quoted shell (`host-budget
+  run -- sh -c '<cmd> --maxWorkers="$OPS_WORKERS"'` or `-j "$OPS_WORKERS"`) unless the
+  project config already sets a tighter cap or serial execution; never set
+  `VITEST_MAX_WORKERS` as a generic cap (Vitest 5 overwrites explicit project
+  `maxWorkers` and `fileParallelism: false`).
+<!-- rule:6d4b70ba6bee49de980520cbdeab198e end -->
 <!-- rule:ca536e7c8ef24f09a49bd0c598972ef5 begin -->
 - A test that starts a subprocess passes it an environment built key by key: `PATH`,
   `HOME` pointed at a temporary directory the test owns, and each other variable the

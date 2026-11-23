@@ -80,6 +80,6 @@ dropped or added. Keep new skills at this depth.
   `git submodule update --init`.
 
 Profile fragments — the instructions that differ between kinds of project —
-live in `profiles/` here, one file per profile. ops
-`profiles.toml` names them and `ops-profile session` prints the ones a
-checkout selects; the delivery contract is [`../docs/profile-delivery.md`](../docs/profile-delivery.md).
+live in `profiles/` here, one file per profile. `profiles/profiles.toml` and lore's
+private definitions name them and `lore profile session` prints the ones a checkout
+selects; the delivery contract is [`../docs/profile-delivery.md`](../docs/profile-delivery.md).

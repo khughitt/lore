@@ -1,4 +1,5 @@
 """Configuration ownership tests catch accidental last-wins or public private values."""
+import json
 import pytest
 from lore._configuration import ProfileError, load, compose
 from conftest import PUBLIC, PRIVATE
@@ -54,3 +55,31 @@ def test_shipped_profiles_have_complete_corpus(profile_world,monkeypatch):
     from lore import _profiles
     monkeypatch.setattr(_profiles,'CORPUS',Path(__file__).resolve().parents[1])
     assert _profiles.check(profile_world.env)==[]
+
+
+def _list(w, capsys):
+    from lore import cli
+    code = cli.main(['profile', 'list', '--json'], w.env, str(w.checkout))
+    out, err = capsys.readouterr()
+    return code, out, err
+
+
+def test_list_names_every_defined_profile_public_and_private(profile_world, capsys):
+    w = profile_world
+    with w.private.open('a') as f: f.write('\n[profile.lab]\ngh_account="lab-test"\n')
+    code, out, err = _list(w, capsys)
+    assert (code, err) == (0, '')
+    assert json.loads(out) == {'profiles': ['external', 'lab', 'personal', 'science', 'work']}
+
+
+@pytest.mark.parametrize('damage', ['private', 'unregistered'])
+def test_list_exits_2_on_a_configuration_it_cannot_load(profile_world, capsys, damage):
+    w = profile_world
+    if damage == 'private': w.private.write_text('not [toml')
+    else:
+        w.data['resolve lore --json'] = {'results': [{'input': 'lore', 'kind': 'prefix', 'status': 'unregistered',
+                                                      'prefix': 'lore'}], 'warnings': []}
+        w.save()
+    code, out, err = _list(w, capsys)
+    assert (code, out) == (2, '')
+    assert err.startswith('lore profile: ')

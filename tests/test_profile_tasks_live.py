@@ -38,3 +38,24 @@ def test_resolution_ignores_task_body_and_records_lock(profile_world):
         assert result['profiles'][0]['name']=='personal'
         after={str(p.relative_to(w.records)):p.read_bytes() for p in w.records.rglob('*') if p.is_file()}
         assert after==before
+
+
+@pytest.mark.parametrize('registry', [None, '[projects]\n', '[projects\n'])
+def test_identity_check_sandbox_rule_reads_the_installed_resolver(profile_world, capsys, registry):
+    """A registry that does not list lore is a sandbox (not judged); one tasks cannot
+    read is never one (cannot judge)."""
+    from lore import cli
+    w=profile_world
+    env={key:value for key,value in w.env.items() if key not in {'REPLIES','CALL_LOG'}}
+    env['PATH']=os.environ['PATH']
+    require_tasks(env)
+    if registry is not None:
+        path=Path(env['XDG_CONFIG_HOME'])/'tasks/projects.toml'
+        path.parent.mkdir(parents=True,exist_ok=True);path.write_text(registry)
+    code=cli.git_identity_check([],env|{'GIT_AUTHOR_NAME':'Other','GIT_AUTHOR_EMAIL':'other@example.invalid'},
+                                str(w.checkout))
+    err=capsys.readouterr().err
+    if registry=='[projects\n':
+        assert code==2 and 'cannot judge' in err and 'not judged' not in err
+    else:
+        assert code==0 and 'does not register lore' in err

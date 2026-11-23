@@ -21,6 +21,11 @@ RECORDS_NOTE = re.compile(r"^docs/notes/[^/]+-(?:brief|handoff)\.md$")
 DOC_DIRS = re.compile(r"^/?docs/(?:specs|plans|superpowers|designs?|rfcs?|adrs?)(?:/|$)")
 NAMED_DIRS = re.compile(r"\bdocs/[A-Za-z0-9_-]+/")
 GLOB = re.compile(r"[*?\[]")
+DEFAULT_SOURCE = "profile default"
+
+
+class LoreUnregistered(ProfileError):
+    """The tasks registry does not register lore, so no profile definitions resolve."""
 
 
 def _git(cwd, *args, env=None):
@@ -66,6 +71,8 @@ def _known(names, config):
 
 def _config(env):
     row = query(["resolve", "lore", "--json"], env)["results"][0]
+    if row["status"] == "unregistered":
+        raise LoreUnregistered("tasks resolve lore: lore is not registered")
     entry = row.get("entry")
     if not isinstance(entry, dict) or not isinstance(entry.get("records"), str):
         raise ProfileError("tasks resolve lore: missing entry.records")
@@ -88,10 +95,14 @@ def _selection(canonical, row, config, env, override=True):
     if matches:
         rule = max(matches, key=lambda r:len(expand(r["path"],env).resolve().parts))
         return _known(rule["profiles"],config), f"profile path {rule['path']}"
-    return _known(config["default"]["profiles"],config), "profile default"
+    return _known(config["default"]["profiles"],config), DEFAULT_SOURCE
 
 
-def resolve(path, env, payload=None):
+def select(path, env):
+    """The selection alone: the checkout, its tasks row, the selected profile names and
+    their source, the composed typed keys, and whether the checkout is the records store.
+    No repository layer, home, audit or private project listing, so a caller that needs
+    only the selection (git-identity-check) never depends on the whole catalogue."""
     config = _config(env)
     canonical, top = checkout_of(path, env)
     row = query(["resolve", str(canonical), "--json"], env)["results"][0]
@@ -101,6 +112,14 @@ def resolve(path, env, payload=None):
     store = isinstance(marker,str) and pathlib.Path(marker).resolve() == canonical
     if store and row["status"] != "unregistered":
         raise ProfileError("contradictory records-store metadata")
+    return {"config": config, "canonical": canonical, "top": top, "row": row, "names": names,
+            "source": source, "keys": keys, "store": store}
+
+
+def resolve(path, env, payload=None):
+    chosen = select(path, env)
+    config, canonical, top, row = chosen["config"], chosen["canonical"], chosen["top"], chosen["row"]
+    names, source, keys, store = chosen["names"], chosen["source"], chosen["keys"], chosen["store"]
     entry = row.get("entry", {})
     linked = entry.get("kind") == "linked"
     layout = None
@@ -266,6 +285,11 @@ def records_audit(res, env=None):
             found.append(f"{name}\tstays in the code tree and is revised in place until this project rewrites it "
                          f"as a reference document; new working documents go under {layout['records']}/docs")
     return found
+
+
+def defined(env):
+    """Every profile name lore's definitions declare, public and private, sorted."""
+    return sorted(_config(env)["profile"])
 
 
 def check(env):

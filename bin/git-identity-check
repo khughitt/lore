@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+"""Launch git-identity-check from the checkout's uninstalled standard-library package.
+
+    git-identity-check [PATH]
+
+Exits 0 when the commit's identity matches the profile's or the repository is not
+judged, 1 on a mismatch, 2 when it cannot judge. The system interpreter runs it, whatever
+python3 is first on PATH; a package that cannot load (an interpreter without tomllib)
+still answers 2, never a traceback, so this file stays parseable by Python 3.9.
+Reference: docs/profile-delivery.md (Commit identity check).
+"""
+import os
+import pathlib
+import sys
+sys.dont_write_bytecode = True
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'src'))
+try:
+    from lore.cli import git_identity_check
+except Exception as error:
+    sys.stderr.write('git-identity-check: cannot judge {}: {}: {}\n'
+                     '  To commit past it once: git -c hook.identity-check.enabled=false commit …\n'
+                     .format(os.getcwd(), type(error).__name__, error))
+    raise SystemExit(2)
+
+raise SystemExit(git_identity_check(sys.argv[1:], dict(os.environ), os.getcwd()))

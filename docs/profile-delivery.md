@@ -14,7 +14,7 @@ the hook and the prose in `profiles/`. Tasks owns assignment/placement metadata 
 its resolver. hq owns hook wiring and continues invoking main's hook; a worktree's
 hook is used only by explicit path during preparation.
 
-There is no PATH install. From this checkout, use `./bin/lore profile` with one of:
+`lore` has no PATH install. From this checkout, use `./bin/lore profile` with one of:
 
 | Subcommand | Result |
 | --- | --- |
@@ -22,10 +22,13 @@ There is no PATH install. From this checkout, use `./bin/lore profile` with one 
 | `explain [PATH]` | Human-readable values with provenance |
 | `session [PATH]` | Complete delivered profile text |
 | `check` | Configuration/catalogue diagnostics; nonzero for problems |
+| `list [--json]` | Every profile name the public and private definitions declare, sorted, one per line; `--json` prints `{"profiles": [<name>, ...]}`. A configuration lore cannot load (unparseable or invalid definitions, lore unregistered, a tasks failure) exits 2 with one `lore profile:` error on stderr |
 | `audit [PATH]` | Existing design documents hidden by excludes or retained in code |
 
 `./bin/lore hook profile-notice` and `./bin/lore hook stale-notice` are relay notice
 subscribers ([Relay subscribers](#relay-subscribers)), not commands for people.
+`git-identity-check` is the one command installed on `PATH`
+([Commit identity check](#commit-identity-check)).
 
 From elsewhere, run `tasks resolve lore --json`, require a successful single result,
 and read `results[0].root`. Invoke that root's `bin/lore` by explicit path, safely
@@ -149,11 +152,41 @@ its temporary registry, records and Git config are isolated. Hosted suites decla
 `LORE_TEST_LIVE_TASKS=unavailable`, printing the explicit integration skip reason;
 any other marker value errors, and test-live unsets it.
 
-The explicit local acceptance command is `scripts/profile-parity.py --ops-root PATH`,
-where PATH is the registered ops root. It checks every registered checkout present
-on the host, lists unavailable ones, rejects present-resolution failures and
-unexplained differences, and compares effective definitions. Ops and lore's private
-copies can diverge after acceptance until program piece 1.5 retires the old copy;
-check does not promise synchronization. Live hook/global-instruction activation and
-bounded rollback require a separate concrete user grant. See the task's frozen plan
-and activation packet for exact revision/rollback evidence.
+Live hook/global-instruction activation and bounded rollback require a separate
+concrete user grant.
+
+## Commit identity check
+
+`git-identity-check [PATH]` (launcher `bin/git-identity-check`, package module
+`lore._identity_check`) refuses a commit whose author or committer is not the selected
+profile's `git_identity`. The global git config declares it as the hook
+`hook.identity-check` on the `pre-commit` and `pre-merge-commit` events and calls it by
+name, so `just install`, run in the main checkout, links it into `~/.local/bin`; the
+recipe refuses a linked worktree. Repointing that link is a host change made only with
+the user's go-ahead at that moment.
+
+Without PATH it judges the repository git resolves from the environment, an inherited
+`GIT_DIR` included, which inside a hook is the one being committed to. With PATH it
+judges that checkout, whatever repository the environment names. It resolves the
+profile in-process through `select()`, the selection part of `resolve()` (profiles and
+their source, composed keys, the records-store test) without the private project
+listing, home or audits, so a catalogue warning about an unrelated project never blocks
+a commit. It never spawns `lore`, and the resolver never sees a repository-local git
+variable. The expected identity never comes from git config.
+
+| Exit | Meaning |
+| --- | --- |
+| 0 | Both identities match, or the repository is not judged |
+| 1 | One stderr finding per mismatched role, naming where git took each wrong field (a config file and scope, the environment, `--author`, `EMAIL`, or git's system default) |
+| 2 | It cannot judge: an unresolvable profile, a tasks failure, an unreadable registry, a package that cannot load. Never a pass and never a traceback |
+
+Git refuses the commit on 1 and 2. A repository is not judged when its profile comes
+from lore's default (`profile default`: scratch repositories, test fixtures, and the
+records store, which no path rule covers), or when `tasks resolve lore` reports lore
+unregistered: a sandboxed `XDG_CONFIG_HOME` whose registry lacks lore prints one
+`not judged` notice and passes. A registry tasks cannot read is never a sandbox.
+`OPS_IDENTITY_AUTHOR=allow` lets a deliberately foreign author through, and the
+committer is always judged. The value is read only in a judged repository: there any
+other non-empty value cannot judge, while an unjudged repository passes whatever it holds. The variable keeps its earlier name, from when ops owned the
+check, so existing runbooks and habits still apply. To commit past the guard once:
+`git -c hook.identity-check.enabled=false commit …`.

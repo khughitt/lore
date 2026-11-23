@@ -1231,9 +1231,8 @@ def test_deployed_recipes_ignore_stale_preparation_environment(world):
     for name in ('ops-check', 'ops-docs'):
         (world.root / 'tools' / name).write_text('import sys\n')
     (world.root / 'tools/tt').write_text('import subprocess, sys\nsys.exit(subprocess.run(sys.argv[sys.argv.index("--") + 1:]).returncode)\n')
-    shutil.copy(ROOT / 'bin/lore', world.root / 'bin/lore')  # check_cmd compiles these too
-    (world.root / 'scripts').mkdir(exist_ok=True)
-    shutil.copy(ROOT / 'scripts/profile-parity.py', world.root / 'scripts/profile-parity.py')
+    for name in ('bin/lore', 'bin/git-identity-check'):  # check_cmd compiles these too
+        shutil.copy(ROOT / name, world.root / name)
     commit_pair(world)
     stale = world.root.parent / 'old-ops-worktree'
     git(world.ops, 'worktree', 'add', '-q', '--detach', str(stale), 'HEAD')

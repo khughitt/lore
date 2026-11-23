@@ -78,6 +78,9 @@ is a warning, while broken bindings or uncovered obligations are fatal.
   through the lore-1be62d map. `tasks show <task>` prints each attachment's path.
 - `hooks/claude-profile`: the SessionStart hook every Claude Code and Codex session runs,
   wired from hq's hook files; it loads lore's package and reads assignments through tasks.
+- `bin/git-identity-check`: the commit identity guard the global git config's hook runs
+  by name; `just install` links it into `~/.local/bin` (a host change: only with the
+  user's go-ahead). `docs/profile-delivery.md`, Commit identity check.
 - `bin/lore hook profile-notice|stale-notice`: relay notice subscribers (one schema-2
   envelope in, `{}` or `{"context"}` out), not yet wired; `docs/profile-delivery.md`.
 - `bin/assemble-instructions`: the sole artifact/manifest writer and guard.

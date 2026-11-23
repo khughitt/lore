@@ -38,7 +38,7 @@ venv_guard := "{ .venv/bin/python -c \"import pytest, xdist\" >/dev/null 2>&1 ||
 # Temporary JUnit reports let tt record each run's five slowest tests.
 fast_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 test_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile bin/lore scripts/profile-parity.py && python3 -m compileall -q src/lore"
+check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile bin/lore bin/git-identity-check && python3 -m compileall -q src/lore"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
@@ -143,6 +143,12 @@ work-link *names:
 # dependency change.
 setup:
     {{tt}} setup -- sh -c '{{setup_cmd}}'
+
+# Link git-identity-check into ~/.local/bin, where the global git config's identity-check
+# hook finds it by name. It links this checkout's launcher, so it refuses a linked worktree:
+# a host pointer never names a worktree. Idempotent; replaces the link it finds there.
+install:
+    {{tt}} install -- sh -c '[ "$(git rev-parse --absolute-git-dir)" = "$(git rev-parse --path-format=absolute --git-common-dir)" ] || { echo "just install links the main checkout: run it there, not in a worktree" >&2; exit 1; }; mkdir -p ~/.local/bin && ln -sfn "$(pwd)/bin/git-identity-check" ~/.local/bin/git-identity-check'
 
 # What the pre-commit hook runs: `check`'s command under its own hook target.
 hook-pre-commit:

@@ -28,6 +28,11 @@ git config core.hooksPath .githooks
 just setup
 ```
 
+`just install`, run in the main checkout, links `bin/git-identity-check` into
+`~/.local/bin`, where the global git config's identity-check hook calls it by name
+([profile delivery](docs/profile-delivery.md#commit-identity-check)). It replaces an
+existing link there, so run it only when you mean to point the host's hook at this checkout.
+
 Checks use Python 3.11+, uv, Git and just. The corpus, profiles and skills are plain
 files and read on their own. Live delivery, the `SessionStart` hook (`hooks/claude-profile`),
 and the repository gates (`just check` and `bin/assemble-instructions check`) require
@@ -102,6 +107,8 @@ the normal checks ([instruction assembly](docs/instruction-assembly.md)).
 - `bin/lore`: the launcher for `lore profile …` and the relay notice subscribers
   `lore hook profile-notice` and `lore hook stale-notice`, which carry the profile text
   and the stale-instructions notice through relay once hq wires them.
+- `bin/git-identity-check`: the commit identity guard the global git hook runs
+  ([profile delivery](docs/profile-delivery.md#commit-identity-check)).
 - `docs/`: the three reference documents. Working documents (specs, plans, briefs) and
   task records live in the records root (`tasks where` names it). The archived documents'
   history is in the records repository's lore directory; [AGENTS.md](AGENTS.md) says where

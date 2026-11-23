@@ -90,7 +90,9 @@ key=" ".join(sys.argv[1:])
 with open(os.environ["CALL_LOG"],"a") as f: f.write(json.dumps(sys.argv[1:])+"\\n")
 replies=json.load(open(os.environ["REPLIES"]))
 if key not in replies: print("unexpected query: "+key,file=sys.stderr);sys.exit(4)
-print(json.dumps(replies[key]))
+reply=replies[key]
+if "_exit" in reply: print(reply["_stderr"],file=sys.stderr);sys.exit(reply["_exit"])
+print(json.dumps(reply))
 ''')
     fake.chmod(0o755)
     env.update(PATH=str(bin_dir) + os.pathsep + env['PATH'], CALL_LOG=str(commands), REPLIES=str(replies))
@@ -120,7 +122,7 @@ def delivery(profile_world):
     import shutil
     w = profile_world
     shutil.copytree(ROOT / 'src', w.corpus / 'src', ignore=shutil.ignore_patterns('__pycache__'))
-    for name in ('hooks/claude-profile', 'bin/lore'):
+    for name in ('hooks/claude-profile', 'bin/lore', 'bin/git-identity-check'):
         target = w.corpus / name; target.parent.mkdir(exist_ok=True)
         if (ROOT / name).exists(): shutil.copy2(ROOT / name, target)
     # Store prose is corpus data, copied independently of production rendering logic.

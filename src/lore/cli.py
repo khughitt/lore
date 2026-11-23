@@ -1,11 +1,11 @@
-"""Parse the profile and hook command groups and dispatch to resolution/rendering."""
+"""Parse lore's command groups and git-identity-check, and dispatch to their subsystems."""
 import argparse
 import json
 import pathlib
 import sys
-from . import _hooks
+from . import _hooks, _identity_check
 from ._configuration import ProfileError
-from ._profiles import resolve, check, audit
+from ._profiles import resolve, check, audit, defined
 from ._rendering import explain_text, session_text
 
 
@@ -15,6 +15,7 @@ def main(argv, env, cwd):
     profile = groups.add_parser('profile')
     commands = profile.add_subparsers(dest='command', required=True)
     commands.add_parser('check')
+    commands.add_parser('list', help='every profile lore defines').add_argument('--json', action='store_true')
     for name in ('resolve', 'explain', 'session', 'audit'):
         sub = commands.add_parser(name)
         sub.add_argument('path', nargs='?', default='.')
@@ -25,6 +26,8 @@ def main(argv, env, cwd):
     args = parser.parse_args(argv)
     if args.group == 'hook':
         return _hook(args.command, env)
+    if args.command == 'list':
+        return _list(args.json, env)
     try:
         if args.command == 'check':
             problems = check(env)
@@ -44,6 +47,26 @@ def main(argv, env, cwd):
         return 1
     sys.stdout.write(output)
     return 0
+
+
+def _list(as_json, env):
+    """The defined profile names; a configuration lore cannot load exits 2."""
+    try:
+        names = defined(env)
+    except (ProfileError, OSError, ValueError) as error:
+        print(f'lore profile: {error}', file=sys.stderr)
+        return 2
+    sys.stdout.write(json.dumps({'profiles': names}) + '\n' if as_json else ''.join(f'{n}\n' for n in names))
+    return 0
+
+
+def git_identity_check(argv, env, cwd):
+    """The git-identity-check command: 0 pass or not judged, 1 mismatch, 2 cannot judge."""
+    parser = argparse.ArgumentParser(prog='git-identity-check', description=_identity_check.__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('path', nargs='?')
+    args = parser.parse_args(argv)
+    return _identity_check.run(args.path, env, cwd)
 
 
 def _hook(name, env):

@@ -95,8 +95,8 @@ latency incident's verification needs). Override with `tasks start <id> --force
 --reason "<why>"`, whose reason quotes or cites that approval so the override is
 recorded. A reason the agent writes for itself is not approval, and neither is a
 controller's instruction to its subagent. Without approval, park the blocked work
-(`tasks park <id> "<next step>" --waiting-on user --reason approval`) rather than
-force it.
+(`tasks park <id> "<next step>" --waiting-on user --reason approval` linked to or
+inline-opening a revision-pinned `approval` decision) rather than force it.
 <!-- rule:13f54add0c144229bf870b4b39835acf end -->
 
 <!-- rule:b6576b5590d4430da697c160e083b10c begin -->

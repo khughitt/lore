@@ -93,8 +93,10 @@
   allowance with source and purpose) continue without asking; otherwise stop after
   the second unexplained failure. Rulings may lower or remove incidental caps, never
   enlarge unexplained-failure authority or relax human or protective limits.
-  Unattended, park the task `--waiting-on user --reason decision` with that question
-  as its next step.
+  Unattended, park the task `--waiting-on user --reason decision` linked to or
+  inline-opening a named decision (`--decision <uuid>` or `--decision-kind question
+  --decision-origin workflow --decision-text "<question>"`), with that question as
+  its next step.
 <!-- rule:052f6da8885c4d2f81b11c0602eb6e92 end -->
 <!-- rule:1f37e3afebdd433a9ccaa2970cde7289 begin -->
 - A turn is the work since the user's last message, your subagents' work included; a
@@ -140,8 +142,10 @@
   worktree, process and retained-item accounting you already hold and says it was not
   refreshed; the session that resumes refreshes it before other work, which here
   outranks Processes' accounting at park. As the controller (or working alone), write
-  the pause report, park the task `--waiting-on user --reason decision` with the
-  decision as its next step, and end the turn. As a subagent, or a session another
+  the pause report, park the task `--waiting-on user --reason decision` linked to or
+  inline-opening a named decision (`--decision <uuid>` or `--decision-kind question
+  --decision-origin workflow --decision-text "<decision>"`) with the decision as its
+  next step, and end the turn. As a subagent, or a session another
   agent launched (even when the hook treats you as a root), park any claim
   `--waiting-on agent` for whoever launched you and return a short status (done, left,
   running); only the controller writes the pause report. The report gives what the
@@ -163,7 +167,8 @@
   turn-pause delivers it to the tree as a `spend` pause. Received mid-turn, through a
   turn-pause refusal or any other route (a notice, an alert the user pastes), handle it
   as a crossed limit under the turn-pause rule above: stop, park the task `--waiting-on
-  user --reason decision` with the signal (value, threshold, episode) in the park note,
+  user --reason decision` linked to or inline-opening a named decision with the signal
+  (value, threshold, episode) in the park note,
   report it, and end the turn; a subagent stops as that rule says. Investigation starts
   in the next turn. Received at the user's prompt (turn-pause injects it as context
   when the episode opened while the root was idle), do not park or end the turn: report
@@ -174,7 +179,8 @@
   the spending cause from the work being resumed (the long wait handed to a
   small-context child, the controller restarted fresh per stage); filing a follow-up
   task alone is neither. Without one, the work stays parked `--waiting-on user --reason
-  decision`, naming the cause and the options. Only the user's explicit instruction
+  decision` linked to or inline-opening a named decision naming the cause and the
+  options. Only the user's explicit instruction
   resumes work whose spending pattern is unchanged: a waived investigation is not that
   instruction, and neither is the reply that ends the pause. This outranks the
   turn-pause rule's continuation after that reply. Never write obs's spend state to
@@ -289,7 +295,9 @@
   that stopped; how a running result is picked up goes in the task note. A step you own (a review you dispatch, a
   check you rerun, a child you have not started) is never reported as waiting on the
   user: finish it, or `tasks park` the task with that step as the next action and resume
-  it; hand it over only explicitly (`--waiting-on user --reason review`). A park's next
+  it; hand it over only explicitly (`--waiting-on user --reason review` linked to or
+  inline-opening a named decision, pinning any review or approval artifact by repo,
+  path and commit or path and sha256 at request time). A park's next
   step is an action and who takes it ("rerun `just gate` in .worktrees/x, then dispatch
   the Task 6 review"), never a state ("waiting for next steps"). An unblocked task you
   hold is not parked between increments: continue until a blocker, a gate that needs a
@@ -299,8 +307,11 @@
   `presentation: desktop` on a non-handback route. A question and `tasks park` do not
   write each other: continue independent work while a pending or deferred question
   waits, and when you actually stop on it, `tasks park --waiting-on user` with the
-  actionable next step and the question `id` when available (and `context.taskId` on
-  the question when known).
+  actionable next step, linking or inline-opening a named decision whenever using
+  `--reason review|decision|approval` (pinning any approval or review artifact at
+  request time) and recording the question `id` when available (and `context.taskId`
+  on the question when known). Non-request handoffs (`session`, `dependency`,
+  `environment`, `quiet`) need no linked decision.
 <!-- rule:4fd096e0dfb040c7b5f77277569bbabd end -->
 <!-- rule:717a50b29e794e72b327bf60820479bf begin -->
 - A skill's scripted question or stop (an integration menu, a "surface residual

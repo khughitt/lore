@@ -33,7 +33,7 @@ dropped or added. Keep new skills at this depth.
   store-free `mindful --json help op` capability probe. A mismatched runtime stops
   before capture. Mindful ships the vocabulary; routing preferences are private
   host configuration.
-- `flow` and `session-logs` — served from the flows and hq checkouts, declared the same way.
+- `flow`, `pair` and `session-logs` — served from the flows and hq checkouts, declared the same way.
 - `quarry` and `quarry-biology` — served from the quarry checkout's `skills/`, declared
   the same way.
 - `references/retained-item-records.md` — lore-authored closeout record guidance,

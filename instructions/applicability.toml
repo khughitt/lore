@@ -6,22 +6,26 @@
 # --- Worktrees
 
 [rule.3278f93fcc9342819ee39d1bc5ba318f]  # Isolated worktrees and setup
+reviewed = "5b805a131ef80a38e683b11bf1aece2821616bc98e6ab7ba2a2e3f651615cd8d"
 governs = ["worktree-lifecycle"]
 by = "first-edit"
 note = "worktree-lifecycle here means the whole worktree setup an actor may be spared: creating it, hydrating it, reporting a missing setup route, preparing its baseline, and removing it; band's launcher does all of these before its worker starts. The obligation to change code only inside a worktree is met by the launcher placing the worker in one."
 rule_sha256 = "9b96b98296f8fa2d9a579a816c372958586ffb6d5b32630cb3513e8370b2f921"
 
 [rule.813cfae03116426f9b5da22b5af1cf83]  # Preserve ignored files before removal
+reviewed = "29123f06794d4cd3b7f00aa682ce0526533627111d4be49b5fabca62856a5008"
 governs = ["worktree-lifecycle"]
 note = "Every obligation is a step of removing a worktree."
 rule_sha256 = "a96818cd4d091db57fef39c6c935702222bdb7e12e039476b2f449fcca019da4"
 
 [rule.eadfc260a2134d269009cae210212fdf]  # Submodule worktree removal
+reviewed = "a79da413c9fe61e11c16658826d67e8d1e2e4a07b07fc949b770c024ad34b99e"
 governs = ["worktree-lifecycle"]
 note = "Every obligation is a step of forcing a worktree removal."
 rule_sha256 = "4cf0ae497cbfcddac72c3c8e245fb55dcb4efacab869bf68545d6d241d970933"
 
 [rule.4402e5c1ec654514a43ca011c2800ba6]  # Harvest timings before removal
+reviewed = "0cdc95816c1122e2731b18128c249628f93aedd4d03b473a32d59151584ebc1a"
 governs = ["worktree-lifecycle"]
 note = "\"Before removing a worktree\": removal only."
 rule_sha256 = "5b5fe45de2ef010f24d13133cbed05523533e3940139db3f9a00bd885b81c74f"
@@ -29,6 +33,7 @@ rule_sha256 = "5b5fe45de2ef010f24d13133cbed05523533e3940139db3f9a00bd885b81c74f"
 # --- Asking the user
 
 [rule.2c5785f136ca4ee590e1c69406276623]  # Question format
+reviewed = "005a8b56718b2275a8dc79369137262a3a8e01244bdf5925a7ba004a57d04f95"
 governs = ["ask-user"]
 note = "\"A question, when asked\": every clause is about how to ask the user."
 rule_sha256 = "84fa24acfd1d9e6dfd2d6a4f8d2f8fcd2aae031866d06b1d396f3eaff246c210"
@@ -36,6 +41,7 @@ rule_sha256 = "84fa24acfd1d9e6dfd2d6a4f8d2f8fcd2aae031866d06b1d396f3eaff246c210"
 # --- Integration
 
 [rule.5a5808d0572f49e49afe103d7569231e]  # Local integration and external actions
+reviewed = "2b0e04508f49857fa98468c19735c6c83da01518cc208e122e4eda133ecf6d92"
 governs = ["integrate"]
 note = "Local merge, push, PR: the integrate duty."
 rule_sha256 = "d1a9938f2e4eb5688878c7a8dfd60d7deea84bbb88402402fd8c9b913a8a852c"
@@ -43,26 +49,31 @@ rule_sha256 = "d1a9938f2e4eb5688878c7a8dfd60d7deea84bbb88402402fd8c9b913a8a852c"
 # --- Task records
 
 [rule.e5201d5768794401bf9d88a39b1ee445]  # Reopen unfinished review corrections
+reviewed = "891fa79314a67f6cf8d6971ae7afa843a8787a91354da7049932c108fc3fa740"
 governs = ["task-records"]
 note = "tasks edit, start, done, park and filing a concerns task: task record writes."
 rule_sha256 = "9ce030598b9fcf8b9d373c93eb72cf694b9fd601611f00c71e5d9f0e2b67fc9a"
 
 [rule.019b1ebc42524f6689c223c58ca6cadf]  # Deferred findings have an open owner before close
+reviewed = "f36c83fd20a9c3c65fc85fb3db767248e50ae45e2b99f8ca60d7091e04bf2880"
 governs = ["task-records"]
 note = "\"Before tasks done\": filing follow-ups and noting tasks."
 rule_sha256 = "64c8b6416fa84c9c230c66ea35473055ee488dc6d5f4fb8dd112b9c8a415d6e8"
 
 [rule.13f54add0c144229bf870b4b39835acf]  # Halt tasks take priority
+reviewed = "8ebfbc647d970cb895435e701f43ab94a47db5f963e35ec7e7511937c8a74d90"
 governs = ["task-records"]
 note = "Choosing and starting a task, forcing or parking it: claiming is a task record write."
 rule_sha256 = "631f7b9abd60c342343272b6c72b955786e4ced731c29bdaa94849ded0a50bb4"
 
 [rule.86172e9df3bc47369bde0a298b8a292a]  # Record concerns at filing
+reviewed = "45b68dedba998d6803ba936ed111044e309909e33d5b738fbf54d9e95444c6a2"
 governs = ["task-records"]
 note = "\"When you file a task\": filing and noting."
 rule_sha256 = "1372732082081c85558485b6ce6f5dbfd96caa9d2008e94a4e38601ec234ac0e"
 
 [rule.b6576b5590d4430da697c160e083b10c]  # Latency incident verification
+reviewed = "ca4ae3f8927eb8a8d0d18d3ee64f798440207eb0a7f8ea1c0f7e51340fec188d"
 governs = ["task-records"]
 note = "Retiring obligations, removing halts, tasks start, attach and done on incident tasks; the advisory clauses impose nothing on an actor that cannot touch incidents."
 rule_sha256 = "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30"
@@ -70,6 +81,7 @@ rule_sha256 = "eaebafc1e1e9daf7ee31c190c5cd394a3cceb8e839128d1811f806f3d2b21f30"
 # --- Trials
 
 [rule.b2d5d7b434c74989a11e2b7a88dcd829]  # Honor trial assignments
+reviewed = "205a165d98aeb532a87976069371c08c0a0c5df6fa6384b62eeaff07d12598a8"
 governs = ["trials"]
 note = "\"After tasks start, run trial-arm\": the trials duty."
 rule_sha256 = "8b278d29640abdeef040b6272c02b3c9935cf2eec9a12c8ad5691c6cdc5509f9"
@@ -77,6 +89,7 @@ rule_sha256 = "8b278d29640abdeef040b6272c02b3c9935cf2eec9a12c8ad5691c6cdc5509f9"
 # --- Review rounds
 
 [rule.00bc708d91bf4a1b80ce498d206479e4]  # Assign independent reviewer effort through native settings
+reviewed = "f1c0aaecd924fb9f610e388b324b76d31d9186b03c2985fb320d6aa9974dd92b"
 governs = ["run-reviews"]
 note = "Drawing effort, launching reviewers and keeping assignments: running review rounds."
 rule_sha256 = "71ef391cee22f02915ffdeeacadb4743e5cea36219e7b36168686ccc11f0230d"
@@ -87,6 +100,7 @@ note = "\"Every brief\" may be read as every dispatch brief, not only a reviewer
 rule_sha256 = "eede5669b6d03e8b73dcf2154297cf1ff29d8e45da67c9fcdb7411d74e1be9cf"
 
 [rule.046dfb8c365f454a86390b6b4167e487]  # Read-only reviewers and saved reports
+reviewed = "d3c4523d2e046405c578e5ef3160c7f3580cf818dbaa7fd6b2df9fb174e912bd"
 any = [
   { when = [{ fact = "actor.role", in = ["reviewer"] }] },
   { governs = ["run-reviews"] },
@@ -97,31 +111,37 @@ rule_sha256 = "1496d212378747e8c0ab9ca9dc40ecd9856ea8022fca941b0d94d0620996d4b4"
 # --- Feedback
 
 [rule.3626fd73a87c4d438ac6a0b6c3ffbf27]  # Report tool and instruction friction
+reviewed = "8ef114592307d82444ba7d4fb7e019324789b91ce665384feb1cd3da17e937a5"
 governs = ["file-feedback"]
 note = "When to file feedback."
 rule_sha256 = "205c2488d87522c9438bc3f39a4237d49e6da542ab2973afe763339da05fbd0a"
 
 [rule.09d96981ac844d2fbfcb375c3bd77994]  # File tooling feedback
+reviewed = "5abe4519e47479298499b97ba35afe0c1f94f0d19b64326fd7a4e8be3e261d4b"
 governs = ["file-feedback"]
 note = "How to file feedback."
 rule_sha256 = "1ce3670322c87c3079d5cdcb9df7b6bf8f27bc28219384ec1152d1d0312d12e9"
 
 [rule.7bea58c0548e40e38d39247aa236a76d]  # Standalone feedback bodies
+reviewed = "7c5af35e6875856bc441f4917557b7b38feea82a31191ea4c04af4b0beb350dc"
 governs = ["file-feedback"]
 note = "The body of a feedback report."
 rule_sha256 = "7a5b7de86855b1fbb40a540d1d82b0acbcfd61c1523d23a8434244c9d0b3924a"
 
 [rule.406df98201e14fe9b3a736887d7010b2]  # File guidance lessons
+reviewed = "60d40c952194f48ee703942c1cb084933647b2e97e021976603af1229d0e3360"
 governs = ["file-feedback"]
 note = "Lessons are filed as feedback; a memory never replaces the report."
 rule_sha256 = "fc86ef066af165d26278556711e2a8bb5e4d3d476dc16c76662993920e7e79ee"
 
 [rule.a5554bc873f348648268c912ee06b92a]  # Tool-focused feedback without project details
+reviewed = "13b873db7a3838214017ff2bc45197b172e08e8770d1b0d3bca1e76280a59c76"
 governs = ["file-feedback"]
 note = "Content of a feedback report."
 rule_sha256 = "632fc9610a54d1733619928268e9f91970581eb8e5723a1cc7d127697278eddd"
 
 [rule.92d0731cd46d4f88913d0e99ac92ec52]  # File from the actual source checkout
+reviewed = "15841f7259c92c68a1f8592376acbef27f476925ee7501044368db207716d50d"
 governs = ["file-feedback"]
 note = "Where feedback is filed from, and what to say when filing fails."
 rule_sha256 = "249e30507c2d8a066841447c34c4f9d650cef3aba77ef5b470f8cc1588ceb399"
@@ -156,26 +176,31 @@ rule_sha256 = "0d5173d0f79ac6b0d265e3369542a70ae7a4b80e0dd00456d8184bb407a4a114"
 # --- Messages a person reads
 
 [rule.016ceef1ef2547f8aa157cb7eb3157cc]  # Confirm project switches
+reviewed = "96743530e177b5b16d7f8ea319755f2ddbcb5197ab69a6191ac407087a3c63b8"
 when = [{ fact = "actor.interactive", eq = true }]
 note = "Needs a person conversing with the actor."
 rule_sha256 = "f78e64c8e6794b5954ea54c987c298364cbbb1c9979788d7f84a92716541d770"
 
 [rule.de5f1d0582294f77b597b1a5b42c9d76]  # Outcome-first reports
+reviewed = "c45262db769857ed754936e5f0556acad30d61b8bdb200e3e5107b3d0a5c0d83"
 when = [{ fact = "actor.interactive", eq = true }]
 note = "\"A message to the user\": actor.interactive means a person reads this actor's messages."
 rule_sha256 = "e9c749a2dedfa0d2861a05eb97d51f2550a0c8a68bba5290bd59305b695c3679"
 
 [rule.718e79f5b3fa40249cb178139c26b28f]  # Resolvable user-facing paths
+reviewed = "dce489bc67f5efcdc86a89e8ae02ac6590c9eb975eabbac449758f1626990fbe"
 when = [{ fact = "actor.interactive", eq = true }]
 note = "\"A path you show the user\"."
 rule_sha256 = "2dd74124cd72aa8bf869d60bf8d25bacc9f89cc7932ca0e32c8850894b7812ae"
 
 [rule.65fcb49d5d7344d9a052800af708b9ee]  # Self-explanatory image sheets
+reviewed = "b54dcaeb7ec66973e064b0cf8632db49c177ac82e27e4c2432652b83d058ab9e"
 when = [{ fact = "actor.interactive", eq = true }]
 note = "\"A sheet of images you hand the user to judge\"."
 rule_sha256 = "6febfe6df38f60c74cca50235a65c11bd5c55b4db8712ca0920d768525dd8759"
 
 [rule.fb8d914a2eb44a64acc7e086970328a0]  # Report evidence and limits
+reviewed = "b7a3a51c198f9c0a047668249aeab95262bd6204f4d5e736e112daa5ae05a429"
 any = [
   { when = [{ fact = "actor.interactive", eq = true }] },
   { governs = ["task-records"] },
@@ -184,6 +209,7 @@ note = "Messages to the user, and what goes in task notes and linked records ins
 rule_sha256 = "6a4f165bf831d9a52aa03b8663845df7959b330092f81427a4a0aa5a154fdd2f"
 
 [rule.19c566200a204b339abf808f84984c7d]  # Retain rulings and integration state
+reviewed = "d0cc24b15fb2d42061f785f945e2438dfcbde8d179c45c6d519169156af5727f"
 any = [
   { when = [{ fact = "actor.interactive", eq = true }] },
   { governs = ["task-records"] },
@@ -194,6 +220,7 @@ rule_sha256 = "51427f1d9c170fbe161cf040da68f0b539efd85ce8b10a99e72fcc1d4d54b16d"
 # --- Target checkout
 
 [rule.b7fe2b6f29a046a283cd91afb240c723]  # Apply the code organization checklist in implementation and review briefs
+reviewed = "1c63a7df6e8b97a9ddabbe376c206802993843fa3b7a25f9496a99a02434b2a0"
 when = [{ fact = "target.code_guide", eq = true }]
 note = "\"When a target or reviewed repository's root AGENTS.md cites a code guide\"."
 rule_sha256 = "aac4d32729b440411c74e34f9d9c15b63bb3d0c1f5d85536074fed28a9d23e63"

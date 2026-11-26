@@ -4,6 +4,7 @@ import pathlib
 import sys
 
 from . import _applicability, check, select_text
+from ._band_shadow import render, report
 from ._corpus import APPLICABILITY, load
 from ._errors import ContextError
 from ._git import EXECUTING_ROOT
@@ -84,4 +85,6 @@ def _approve(root, rule_ids):
 
 
 def _shadow_band(root, args):
-    raise ContextError('shadow-band is not available yet')
+    data = report(args.attempts, args.fixture, root)
+    sys.stdout.write(json.dumps(data, indent=2) + '\n' if args.json else render(data))
+    return 0

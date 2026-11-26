@@ -1,0 +1,516 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lore:instructions/selection-context.json",
+  "title": "Selection context, schema 1",
+  "description": "The actor, target and moment lore selects instructions for. Every fact is {value, source} or {value: null, reason}; a fact left out is unknown. A duty in neither list is unknown.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "name"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1
+    },
+    "name": {
+      "$ref": "#/$defs/text"
+    },
+    "assembled": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "by": {
+          "$ref": "#/$defs/text"
+        },
+        "at": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actor.harness": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "agy",
+                    "claude-code",
+                    "codex",
+                    "opencode",
+                    "pi"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.model": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.role": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "reviewer",
+                    "root",
+                    "search",
+                    "worker"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.interactive": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.shell": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "bash",
+                    "zsh"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.skills": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "native",
+                    "none",
+                    "shell"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "actor.child_wake": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.project": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.stage": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "experimental",
+                    "pre-release",
+                    "supported"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.profile": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.family": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "guild",
+                    "none",
+                    "verifiably"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.test_policy": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "broad",
+                    "off"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.code_guide": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "target.test_front_door": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "host.host_budget": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        },
+        "moment": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "value",
+                "source"
+              ],
+              "properties": {
+                "value": {
+                  "enum": [
+                    "launch",
+                    "session-start"
+                  ]
+                },
+                "source": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/unknown"
+            }
+          ]
+        }
+      }
+    },
+    "duties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "held": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/duty"
+          }
+        },
+        "withheld": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "duty",
+              "source"
+            ],
+            "properties": {
+              "duty": {
+                "$ref": "#/$defs/duty"
+              },
+              "source": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "reason"
+      ],
+      "properties": {
+        "value": {
+          "type": "null"
+        },
+        "reason": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "duty": {
+      "enum": [
+        "ask-user",
+        "commit",
+        "desktop",
+        "dispatch",
+        "edit-code",
+        "file-feedback",
+        "host-services",
+        "integrate",
+        "run-reviews",
+        "run-tests",
+        "spend",
+        "task-records",
+        "trials",
+        "worktree-lifecycle"
+      ]
+    }
+  }
+}

@@ -38,14 +38,14 @@ venv_guard := "{ .venv/bin/python -c \"import pytest, xdist\" >/dev/null 2>&1 ||
 # Temporary JUnit reports let tt record each run's five slowest tests.
 fast_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
 test_cmd := venv_guard + " && PYTHONPATH=\"src${PYTHONPATH:+:$PYTHONPATH}\" .venv/bin/python -m pytest -n 4 tools tests -q -rs --junitxml=\"${TT_JUNIT_DIR:?run through tt}/pytest.xml\""
-check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile bin/lore bin/git-identity-check && python3 -m compileall -q src/lore"
+check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 -m py_compile bin/skill-sizes.py bin/assemble-instructions tools/instruction-assembly-proof-driver.py hooks/claude-profile bin/lore bin/git-identity-check && python3 -m compileall -q src/lore && python3 bin/lore context check"
 
 # Staged paths that cannot change the code checks' verdict: a commit staging only these
 # runs docs_check_cmd instead of check_cmd. fnmatch globs, `*` crossing `/`. Narrow it
 # when docs/ holds executable examples, fixtures, or anything a test reads; set it to
 # "" to always run the full check.
 docs_paths := "*.md docs/* instructions/* profiles/* skills/*"
-docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check"
+docs_check_cmd := "python3 tools/ops-check && python3 tools/ops-docs check && tasks check && python3 bin/assemble-instructions check && python3 bin/lore context check"
 
 # Remote refs whose push makes CI run the full suite (test_cmd or its equivalent), as
 # space-separated fnmatch globs: "refs/heads/main", or "refs/heads/*" when CI runs it on

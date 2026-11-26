@@ -129,6 +129,8 @@ def build_world(base, home):
     shutil.copytree(ROOT / 'instructions', root / 'instructions')
     (root / 'instructions/AGENTS.manifest.json').unlink(missing_ok=True)
     shutil.rmtree(root / 'instructions/rules', ignore_errors=True)
+    # Applicability entries name today's rule ids, which the reference world replaces.
+    (root / 'instructions/applicability.toml').unlink(missing_ok=True)
     # Reference worlds use immutable initial policy, not today's editable prose.
     baseline = (ROOT / 'tools/fixtures/instruction-assembly/baseline.md').read_bytes()
     boundary = baseline.index(b'<!-- ops:projects start')

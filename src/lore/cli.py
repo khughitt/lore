@@ -23,9 +23,15 @@ def main(argv, env, cwd):
     hook = groups.add_parser('hook', help='relay notice subscribers; one envelope on stdin')
     hooks = hook.add_subparsers(dest='command', required=True)
     for name in ('profile-notice', 'stale-notice'): hooks.add_parser(name)
+    _context_parser(groups)
     args = parser.parse_args(argv)
     if args.group == 'hook':
         return _hook(args.command, env)
+    if args.group == 'context':
+        # Imported here: the hook and profile groups run in every session and must not load,
+        # or be broken by, the selection package.
+        from .context import _commands
+        return _commands.run(args)
     if args.command == 'list':
         return _list(args.json, env)
     try:
@@ -47,6 +53,26 @@ def main(argv, env, cwd):
         return 1
     sys.stdout.write(output)
     return 0
+
+
+def _context_parser(groups):
+    context = groups.add_parser('context', help='select the delivered rules that apply to a context')
+    commands = context.add_subparsers(dest='command', required=True)
+    select = commands.add_parser('select', help='the selected text, or its record with --json')
+    select.add_argument('--context', required=True, metavar='FILE')
+    select.add_argument('--shadow', action='store_true', help='also apply proposed entries')
+    select.add_argument('--json', action='store_true', help='print the selection record instead')
+    select.add_argument('--record', metavar='FILE', help='also write the selection record')
+    explain = commands.add_parser('explain', help='one line per rule: decision, reason, facts used')
+    explain.add_argument('--context', required=True, metavar='FILE')
+    explain.add_argument('--shadow', action='store_true')
+    commands.add_parser('check', help='validate the applicability file and the empty-context invariant')
+    approve = commands.add_parser('approve', help='write reviewed digests for user-approved entries')
+    approve.add_argument('rules', nargs='+', metavar='RULE_ID')
+    band = commands.add_parser('shadow-band', help="what band's pi worker would receive, per recorded attempt")
+    band.add_argument('--attempts', required=True, metavar='DIR')
+    band.add_argument('--fixture', required=True, metavar='FILE')
+    band.add_argument('--json', action='store_true')
 
 
 def _list(as_json, env):

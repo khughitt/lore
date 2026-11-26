@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "name": "band-worker",
+  "assembled": {
+    "by": "lore test fixture from band src/adapters/tasks/brief.ts and docs/attempts.md",
+    "at": "2026-11-26"
+  },
+  "facts": {
+    "actor.harness": {
+      "value": "pi",
+      "source": "band docs/attempts.md, Worker session: \"pi runs over RPC in the worktree\""
+    },
+    "actor.role": {
+      "value": "worker",
+      "source": "band launcher: the worker session of a change attempt (docs/attempts.md, Worker session)"
+    },
+    "actor.interactive": {
+      "value": false,
+      "source": "band docs/attempts.md: the worker runs over RPC and band, not a person, reads its messages; band src/adapters/tasks/brief.ts: \"When you are done, stop with a short summary\""
+    },
+    "moment": {
+      "value": "launch",
+      "source": "band launcher: the brief and instructions are composed before the prompt"
+    },
+    "actor.shell": {
+      "value": null,
+      "reason": "hq records no shell fact for pi"
+    },
+    "actor.skills": {
+      "value": null,
+      "reason": "hq records no skill-loading fact for pi"
+    },
+    "actor.child_wake": {
+      "value": null,
+      "reason": "hq records no controller-wake fact for pi"
+    },
+    "actor.model": {
+      "value": null,
+      "reason": "varies per attempt with the kind's grant"
+    }
+  },
+  "duties": {
+    "held": [
+      "edit-code",
+      "commit",
+      "run-tests"
+    ],
+    "withheld": [
+      {
+        "duty": "worktree-lifecycle",
+        "source": "band src/adapters/tasks/brief.ts: \"Never create or remove worktrees.\""
+      },
+      {
+        "duty": "task-records",
+        "source": "band src/adapters/tasks/brief.ts: \"Run only read-only `tasks` commands; never change a task.\""
+      },
+      {
+        "duty": "integrate",
+        "source": "band src/adapters/tasks/brief.ts: \"Never push or merge.\""
+      },
+      {
+        "duty": "file-feedback",
+        "source": "band src/adapters/tasks/brief.ts: \"Never file feedback or run `trial-arm`.\""
+      },
+      {
+        "duty": "trials",
+        "source": "band src/adapters/tasks/brief.ts: \"Never file feedback or run `trial-arm`.\""
+      },
+      {
+        "duty": "ask-user",
+        "source": "band src/adapters/tasks/brief.ts: \"Only band manages the attempt's lifecycle: … asking the user or running review rounds …\""
+      },
+      {
+        "duty": "run-reviews",
+        "source": "band src/adapters/tasks/brief.ts: \"Only band manages the attempt's lifecycle: … asking the user or running review rounds …\""
+      }
+    ]
+  }
+}

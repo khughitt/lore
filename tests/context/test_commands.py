@@ -1,6 +1,7 @@
 """The `lore context` commands, run by explicit path in an isolated repository copy."""
 import hashlib
 import json
+import pathlib
 import subprocess
 import sys
 
@@ -154,3 +155,41 @@ def test_select_refuses_artifact_that_does_not_match_the_manifest(repo):
     result = lore(repo, 'select', '--context', write_context(repo, EMPTY))
     assert result.returncode == 1 and b'does not match the manifest' in result.stderr
     assert lore(repo, 'check').returncode == 1
+
+
+def test_select_record_to_an_unwritable_path_is_a_context_error(repo):
+    result = lore(repo, 'select', '--context', write_context(repo, EMPTY),
+                  '--record', str(repo.parent / 'missing-dir' / 'record.json'))
+    assert result.returncode == 1 and result.stderr.startswith(b'lore context: cannot write record')
+    assert b'Traceback' not in result.stderr
+
+
+def test_shadow_band_with_unreadable_or_non_json_fixture_is_a_context_error(repo):
+    attempts = repo.parent / 'attempts'
+    attempts.mkdir()
+    bad = repo.parent / 'bad.json'
+    bad.write_text('{nope')
+    for fixture, message in ((repo.parent / 'absent.json', b'cannot read fixture'), (bad, b'is not JSON')):
+        result = lore(repo, 'shadow-band', '--attempts', str(attempts), '--fixture', str(fixture))
+        assert result.returncode == 1 and result.stderr.startswith(b'lore context:'), result.stderr
+        assert message in result.stderr and b'Traceback' not in result.stderr
+
+
+def test_relative_context_path_resolves_against_the_callers_cwd(tmp_path, monkeypatch, capsys):
+    from lore import cli
+    caller = tmp_path / 'caller'
+    caller.mkdir()
+    (caller / 'ctx.json').write_text(json.dumps(EMPTY))
+    monkeypatch.chdir(tmp_path)
+    assert cli.main(['context', 'select', '--context', 'ctx.json', '--json'], {}, str(caller)) == 0
+
+
+def test_shadow_band_with_fixture_of_the_wrong_shape_is_a_context_error(repo):
+    attempts = repo.parent / 'attempts'
+    attempts.mkdir()
+    for data, message in (([1], b'fixture'), ({'schema': 1, 'name': 'n', 'facts': []}, b'facts')):
+        fixture = repo.parent / 'shape.json'
+        fixture.write_text(json.dumps(data))
+        result = lore(repo, 'shadow-band', '--attempts', str(attempts), '--fixture', str(fixture))
+        assert result.returncode == 1 and result.stderr.startswith(b'lore context:'), result.stderr
+        assert message in result.stderr and b'Traceback' not in result.stderr

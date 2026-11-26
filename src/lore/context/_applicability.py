@@ -242,7 +242,7 @@ def _test_problem(test):
         if kind == 'bool':
             if not isinstance(value, bool):
                 return f'{test.fact} takes true or false, not {value!r}'
-        elif not isinstance(value, str) or (allowed is not None and value not in allowed):
+        elif not isinstance(value, str) or not value or (allowed is not None and value not in allowed):
             return f'{test.fact} has no value {value!r}'
     return None
 

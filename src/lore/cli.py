@@ -31,7 +31,7 @@ def main(argv, env, cwd):
         # Imported here: the hook and profile groups run in every session and must not load,
         # or be broken by, the selection package.
         from .context import _commands
-        return _commands.run(args)
+        return _commands.run(args, cwd)
     if args.command == 'list':
         return _list(args.json, env)
     try:

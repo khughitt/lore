@@ -86,3 +86,22 @@ def test_git_calls_on_another_repository_ignore_a_hook_environment(tmp_path, mon
     monkeypatch.setenv('GIT_DIR', str(other / '.git'))
     monkeypatch.setenv('GIT_INDEX_FILE', str(other / '.git' / 'index'))
     assert load(root, 'index').rules[0].id == A
+
+
+@pytest.mark.parametrize('mutate', [
+    lambda m: [m],
+    lambda m: {**m, 'artifact': 'x'},
+    lambda m: {**m, 'fragments': {}},
+    lambda m: {**m, 'fragments': ['x']},
+    lambda m: {**m, 'fragments': [{**m['fragments'][0], 'rules': [{'id': A}]}]},
+    lambda m: {**m, 'fragments': [{**m['fragments'][0], 'rules': 'x'}]},
+    lambda m: {**m, 'fragments': [{**m['fragments'][0],
+                                   'rules': [{**m['fragments'][0]['rules'][0], 'offset': -1}]}]},
+    lambda m: {**m, 'fragments': [{**m['fragments'][0],
+                                   'rules': [{**m['fragments'][0]['rules'][0], 'offset': True}]}]},
+    lambda m: {**m, 'fragments': [{**m['fragments'][0], 'generated': 'x', 'offset': '0'}]},
+])
+def test_load_refuses_malformed_manifest_shapes_with_a_context_error(tmp_path, mutate):
+    artifact, manifest = build([('rule', AH, '- one\n')])
+    with pytest.raises(ContextError, match='manifest'):
+        load(write_tree(tmp_path, artifact, mutate(manifest)), 'working')

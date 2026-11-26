@@ -1,0 +1,30 @@
+{
+  "assessments": [],
+  "events": [],
+  "id": "rule:e6d33b7f0a9f4c52a5f34f745ea2dc19",
+  "impact": {
+    "categories": [],
+    "reason": "Classification not yet reviewed.",
+    "tier": "unknown"
+  },
+  "incidents": [],
+  "purpose": {
+    "basis": "unknown",
+    "sources": [],
+    "text": "Purpose not yet recorded."
+  },
+  "relations": [],
+  "revisions": [
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "c9bea938b06627515e19b6e81de54d806cdb64cbb6eedc8904bcd123df00ad73",
+      "text": "- Ask once for a prepared sequence of external or host steps (an install, a first\n  run, verification of what it made, enabling a timer or service) whose parameters a\n  read-only preflight has settled: before the first step, name every step, its scope\n  and the shared rollback, and stop early only when a check fails or a parameter\n  differs from what was asked. A plan or task does not split such a sequence into\n  separate approvals as each step is reached.\n"
+    }
+  ],
+  "schema": 1,
+  "searches": [],
+  "sources": [],
+  "state": "active",
+  "title": "Ask once for a prepared external or host sequence"
+}

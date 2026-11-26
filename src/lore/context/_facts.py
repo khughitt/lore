@@ -109,7 +109,7 @@ def _duties(raw):
         if not isinstance(source, str) or not source:
             raise ContextError(f'withheld duty {name} has no source quoting the launcher')
         if name in withheld:
-            _once([name, name])
+            raise ContextError(f'duty {name} is listed twice')
         withheld[name] = source
     both = set(held_list) & set(withheld)
     if both:
@@ -135,7 +135,7 @@ def _once(names):
 
 
 def _duty_name(name):
-    if name not in DUTIES:
+    if not isinstance(name, str) or name not in DUTIES:
         raise ContextError(f'unknown duty {name!r}')
     return name
 

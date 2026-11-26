@@ -182,3 +182,14 @@ def test_relative_context_path_resolves_against_the_callers_cwd(tmp_path, monkey
     (caller / 'ctx.json').write_text(json.dumps(EMPTY))
     monkeypatch.chdir(tmp_path)
     assert cli.main(['context', 'select', '--context', 'ctx.json', '--json'], {}, str(caller)) == 0
+
+
+def test_shadow_band_with_fixture_of_the_wrong_shape_is_a_context_error(repo):
+    attempts = repo.parent / 'attempts'
+    attempts.mkdir()
+    for data, message in (([1], b'fixture'), ({'schema': 1, 'name': 'n', 'facts': []}, b'facts')):
+        fixture = repo.parent / 'shape.json'
+        fixture.write_text(json.dumps(data))
+        result = lore(repo, 'shadow-band', '--attempts', str(attempts), '--fixture', str(fixture))
+        assert result.returncode == 1 and result.stderr.startswith(b'lore context:'), result.stderr
+        assert message in result.stderr and b'Traceback' not in result.stderr

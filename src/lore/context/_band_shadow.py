@@ -35,6 +35,8 @@ def read_attempts(directory):
             lines = events.read_text().splitlines()
         except OSError as error:
             raise ContextError(f'cannot read {events}: {error.strerror}') from None
+        except UnicodeDecodeError as error:
+            raise ContextError(f'cannot read {events}: {error}') from None
         for number, line in enumerate(lines, 1):
             if not line.strip():
                 continue
@@ -65,6 +67,8 @@ def _transcript(directory, started):
     """The session file re-rooted under the attempts directory (the state directory was renamed)."""
     if not started or not started.get('sessionFile'):
         return None
+    if not isinstance(started['sessionFile'], str):
+        raise ContextError(f'runtime-started sessionFile is not a string: {started["sessionFile"]!r}')
     parts = pathlib.PurePath(started['sessionFile']).parts
     if 'attempts' not in parts:
         return None
@@ -154,6 +158,10 @@ def report(directory, fixture_path, root, git=_git.run):
         fixture = json.loads(fixture_bytes)
     except ValueError as error:
         raise ContextError(f'fixture {fixture_path} is not JSON: {error}') from None
+    if not isinstance(fixture, dict):
+        raise ContextError(f'fixture {fixture_path} is not a JSON object')
+    if not isinstance(fixture.get('facts', {}), dict):
+        raise ContextError(f'fixture {fixture_path} facts is not an object')
     attempts = read_attempts(directory)
     rows, records = [], []
     omitted, kept = {}, {}

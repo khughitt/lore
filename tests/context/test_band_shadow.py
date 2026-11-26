@@ -167,3 +167,18 @@ def test_malformed_events_file_is_a_context_error(tmp_path, line, message):
     (tmp_path / 'A1/events.jsonl').write_text(line + '\n')
     with pytest.raises(ContextError, match=message):
         read_attempts(tmp_path)
+
+
+def test_events_file_that_is_not_utf8_is_a_context_error(tmp_path):
+    (tmp_path / 'A1').mkdir()
+    (tmp_path / 'A1/events.jsonl').write_bytes(b'\xff\xfe\n')
+    with pytest.raises(ContextError, match='cannot read'):
+        read_attempts(tmp_path)
+
+
+def test_non_string_session_file_is_a_context_error(tmp_path):
+    (tmp_path / 'A1').mkdir()
+    events = [{'type': 'created', 'project': 'p', 'root': '/r'}, {'type': 'runtime-started', 'sessionFile': 5}]
+    (tmp_path / 'A1/events.jsonl').write_text(''.join(json.dumps(e) + '\n' for e in events))
+    with pytest.raises(ContextError, match='sessionFile'):
+        read_attempts(tmp_path)

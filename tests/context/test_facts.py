@@ -97,3 +97,10 @@ def test_context_rejects_duplicate_held_or_withheld_duty():
     with pytest.raises(ContextError, match='commit is listed twice'):
         load_context({'schema': 1, 'name': 'x', 'duties': {'withheld': [
             {'duty': 'commit', 'source': 'a'}, {'duty': 'commit', 'source': 'b'}]}})
+
+
+def test_context_rejects_duty_name_that_is_not_a_string():
+    with pytest.raises(ContextError, match='unknown duty'):
+        load_context({'schema': 1, 'name': 'x', 'duties': {'held': [['commit']]}})
+    with pytest.raises(ContextError, match='unknown duty'):
+        load_context({'schema': 1, 'name': 'x', 'duties': {'withheld': [{'duty': ['commit'], 'source': 's'}]}})

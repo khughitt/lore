@@ -6,7 +6,7 @@ What a session is told: the global instructions and profile fragments, the skill
 no other home, and the assembly of traceable context from owner fragments with a
 provenance manifest.
 """
-authority = ["docs/instruction-formats.md", "docs/profile-delivery.md", "docs/instruction-assembly.md"]
+authority = ["docs/instruction-formats.md", "docs/profile-delivery.md", "docs/instruction-assembly.md", "docs/context-selection.md"]
 subsystems = []
 
 [documents]

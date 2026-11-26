@@ -726,9 +726,14 @@ verification. No incremental hashing or relaxed scrub policy is introduced.
 ## Execution workspaces (active placement)
 
 This override of superpowers execution setup, task loop, resume, review packaging
-and cleanup is active following the approved lore delivery. Existing workspaces
-are not moved or folded. For new executions, create
-one workspace at `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/` on the
+and cleanup is active following the approved lore delivery. It applies to
+supported-stage planned work and retained flow-trial units, the work that reads
+`supported-workflow.md`. Experimental and pre-release planned work keeps the
+execution skills' worktree-local `.superpowers/sdd/` workspace; the global Git
+rule's inspection of that workspace before worktree removal still applies.
+An execution keeps the workspace it started in: a worktree-local workspace is not
+moved to this placement mid-plan, and a started external one is not folded back.
+For new executions in scope, create one workspace at `$WORK_ROOT/<project>/<owning-task-id>/plans/<plan-key>/` on the
 current host's declared persistent storage. Specs/plans stay in their profile's
 authorized destination. Missing or inaccessible storage requires resolution, never
 a guessed alternate root. Record host, literal path, owning task, plan repository

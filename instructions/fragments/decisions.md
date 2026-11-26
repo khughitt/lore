@@ -108,6 +108,13 @@
   does; reopening does not revive it. General “proceed” or plan approval alone grants no
   external authority. Check all outgoing commits for unrelated or unreviewed changes;
   separate those changes or seek new authority.
+  A scope or priority choice is the user's, and a change to an approved artifact
+  material, only when it would change the recorded goal, scope, a Binding bound,
+  required evidence, authority or risk. Diagnosing a failure, preparing a correction,
+  or repairing a test or fixture so an accepted requirement can pass within those is a
+  bounded decision, recorded as a ruling, even where it departs from an unlabelled
+  step an agent wrote; protective limits, adopted Binding stops and the gates listed
+  here still stop.
 <!-- rule:8d52bc64e99b42d78f4219f73c3b375c end -->
 <!-- rule:e6d33b7f0a9f4c52a5f34f745ea2dc19 begin -->
 - Ask once for a prepared sequence of external or host steps (an install, a first

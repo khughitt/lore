@@ -30,11 +30,14 @@ def load_context(data):
     if not isinstance(data, dict):
         raise ContextError('a selection context is a JSON object')
     _keys(data, {'schema', 'name', 'assembled', 'facts', 'duties'}, 'context')
-    if data.get('schema') != 1:
-        raise ContextError(f'context schema {data.get("schema")!r} is not 1')
+    schema = data.get('schema')
+    if type(schema) is not int or schema != 1:     # True == 1 in Python
+        raise ContextError(f'context schema {schema!r} is not 1')
     name = data.get('name')
     if not isinstance(name, str) or not name:
         raise ContextError('context name must be a nonempty string')
+    if 'assembled' in data:
+        _assembled(data['assembled'])
     facts = {}
     raw_facts = data.get('facts', {})
     if not isinstance(raw_facts, dict):
@@ -92,6 +95,7 @@ def _duties(raw):
         raise ContextError('duties.held must be a list')
     for name in held_list:
         _duty_name(name)
+    _once(held_list)
     withheld = {}
     withheld_list = raw.get('withheld', [])
     if not isinstance(withheld_list, list):
@@ -104,11 +108,30 @@ def _duties(raw):
         source = item.get('source')
         if not isinstance(source, str) or not source:
             raise ContextError(f'withheld duty {name} has no source quoting the launcher')
+        if name in withheld:
+            _once([name, name])
         withheld[name] = source
     both = set(held_list) & set(withheld)
     if both:
         raise ContextError(f'duty {", ".join(sorted(both))} is both held and withheld')
     return frozenset(held_list), withheld
+
+
+def _assembled(raw):
+    if not isinstance(raw, dict):
+        raise ContextError('context assembled must be an object with by and at')
+    _keys(raw, {'by', 'at'}, 'assembled')
+    for key, value in raw.items():
+        if not isinstance(value, str) or not value:
+            raise ContextError(f'assembled.{key} must be a nonempty string')
+
+
+def _once(names):
+    seen = set()
+    for name in names:
+        if name in seen:
+            raise ContextError(f'duty {name} is listed twice')
+        seen.add(name)
 
 
 def _duty_name(name):

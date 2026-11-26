@@ -3,6 +3,9 @@ import hashlib
 import json
 import pathlib
 
+import pytest
+
+from lore.context import ContextError
 from lore.context._band_shadow import Attempt, read_attempts, render, report, target_facts
 from lore.context._corpus import APPLICABILITY, MANIFEST
 
@@ -152,3 +155,15 @@ def test_report_counts_only_launched_attempts_and_names_kept_by_unknown(repo, tm
     assert 'target.stage' in a1['unknown_facts'] and 'target.code_guide' not in a1['unknown_facts']
     text = render(data)
     assert text.startswith('# Band worker shadow report\n') and '| plain | 1 |' in text and 'Rule B' in text
+
+
+@pytest.mark.parametrize('line, message', [
+    ('{nope', 'line 1 is not JSON'),
+    ('[1]', 'line 1 is not a JSON object'),
+    ('{"type": "created", "root": "/r"}', 'created event has no project'),
+])
+def test_malformed_events_file_is_a_context_error(tmp_path, line, message):
+    (tmp_path / 'A1').mkdir()
+    (tmp_path / 'A1/events.jsonl').write_text(line + '\n')
+    with pytest.raises(ContextError, match=message):
+        read_attempts(tmp_path)

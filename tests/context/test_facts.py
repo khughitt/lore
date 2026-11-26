@@ -74,3 +74,26 @@ def test_schema_file_enumerates_the_vocabulary():
     schema = json.loads((ROOT / 'instructions/selection-context.json').read_text())
     assert set(schema['properties']['facts']['properties']) == set(FACTS)
     assert set(schema['$defs']['duty']['enum']) == DUTIES
+
+
+def test_context_rejects_boolean_schema():
+    with pytest.raises(ContextError, match='schema True is not 1'):
+        load_context({'schema': True, 'name': 'x'})
+
+
+@pytest.mark.parametrize('assembled', ['now', {'by': ''}, {'by': 'x', 'when': 'y'}, {'at': 3}])
+def test_context_rejects_malformed_assembled(assembled):
+    with pytest.raises(ContextError, match='assembled'):
+        load_context({'schema': 1, 'name': 'x', 'assembled': assembled})
+
+
+def test_context_accepts_assembled_by_and_at():
+    load_context({'schema': 1, 'name': 'x', 'assembled': {'by': 'band', 'at': '2026-11-26T00:00:00Z'}})
+
+
+def test_context_rejects_duplicate_held_or_withheld_duty():
+    with pytest.raises(ContextError, match='commit is listed twice'):
+        load_context({'schema': 1, 'name': 'x', 'duties': {'held': ['commit', 'commit']}})
+    with pytest.raises(ContextError, match='commit is listed twice'):
+        load_context({'schema': 1, 'name': 'x', 'duties': {'withheld': [
+            {'duty': 'commit', 'source': 'a'}, {'duty': 'commit', 'source': 'b'}]}})

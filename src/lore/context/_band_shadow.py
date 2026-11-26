@@ -31,10 +31,19 @@ def read_attempts(directory):
     attempts = []
     for events in sorted(directory.glob('*/events.jsonl')):
         created = branch_point = started = None
-        for line in events.read_text().splitlines():
+        try:
+            lines = events.read_text().splitlines()
+        except OSError as error:
+            raise ContextError(f'cannot read {events}: {error.strerror}') from None
+        for number, line in enumerate(lines, 1):
             if not line.strip():
                 continue
-            event = json.loads(line)
+            try:
+                event = json.loads(line)
+            except ValueError as error:
+                raise ContextError(f'{events} line {number} is not JSON: {error}') from None
+            if not isinstance(event, dict):
+                raise ContextError(f'{events} line {number} is not a JSON object')
             kind = event.get('type')
             if kind == 'created' and created is None:
                 created = event
@@ -44,6 +53,9 @@ def read_attempts(directory):
                 started = event
         if created is None:
             raise ContextError(f'{events} has no created event')
+        for key in ('project', 'root'):
+            if not isinstance(created.get(key), str) or not created[key]:
+                raise ContextError(f'{events} created event has no {key}')
         attempts.append(Attempt(events.parent.name, created['project'], created['root'], branch_point,
                                 started is not None, _transcript(directory, started)))
     return tuple(attempts)
@@ -134,8 +146,14 @@ def _test_policy(show, known):
 def report(directory, fixture_path, root, git=_git.run):
     """The shadow report over every attempt in directory, for the fixture context, from root's corpus."""
     root = pathlib.Path(root)
-    fixture_bytes = pathlib.Path(fixture_path).read_bytes()
-    fixture = json.loads(fixture_bytes)
+    try:
+        fixture_bytes = pathlib.Path(fixture_path).read_bytes()
+    except OSError as error:
+        raise ContextError(f'cannot read fixture {fixture_path}: {error.strerror}') from None
+    try:
+        fixture = json.loads(fixture_bytes)
+    except ValueError as error:
+        raise ContextError(f'fixture {fixture_path} is not JSON: {error}') from None
     attempts = read_attempts(directory)
     rows, records = [], []
     omitted, kept = {}, {}

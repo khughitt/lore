@@ -172,3 +172,10 @@ def test_with_reviewed_replaces_an_earlier_digest():
 def test_with_reviewed_refuses_a_rule_without_an_entry():
     with pytest.raises(ContextError, match='no entry'):
         with_reviewed(TOML_A_ZSH, parse(TOML_A_ZSH.encode()), RULES, [B])
+
+
+def test_problems_reject_empty_name_on_an_unconstrained_scalar_fact():
+    found = check(f'[rule.{AH}]\nwhen = [{{ fact = "actor.model", eq = "" }}, '
+                  f'{{ fact = "target.project", in = ["lore", ""] }}]\nrule_sha256 = "ha"\n')
+    assert any('actor.model' in p and "''" in p for p in found)
+    assert any('target.project' in p and "''" in p for p in found)

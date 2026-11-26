@@ -10,7 +10,12 @@ from ._errors import ContextError
 from ._git import EXECUTING_ROOT
 
 
-def run(args, root=EXECUTING_ROOT):
+def run(args, cwd, root=EXECUTING_ROOT):
+    """Relative path arguments resolve against cwd, the caller's directory."""
+    for name in ('context', 'record', 'attempts', 'fixture'):
+        value = getattr(args, name, None)
+        if value is not None:
+            setattr(args, name, pathlib.Path(cwd) / value)
     try:
         if args.command == 'select':
             return _select(root, args)
@@ -40,7 +45,10 @@ def _context(path):
 def _select(root, args):
     text, record = select_text(root, _context(args.context), shadow=args.shadow)
     if args.record:
-        pathlib.Path(args.record).write_text(json.dumps(record, indent=2) + '\n')
+        try:
+            pathlib.Path(args.record).write_text(json.dumps(record, indent=2) + '\n')
+        except OSError as error:
+            raise ContextError(f'cannot write record {args.record}: {error.strerror}') from None
     if args.json:
         sys.stdout.write(json.dumps(record, indent=2) + '\n')
     else:

@@ -24,10 +24,12 @@ to read one of them from anywhere.
 - `mind6` — mindful v6 (mindful) — Headless thought, mindmap, and journal store; the current mindful
 - `mm` — multiple-myeloma — The multiple myeloma research program: a workspace over the verifiably stack
 - `mm30` — mm30 — The MM30 meta-analysis pipeline (v7 line) that feeds the MM30 Shiny app
+- `mtorc3` — nguyen23 (mtorc3) — RNA-seq, phosphoproteomics and literature analyses for the Nguyen et al. mTORC3 CRISPR multiomics manuscript
 - `nodes` — nodes — A problem-agnostic knowledge substrate: typed markdown nodes
 - `ns` — natural-systems (natural-systems-v2) — Research on structure across representation, observation, scale, and coupling
 - `obs` — obs — Cross-project execution evidence, observability, and historical analysis
 - `ops` — ops — The hub for work spanning projects, and the shared tooling
+- `photos` — phone-photos — Copy phone photos locally and upload them during a nightly window
 - `pressure` — noctalia-resource-alert — Noctalia v5 plugin for memory, sustained CPU, and disk-space pressure alerts
 - `prism` — prism — Resolves appearance definitions and applies them to their targets
 - `quarry` — quarry — One CLI and skills over scientific resources, with domains as lenses

@@ -1,5 +1,6 @@
 """The committed applicability file and the band worker context it is tried on."""
 import json
+import os
 import pathlib
 import re
 import subprocess
@@ -75,9 +76,19 @@ def test_record_keeping_report_rules_stay_for_an_unread_actor_that_writes_task_r
         expect(changed, title, 'include', 'entry-holds')
 
 
+def _registry_env():
+    """PATH and the variables that locate the user's tasks registry, nothing else."""
+    env = {}
+    for key in ('PATH', 'HOME', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME', 'XDG_STATE_HOME'):
+        if key in os.environ:
+            env[key] = os.environ[key]
+    return env
+
+
 def band_root():
     try:
-        result = subprocess.run(['tasks', 'resolve', 'band', '--json'], capture_output=True, text=True, timeout=30)
+        result = subprocess.run(['tasks', 'resolve', 'band', '--json'], capture_output=True, text=True, timeout=30,
+                                env=_registry_env())
     except (OSError, subprocess.TimeoutExpired):
         return None
     if result.returncode:
@@ -98,3 +109,16 @@ def test_band_fixture_quotes_exist_in_band_brief():
         for part in (p.strip() for p in quote.split('…')):
             if part:
                 assert part in brief, (withheld['duty'], part)
+
+
+def test_band_root_builds_its_environment_key_by_key(monkeypatch):
+    seen = {}
+
+    def fake(args, **kwargs):
+        seen.update(kwargs)
+        raise OSError('not run')
+
+    monkeypatch.setenv('GIT_DIR', '/elsewhere/.git')
+    monkeypatch.setattr(subprocess, 'run', fake)
+    assert band_root() is None
+    assert isinstance(seen.get('env'), dict) and 'GIT_DIR' not in seen['env'] and 'PATH' in seen['env']

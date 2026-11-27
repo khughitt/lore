@@ -20,6 +20,12 @@
       "locator": null,
       "sha256": "c9bea938b06627515e19b6e81de54d806cdb64cbb6eedc8904bcd123df00ad73",
       "text": "- Ask once for a prepared sequence of external or host steps (an install, a first\n  run, verification of what it made, enabling a timer or service) whose parameters a\n  read-only preflight has settled: before the first step, name every step, its scope\n  and the shared rollback, and stop early only when a check fails or a parameter\n  differs from what was asked. A plan or task does not split such a sequence into\n  separate approvals as each step is reached.\n"
+    },
+    {
+      "clauses": [],
+      "locator": null,
+      "sha256": "737b75e947d9cbbe7b87c11b5010d8990afa7aaa8bd00f6eb40e4734fdbbfb31",
+      "text": "- Ask once for a prepared sequence of external or host steps (an install, a first\n  run, verification of what it made, enabling a timer or service) whose parameters a\n  read-only preflight has settled: just before the first step, name every step, its\n  scope and the shared rollback. That approval is Processes' at-that-moment approval\n  for each service it names; use of the live desktop still asks at its moment. Any\n  failed step or check, or a parameter that differs from what was asked, stops the\n  sequence, and the twice-failed rule above governs retries. A plan or task does not\n  split such a sequence into separate approvals as each step is reached.\n"
     }
   ],
   "schema": 1,

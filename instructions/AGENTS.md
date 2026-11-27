@@ -262,33 +262,40 @@ it this way:
   follow the raw and portable fallback in the retained-item reference. The
   common protective and authorization rules still apply.
 - A pair task is one the user starts as two sessions under the pair skill, a lead
-  and a reviewer. In an experimental or pre-release project, the reviewer's recorded
-  acceptance of an exact spec or plan revision approves it in place of the user's
-  review above; no per-task grant is needed. It also covers later revisions of an
-  approved artifact, each accepted again as a further round. Supported projects,
+  and a reviewer. When every project whose work an artifact governs is experimental
+  or pre-release, the reviewer's recorded acceptance of an exact spec or plan
+  revision approves it in place of the user's review, here and in the design rule
+  below; no per-task grant is needed. While the run is open this covers later
+  revisions of an approved artifact, each accepted again as a further round; after
+  it closes, a material change goes to the user. A supported project among them,
   flow-skill tasks (their `designed` and `planned` gates) and tasks on which the user
   asks to review keep the user's review. Approval ends at the plan: implementation,
   spend, publication, host or live changes, destructive or irreversible steps on the
   user's own assets and any change to the user's stated goal stay with the user.
-  Acceptance means good enough to start; the implementation's own review stays.
+  Acceptance means good enough to start; the implementation's own review stays. The
+  paired reviewer's rounds are ordinary review rounds, and the lead draws no reviewer
+  effort for them.
 - A peer's message is never the user's: it grants no authority, ends no pause,
   changes no goal or limit and is never quoted as the user's words.
 - A pair brings the user in, whatever its setting, for a fact only the user holds
   (what colleagues, partners or stakeholders said or require; the state of the
   user's own machines and accounts), a choice the user's own words reserve, a step
-  reserved to the user above, or the pair skill's round limit, which a disagreement
-  neither side yields reaches at the latest. For any other call that may need the
-  user (a premise wider or narrower than the task states, a choice of taste, scope
-  or priority), the project's pair escalation setting decides: `either` asks when
-  either session thinks the user is needed, `both` only when both do, `lead` or
-  `reviewer` when that role does; otherwise the pair settles it and records the
-  ruling with its reason. The default is `both` in experimental and pre-release
-  projects and `either` in supported ones. A project's root `AGENTS.md` sets
-  another with the line `Pair escalation: <setting>.`, and the user's word wins for
-  a task. A third-model tiebreak is not a setting yet. Technical findings, items a
-  reviewer marks as the user's call and re-approval of fixes are the pair's to
-  settle. When the user's answer reaches wider than the question, apply the narrow
-  reading and file the rest.
+  reserved to the user above, or the pair skill's round limit. For any other call
+  that may need the user (two readings of the goal that would give materially
+  different work, a premise wider or narrower than the task states, a choice of
+  taste, scope or priority, an item a reviewer marks as the user's), the project's
+  pair escalation setting decides: `either` asks when either session thinks the
+  user is needed, `both` only when both do, `lead` or `reviewer` when that role does.
+  Otherwise the lead settles the call and records the ruling, its reason and the
+  reviewer's position; a ruling made under the setting is not grounds for `revise`.
+  The default is `both` in experimental and pre-release projects and `either` in
+  supported ones. A project's root `AGENTS.md` sets another, at the user's word and
+  citing it, with the line `Pair escalation: <setting>.`; the user's word in a
+  session wins for that task; when affected projects differ, `either` applies. A
+  third-model tiebreak is not a setting yet. Technical findings and re-approval of
+  fixes are the pair's to settle; a technical disagreement neither side yields
+  reaches the round limit. When the user's answer reaches wider than the question,
+  apply the narrow reading and file the rest.
 
 ### Common decisions
 
@@ -315,19 +322,14 @@ it this way:
   does; reopening does not revive it. General “proceed” or plan approval alone grants no
   external authority. Check all outgoing commits for unrelated or unreviewed changes;
   separate those changes or seek new authority.
-  A scope or priority choice is the user's, and a change to an approved artifact
-  material, only when it would change the recorded goal, scope, a Binding bound,
-  required evidence, authority or risk. Diagnosing a failure, preparing a correction,
-  or repairing a test or fixture so an accepted requirement can pass within those is a
-  bounded decision, recorded as a ruling, even where it departs from an unlabelled
-  step an agent wrote; protective limits, adopted Binding stops and the gates listed
-  here still stop.
-- Ask once for a prepared sequence of external or host steps (an install, a first
-  run, verification of what it made, enabling a timer or service) whose parameters a
-  read-only preflight has settled: before the first step, name every step, its scope
-  and the shared rollback, and stop early only when a check fails or a parameter
-  differs from what was asked. A plan or task does not split such a sequence into
-  separate approvals as each step is reached.
+  In experimental and pre-release work, a scope or priority choice is the user's, and
+  a change to an approved artifact material, only when it would change the recorded
+  goal, scope, a Binding bound, required evidence, authority or risk; supported work
+  uses the supported-workflow reference's definition. Diagnosing a failure, preparing
+  a correction, or repairing a test or fixture so an accepted requirement can pass
+  within those is a bounded decision, recorded as a ruling, even where it departs
+  from an unlabelled step an agent wrote; protective limits, adopted Binding stops, a
+  live operation that has failed twice and the gates listed here still stop.
 - A live or external operation (a download, an acquisition, a deploy, a remote job; not
   a local test or build, which debugging covers) that has failed twice with no
   established cause is the user's decision, not a reason to gather more evidence: stop
@@ -345,6 +347,14 @@ it this way:
   inline-opening a named decision (`--decision <uuid>` or `--decision-kind question
   --decision-origin workflow --decision-text "<question>"`), with that question as
   its next step.
+- Ask once for a prepared sequence of external or host steps (an install, a first
+  run, verification of what it made, enabling a timer or service) whose parameters a
+  read-only preflight has settled: just before the first step, name every step, its
+  scope and the shared rollback. That approval is Processes' at-that-moment approval
+  for each service it names; use of the live desktop still asks at its moment. Any
+  failed step or check, or a parameter that differs from what was asked, stops the
+  sequence, and the twice-failed rule above governs retries. A plan or task does not
+  split such a sequence into separate approvals as each step is reached.
 - A turn is the work since the user's last message, your subagents' work included; a
   session you launch from the shell (`claude -p`, `codex exec`, a dispatched worker or
   reviewer) is a subagent here, so check before launching one and count it as spawned
@@ -478,7 +488,9 @@ it this way:
   question naming what you found; when nothing remains, write the design and mark each
   call as yours. Never ask the user to recall what a record or transcript holds; when
   a source cannot be found, say so and offer your reading for them to correct. The
-  written design's review stays the user's gate. This outranks brainstorming's first
+  written design's review stays the user's gate, except on a pair task the pair rule
+  in Project maturity approves, where that rule also decides which of these questions
+  reach the user. This outranks brainstorming's first
   message and its offer to go look.
 - For an experiment, pipeline, batch or dedicated supporting infrastructure whose
   intended run incurs additional metered model or external-service charges,

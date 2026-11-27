@@ -291,7 +291,8 @@ it this way:
   The default is `both` in experimental and pre-release projects and `either` in
   supported ones. A project's root `AGENTS.md` sets another, at the user's word and
   citing it, with the line `Pair escalation: <setting>.`; the user's word in a
-  session wins for that task; when affected projects differ, `either` applies. A
+  session wins for that task; when the affected projects' settings differ, `either`
+  applies. A
   third-model tiebreak is not a setting yet. Technical findings and re-approval of
   fixes are the pair's to settle; a technical disagreement neither side yields
   reaches the round limit. When the user's answer reaches wider than the question,
@@ -353,7 +354,8 @@ it this way:
   scope and the shared rollback. That approval is Processes' at-that-moment approval
   for each service it names; use of the live desktop still asks at its moment. Any
   failed step or check, or a parameter that differs from what was asked, stops the
-  sequence, and the twice-failed rule above governs retries. A plan or task does not
+  sequence; a retry the twice-failed rule above allows that then succeeds continues it
+  under the same approval. A plan or task does not
   split such a sequence into separate approvals as each step is reached.
 - A turn is the work since the user's last message, your subagents' work included; a
   session you launch from the shell (`claude -p`, `codex exec`, a dispatched worker or

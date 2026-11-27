@@ -20,7 +20,8 @@ sys.path.insert(0, str(ROOT / 'src'))
 from lore import _projects  # noqa: E402
 IDS = ['core', 'refactoring', 'git', 'profiles', 'design-docs', 'communication',
        'decisions', 'processes', 'tests', 'shell', 'outcome-notes', 'trials', 'feedback', 'projects']
-CATALOG_IDS = IDS[:6] + ['notation'] + IDS[6:]
+CATALOG_IDS = IDS[:6] + ['notation', 'statements'] + IDS[6:]
+ADAPTABLE_IDS = {'statements'}
 # Fixture repositories ignore the host's global and system Git config and its hooks.
 HERMETIC_GIT = {'GIT_CONFIG_GLOBAL': os.devnull, 'GIT_CONFIG_NOSYSTEM': '1'}
 
@@ -435,7 +436,11 @@ def test_world_copy_refuses_a_stale_template_path(world_template, tmp_path, home
 
 
 def test_catalog_inventory_preserves_v1_mandatory_ids():
-    assert inventory(ROOT) == (CATALOG_IDS, {'mandatory'})
+    catalog = tomllib.loads((ROOT / 'instructions/assembly.toml').read_text())
+    classes = {f['id']: f['classification'] for f in catalog['fragments']}
+    assert list(classes) == CATALOG_IDS
+    assert classes == {name: 'adaptable' if name in ADAPTABLE_IDS else 'mandatory'
+                       for name in CATALOG_IDS}
 
 
 def test_historical_reference_fixtures_match_independent_git_blobs():
